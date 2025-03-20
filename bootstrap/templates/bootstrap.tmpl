@@ -1,0 +1,117 @@
+{{ define "env_file" }}DATABASE_URL="postgresql://development:development@localhost:5432/{{.ProjectName}}_{{.DevEnvironment}}?sslmode=disable"
+ENVIRONMENT={{.DevEnvironment}}
+PORT=3000
+{{end}}
+
+{{ define "package_json" }}{
+    "devDependencies": {
+        "prisma": "^6.3.0"
+    },
+    "dependencies": {
+        "@prisma/client": "^6.3.0"
+    }
+}
+{{ end }}
+
+{{ define "schema_prisma" }}// This is your Prisma schema file,
+// learn more about it in the docs: https://pris.ly/d/prisma-schema
+
+generator client {
+    provider        = "prisma-client-js"
+    previewFeatures = ["prismaSchemaFolder"]
+}
+
+datasource db {
+    provider = "postgresql"
+    url      = env("DATABASE_URL")
+}
+{{ end }}
+
+{{  define "internal_domain_init"}}// Package models contains all your models that represents your tables to go structs.
+// Models is a package shared by all your app so that is way this package
+// exists; to avoid circular dependencies
+package models
+{{ end }}
+
+{{ define "cmd_api_controllers_init" }}package controllers
+
+import "github.com/labstack/echo/v4"
+
+type InitController struct {}
+
+func NewInitController() *InitController {
+    return &InitController{}
+}
+
+func (c *InitController) SetUpRoutes(group *echo.Group) {
+    group.GET("/initial", c.GetHandler)
+}
+
+func (c *InitController) GetHandler(ctx echo.Context) error {
+    return ctx.String("Hello from your new API :D")
+}
+{{ end }}
+
+{{ define "cmd_api_main" }}package main
+
+import (
+    "github.com/labstack/echo/v4"
+    "github.com/manicar2093/winter"
+    "github.com/manicar2093/winter/connections"
+    "{{.ModuleName}}/pkg/config"
+    "{{.ModuleName}}/cmd/api/controllers"
+    "github.com/manicar2093/winter/apperrors"
+    "github.com/manicar2093/winter/validator"
+    "github.com/manicar2093/echoroutesview"
+)
+
+func main() {
+    var (
+        echoInstance    = echo.New()
+        baseEndpoint    = "/api/v1"
+        conf            = converters.Must(winter.ParseConfig[config.Config]())
+        dbConn          = connections.GetGormConnection(conf.DatabaseConnectionConfig)
+    )
+    echoInstance.Use(middleware.Logger())
+    winter.RegisterController(baseEndpoint, controllers.NewInitController())
+    echoroutesview.RegisterRoutesViewer(e)
+
+    e.HTTPErrorHandler = apperrors.HandlerWEcho
+    e.Validator = validator.NewGooKitValidator()
+
+    e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", conf.Port)))
+}
+{{ end }}
+
+{{ define "pkg_generators_generators" }}// Package generators contains all your models generators; functions used to generate mocked data and help you testing
+package generators
+
+import "github.com/go-viper/mapstructure/v2"
+
+type testingI interface {
+    mock.TestingT
+    Fatal(args ...any)
+    Cleanup(func())
+}
+
+func decode(t testingI, args map[string]any, holder any) {
+    if err := mapstructure.Decode(args, &holder); err != nil {
+        t.Fatal(err)
+    }
+}
+{{ end }}
+
+{{ define "pkg_config_config.go" }}// Package config contains a struct with all your API configs
+package config
+
+import (
+    "github.com/caarlos0/env/v10"
+    "github.com/manicar2093/winter"
+    "github.com/manicar2093/winter/connections"
+)
+
+type Config struct {
+    winter.Config
+    connections.DatabaseConnectionConfig
+}
+{{ end }}

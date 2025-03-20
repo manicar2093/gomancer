@@ -1,0 +1,30 @@
+{{ define "cmd_api_main" }}package main
+
+import (
+    "github.com/labstack/echo/v4"
+    "github.com/manicar2093/winter"
+    "github.com/manicar2093/winter/connections"
+    "{{.ModuleName}}/pkg/config"
+    "{{.ModuleName}}/cmd/api/controllers"
+    "github.com/manicar2093/winter/apperrors"
+    "github.com/manicar2093/winter/validator"
+    "github.com/manicar2093/echoroutesview"
+)
+
+func main() {
+    var (
+        echoInstance    = echo.New()
+        baseEndpoint    = "/api/v1"
+        conf            = converters.Must(winter.ParseConfig[config.Config]())
+        dbConn          = connections.GetGormConnection(conf.DatabaseConnectionConfig)
+    )
+    echoInstance.Use(middleware.Logger())
+    winter.RegisterController(baseEndpoint, controllers.NewInitController())
+    echoroutesview.RegisterRoutesViewer(e)
+
+    e.HTTPErrorHandler = apperrors.HandlerWEcho
+    e.Validator = validator.NewGooKitValidator()
+
+    e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", conf.Port)))
+}
+{{ end }}

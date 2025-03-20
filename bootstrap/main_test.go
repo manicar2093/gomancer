@@ -23,9 +23,9 @@ var _ = Describe("Main", func() {
 	)
 
 	AfterEach(func() {
-		//if err := os.RemoveAll("test"); err != nil {
-		//	GinkgoT().Log(err)
-		//}
+		if err := os.RemoveAll("test"); err != nil {
+			GinkgoT().Log(err)
+		}
 	})
 	Describe("InitProject", func() {
 		It("creates all needed directories and files to start a new project", func() {
@@ -201,6 +201,11 @@ jobs:
                 with:
                     github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
                     branch: main
+`))
+			Expect(dirWithPath("go.mod")).Should(BeAnExistingFile())
+			Expect(readWithPath("go.mod")).Should(ContainSubstring(`module test
+
+go 1.23
 `))
 		})
 	})

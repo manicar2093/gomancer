@@ -42,6 +42,10 @@ var (
 					".cz.toml",
 					"cz.toml",
 				},
+				{
+					"go.mod",
+					"go.mod",
+				},
 			},
 		},
 		{

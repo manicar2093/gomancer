@@ -171,6 +171,37 @@ version_files = [
 ]
 bump_message = "bump: Semantic Release Bot: Realease Version: $new_version 🤖🚀 [skip ci]"
 `))
+			Expect(dirWithPath(".github/workflows/bump_version.yml")).Should(BeAnExistingFile())
+			Expect(readWithPath(".github/workflows/bump_version.yml")).Should(ContainSubstring(`name: Bump Version
+
+on:
+    push:
+        branches:
+            - main
+
+jobs:
+    bump-version:
+        if: ${{!contains(github.event.head_commit.message, '[skip ci]')}}
+        runs-on: ubuntu-latest
+        name: "Bump version and create changelog with commitizen"
+        steps:
+            - name: Check out
+                uses: actions/checkout@v2
+                with:
+                    token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
+                    fetch-depth: 0
+            - name: Set up Go
+                uses: actions/setup-go@v3
+                with:
+                    go-version: 1.23.x
+            - name: Set GOBIN
+                run: go env -w GOBIN=/usr/local/bin
+            - name: Create bump and changelog
+                uses: commitizen-tools/commitizen-action@master
+                with:
+                    github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
+                    branch: main
+`))
 		})
 	})
 })

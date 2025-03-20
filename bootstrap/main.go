@@ -107,6 +107,15 @@ var (
 				},
 			},
 		},
+		{
+			".github/workflows",
+			[]fileWithContent{
+				{
+					"bump_version.yml",
+					"github_workflows_bump_version.yml",
+				},
+			},
+		},
 	}
 )
 

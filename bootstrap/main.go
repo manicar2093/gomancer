@@ -149,11 +149,13 @@ func InitProject(input InitProjectInput) error {
 			InitProjectInput
 			ProjectName                     string
 			DevEnvironment, TestEnvironment string
+			GoVersion                       string
 		}{
 			InitProjectInput: input,
 			ProjectName:      projectDirName,
 			DevEnvironment:   "dev",
 			TestEnvironment:  "test",
+			GoVersion:        "1.23",
 		}
 	)
 	for _, dir := range initialFiles {

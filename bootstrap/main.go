@@ -38,6 +38,10 @@ var (
 					"package.json",
 					"package_json",
 				},
+				{
+					".cz.toml",
+					"cz.toml",
+				},
 			},
 		},
 		{
@@ -84,12 +88,22 @@ var (
 					"pkg_generators_generators",
 				},
 			},
-		}, {
+		},
+		{
 			"pkg/config",
 			[]fileWithContent{
 				{
 					"config.go",
 					"pkg_config_config.go",
+				},
+			},
+		},
+		{
+			"pkg/versioning",
+			[]fileWithContent{
+				{
+					"version.go",
+					"pkg_versioning_version.go",
 				},
 			},
 		},

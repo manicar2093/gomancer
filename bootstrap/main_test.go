@@ -153,6 +153,24 @@ type Config struct {
     winter.Config
     connections.DatabaseConnectionConfig
 }`))
+			Expect(dirWithPath("pkg/versioning/version.go")).Should(BeAnExistingFile())
+			Expect(readWithPath("pkg/versioning/version.go")).Should(ContainSubstring(`// Package versioning contains a constant with the current version of your API code
+package versioning
+
+const Version = "0.0.0"
+`))
+			Expect(dirWithPath(".cz.toml")).Should(BeAnExistingFile())
+			Expect(readWithPath(".cz.toml")).Should(ContainSubstring(`[tool]
+[tool.commitizen]
+name = "cz_conventional_commits"
+version = "0.0.0"
+tag_format = "v$version"
+version_files = [
+    ".cz.toml:version",
+    "pkg/versioning/version.go:Version",
+]
+bump_message = "bump: Semantic Release Bot: Realease Version: $new_version 🤖🚀 [skip ci]"
+`))
 		})
 	})
 })

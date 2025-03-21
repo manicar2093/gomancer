@@ -1,0 +1,13 @@
+{{ define "pkg_config_config.go" }}// Package config contains a struct with all your API configs
+package config
+
+import (
+    "github.com/manicar2093/winter"
+    "github.com/manicar2093/winter/connections"
+)
+
+type Config struct {
+    winter.Config
+    connections.DatabaseConnectionConfig
+}
+{{ end }}

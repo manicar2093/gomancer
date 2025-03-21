@@ -1,0 +1,35 @@
+name: Development Workflow
+
+on:
+  pull_request:
+    types: [edited, synchronize, opened, reopened]
+    branches:
+      - main
+
+jobs:
+  testing:
+    name: test
+    runs-on: ubuntu-latest
+    steps:
+      - name: Set up Go
+        uses: actions/setup-go@v3
+        with:
+          go-version: 1.23.x
+      - name: Set GOBIN
+        run: go env -w GOBIN=/usr/local/bin
+      - uses: actions/checkout@v3
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Install dependencies
+        run: |
+          go mod download
+          go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.23.1
+          curl -SsL https://packages.httpie.io/deb/KEY.gpg | sudo gpg --dearmor -o /usr/share/keyrings/httpie.gpg
+          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/httpie.gpg] https://packages.httpie.io/deb ./" | sudo tee /etc/apt/sources.list.d/httpie.list > /dev/null
+          sudo apt update
+          sudo apt install httpie
+      - name: Tests
+        run: task test

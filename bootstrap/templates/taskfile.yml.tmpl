@@ -1,0 +1,30 @@
+{{ define "taskfile.yml"}}# https://taskfile.dev
+
+version: '3'
+
+tasks:
+    build:
+        desc: Build your API to deploy anywhere
+        cmds:
+            - go build -o .bin/api/server cmd/api/*.go
+    fmt:
+        desc: Format all your Golang and Prisma code
+        cmds:
+            - go fmt ./...
+            - npx prisma format
+    version:
+        desc: Shows your current API version
+        cmds:
+            - cz version -p
+    dev:
+        desc: Start project with air using your .env file
+        dotenv: ['.env']
+        cmds:
+            - air
+    run:
+        desc: Start project from build
+        dotenv: ['.env']
+        deps: [build]
+        cmds:
+            - ./.bin/api/server
+{{ end }}

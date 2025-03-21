@@ -1,0 +1,28 @@
+# https://taskfile.dev
+
+version: '3'
+
+tasks:
+  test:
+    desc: Run test with ginkgo
+    cmds:
+      - ginkgo run -v ./...
+
+  integration_test:
+    desc: Run project integration test
+    cmds:
+      - ./scripts/run_integration_test.sh
+
+  install:
+    cmds:
+      - go install
+
+  fmt:
+    desc: Format all code
+    cmds:
+      - go fmt ./...
+
+  version:
+    desc: Current version of gomancer
+    cmds:
+      - cz version -p

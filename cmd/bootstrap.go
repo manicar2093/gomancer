@@ -20,6 +20,7 @@ Project structure:
 ├── .air.toml
 ├── .cz.toml
 ├── .env
+├── README.md
 ├── Taskfile.yml
 ├── go.mod
 ├── package.json

@@ -54,6 +54,10 @@ var (
 					".air.toml",
 					"air.toml",
 				},
+				{
+					"README.md",
+					"README.md",
+				},
 			},
 		},
 		{

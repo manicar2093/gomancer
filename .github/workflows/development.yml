@@ -18,9 +18,14 @@ jobs:
       - name: Set GOBIN
         run: go env -w GOBIN=/usr/local/bin
       - uses: actions/checkout@v3
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
       - name: Install dependencies
         run: |
           go mod download
           go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.23.1
       - name: Tests
-        run: ginkgo run --v ./...
+        run: task test

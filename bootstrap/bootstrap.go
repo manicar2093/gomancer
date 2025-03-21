@@ -46,6 +46,10 @@ var (
 					"go.mod",
 					"go.mod",
 				},
+				{
+					"Taskfile.yml",
+					"taskfile.yml",
+				},
 			},
 		},
 		{

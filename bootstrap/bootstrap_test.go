@@ -42,7 +42,7 @@ ENVIRONMENT=dev
 PORT=3000
 `))
 			Expect(dirWithPath("package.json")).Should(BeAnExistingFile())
-			Expect(readWithPath("package.json")).Should(ContainSubstring(`{
+			Expect(readWithPath("package.json")).Should(Equal(`{
     "devDependencies": {
         "prisma": "^6.3.0"
     },
@@ -52,7 +52,7 @@ PORT=3000
 }
 `))
 			Expect(dirWithPath("prisma/schema/schema.prisma")).Should(BeAnExistingFile())
-			Expect(readWithPath("prisma/schema/schema.prisma")).Should(ContainSubstring(`// This is your Prisma schema file,
+			Expect(readWithPath("prisma/schema/schema.prisma")).Should(Equal(`// This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
@@ -66,13 +66,13 @@ datasource db {
 }
 `))
 			Expect(dirWithPath("internal/domain/models/init.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("internal/domain/models/init.go")).Should(ContainSubstring(`// Package models contains all your models that represents your tables to go structs.
+			Expect(readWithPath("internal/domain/models/init.go")).Should(Equal(`// Package models contains all your models that represents your tables to go structs.
 // Models is a package shared by all your app so that is way this package
 // exists; to avoid circular dependencies
 package models
 `))
 			Expect(dirWithPath("cmd/api/controllers/init.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("cmd/api/controllers/init.go")).Should(ContainSubstring(`package controllers
+			Expect(readWithPath("cmd/api/controllers/init.go")).Should(Equal(`package controllers
 
 import "github.com/labstack/echo/v4"
 
@@ -91,7 +91,7 @@ func (c *InitController) GetHandler(ctx echo.Context) error {
 }
 `))
 			Expect(dirWithPath("cmd/api/main.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("cmd/api/main.go")).Should(ContainSubstring(`package main
+			Expect(readWithPath("cmd/api/main.go")).Should(Equal(`package main
 
 import (
     "github.com/labstack/echo/v4"
@@ -122,7 +122,7 @@ func main() {
 }
 `))
 			Expect(dirWithPath("pkg/generators/generators.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("pkg/generators/generators.go")).Should(ContainSubstring(`// Package generators contains all your models generators; functions used to generate mocked data and help you testing
+			Expect(readWithPath("pkg/generators/generators.go")).Should(Equal(`// Package generators contains all your models generators; functions used to generate mocked data and help you testing
 package generators
 
 import "github.com/go-viper/mapstructure/v2"
@@ -140,7 +140,7 @@ func decode(t testingI, args map[string]any, holder any) {
 }
 `))
 			Expect(dirWithPath("pkg/config/config.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("pkg/config/config.go")).Should(ContainSubstring(`// Package config contains a struct with all your API configs
+			Expect(readWithPath("pkg/config/config.go")).Should(Equal(`// Package config contains a struct with all your API configs
 package config
 
 import (
@@ -152,15 +152,16 @@ import (
 type Config struct {
     winter.Config
     connections.DatabaseConnectionConfig
-}`))
+}
+`))
 			Expect(dirWithPath("pkg/versioning/version.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("pkg/versioning/version.go")).Should(ContainSubstring(`// Package versioning contains a constant with the current version of your API code
+			Expect(readWithPath("pkg/versioning/version.go")).Should(Equal(`// Package versioning contains a constant with the current version of your API code
 package versioning
 
 const Version = "0.0.0"
 `))
 			Expect(dirWithPath(".cz.toml")).Should(BeAnExistingFile())
-			Expect(readWithPath(".cz.toml")).Should(ContainSubstring(`[tool]
+			Expect(readWithPath(".cz.toml")).Should(Equal(`[tool]
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "0.0.0"
@@ -172,7 +173,7 @@ version_files = [
 bump_message = "bump: Semantic Release Bot: Realease Version: $new_version 🤖🚀 [skip ci]"
 `))
 			Expect(dirWithPath(".github/workflows/bump_version.yml")).Should(BeAnExistingFile())
-			Expect(readWithPath(".github/workflows/bump_version.yml")).Should(ContainSubstring(`name: Bump Version
+			Expect(readWithPath(".github/workflows/bump_version.yml")).Should(Equal(`name: Bump Version
 
 on:
     push:
@@ -203,9 +204,26 @@ jobs:
                     branch: main
 `))
 			Expect(dirWithPath("go.mod")).Should(BeAnExistingFile())
-			Expect(readWithPath("go.mod")).Should(ContainSubstring(`module test
+			Expect(readWithPath("go.mod")).Should(Equal(`module test
 
 go 1.23
+`))
+			Expect(dirWithPath("Taskfile.yml")).Should(BeAnExistingFile())
+			Expect(readWithPath("Taskfile.yml")).Should(Equal(`# https://taskfile.dev
+
+version: '3'
+
+tasks:
+    build:
+        cmds:
+            - go build -o .bin/api/server cmd/api/*.go
+    fmt:
+        cmds:
+            - go fmt ./...
+            - npx prisma format
+    version:
+        cmds:
+            - cz version -p
 `))
 		})
 	})

@@ -9,5 +9,5 @@ import (
 
 func TestInit(t *testing.T) {
 	RegisterFailHandler(Fail)
-	RunSpecs(t, "Init Suite")
+	RunSpecs(t, "Bootstrap Suite")
 }

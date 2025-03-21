@@ -1,0 +1,16 @@
+{{ define "taskfile.yml"}}# https://taskfile.dev
+
+version: '3'
+
+tasks:
+    build:
+        cmds:
+            - go build -o .bin/api/server cmd/api/*.go
+    fmt:
+        cmds:
+            - go fmt ./...
+            - npx prisma format
+    version:
+        cmds:
+            - cz version -p
+{{ end }}

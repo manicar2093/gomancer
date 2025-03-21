@@ -4,9 +4,16 @@ version: '3'
 
 tasks:
   test:
+    desc: Run test with ginkgo
     cmds:
       - ginkgo run -v ./...
 
   fmt:
+    desc: Format all code
     cmds:
       - go fmt ./...
+
+  version:
+    desc: Current version of gomancer
+    cmds:
+      - cz version -p

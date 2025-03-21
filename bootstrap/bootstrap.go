@@ -50,6 +50,10 @@ var (
 					"Taskfile.yml",
 					"taskfile.yml",
 				},
+				{
+					".air.toml",
+					"air.toml",
+				},
 			},
 		},
 		{

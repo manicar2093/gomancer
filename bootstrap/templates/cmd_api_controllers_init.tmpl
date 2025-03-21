@@ -1,6 +1,9 @@
 {{ define "cmd_api_controllers_init" }}package controllers
 
-import "github.com/labstack/echo/v4"
+import (
+    "github.com/labstack/echo/v4"
+    "net/http"
+)
 
 type InitController struct {}
 
@@ -13,6 +16,6 @@ func (c *InitController) SetUpRoutes(group *echo.Group) {
 }
 
 func (c *InitController) GetHandler(ctx echo.Context) error {
-    return ctx.String("Hello from your new API :D")
+    return ctx.String(http.StatusOK, "Hello from your new API :D")
 }
 {{ end }}

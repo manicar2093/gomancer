@@ -21,4 +21,10 @@ tasks:
         dotenv: ['.env']
         cmds:
             - air
+    run:
+        desc: Start project from build
+        dotenv: ['.env']
+        deps: [build]
+        cmds:
+            - ./.bin/api/server
 {{ end }}

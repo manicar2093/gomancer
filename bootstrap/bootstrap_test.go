@@ -74,7 +74,10 @@ package models
 			Expect(dirWithPath("cmd/api/controllers/init.go")).Should(BeAnExistingFile())
 			Expect(readWithPath("cmd/api/controllers/init.go")).Should(Equal(`package controllers
 
-import "github.com/labstack/echo/v4"
+import (
+    "github.com/labstack/echo/v4"
+    "net/http"
+)
 
 type InitController struct {}
 
@@ -87,38 +90,40 @@ func (c *InitController) SetUpRoutes(group *echo.Group) {
 }
 
 func (c *InitController) GetHandler(ctx echo.Context) error {
-    return ctx.String("Hello from your new API :D")
+    return ctx.String(http.StatusOK, "Hello from your new API :D")
 }
 `))
 			Expect(dirWithPath("cmd/api/main.go")).Should(BeAnExistingFile())
 			Expect(readWithPath("cmd/api/main.go")).Should(Equal(`package main
 
 import (
+    "fmt"
     "github.com/labstack/echo/v4"
+    "github.com/labstack/echo/v4/middleware"
+    "github.com/manicar2093/echoroutesview"
     "github.com/manicar2093/winter"
-    "github.com/manicar2093/winter/connections"
+    "github.com/manicar2093/winter/apperrors"
+    "github.com/manicar2093/winter/converters"
+    "github.com/manicar2093/winter/validator"
     "test/pkg/config"
     "test/cmd/api/controllers"
-    "github.com/manicar2093/winter/apperrors"
-    "github.com/manicar2093/winter/validator"
-    "github.com/manicar2093/echoroutesview"
 )
 
 func main() {
     var (
-        echoInstance    = echo.New()
-        baseEndpoint    = "/api/v1"
-        conf            = converters.Must(winter.ParseConfig[config.Config]())
-        dbConn          = connections.GetGormConnection(conf.DatabaseConnectionConfig)
+        echoInstance = echo.New()
+        baseEndpoint = "/api/v1"
+        baseGroup    = echoInstance.Group(baseEndpoint)
+        conf         = converters.Must(winter.ParseConfig[config.Config]())
     )
     echoInstance.Use(middleware.Logger())
-    winter.RegisterController(baseEndpoint, controllers.NewInitController())
-    echoroutesview.RegisterRoutesViewer(e)
+    winter.RegisterController(baseGroup, controllers.NewInitController())
+    echoroutesview.RegisterRoutesViewer(echoInstance)
 
-    e.HTTPErrorHandler = apperrors.HandlerWEcho
-    e.Validator = validator.NewGooKitValidator()
+    echoInstance.HTTPErrorHandler = apperrors.HandlerWEcho
+    echoInstance.Validator = validator.NewGooKitValidator()
 
-    e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", conf.Port)))
+    echoInstance.Logger.Fatal(echoInstance.Start(fmt.Sprintf(":%d", conf.Port)))
 }
 `))
 			Expect(dirWithPath("pkg/generators/generators.go")).Should(BeAnExistingFile())
@@ -144,7 +149,6 @@ func decode(t testingI, args map[string]any, holder any) {
 package config
 
 import (
-    "github.com/caarlos0/env/v10"
     "github.com/manicar2093/winter"
     "github.com/manicar2093/winter/connections"
 )
@@ -232,6 +236,12 @@ tasks:
         dotenv: ['.env']
         cmds:
             - air
+    run:
+        desc: Start project from build
+        dotenv: ['.env']
+        deps: [build]
+        cmds:
+            - ./.bin/api/server
 `))
 			Expect(dirWithPath(".air.toml")).Should(BeAnExistingFile())
 			Expect(readWithPath(".air.toml")).Should(Equal(`root = "."

@@ -31,7 +31,7 @@ var (
 			"",
 			[]fileWithContent{
 				{
-					".env.dev",
+					".env",
 					"env_file",
 				},
 				{

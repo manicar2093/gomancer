@@ -36,8 +36,8 @@ var _ = Describe("Main", func() {
 			err := bootstrap.InitProject(input)
 
 			Expect(err).ToNot(HaveOccurred())
-			Expect(dirWithPath(".env.dev")).Should(BeAnExistingFile())
-			Expect(readWithPath(".env.dev")).To(ContainSubstring(`DATABASE_URL="postgresql://development:development@localhost:5432/test_dev?sslmode=disable"
+			Expect(dirWithPath(".env")).Should(BeAnExistingFile())
+			Expect(readWithPath(".env")).To(Equal(`DATABASE_URL="postgresql://development:development@localhost:5432/test_dev?sslmode=disable"
 ENVIRONMENT=dev
 PORT=3000
 `))

@@ -7,6 +7,10 @@ tasks:
     desc: Run test with ginkgo
     cmds:
       - ginkgo run -v ./...
+
+  integration_test:
+    desc: Run project integration test
+    cmds:
       - ./scripts/run_integration_test.sh
 
   install:

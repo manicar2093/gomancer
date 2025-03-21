@@ -8,6 +8,10 @@ tasks:
     cmds:
       - ginkgo run -v ./...
 
+  install:
+    cmds:
+      - go install
+
   fmt:
     desc: Format all code
     cmds:

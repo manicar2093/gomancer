@@ -47,10 +47,10 @@ Project structure:
         └── schema.prisma
 `,
 	Example: "gomancer bootstrap github.com/great-dev/revolutionary",
-	Args:    cobra.ExactArgs(2),
+	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
 		err := bootstrap.InitProject(bootstrap.InitProjectInput{
-			ModuleName: args[1],
+			ModuleName: args[0],
 		})
 		return err
 	},

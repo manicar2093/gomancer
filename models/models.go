@@ -10,10 +10,6 @@ import (
 )
 
 type (
-	IdAttribute struct {
-		domain.TransformedText
-		Type string
-	}
 	Attribute struct {
 		domain.TransformedText
 		Type       string
@@ -22,13 +18,8 @@ type (
 	GenerateModelInput struct {
 		domain.TransformedText
 		ModuleInfo  domain.ModuleInfo
-		IdAttribute IdAttribute
+		IdAttribute Attribute
 		Attributes  []Attribute
-	}
-
-	GeneratedModelOutput struct {
-		Model             *Statement
-		TestGeneratorFunc *Statement
 	}
 )
 

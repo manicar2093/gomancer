@@ -56,13 +56,14 @@ var _ = Describe("Models", func() {
 					PascalCase: "PostTest",
 					CamelCase:  "postTest",
 				},
-				IdAttribute: models.IdAttribute{
+				IdAttribute: models.Attribute{
 					TransformedText: domain.TransformedText{
 						SnakeCase:  "id",
 						PascalCase: "Id",
 						CamelCase:  "id",
 					},
-					Type: "uuid",
+					Type:       "uuid",
+					IsOptional: false,
 				},
 				Attributes: []models.Attribute{
 					{

@@ -1,0 +1,24 @@
+package generators
+
+import (
+	gofakeit "github.com/brianvoe/gofakeit/v7"
+	uuid "github.com/google/uuid"
+	goption "github.com/manicar2093/goption"
+	udecimal "github.com/quagmt/udecimal"
+	models "github.com/user/project_name/internal/domain/models"
+)
+
+func GeneratePostTest(t testingI, args map[string]any) models.PostTest {
+	fak := models.PostTest{
+		Age:        gofakeit.Int(),
+		CaseOfUse:  goption.Of(gofakeit.Int32()),
+		Id:         uuid.New(),
+		Name:       goption.Of(gofakeit.Word()),
+		Price:      goption.Of(udecimal.MustFromFloat64(gofakeit.Float64())),
+		TotalPrice: udecimal.MustFromFloat64(gofakeit.Float64()),
+	}
+
+	decode(t, args, &fak)
+
+	return fak
+}

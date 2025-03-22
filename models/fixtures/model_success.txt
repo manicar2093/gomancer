@@ -1,0 +1,16 @@
+package models
+
+import (
+	uuid "github.com/google/uuid"
+	goption "github.com/manicar2093/goption"
+	udecimal "github.com/quagmt/udecimal"
+)
+
+type PostTest struct {
+	Id         uuid.UUID                          `gorm:"default:gen_random_uuid()" json:"id" mapstructure:"id" param:"id"`
+	Name       goption.Optional[string]           `json:"name" mapstructure:"name" param:"name"`
+	TotalPrice udecimal.Decimal                   `json:"total_price" mapstructure:"total_price" param:"total_price" validate:"required"`
+	Price      goption.Optional[udecimal.Decimal] `json:"price" mapstructure:"price" param:"price"`
+	Age        int                                `json:"age" mapstructure:"age" param:"age" validate:"required"`
+	CaseOfUse  goption.Optional[int32]            `json:"case_of_use" mapstructure:"case_of_use" param:"case_of_use"`
+}

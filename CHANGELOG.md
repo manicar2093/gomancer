@@ -1,3 +1,9 @@
+## v0.2.0 (2025-03-22)
+
+### Feat
+
+- add model and generator code creation
+
 ## v0.1.0 (2025-03-21)
 
 ### Feat

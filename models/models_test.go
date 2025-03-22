@@ -115,9 +115,9 @@ var _ = Describe("Models", func() {
 
 			Expect(err).ToNot(HaveOccurred())
 			Expect(path.Join(string(domain.ModelsPackagePath), "post_test.go")).Should(BeAnExistingFile())
-			Expect(readFromModelsDir(GinkgoT(), "post_test")).To(Equal(readFixtureFile(GinkgoT(), "model_1.txt")))
+			Expect(readFromModelsDir(GinkgoT(), "post_test")).To(Equal(readFixtureFile(GinkgoT(), "model_success.txt")))
 			Expect(path.Join(string(domain.GeneratorsPackagePath), "post_test.go")).Should(BeAnExistingFile())
-			Expect(readFromGeneratorsDir(GinkgoT(), "post_test")).To(Equal(readFixtureFile(GinkgoT(), "model_2.txt")))
+			Expect(readFromGeneratorsDir(GinkgoT(), "post_test")).To(Equal(readFixtureFile(GinkgoT(), "generator_success.txt")))
 		})
 	})
 })

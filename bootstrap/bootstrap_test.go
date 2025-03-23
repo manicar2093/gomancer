@@ -1,6 +1,7 @@
 package bootstrap_test
 
 import (
+	"github.com/manicar2093/gomancer/testmatchers"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"os"
@@ -15,10 +16,6 @@ var _ = Describe("Main", func() {
 		testPath    = "test"
 		dirWithPath = func(input string) string {
 			return path.Join(testPath, input)
-		}
-		readWithPath = func(filename string) (string, error) {
-			data, err := os.ReadFile(dirWithPath(filename))
-			return string(data), err
 		}
 	)
 
@@ -36,13 +33,12 @@ var _ = Describe("Main", func() {
 			err := bootstrap.InitProject(input)
 
 			Expect(err).ToNot(HaveOccurred())
-			Expect(dirWithPath(".env")).Should(BeAnExistingFile())
-			Expect(readWithPath(".env")).To(Equal(`DATABASE_URL="postgresql://development:development@localhost:5432/test_dev?sslmode=disable"
+
+			Expect(dirWithPath(".env")).Should(testmatchers.BeAnExistingFileAndEqualString(`DATABASE_URL="postgresql://development:development@localhost:5432/test_dev?sslmode=disable"
 ENVIRONMENT=dev
 PORT=3000
 `))
-			Expect(dirWithPath("package.json")).Should(BeAnExistingFile())
-			Expect(readWithPath("package.json")).Should(Equal(`{
+			Expect(dirWithPath("package.json")).Should(testmatchers.BeAnExistingFileAndEqualString(`{
     "devDependencies": {
         "prisma": "^6.3.0"
     },
@@ -51,8 +47,8 @@ PORT=3000
     }
 }
 `))
-			Expect(dirWithPath("prisma/schema/schema.prisma")).Should(BeAnExistingFile())
-			Expect(readWithPath("prisma/schema/schema.prisma")).Should(Equal(`// This is your Prisma schema file,
+
+			Expect(dirWithPath("prisma/schema/schema.prisma")).Should(testmatchers.BeAnExistingFileAndEqualString(`// This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
@@ -65,14 +61,13 @@ datasource db {
     url      = env("DATABASE_URL")
 }
 `))
-			Expect(dirWithPath("internal/domain/models/init.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("internal/domain/models/init.go")).Should(Equal(`// Package models contains all your models that represents your tables to go structs.
+
+			Expect(dirWithPath("internal/domain/models/init.go")).Should(testmatchers.BeAnExistingFileAndEqualString(`// Package models contains all your models that represents your tables to go structs.
 // Models is a package shared by all your app so that is way this package
 // exists; to avoid circular dependencies
 package models
 `))
-			Expect(dirWithPath("cmd/api/controllers/init.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("cmd/api/controllers/init.go")).Should(Equal(`package controllers
+			Expect(dirWithPath("cmd/api/controllers/init.go")).Should(testmatchers.BeAnExistingFileAndEqualString(`package controllers
 
 import (
     "github.com/labstack/echo/v4"
@@ -93,8 +88,7 @@ func (c *InitController) GetHandler(ctx echo.Context) error {
     return ctx.String(http.StatusOK, "Hello from your new API :D")
 }
 `))
-			Expect(dirWithPath("cmd/api/main.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("cmd/api/main.go")).Should(Equal(`package main
+			Expect(dirWithPath("cmd/api/main.go")).Should(testmatchers.BeAnExistingFileAndEqualString(`package main
 
 import (
     "fmt"
@@ -126,8 +120,7 @@ func main() {
     echoInstance.Logger.Fatal(echoInstance.Start(fmt.Sprintf(":%d", conf.Port)))
 }
 `))
-			Expect(dirWithPath("pkg/generators/generators.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("pkg/generators/generators.go")).Should(Equal(`// Package generators contains all your models generators; functions used to generate mocked data and help you testing
+			Expect(dirWithPath("pkg/generators/generators.go")).Should(testmatchers.BeAnExistingFileAndEqualString(`// Package generators contains all your models generators; functions used to generate mocked data and help you testing
 package generators
 
 import "github.com/go-viper/mapstructure/v2"
@@ -144,8 +137,7 @@ func decode(t testingI, args map[string]any, holder any) {
     }
 }
 `))
-			Expect(dirWithPath("pkg/config/config.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("pkg/config/config.go")).Should(Equal(`// Package config contains a struct with all your API configs
+			Expect(dirWithPath("pkg/config/config.go")).Should(testmatchers.BeAnExistingFileAndEqualString(`// Package config contains a struct with all your API configs
 package config
 
 import (
@@ -158,14 +150,12 @@ type Config struct {
     connections.DatabaseConnectionConfig
 }
 `))
-			Expect(dirWithPath("pkg/versioning/version.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("pkg/versioning/version.go")).Should(Equal(`// Package versioning contains a constant with the current version of your API code
+			Expect(dirWithPath("pkg/versioning/version.go")).Should(testmatchers.BeAnExistingFileAndEqualString(`// Package versioning contains a constant with the current version of your API code
 package versioning
 
 const Version = "0.0.0"
 `))
-			Expect(dirWithPath(".cz.toml")).Should(BeAnExistingFile())
-			Expect(readWithPath(".cz.toml")).Should(Equal(`[tool]
+			Expect(dirWithPath(".cz.toml")).Should(testmatchers.BeAnExistingFileAndEqualString(`[tool]
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "0.0.0"
@@ -176,8 +166,7 @@ version_files = [
 ]
 bump_message = "bump: Semantic Release Bot: Realease Version: $new_version 🤖🚀 [skip ci]"
 `))
-			Expect(dirWithPath(".github/workflows/bump_version.yml")).Should(BeAnExistingFile())
-			Expect(readWithPath(".github/workflows/bump_version.yml")).Should(Equal(`name: Bump Version
+			Expect(dirWithPath(".github/workflows/bump_version.yml")).Should(testmatchers.BeAnExistingFileAndEqualString(`name: Bump Version
 
 on:
     push:
@@ -207,13 +196,11 @@ jobs:
                     github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
                     branch: main
 `))
-			Expect(dirWithPath("go.mod")).Should(BeAnExistingFile())
-			Expect(readWithPath("go.mod")).Should(Equal(`module test
+			Expect(dirWithPath("go.mod")).Should(testmatchers.BeAnExistingFileAndEqualString(`module test
 
 go 1.23
 `))
-			Expect(dirWithPath("Taskfile.yml")).Should(BeAnExistingFile())
-			Expect(readWithPath("Taskfile.yml")).Should(Equal(`# https://taskfile.dev
+			Expect(dirWithPath("Taskfile.yml")).Should(testmatchers.BeAnExistingFileAndEqualString(`# https://taskfile.dev
 
 version: '3'
 
@@ -243,8 +230,7 @@ tasks:
         cmds:
             - ./.bin/api/server
 `))
-			Expect(dirWithPath(".air.toml")).Should(BeAnExistingFile())
-			Expect(readWithPath(".air.toml")).Should(Equal(`root = "."
+			Expect(dirWithPath(".air.toml")).Should(testmatchers.BeAnExistingFileAndEqualString(`root = "."
 tmp_dir = "tmp"
 
 [build]
@@ -312,8 +298,8 @@ clean_on_exit = true
 clear_on_rebuild = true
 keep_scroll = true
 `))
-			Expect(dirWithPath("README.md")).Should(BeAnExistingFile())
-			Expect(readWithPath("README.md")).Should(Equal(`# test
+
+			Expect(dirWithPath("README.md")).Should(testmatchers.BeAnExistingFileAndEqualString(`# test
 
 This is the initial code for the greatest project ever made.
 

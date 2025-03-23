@@ -4,6 +4,7 @@ import (
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/manicar2093/gomancer/models"
 	"github.com/manicar2093/gomancer/testfixtures"
+	"github.com/manicar2093/gomancer/testmatchers"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"os"
@@ -29,10 +30,10 @@ var _ = Describe("Models", func() {
 
 			Expect(err).ToNot(HaveOccurred())
 			Expect(path.Join(string(domain.InternalDomainModelsPackagePath), "post_test.go")).Should(
-				testfixtures.BeAnExistingFileWithEqualContent(path.Join("fixtures", "model_success.txt")),
+				testmatchers.BeAnExistingFileWithEqualContent(path.Join("fixtures", "model_success.txt")),
 			)
 			Expect(path.Join(string(domain.PkgGeneratorsPackagePath), "post_test.go")).Should(
-				testfixtures.BeAnExistingFileWithEqualContent(path.Join("fixtures", "generator_success.txt")),
+				testmatchers.BeAnExistingFileWithEqualContent(path.Join("fixtures", "generator_success.txt")),
 			)
 		})
 	})

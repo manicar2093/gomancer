@@ -1,4 +1,4 @@
-package testfixtures
+package testmatchers
 
 import (
 	"fmt"
@@ -8,21 +8,20 @@ import (
 	"os"
 )
 
-type BeAnExistingFileWithEqualContentMatcher struct {
+type BeAnExistingFileWithEqualFileContentMatcher struct {
 	EquallySourceFilePath string
 }
 
 func BeAnExistingFileWithEqualContent(equallySourceFilePath string) types.GomegaMatcher {
-	return &BeAnExistingFileWithEqualContentMatcher{
+	return &BeAnExistingFileWithEqualFileContentMatcher{
 		equallySourceFilePath,
 	}
 }
 
-func (c BeAnExistingFileWithEqualContentMatcher) Match(actual interface{}) (success bool, err error) {
-	//println("REALLY!!!!!!! :O -------------")
+func (c BeAnExistingFileWithEqualFileContentMatcher) Match(actual interface{}) (success bool, err error) {
 	mustExistingFilePath, ok := actual.(string)
 	if !ok {
-		return false, fmt.Errorf("BeAnExistingFileWithEqualContentMatcher matcher expects a file path")
+		return false, fmt.Errorf("BeAnExistingFileWithEqualFileContentMatcher matcher expects a file path")
 	}
 	existingFileMatcher := matchers.BeAnExistingFileMatcher{}
 	isExisting, err := existingFileMatcher.Match(mustExistingFilePath)
@@ -47,10 +46,10 @@ func (c BeAnExistingFileWithEqualContentMatcher) Match(actual interface{}) (succ
 
 }
 
-func (c BeAnExistingFileWithEqualContentMatcher) FailureMessage(actual interface{}) (message string) {
+func (c BeAnExistingFileWithEqualFileContentMatcher) FailureMessage(actual interface{}) (message string) {
 	return format.Message(actual, "to exist and match content")
 }
 
-func (c BeAnExistingFileWithEqualContentMatcher) NegatedFailureMessage(actual interface{}) (message string) {
+func (c BeAnExistingFileWithEqualFileContentMatcher) NegatedFailureMessage(actual interface{}) (message string) {
 	return format.Message(actual, "not to exist and not match content (this has no sense any way ._.)")
 }

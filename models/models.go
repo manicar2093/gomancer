@@ -9,21 +9,7 @@ import (
 	"path"
 )
 
-type (
-	Attribute struct {
-		domain.TransformedText
-		Type       string
-		IsOptional bool
-	}
-	GenerateModelInput struct {
-		domain.TransformedText
-		ModuleInfo  domain.ModuleInfo
-		IdAttribute Attribute
-		Attributes  []Attribute
-	}
-)
-
-func GenerateModel(input GenerateModelInput) error {
+func GenerateModel(input domain.GenerateModelInput) error {
 	if err := doGenerateModel(input); err != nil {
 		return err
 	}
@@ -33,7 +19,7 @@ func GenerateModel(input GenerateModelInput) error {
 	return nil
 }
 
-func doGenerateModel(input GenerateModelInput) error {
+func doGenerateModel(input domain.GenerateModelInput) error {
 	log.Println("Generating model...")
 	attribs := append(
 		[]Code{
@@ -45,7 +31,7 @@ func doGenerateModel(input GenerateModelInput) error {
 				),
 			),
 		},
-		underscore.Map(input.Attributes, func(item Attribute) Code {
+		underscore.Map(input.Attributes, func(item domain.Attribute) Code {
 			builder := Null().Id(item.PascalCase)
 			itemType := domain.QualifiersByType(item.Type)
 			if item.IsOptional {
@@ -72,13 +58,13 @@ func doGenerateModel(input GenerateModelInput) error {
 	return destinyFile.Save(path.Join(string(domain.InternalDomainModelsPackagePath), input.SnakeCase+".go"))
 }
 
-func doGenerateTestGeneratorFunc(input GenerateModelInput) error {
+func doGenerateTestGeneratorFunc(input domain.GenerateModelInput) error {
 	log.Println("Generating model testing generator...")
 	valuesDict := make(Dict)
 
 	valuesDict[Id("Id")] = FakerCallByType(input.IdAttribute.Type)
 
-	structValues := underscore.Reduce(input.Attributes, func(item Attribute, acc Dict) Dict {
+	structValues := underscore.Reduce(input.Attributes, func(item domain.Attribute, acc Dict) Dict {
 		fakeTypeQualifier := FakerCallByType(item.Type)
 		if item.IsOptional {
 			fakeTypeQualifier = Qual(domain.GoptionPkgPath, "Of").Call(fakeTypeQualifier)

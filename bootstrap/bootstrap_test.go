@@ -1,48 +1,51 @@
 package bootstrap_test
 
 import (
+	"github.com/manicar2093/gomancer/bootstrap"
+	"github.com/manicar2093/gomancer/testmatchers"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"os"
 	"path"
-
-	"github.com/manicar2093/gomancer/bootstrap"
 )
 
-var _ = Describe("Main", func() {
+var _ = Describe("Main", Ordered, func() {
 
 	var (
 		testPath    = "test"
 		dirWithPath = func(input string) string {
 			return path.Join(testPath, input)
 		}
-		readWithPath = func(filename string) (string, error) {
-			data, err := os.ReadFile(dirWithPath(filename))
-			return string(data), err
-		}
 	)
 
-	AfterEach(func() {
-		if err := os.RemoveAll("test"); err != nil {
-			GinkgoT().Log(err)
-		}
-	})
 	Describe("InitProject", func() {
-		It("creates all needed directories and files to start a new project", func() {
+
+		BeforeAll(func() {
 			var input = bootstrap.InitProjectInput{
-				ModuleName: "test",
+				ModuleName: testPath,
 			}
 
 			err := bootstrap.InitProject(input)
 
 			Expect(err).ToNot(HaveOccurred())
-			Expect(dirWithPath(".env")).Should(BeAnExistingFile())
-			Expect(readWithPath(".env")).To(Equal(`DATABASE_URL="postgresql://development:development@localhost:5432/test_dev?sslmode=disable"
+		})
+
+		AfterAll(func() {
+			if err := os.RemoveAll(testPath); err != nil {
+				GinkgoT().Log(err)
+			}
+		})
+
+		It("creates .env file", func() {
+			content := `DATABASE_URL="postgresql://development:development@localhost:5432/test_dev?sslmode=disable"
 ENVIRONMENT=dev
 PORT=3000
-`))
-			Expect(dirWithPath("package.json")).Should(BeAnExistingFile())
-			Expect(readWithPath("package.json")).Should(Equal(`{
+`
+			Expect(dirWithPath(".env")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates package.json file", func() {
+			content := `{
     "devDependencies": {
         "prisma": "^6.3.0"
     },
@@ -50,9 +53,13 @@ PORT=3000
         "@prisma/client": "^6.3.0"
     }
 }
-`))
-			Expect(dirWithPath("prisma/schema/schema.prisma")).Should(BeAnExistingFile())
-			Expect(readWithPath("prisma/schema/schema.prisma")).Should(Equal(`// This is your Prisma schema file,
+`
+			Expect(dirWithPath("package.json")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+
+		})
+
+		It("creates prisma/schema/schema.prisma file", func() {
+			content := `// This is your Prisma schema file,
 // learn more about it in the docs: https://pris.ly/d/prisma-schema
 
 generator client {
@@ -64,15 +71,21 @@ datasource db {
     provider = "postgresql"
     url      = env("DATABASE_URL")
 }
-`))
-			Expect(dirWithPath("internal/domain/models/init.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("internal/domain/models/init.go")).Should(Equal(`// Package models contains all your models that represents your tables to go structs.
+`
+			Expect(dirWithPath("prisma/schema/schema.prisma")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates internal/domain/models/init.go file", func() {
+			content := `// Package models contains all your models that represents your tables to go structs.
 // Models is a package shared by all your app so that is way this package
 // exists; to avoid circular dependencies
 package models
-`))
-			Expect(dirWithPath("cmd/api/controllers/init.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("cmd/api/controllers/init.go")).Should(Equal(`package controllers
+`
+			Expect(dirWithPath("internal/domain/models/init.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates cmd/api/controllers/init.go file", func() {
+			content := `package controllers
 
 import (
     "github.com/labstack/echo/v4"
@@ -92,9 +105,12 @@ func (c *InitController) SetUpRoutes(group *echo.Group) {
 func (c *InitController) GetHandler(ctx echo.Context) error {
     return ctx.String(http.StatusOK, "Hello from your new API :D")
 }
-`))
-			Expect(dirWithPath("cmd/api/main.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("cmd/api/main.go")).Should(Equal(`package main
+`
+			Expect(dirWithPath("cmd/api/controllers/init.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates cmd/api/main.go file", func() {
+			content := `package main
 
 import (
     "fmt"
@@ -125,9 +141,12 @@ func main() {
 
     echoInstance.Logger.Fatal(echoInstance.Start(fmt.Sprintf(":%d", conf.Port)))
 }
-`))
-			Expect(dirWithPath("pkg/generators/generators.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("pkg/generators/generators.go")).Should(Equal(`// Package generators contains all your models generators; functions used to generate mocked data and help you testing
+`
+			Expect(dirWithPath("cmd/api/main.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates pkg/generators/generators.go file", func() {
+			content := `// Package generators contains all your models generators; functions used to generate mocked data and help you testing
 package generators
 
 import "github.com/go-viper/mapstructure/v2"
@@ -143,9 +162,12 @@ func decode(t testingI, args map[string]any, holder any) {
         t.Fatal(err)
     }
 }
-`))
-			Expect(dirWithPath("pkg/config/config.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("pkg/config/config.go")).Should(Equal(`// Package config contains a struct with all your API configs
+`
+			Expect(dirWithPath("pkg/generators/generators.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates pkg/config/config.go file", func() {
+			content := `// Package config contains a struct with all your API configs
 package config
 
 import (
@@ -157,15 +179,21 @@ type Config struct {
     winter.Config
     connections.DatabaseConnectionConfig
 }
-`))
-			Expect(dirWithPath("pkg/versioning/version.go")).Should(BeAnExistingFile())
-			Expect(readWithPath("pkg/versioning/version.go")).Should(Equal(`// Package versioning contains a constant with the current version of your API code
+`
+			Expect(dirWithPath("pkg/config/config.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates pkg/versioning/version.go file", func() {
+			content := `// Package versioning contains a constant with the current version of your API code
 package versioning
 
 const Version = "0.0.0"
-`))
-			Expect(dirWithPath(".cz.toml")).Should(BeAnExistingFile())
-			Expect(readWithPath(".cz.toml")).Should(Equal(`[tool]
+`
+			Expect(dirWithPath("pkg/versioning/version.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates .cz.toml file", func() {
+			content := `[tool]
 [tool.commitizen]
 name = "cz_conventional_commits"
 version = "0.0.0"
@@ -175,9 +203,12 @@ version_files = [
     "pkg/versioning/version.go:Version",
 ]
 bump_message = "bump: Semantic Release Bot: Realease Version: $new_version 🤖🚀 [skip ci]"
-`))
-			Expect(dirWithPath(".github/workflows/bump_version.yml")).Should(BeAnExistingFile())
-			Expect(readWithPath(".github/workflows/bump_version.yml")).Should(Equal(`name: Bump Version
+`
+			Expect(dirWithPath(".cz.toml")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates .github/workflows/bump_version.yml file", func() {
+			content := `name: Bump Version
 
 on:
     push:
@@ -206,14 +237,20 @@ jobs:
                 with:
                     github_token: ${{ secrets.PERSONAL_ACCESS_TOKEN }}
                     branch: main
-`))
-			Expect(dirWithPath("go.mod")).Should(BeAnExistingFile())
-			Expect(readWithPath("go.mod")).Should(Equal(`module test
+`
+			Expect(dirWithPath(".github/workflows/bump_version.yml")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates go.mod file", func() {
+			content := `module test
 
 go 1.23
-`))
-			Expect(dirWithPath("Taskfile.yml")).Should(BeAnExistingFile())
-			Expect(readWithPath("Taskfile.yml")).Should(Equal(`# https://taskfile.dev
+`
+			Expect(dirWithPath("go.mod")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates Taskfile.yml file", func() {
+			content := `# https://taskfile.dev
 
 version: '3'
 
@@ -242,9 +279,12 @@ tasks:
         deps: [build]
         cmds:
             - ./.bin/api/server
-`))
-			Expect(dirWithPath(".air.toml")).Should(BeAnExistingFile())
-			Expect(readWithPath(".air.toml")).Should(Equal(`root = "."
+`
+			Expect(dirWithPath("Taskfile.yml")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates .air.toml file", func() {
+			content := `root = "."
 tmp_dir = "tmp"
 
 [build]
@@ -311,9 +351,12 @@ clean_on_exit = true
 [screen]
 clear_on_rebuild = true
 keep_scroll = true
-`))
-			Expect(dirWithPath("README.md")).Should(BeAnExistingFile())
-			Expect(readWithPath("README.md")).Should(Equal(`# test
+`
+			Expect(dirWithPath(".air.toml")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates README.md file", func() {
+			content := `# test
 
 This is the initial code for the greatest project ever made.
 
@@ -329,7 +372,8 @@ Yep, you need to install some tools to make this work:
 ## Thank you!
 
 Be yourself. Find joy by what you do. Happy coding :)
-`))
+`
+			Expect(dirWithPath("README.md")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
 	})
 })

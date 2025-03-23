@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/charmbracelet/log"
+	"github.com/manicar2093/gomancer/domain"
 	"net/url"
 	"os"
 	"path"
@@ -61,7 +62,7 @@ var (
 			},
 		},
 		{
-			"prisma/schema",
+			string(domain.PrismaSchemaPackagePath),
 			[]fileWithContent{
 				{
 					"schema.prisma",
@@ -70,7 +71,7 @@ var (
 			},
 		},
 		{
-			"internal/domain/models",
+			string(domain.InternalDomainModelsPackagePath),
 			[]fileWithContent{
 				{
 					"init.go",
@@ -79,7 +80,7 @@ var (
 			},
 		},
 		{
-			"cmd/api/controllers",
+			string(domain.CmdApiControllersPackagePath),
 			[]fileWithContent{
 				{
 					"init.go",
@@ -88,7 +89,7 @@ var (
 			},
 		},
 		{
-			"cmd/api",
+			string(domain.CmdApiPackagePath),
 			[]fileWithContent{
 				{
 					"main.go",
@@ -97,7 +98,7 @@ var (
 			},
 		},
 		{
-			"pkg/generators",
+			string(domain.PkgGeneratorsPackagePath),
 			[]fileWithContent{
 				{
 					"generators.go",
@@ -106,7 +107,7 @@ var (
 			},
 		},
 		{
-			"pkg/config",
+			string(domain.PkgConfigPackagePath),
 			[]fileWithContent{
 				{
 					"config.go",
@@ -115,7 +116,7 @@ var (
 			},
 		},
 		{
-			"pkg/versioning",
+			string(domain.PkgVersioningPackagePath),
 			[]fileWithContent{
 				{
 					"version.go",
@@ -124,7 +125,7 @@ var (
 			},
 		},
 		{
-			".github/workflows",
+			string(domain.GithubWorkflowsPackagePath),
 			[]fileWithContent{
 				{
 					"bump_version.yml",

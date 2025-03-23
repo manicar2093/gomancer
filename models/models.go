@@ -69,7 +69,7 @@ func doGenerateModel(input GenerateModelInput) error {
 		attribs...,
 	)
 
-	return destinyFile.Save(path.Join(string(domain.ModelsPackagePath), input.SnakeCase+".go"))
+	return destinyFile.Save(path.Join(string(domain.InternalDomainModelsPackagePath), input.SnakeCase+".go"))
 }
 
 func doGenerateTestGeneratorFunc(input GenerateModelInput) error {
@@ -90,9 +90,9 @@ func doGenerateTestGeneratorFunc(input GenerateModelInput) error {
 	constructor := Null().Func().Id(fmt.Sprintf("Generate%s", input.PascalCase)).Params(
 		Id("t").Id("testingI"),
 		Id("args").Map(String()).Any(),
-	).Add(domain.GetPackageQualifier(input.ModuleInfo.Name, domain.ModelsPackagePath, input.PascalCase)).Block(
+	).Add(domain.GetPackageQualifier(input.ModuleInfo.Name, domain.InternalDomainModelsPackagePath, input.PascalCase)).Block(
 		Id("fak").Op(":=").Add(
-			domain.GetPackageQualifier(input.ModuleInfo.Name, domain.ModelsPackagePath, input.PascalCase),
+			domain.GetPackageQualifier(input.ModuleInfo.Name, domain.InternalDomainModelsPackagePath, input.PascalCase),
 		).Values(
 			structValues,
 		),
@@ -105,5 +105,5 @@ func doGenerateTestGeneratorFunc(input GenerateModelInput) error {
 	destinyFile := NewFile(string(domain.GeneratorsPkg))
 	destinyFile.ImportAlias(fakerPkgPath, "gofakeit")
 	destinyFile.Add(constructor)
-	return destinyFile.Save(path.Join(string(domain.GeneratorsPackagePath), input.SnakeCase+".go"))
+	return destinyFile.Save(path.Join(string(domain.PkgGeneratorsPackagePath), input.SnakeCase+".go"))
 }

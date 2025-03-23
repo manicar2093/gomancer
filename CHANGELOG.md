@@ -1,3 +1,9 @@
+## v0.3.0 (2025-03-23)
+
+### Feat
+
+- add a new way to handle paths generation
+
 ## v0.2.0 (2025-03-22)
 
 ### Feat

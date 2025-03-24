@@ -9,38 +9,30 @@ import (
 const fakerPkgPath = "github.com/brianvoe/gofakeit/v7"
 
 func FakerCallByType(t string) jen.Code {
-	switch t {
-	case "string":
+	switch domain.SupportedType(t) {
+	case domain.TypeString:
 		return jen.Qual(fakerPkgPath, "Word").Call()
-	case "int":
+	case domain.TypeInt:
 		return jen.Qual(fakerPkgPath, "Int").Call()
-	case "int8":
+	case domain.TypeInt8:
 		return jen.Qual(fakerPkgPath, "Int8").Call()
-	case "int16":
+	case domain.TypeInt16:
 		return jen.Qual(fakerPkgPath, "Int16").Call()
-	case "int32":
+	case domain.TypeInt32:
 		return jen.Qual(fakerPkgPath, "Int32").Call()
-	case "int64":
+	case domain.TypeInt64:
 		return jen.Qual(fakerPkgPath, "Int64").Call()
-	case "uint":
-		return jen.Qual(fakerPkgPath, "UInt").Call()
-	case "uint8":
-		return jen.Qual(fakerPkgPath, "UInt8").Call()
-	case "uint16":
-		return jen.Qual(fakerPkgPath, "UInt16").Call()
-	case "uint32":
-		return jen.Qual(fakerPkgPath, "UInt32").Call()
-	case "float32":
+	case domain.TypeFloat32:
 		return jen.Qual(fakerPkgPath, "Float32").Call()
-	case "float64":
+	case domain.TypeFloat64:
 		return jen.Qual(fakerPkgPath, "Float64").Call()
-	case "time":
+	case domain.TypeTime:
 		return jen.Qual(fakerPkgPath, "Date").Call()
-	case "decimal":
+	case domain.TypeDecimal:
 		return jen.Qual(domain.DecimalPkgPath, "MustFromFloat64").Call(
 			jen.Qual(fakerPkgPath, "Float64").Call(),
 		)
-	case "uuid":
+	case domain.TypeUuid:
 		return jen.Qual(domain.UUIDPkgPath, "New").Call()
 	default:
 		panic(fmt.Sprintf("type %s can be faked", t))

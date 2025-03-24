@@ -22,9 +22,11 @@ That's why Gomancer borned...
 
 - [X] Start a project
 - [ ] Create only controller
+- [ ] Create controller testing
 - [X] Create models
-- [ ] Create migrations with Prisma
+- [X] Create migrations with Prisma
 - [ ] Create crud repository
+- [ ] Create crud testing
 - [ ] Create all at once: controller, model, migration and repository
 - [ ] Create only model with repository
 - [ ] Create API documentation

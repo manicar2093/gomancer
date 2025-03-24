@@ -1,3 +1,10 @@
+## v0.4.0 (2025-03-24)
+
+### Feat
+
+- add prisma migration generation
+- add supported types to domain
+
 ## v0.3.0 (2025-03-23)
 
 ### Feat

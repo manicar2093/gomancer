@@ -1,0 +1,10 @@
+model PostTest {
+     id String @id @default(dbgenerated("gen_random_uuid()"))  @db.Uuid
+     name String?
+     total_price Decimal @db.Decimal(10,2)
+     price Decimal? @db.Decimal(10,2)
+     age Int
+     case_of_use Int?
+
+     @@map("post_test")
+}

@@ -27,18 +27,18 @@ func BeAnExistingFileWithEqualContent(equallySourceFilePath string) types.Gomega
 }
 
 func (c *BeAnExistingFileWithEqualFileContentMatcher) Match(actual interface{}) (success bool, err error) {
-	mustExistingFilePath, ok := actual.(string)
+	expectedFileToExistPath, ok := actual.(string)
 	if !ok {
 		return false, fmt.Errorf("BeAnExistingFileWithEqualFileContentMatcher matcher expects a file path")
 	}
 
-	success, err = c.existingFileMatcher.Match(mustExistingFilePath)
+	success, err = c.existingFileMatcher.Match(expectedFileToExistPath)
 	if err != nil || !success {
 		c.failExistingMatcher = true
 		return success, err
 	}
 
-	mustExistingSourceContent, err := os.ReadFile(mustExistingFilePath)
+	expectedFileToExistContent, err := os.ReadFile(expectedFileToExistPath)
 	if err != nil {
 		return false, err
 	}
@@ -48,11 +48,12 @@ func (c *BeAnExistingFileWithEqualFileContentMatcher) Match(actual interface{}) 
 		return false, err
 	}
 
-	c.equalMatcher.Expected = string(mustExistingSourceContent)
-	success, err = c.equalMatcher.Match(equallySourceContent)
+	expectedFileToExistContentAsString := string(expectedFileToExistContent)
+	c.equalMatcher.Expected = string(equallySourceContent)
+	success, err = c.equalMatcher.Match(expectedFileToExistContentAsString)
 	if err != nil || !success {
 		c.failEqualMatcher = true
-		c.expectedContent = string(equallySourceContent)
+		c.expectedContent = expectedFileToExistContentAsString
 		return success, err
 	}
 	return

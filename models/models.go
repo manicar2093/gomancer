@@ -25,7 +25,7 @@ func doGenerateModel(input domain.GenerateModelInput) error {
 		[]Code{
 			Id("Id").Add(domain.QualifiersByType(input.IdAttribute.Type)).Tag(
 				domain.Tags(
-					input.IdAttribute.SnakeCase,
+					input.IdAttribute,
 					domain.Validations{},
 					domain.GormUuidTag, domain.JsonTag, domain.ParamTag, domain.MapstructureTag,
 				),
@@ -41,7 +41,7 @@ func doGenerateModel(input domain.GenerateModelInput) error {
 			}
 
 			return builder.Tag(domain.Tags(
-				item.SnakeCase,
+				item,
 				domain.Validations{
 					Required: !item.IsOptional,
 				},

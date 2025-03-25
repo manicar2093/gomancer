@@ -18,7 +18,7 @@ const (
 	GormUuidTag         = "gorm|default:gen_random_uuid()"
 )
 
-func Tags(attributeKey string, validations Validations, tags ...Tag) map[string]string {
+func Tags(attribute Attribute, validations Validations, tags ...Tag) map[string]string {
 	response := make(map[string]string)
 	for _, tag := range tags {
 		if tag == GormUuidTag {
@@ -26,12 +26,16 @@ func Tags(attributeKey string, validations Validations, tags ...Tag) map[string]
 			response[d[0]] = d[1]
 			continue
 		}
-		response[string(tag)] = attributeKey
+		response[string(tag)] = attribute.SnakeCase
 	}
 
 	validationsSB := strings.Builder{}
 	if validations.Required {
-		validationsSB.WriteString("required")
+		if attribute.Type == string(TypeUuid) {
+			validationsSB.WriteString("required_uuid")
+		} else {
+			validationsSB.WriteString("required")
+		}
 	}
 	if valString := validationsSB.String(); valString != "" {
 		response["validate"] = valString

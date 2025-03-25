@@ -1,3 +1,14 @@
+## v0.5.0 (2025-03-25)
+
+### Feat
+
+- add repo missing functions
+- add repo struct, constructor and save method
+
+### Refactor
+
+- add model qualifier to generator data struct
+
 ## v0.4.0 (2025-03-24)
 
 ### Feat

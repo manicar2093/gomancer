@@ -3,16 +3,14 @@ package post_test
 
 import (
 	uuid "github.com/google/uuid"
-	models "github.com/user/project_name/internal/domain/models"
 	goption "github.com/manicar2093/goption"
 	gormpager "github.com/manicar2093/gormpager"
 	connections "github.com/manicar2093/winter/connections"
 	udecimal "github.com/quagmt/udecimal"
-	"gorm.io/gorm/clause"
-	"time"
+	models "github.com/user/project_name/internal/domain/models"
 )
 
-type UsersRepository struct {
+type PostTestRepository struct {
 	db *connections.ConnWrapper
 }
 
@@ -45,12 +43,12 @@ func (c *PostTestRepository) GetAllPaginated(pageNumber, pageSize int) (*gormpag
 }
 
 type PartialUpdateByIdInput struct {
-	Id          uuid.UUID                           `json:"id" param:"id" validate:"required_uuid"`
-	Name        goption.Optional[string]            `json:"name"`
-	TotalPrice  goption.Optional[udecimal.Decimal]  `json:"total_price"`
-	Price       goption.Optional[udecimal.Decimal]  `json:"price"`
-	Age         goption.Optional[int]               `json:"age"`
-	CaseOfUse   goption.Optional[int32]             `json:"case_of_use"`
+	Id         uuid.UUID                          `json:"id" param:"id" validate:"required_uuid"`
+	Name       goption.Optional[string]           `json:"name"`
+	TotalPrice goption.Optional[udecimal.Decimal] `json:"total_price"`
+	Price      goption.Optional[udecimal.Decimal] `json:"price"`
+	Age        goption.Optional[int]              `json:"age"`
+	CaseOfUse  goption.Optional[int32]            `json:"case_of_use"`
 }
 
 // PartialUpdateById can select which field has to be updated from given input
@@ -60,25 +58,26 @@ func (c *PostTestRepository) PartialUpdateById(changes PartialUpdateByIdInput) (
 		updates = map[string]any{}
 	)
 
-	if changes.Names.IsPresent() {
+	if changes.Name.IsPresent() {
 		updates["name"] = changes.Name.MustGet()
 	}
-	if changes.Names.IsPresent() {
-        updates["total_price"] = changes.TotalPrice.MustGet()
-    }
-    if changes.Names.IsPresent() {
-        updates["price"] = changes.Price.MustGet()
-    }
-    if changes.Names.IsPresent() {
-        updates["age"] = changes.Age.MustGet()
-    }
-    if changes.Names.IsPresent() {
-        updates["case_of_use"] = changes.CaseOfUse.MustGet()
-    }
+	if changes.TotalPrice.IsPresent() {
+		updates["total_price"] = changes.TotalPrice.MustGet()
+	}
+	if changes.Price.IsPresent() {
+		updates["price"] = changes.Price.MustGet()
+	}
+	if changes.Age.IsPresent() {
+		updates["age"] = changes.Age.MustGet()
+	}
+	if changes.CaseOfUse.IsPresent() {
+		updates["case_of_use"] = changes.CaseOfUse.MustGet()
+	}
 
 	if res := c.db.Model(&result).Clauses(clause.Returning{}).Where("id = ?", changes.Id).Updates(updates); res.Error != nil {
 		return nil, res.Error
 	}
+
 	return &result, nil
 }
 

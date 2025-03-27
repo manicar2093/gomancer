@@ -2,6 +2,7 @@ package gormimpl
 
 import (
 	"fmt"
+	"github.com/charmbracelet/log"
 	. "github.com/dave/jennifer/jen"
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/rjNemo/underscore"
@@ -20,6 +21,7 @@ type (
 )
 
 func GenerateRepository(input domain.GenerateModelInput) error {
+	log.Info("Generating gorm repository...")
 	repositoryStructName := fmt.Sprintf("%sRepository", input.PascalCase)
 	receiverVar := "c"
 	data := generatorData{

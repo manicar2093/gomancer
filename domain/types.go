@@ -33,3 +33,7 @@ func QualifiersByType(t string) *jen.Statement {
 func OptionalQualifier() jen.Code {
 	return jen.Qual(GoptionPkgPath, "Optional")
 }
+
+func isValidType(t string) bool {
+	return true
+}

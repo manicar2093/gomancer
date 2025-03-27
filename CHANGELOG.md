@@ -1,3 +1,10 @@
+## v0.6.0 (2025-03-27)
+
+### Feat
+
+- add controller generation
+- add log for repository creation
+
 ## v0.5.0 (2025-03-25)
 
 ### Feat

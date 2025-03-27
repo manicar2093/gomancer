@@ -21,7 +21,7 @@ That's why Gomancer borned...
 ## What is our goal?
 
 - [X] Start a project
-- [ ] Create only controller
+- [X] Create controller
 - [ ] Create controller testing
 - [X] Create models
 - [X] Create migrations with Prisma

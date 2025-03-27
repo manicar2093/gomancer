@@ -5,6 +5,6 @@ version = "0.6.0"
 tag_format = "v$version"
 version_files = [
     ".cz.toml:version",
-    "version.go:Version",
+    "versioning/version.go:Version",
 ]
 bump_message = "bump: Semantic Release Bot: Realease Version: $new_version 🤖🚀 [skip ci]"

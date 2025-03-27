@@ -13,9 +13,6 @@ import (
 var templatesFS embed.FS
 
 type (
-	GenerateControllerInput struct {
-		domain.GenerateModelInput
-	}
 	tplInput struct {
 		domain.GenerateModelInput
 		EchoDependency            string

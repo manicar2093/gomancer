@@ -61,6 +61,7 @@ ParsingFor:
 				Err:   "not enough data to continue",
 			})
 			hasParsedError = true
+			continue ParsingFor
 		case 2:
 			attribName := separated[0]
 			attribType := separated[1]
@@ -72,6 +73,10 @@ ParsingFor:
 					Index: index,
 				})
 				hasParsedError = true
+
+			}
+			if hasParsedError {
+				continue ParsingFor
 			}
 
 			response.Attributes = append(response.Attributes, Attribute{
@@ -93,7 +98,6 @@ ParsingFor:
 					Index: index,
 				})
 				hasParsedError = true
-				continue ParsingFor
 			}
 			isOptional := strings.ToLower(separated[2]) == "optional"
 
@@ -103,6 +107,10 @@ ParsingFor:
 					Err:   fmt.Sprintf("%s is not a valid type", attribType),
 					Index: index,
 				})
+			}
+
+			if hasParsedError {
+				continue ParsingFor
 			}
 
 			response.Attributes = append(response.Attributes, Attribute{

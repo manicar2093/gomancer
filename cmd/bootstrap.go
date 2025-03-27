@@ -6,7 +6,7 @@ import (
 )
 
 var BootstrapCmd = &cobra.Command{
-	Use:   "bootstrap",
+	Use:   "new",
 	Short: "Starts a new project",
 	Long: `Does Golang needs a fullstack framework?...I don't thing so. 
 

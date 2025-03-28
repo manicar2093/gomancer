@@ -67,6 +67,14 @@ var (
 				Type:       "int32",
 				IsOptional: true,
 			},
+			{
+				TransformedText: domain.TransformedText{
+					SnakeCase:  "created_at",
+					PascalCase: "CreatedAt",
+					CamelCase:  "createdAt",
+				},
+				Type: "time",
+			},
 		},
 	}
 )

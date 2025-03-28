@@ -4,6 +4,7 @@ import (
 	uuid "github.com/google/uuid"
 	goption "github.com/manicar2093/goption"
 	udecimal "github.com/quagmt/udecimal"
+	"time"
 )
 
 type PostTest struct {
@@ -13,4 +14,5 @@ type PostTest struct {
 	Price      goption.Optional[udecimal.Decimal] `json:"price" mapstructure:"price" param:"price"`
 	Age        int                                `json:"age" mapstructure:"age" param:"age" validate:"required"`
 	CaseOfUse  goption.Optional[int32]            `json:"case_of_use" mapstructure:"case_of_use" param:"case_of_use"`
+	CreatedAt  time.Time                          `json:"created_at" mapstructure:"created_at" param:"created_at" validate:"required"`
 }

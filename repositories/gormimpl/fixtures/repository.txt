@@ -8,6 +8,7 @@ import (
 	connections "github.com/manicar2093/winter/connections"
 	udecimal "github.com/quagmt/udecimal"
 	models "github.com/user/project_name/internal/domain/models"
+	"time"
 )
 
 type PostTestRepository struct {
@@ -49,6 +50,7 @@ type PartialUpdateByIdInput struct {
 	Price      goption.Optional[udecimal.Decimal] `json:"price"`
 	Age        goption.Optional[int]              `json:"age"`
 	CaseOfUse  goption.Optional[int32]            `json:"case_of_use"`
+	CreatedAt  goption.Optional[time.Time]        `json:"created_at"`
 }
 
 // PartialUpdateById can select which field has to be updated from given input
@@ -72,6 +74,9 @@ func (c *PostTestRepository) PartialUpdateById(changes PartialUpdateByIdInput) (
 	}
 	if changes.CaseOfUse.IsPresent() {
 		updates["case_of_use"] = changes.CaseOfUse.MustGet()
+	}
+	if changes.CreatedAt.IsPresent() {
+		updates["created_at"] = changes.CreatedAt.MustGet()
 	}
 
 	if res := c.db.Model(&result).Clauses(clause.Returning{}).Where("id = ?", changes.Id).Updates(updates); res.Error != nil {

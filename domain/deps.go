@@ -9,4 +9,5 @@ const (
 	WinterCommonReqPkgPath = "github.com/manicar2093/winter/commonreq"
 	GormPagerPkgPath       = "github.com/manicar2093/gormpager"
 	EchoPkgPath            = "github.com/labstack/echo/v4"
+	TimePkgPath            = "time"
 )

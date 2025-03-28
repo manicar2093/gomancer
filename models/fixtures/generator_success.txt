@@ -12,6 +12,7 @@ func GeneratePostTest(t testingI, args map[string]any) models.PostTest {
 	fak := models.PostTest{
 		Age:        gofakeit.Int(),
 		CaseOfUse:  goption.Of(gofakeit.Int32()),
+		CreatedAt:  gofakeit.Date(),
 		Id:         uuid.New(),
 		Name:       goption.Of(gofakeit.Word()),
 		Price:      goption.Of(udecimal.MustFromFloat64(gofakeit.Float64())),

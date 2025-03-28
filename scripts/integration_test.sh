@@ -1,7 +1,7 @@
 #!/bin/bash
 task install
 cd $HOME
-gomancer bootstrap github.com/manicar2093/gomancer_test
+gomancer new github.com/manicar2093/gomancer_test
 cd $HOME/gomancer_test
 go mod tidy
 task run &

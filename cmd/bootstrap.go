@@ -1,12 +1,13 @@
 package cmd
 
 import (
+	"github.com/charmbracelet/log"
 	"github.com/manicar2093/gomancer/bootstrap"
 	"github.com/spf13/cobra"
 )
 
 var BootstrapCmd = &cobra.Command{
-	Use:   "bootstrap",
+	Use:   "new",
 	Short: "Starts a new project",
 	Long: `Does Golang needs a fullstack framework?...I don't thing so. 
 
@@ -50,9 +51,21 @@ Project structure:
 	Example: "gomancer bootstrap github.com/great-dev/revolutionary",
 	Args:    cobra.ExactArgs(1),
 	RunE: func(cmd *cobra.Command, args []string) error {
-		err := bootstrap.InitProject(bootstrap.InitProjectInput{
+		projectDirName, err := bootstrap.InitProject(bootstrap.InitProjectInput{
 			ModuleName: args[0],
 		})
+
+		log.Infof(`
+✅ Ready!
+🏁 Next steps:
+
+	➡️ Run 'cd %s'
+	➡️ Run 'go mod download' to install deps
+	➡️ Run 'npm i' to install prisma deps
+	➡️ Run 'gomancer gen' command to create your first API resource
+	➡️ Enjoy! 😎
+`, projectDirName)
+
 		return err
 	},
 }

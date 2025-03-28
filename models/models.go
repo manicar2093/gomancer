@@ -2,10 +2,11 @@ package models
 
 import (
 	"fmt"
+	"github.com/charmbracelet/log"
 	. "github.com/dave/jennifer/jen"
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/rjNemo/underscore"
-	"log"
+
 	"path"
 )
 
@@ -20,7 +21,7 @@ func GenerateModel(input domain.GenerateModelInput) error {
 }
 
 func doGenerateModel(input domain.GenerateModelInput) error {
-	log.Println("Generating model...")
+	log.Info("Generating model...")
 	attribs := append(
 		[]Code{
 			Id("Id").Add(domain.QualifiersByType(input.IdAttribute.Type)).Tag(
@@ -59,7 +60,7 @@ func doGenerateModel(input domain.GenerateModelInput) error {
 }
 
 func doGenerateTestGeneratorFunc(input domain.GenerateModelInput) error {
-	log.Println("Generating model testing generator...")
+	log.Info("Generating model testing generator...")
 	valuesDict := make(Dict)
 
 	valuesDict[Id("Id")] = FakerCallByType(input.IdAttribute.Type)

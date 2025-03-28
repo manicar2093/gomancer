@@ -25,9 +25,10 @@ var _ = Describe("Main", Ordered, func() {
 				ModuleName: testPath,
 			}
 
-			err := bootstrap.InitProject(input)
+			got, err := bootstrap.InitProject(input)
 
 			Expect(err).ToNot(HaveOccurred())
+			Expect(got).ToNot(BeZero())
 		})
 
 		AfterAll(func() {

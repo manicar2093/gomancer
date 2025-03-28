@@ -13,9 +13,6 @@ import (
 var templatesFS embed.FS
 
 type (
-	GenerateControllerInput struct {
-		domain.GenerateModelInput
-	}
 	tplInput struct {
 		domain.GenerateModelInput
 		EchoDependency            string
@@ -26,7 +23,7 @@ type (
 )
 
 func GenerateController(input domain.GenerateModelInput) error {
-	log.Printf("Generating echo controller...")
+	log.Info("Generating echo controller...")
 	tpl := template.Must(template.ParseFS(templatesFS, "templates/*"))
 
 	f, err := os.OpenFile(path.Join(string(domain.CmdApiControllersPackagePath), input.SnakeCase+".go"), os.O_RDWR|os.O_CREATE, 0755)

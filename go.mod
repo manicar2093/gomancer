@@ -5,10 +5,12 @@ go 1.23.3
 require (
 	github.com/charmbracelet/log v0.4.1
 	github.com/dave/jennifer v1.7.1
+	github.com/iancoleman/strcase v0.3.0
 	github.com/onsi/ginkgo/v2 v2.23.1
 	github.com/onsi/gomega v1.36.2
 	github.com/rjNemo/underscore v0.7.0
 	github.com/spf13/cobra v1.9.1
+	golang.org/x/mod v0.24.0
 )
 
 require (

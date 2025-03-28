@@ -1,6 +1,9 @@
 package domain
 
-import "github.com/dave/jennifer/jen"
+import (
+	"github.com/charmbracelet/log"
+	"github.com/dave/jennifer/jen"
+)
 
 type SupportedType string
 
@@ -17,6 +20,21 @@ var (
 	TypeTime    SupportedType = "time"
 	TypeDecimal SupportedType = "decimal"
 	TypeUuid    SupportedType = "uuid"
+
+	ValidTypesMap = map[SupportedType]bool{
+		TypeInt:     true,
+		TypeInt8:    true,
+		TypeInt16:   true,
+		TypeInt32:   true,
+		TypeInt64:   true,
+		TypeFloat32: true,
+		TypeFloat64: true,
+		TypeString:  true,
+		TypeBool:    true,
+		TypeTime:    true,
+		TypeDecimal: true,
+		TypeUuid:    true,
+	}
 )
 
 func QualifiersByType(t string) *jen.Statement {
@@ -32,4 +50,10 @@ func QualifiersByType(t string) *jen.Statement {
 
 func OptionalQualifier() jen.Code {
 	return jen.Qual(GoptionPkgPath, "Optional")
+}
+
+func isValidType(t string) bool {
+	_, ok := ValidTypesMap[SupportedType(t)]
+	log.Debug("validating type", "type", t, "ok", ok)
+	return ok
 }

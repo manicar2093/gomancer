@@ -6,6 +6,7 @@ import (
 	. "github.com/dave/jennifer/jen"
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/rjNemo/underscore"
+	"os"
 	"path"
 )
 
@@ -52,10 +53,17 @@ func GenerateRepository(input domain.GenerateModelInput) error {
 		f.Add(generator(input, data))
 	})
 
+	modelPackagePath := path.Join(
+		string(domain.InternalPackagePath),
+		input.SnakeCase,
+	)
+	if err := os.MkdirAll(modelPackagePath, os.ModePerm); err != nil {
+		return err
+	}
+
 	return f.Save(
 		path.Join(
-			string(domain.InternalPackagePath),
-			input.SnakeCase,
+			modelPackagePath,
 			"repository_gomancer.go",
 		),
 	)

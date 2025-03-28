@@ -12,11 +12,13 @@ import (
 )
 
 type {{.PascalCase}}Controller struct {
-	{{.PascalCase}}Repository *{{.SnakeCase}}.{{.PascalCase}}Repository
+	{{.CamelCase}}Repository *{{.SnakeCase}}.{{.PascalCase}}Repository
 }
 
 func New{{.PascalCase}}Controller({{.CamelCase}}Repository *{{.SnakeCase}}.{{.PascalCase}}Repository) *{{.PascalCase}}Controller {
-	return &{{.PascalCase}}Controller{postTestRepository: postTestRepository}
+	return &{{.PascalCase}}Controller{
+		{{.CamelCase}}Repository: {{.CamelCase}}Repository,
+	}
 }
 
 func (c *{{.PascalCase}}Controller) SetUpRoutes(group *echo.Group) {

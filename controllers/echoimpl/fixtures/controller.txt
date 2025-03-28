@@ -12,11 +12,13 @@ import (
 )
 
 type PostTestController struct {
-	PostTestRepository *post_test.PostTestRepository
+	postTestRepository *post_test.PostTestRepository
 }
 
 func NewPostTestController(postTestRepository *post_test.PostTestRepository) *PostTestController {
-	return &PostTestController{postTestRepository: postTestRepository}
+	return &PostTestController{
+		postTestRepository: postTestRepository,
+	}
 }
 
 func (c *PostTestController) SetUpRoutes(group *echo.Group) {

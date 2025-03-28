@@ -8,6 +8,7 @@ import (
 	connections "github.com/manicar2093/winter/connections"
 	udecimal "github.com/quagmt/udecimal"
 	models "github.com/user/project_name/internal/domain/models"
+	clause "gorm.io/gorm/clause"
 	"time"
 )
 

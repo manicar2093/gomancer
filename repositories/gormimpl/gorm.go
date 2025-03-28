@@ -232,7 +232,7 @@ func generatePartialUpdateFunction(input domain.GenerateModelInput, generatorDat
 						Dot("Model").
 						Call(Op("&").Id("result")).
 						Dot("Clauses").
-						Call(Id("clause.Returning{}")).
+						Call(domain.GetPackageQualifier(domain.GormPkgPath, "clause", "Returning").Values()).
 						Dot("Where").
 						Call(Lit("id = ?"), Id("changes").Dot("Id")).
 						Dot("Updates").

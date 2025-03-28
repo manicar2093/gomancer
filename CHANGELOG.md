@@ -1,3 +1,21 @@
+## v0.7.0 (2025-03-28)
+
+### Feat
+
+- add check to readme task
+- add log to bootstrap and gen cmd
+- add info logs
+- add parser args
+- move cmd config to its package
+- WIP add valid types map
+- WIP add gen cmd
+- change bootstrap cmd to new
+- move version to its own package
+
+### Fix
+
+- add package directory creation
+
 ## v0.6.0 (2025-03-27)
 
 ### Feat

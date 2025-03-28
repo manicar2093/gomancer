@@ -27,7 +27,7 @@ That's why Gomancer borned...
 - [X] Create migrations with Prisma
 - [X] Create crud repository
 - [ ] Create crud testing
-- [ ] Create all at once: controller, model, migration and repository
+- [X] Create all at once: controller, model, migration and repository
 - [ ] Create only model with repository
 - [ ] Create API documentation
 - [ ] Create auth implementation

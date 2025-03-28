@@ -141,26 +141,56 @@ var _ = Describe("Parser", func() {
 					idSliceGetter, gstruct.Elements{
 						"0": gstruct.MatchAllFields(gstruct.Fields{
 							"Input": Equal("arg1:asdf:apsdf"),
-							"Err":   Equal("expected optional declaration, got 'apsdf'"),
-							"Index": Not(BeZero()),
-						}),
-						"1": gstruct.MatchAllFields(gstruct.Fields{
-							"Input": Equal("arg1:asdf:apsdf"),
 							"Err":   Equal("type 'asdf' is not supported"),
 							"Index": Not(BeZero()),
 						}),
-						"2": gstruct.MatchAllFields(gstruct.Fields{
+						"1": gstruct.MatchAllFields(gstruct.Fields{
 							"Input": Equal("arg2:sdfg"),
 							"Err":   Equal("type 'sdfg' is not supported"),
 							"Index": Not(BeZero()),
 						}),
-						"3": gstruct.MatchAllFields(gstruct.Fields{
+						"2": gstruct.MatchAllFields(gstruct.Fields{
 							"Input": Equal("arg3:dfgh"),
 							"Err":   Equal("type 'dfgh' is not supported"),
 							"Index": Not(BeZero()),
 						}),
 					}),
 				)
+			})
+		})
+
+		When("any input has no enough data", func() {
+			It("should return error details", func() {
+				var (
+					isPkUuid   = false
+					moduleName = "test"
+					args       = []string{
+						"HelloWorld",
+						"arg1",
+						"arg2:",
+						"arg3:string",
+						"arg4:string:optional",
+					}
+				)
+
+				_, errDetails, hasErr := domain.ParseArgs(args, moduleName, isPkUuid)
+
+				Expect(hasErr).To(BeTrue())
+				Expect(errDetails).To(gstruct.MatchAllElementsWithIndex(
+					idSliceGetter, gstruct.Elements{
+						"0": gstruct.MatchAllFields(gstruct.Fields{
+							"Input": Equal("arg1"),
+							"Err":   Equal("not enough data to continue. Remember syntax: attribute:type:optional"),
+							"Index": Not(BeZero()),
+						}),
+						"1": gstruct.MatchAllFields(gstruct.Fields{
+							"Input": Equal("arg2:"),
+							"Err":   Equal("not enough data to continue. Remember syntax: attribute:type:optional"),
+							"Index": Not(BeZero()),
+						}),
+					}),
+				)
+
 			})
 		})
 	})

@@ -8,6 +8,12 @@ import (
 	"strings"
 )
 
+const (
+	notEnoughDataToContinue = "not enough data to continue. Remember syntax: attribute:type:optional"
+	typeNotSupported        = "type '%s' is not supported"
+	optionalNotDeclared     = "expected optional declaration, got '%s'"
+)
+
 type (
 	ParsingErrorDetail struct {
 		Input string
@@ -25,7 +31,6 @@ func ParseArgs(args []string, moduleName string, isPkUuid bool) (GenerateModelIn
 		modelName          = args[0]
 		attributesArgs     = args[1:]
 		parseErrorsDetails []ParsingErrorDetail
-		hasParsedError     bool
 	)
 
 	response := GenerateModelInput{
@@ -50,35 +55,69 @@ func ParseArgs(args []string, moduleName string, isPkUuid bool) (GenerateModelIn
 
 ParsingFor:
 	for index, item := range attributesArgs {
+		var (
+			separated        = strings.Split(item, ":")
+			separatedLen     = len(separated)
+			attribName       string
+			attribType       string
+			isOptionalString string
+		)
 		index++
 		log.Debug(item)
-		separated := strings.Split(item, ":")
 
-		switch len(separated) {
+		switch separatedLen {
 		case 1:
 			parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
 				Input: item,
-				Err:   "not enough data to continue",
+				Err:   notEnoughDataToContinue,
+				Index: index,
 			})
-			hasParsedError = true
 			continue ParsingFor
 		case 2:
-			attribName := separated[0]
-			attribType := separated[1]
-
+			attribName = separated[0]
+			attribType = separated[1]
+			if attribType == "" {
+				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
+					Input: item,
+					Err:   notEnoughDataToContinue,
+					Index: index,
+				})
+				continue ParsingFor
+			}
 			if !isValidType(attribType) {
 				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
 					Input: item,
-					Err:   fmt.Sprintf("type '%s' is not supported", attribType),
+					Err:   fmt.Sprintf(typeNotSupported, attribType),
 					Index: index,
 				})
-				hasParsedError = true
-
 			}
-			if hasParsedError {
+		case 3:
+			attribName = separated[0]
+			attribType = separated[1]
+			isOptionalString = separated[2]
+			if !isValidType(attribType) {
+				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
+					Input: item,
+					Err:   fmt.Sprintf(typeNotSupported, attribType),
+					Index: index,
+				})
 				continue ParsingFor
 			}
+			if isOptionalString != "optional" {
+				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
+					Input: item,
+					Err: fmt.Sprintf(
+						optionalNotDeclared,
+						underscore.Ternary(isOptionalString == "", "<empty>", isOptionalString),
+					),
+					Index: index,
+				})
+				continue ParsingFor
+			}
+		}
 
+		switch separatedLen {
+		case 2:
 			response.Attributes = append(response.Attributes, Attribute{
 				TransformedText: TransformedText{
 					SnakeCase:  strcase.ToSnake(attribName),
@@ -88,33 +127,7 @@ ParsingFor:
 				Type: attribType,
 			})
 		case 3:
-			attribName := separated[0]
-			attribType := separated[1]
-			optionalString := separated[2]
-			if optionalString != "optional" {
-				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
-					Input: item,
-					Err: fmt.Sprintf(
-						"expected optional declaration, got '%s'",
-						underscore.Ternary(optionalString == "", "<empty>", optionalString),
-					),
-					Index: index,
-				})
-				hasParsedError = true
-			}
-			isOptional := strings.ToLower(separated[2]) == "optional"
-
-			if !isValidType(attribType) {
-				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
-					Input: item,
-					Err:   fmt.Sprintf("type '%s' is not supported", attribType),
-					Index: index,
-				})
-			}
-
-			if hasParsedError {
-				continue ParsingFor
-			}
+			isOptional := strings.ToLower(isOptionalString) == "optional"
 
 			response.Attributes = append(response.Attributes, Attribute{
 				TransformedText: TransformedText{
@@ -128,5 +141,5 @@ ParsingFor:
 		}
 	}
 
-	return response, parseErrorsDetails, hasParsedError
+	return response, parseErrorsDetails, len(parseErrorsDetails) > 0
 }

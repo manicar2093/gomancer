@@ -19,6 +19,7 @@ type (
 		WinterDependency          string
 		WinterCommonReqDependency string
 		InternalDomainModelsPath  domain.Path
+		InternalPackagePath       domain.Path
 	}
 )
 
@@ -38,6 +39,7 @@ func GenerateController(input domain.GenerateModelInput) error {
 		WinterDependency:          domain.WinterPkgPath,
 		WinterCommonReqDependency: domain.WinterCommonReqPkgPath,
 		InternalDomainModelsPath:  domain.InternalDomainModelsPackagePath,
+		InternalPackagePath:       domain.InternalPackagePath,
 	}); err != nil {
 		return err
 	}

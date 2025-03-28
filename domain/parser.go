@@ -69,7 +69,7 @@ ParsingFor:
 			if !isValidType(attribType) {
 				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
 					Input: item,
-					Err:   fmt.Sprintf("%s is not a valid type", attribType),
+					Err:   fmt.Sprintf("type '%s' is not supported", attribType),
 					Index: index,
 				})
 				hasParsedError = true
@@ -94,7 +94,10 @@ ParsingFor:
 			if optionalString != "optional" {
 				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
 					Input: item,
-					Err:   fmt.Sprintf("expected optional declaration, got '%s'", optionalString),
+					Err: fmt.Sprintf(
+						"expected optional declaration, got '%s'",
+						underscore.Ternary(optionalString == "", "<empty>", optionalString),
+					),
 					Index: index,
 				})
 				hasParsedError = true
@@ -104,7 +107,7 @@ ParsingFor:
 			if !isValidType(attribType) {
 				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
 					Input: item,
-					Err:   fmt.Sprintf("%s is not a valid type", attribType),
+					Err:   fmt.Sprintf("type '%s' is not supported", attribType),
 					Index: index,
 				})
 			}

@@ -9,6 +9,10 @@ import (
 	"github.com/manicar2093/gomancer/domain"
 )
 
+func idSliceGetter(index int, _ interface{}) string {
+	return strconv.Itoa(index)
+}
+
 var _ = Describe("Parser", func() {
 	Describe("ParseArgs", func() {
 		It("should parse arguments", func() {
@@ -45,9 +49,7 @@ var _ = Describe("Parser", func() {
 					"IsOptional": BeFalse(),
 				}),
 				"Attributes": gstruct.MatchAllElementsWithIndex(
-					func(index int, _ interface{}) string {
-						return strconv.Itoa(index)
-					},
+					idSliceGetter,
 					gstruct.Elements{
 						"0": gstruct.MatchAllFields(gstruct.Fields{
 							"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
@@ -90,7 +92,7 @@ var _ = Describe("Parser", func() {
 						"HelloWorld",
 						"arg1:string:optionl",
 						"arg2:int",
-						"arg3:decimal:optional",
+						"arg3:decimal:",
 					}
 				)
 
@@ -100,8 +102,65 @@ var _ = Describe("Parser", func() {
 				Expect(errDetails[0]).To(gstruct.MatchAllFields(gstruct.Fields{
 					"Input": Equal("arg1:string:optionl"),
 					"Err":   Equal("expected optional declaration, got 'optionl'"),
+					"Index": Not(BeZero()),
 				}))
+				Expect(errDetails).To(gstruct.MatchAllElementsWithIndex(
+					idSliceGetter, gstruct.Elements{
+						"0": gstruct.MatchAllFields(gstruct.Fields{
+							"Input": Equal("arg1:string:optionl"),
+							"Err":   Equal("expected optional declaration, got 'optionl'"),
+							"Index": Not(BeZero()),
+						}),
+						"1": gstruct.MatchAllFields(gstruct.Fields{
+							"Input": Equal("arg3:decimal:"),
+							"Err":   Equal("expected optional declaration, got '<empty>'"),
+							"Index": Not(BeZero()),
+						}),
+					}),
+				)
+			})
+		})
 
+		When("type is not supported", func() {
+			It("should return error details", func() {
+				var (
+					isPkUuid   = false
+					moduleName = "test"
+					args       = []string{
+						"HelloWorld",
+						"arg1:asdf:apsdf",
+						"arg2:sdfg",
+						"arg3:dfgh",
+					}
+				)
+
+				_, errDetails, hasErr := domain.ParseArgs(args, moduleName, isPkUuid)
+
+				Expect(hasErr).To(BeTrue())
+				Expect(errDetails).To(gstruct.MatchAllElementsWithIndex(
+					idSliceGetter, gstruct.Elements{
+						"0": gstruct.MatchAllFields(gstruct.Fields{
+							"Input": Equal("arg1:asdf:apsdf"),
+							"Err":   Equal("expected optional declaration, got 'apsdf'"),
+							"Index": Not(BeZero()),
+						}),
+						"1": gstruct.MatchAllFields(gstruct.Fields{
+							"Input": Equal("arg1:asdf:apsdf"),
+							"Err":   Equal("type 'asdf' is not supported"),
+							"Index": Not(BeZero()),
+						}),
+						"2": gstruct.MatchAllFields(gstruct.Fields{
+							"Input": Equal("arg2:sdfg"),
+							"Err":   Equal("type 'sdfg' is not supported"),
+							"Index": Not(BeZero()),
+						}),
+						"3": gstruct.MatchAllFields(gstruct.Fields{
+							"Input": Equal("arg3:dfgh"),
+							"Err":   Equal("type 'dfgh' is not supported"),
+							"Index": Not(BeZero()),
+						}),
+					}),
+				)
 			})
 		})
 	})

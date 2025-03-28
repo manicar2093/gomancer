@@ -140,12 +140,12 @@ type InitProjectInput struct {
 	ModuleName string
 }
 
-func InitProject(input InitProjectInput) error {
+func InitProject(input InitProjectInput) (string, error) {
 	log.Info("Initiating new project...")
 
 	asUrl, err := url.Parse(input.ModuleName)
 	if err != nil {
-		return errors.Join(err, fmt.Errorf("%s is not a valid module moduleName. follow convention of use urls as github.com/<user>/<repo>, gitlab.com/<user>/<repo>, bitbucket.com/<user>/<repo>, etc", input.ModuleName))
+		return "", errors.Join(err, fmt.Errorf("%s is not a valid module moduleName. follow convention of use urls as github.com/<user>/<repo>, gitlab.com/<user>/<repo>, bitbucket.com/<user>/<repo>, etc", input.ModuleName))
 	}
 
 	pathSlice := strings.Split(asUrl.Path, string(os.PathSeparator))
@@ -153,10 +153,10 @@ func InitProject(input InitProjectInput) error {
 
 	if err := os.Mkdir(projectDirName, os.ModePerm); err != nil {
 		if !os.IsExist(err) {
-			return err
+			return "", err
 		}
 		if false {
-			return fmt.Errorf("%s already exists, use -f to force creation", projectDirName)
+			return "", fmt.Errorf("%s already exists, use -f to force creation", projectDirName)
 		}
 	}
 
@@ -178,20 +178,20 @@ func InitProject(input InitProjectInput) error {
 	for _, dir := range initialFiles {
 		fullDirPath := path.Join(projectDirName, dir.dirPath)
 		if err := os.MkdirAll(fullDirPath, os.ModePerm); err != nil {
-			return err
+			return "", err
 		}
 		for _, file := range dir.files {
 
 			fullFilePath := path.Join(fullDirPath, file.name)
 			f, err := os.OpenFile(fullFilePath, os.O_RDWR|os.O_CREATE, 0755)
 			if err != nil {
-				return err
+				return "", err
 			}
 			if err := tpl.ExecuteTemplate(f, file.tmplName, templateData); err != nil {
-				return err
+				return "", err
 			}
 
 		}
 	}
-	return nil
+	return projectDirName, nil
 }

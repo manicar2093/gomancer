@@ -3,6 +3,7 @@ task install
 cd $HOME
 gomancer new github.com/manicar2093/gomancer_test
 cd $HOME/gomancer_test
+gomancer gen Entity arg1:string arg2:string:optional arg3:time:optional arg4:string arg5:time
 go mod tidy
 task run &
 sleep 2

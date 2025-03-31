@@ -46,7 +46,7 @@ func (c *{{.PascalCase}}Controller) SaveHandler(ctx echo.Context) error {
 }
 
 func (c *{{.PascalCase}}Controller) GetByIdHandler(ctx echo.Context) error {
-	req := commonreq.GetByIdUUID{}
+	req := commonreq.{{GetByType}}{}
 	if err := winter.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}
@@ -87,7 +87,7 @@ func (c *{{.PascalCase}}Controller) PartialUpdateByIdHandler(ctx echo.Context) e
 }
 
 func (c *{{.PascalCase}}Controller) DeleteByIdHandler(ctx echo.Context) error {
-	req := commonreq.GetByIdUUID{}
+	req := commonreq.{{GetByType}}{}
 	if err := winter.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}

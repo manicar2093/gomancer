@@ -25,7 +25,18 @@ type (
 
 func GenerateController(input domain.GenerateModelInput) error {
 	log.Info("Generating echo controller...")
-	tpl := template.Must(template.ParseFS(templatesFS, "templates/*"))
+	var tpl = template.Must(template.
+		New("controllers").
+		Funcs(map[string]any{
+			"GetByType": func() string {
+				if input.IdAttribute.Type == string(domain.TypeUuid) {
+					return "GetByIdUUID"
+				}
+
+				return "GetById"
+			},
+		}).
+		ParseFS(templatesFS, "templates/*"))
 
 	f, err := os.OpenFile(path.Join(string(domain.CmdApiControllersPackagePath), input.SnakeCase+".go"), os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {

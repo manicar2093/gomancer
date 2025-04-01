@@ -30,3 +30,5 @@ That's why Gomancer borned...
 - [X] Create all at once: controller, model, migration and repository
 - [ ] Create API documentation
 - [ ] Create auth implementation
+- [ ] Add crud HTML templates
+- [ ] Add API testing

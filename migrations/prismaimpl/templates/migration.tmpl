@@ -1,6 +1,6 @@
 {{define "migration"}}model {{.PascalCase}} {
 {{CreateIdAttribute .IdAttribute}}{{range .Attributes}}{{CreateAttribute .}}{{end}}
-     @@map("{{.SnakeCase}}")
+     @@map("{{Pluralize .SnakeCase}}")
 }
 {{end}}
 

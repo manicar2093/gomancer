@@ -7,5 +7,5 @@ model PostTest {
      case_of_use Int?
      created_at DateTime
 
-     @@map("post_test")
+     @@map("post_tests")
 }

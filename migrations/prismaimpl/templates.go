@@ -3,6 +3,7 @@ package prismaimpl
 import (
 	"embed"
 	"fmt"
+	"github.com/jinzhu/inflection"
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/rjNemo/underscore"
 	"strings"
@@ -58,4 +59,5 @@ var funcMap = template.FuncMap{
 		)
 		return sb.String()
 	},
+	"Pluralize": inflection.Plural,
 }

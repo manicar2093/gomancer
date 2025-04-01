@@ -8,14 +8,14 @@ import (
 	winter "github.com/manicar2093/winter"
 	commonreq "github.com/manicar2093/winter/commonreq"
 	models "github.com/user/project_name/internal/domain/models"
-	post_test "github.com/user/project_name/internal/post_test"
+	posttest "github.com/user/project_name/internal/posttest"
 )
 
 type PostTestController struct {
-	postTestRepository *post_test.PostTestRepository
+	postTestRepository *posttest.PostTestRepository
 }
 
-func NewPostTestController(postTestRepository *post_test.PostTestRepository) *PostTestController {
+func NewPostTestController(postTestRepository *posttest.PostTestRepository) *PostTestController {
 	return &PostTestController{
 		postTestRepository: postTestRepository,
 	}
@@ -74,7 +74,7 @@ func (c *PostTestController) GetAllPaginatedHandler(ctx echo.Context) error {
 }
 
 func (c *PostTestController) PartialUpdateByIdHandler(ctx echo.Context) error {
-	req := post_test.PartialUpdateByIdInput{}
+	req := posttest.PartialUpdateByIdInput{}
 	if err := winter.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}

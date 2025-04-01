@@ -1,4 +1,4 @@
-package prisma
+package prismaimpl
 
 import (
 	"embed"

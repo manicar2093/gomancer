@@ -28,6 +28,5 @@ That's why Gomancer borned...
 - [X] Create crud repository
 - [ ] Create crud testing
 - [X] Create all at once: controller, model, migration and repository
-- [ ] Create only model with repository
 - [ ] Create API documentation
 - [ ] Create auth implementation

@@ -33,20 +33,23 @@ func ParseArgs(args []string, moduleName string, isPkUuid bool) (GenerateModelIn
 		parseErrorsDetails []ParsingErrorDetail
 	)
 
+	modelNameCamelCase := strcase.ToLowerCamel(modelName)
 	response := GenerateModelInput{
 		TransformedText: TransformedText{
-			SnakeCase:  strcase.ToSnake(modelName),
-			PascalCase: strcase.ToCamel(modelName),
-			CamelCase:  strcase.ToLowerCamel(modelName),
+			SnakeCase:        strcase.ToSnake(modelName),
+			PascalCase:       strcase.ToCamel(modelName),
+			CamelCase:        modelNameCamelCase,
+			LowerNoSpaceCase: strings.ToLower(modelNameCamelCase),
 		},
 		ModuleInfo: ModuleInfo{
 			Name: moduleName,
 		},
 		IdAttribute: Attribute{
 			TransformedText: TransformedText{
-				SnakeCase:  "id",
-				PascalCase: "Id",
-				CamelCase:  "id",
+				SnakeCase:        "id",
+				PascalCase:       "Id",
+				CamelCase:        "id",
+				LowerNoSpaceCase: "id",
 			},
 			Type: underscore.Ternary(isPkUuid, string(TypeUuid), string(TypeInt)),
 		},
@@ -116,13 +119,15 @@ ParsingFor:
 			}
 		}
 
+		attributeNameCamelCase := strcase.ToLowerCamel(attribName)
 		switch separatedLen {
 		case 2:
 			response.Attributes = append(response.Attributes, Attribute{
 				TransformedText: TransformedText{
-					SnakeCase:  strcase.ToSnake(attribName),
-					PascalCase: strcase.ToCamel(attribName),
-					CamelCase:  strcase.ToLowerCamel(attribName),
+					SnakeCase:        strcase.ToSnake(attribName),
+					PascalCase:       strcase.ToCamel(attribName),
+					CamelCase:        attributeNameCamelCase,
+					LowerNoSpaceCase: strings.ToLower(attributeNameCamelCase),
 				},
 				Type: attribType,
 			})
@@ -131,9 +136,10 @@ ParsingFor:
 
 			response.Attributes = append(response.Attributes, Attribute{
 				TransformedText: TransformedText{
-					SnakeCase:  strcase.ToSnake(attribName),
-					PascalCase: strcase.ToCamel(attribName),
-					CamelCase:  strcase.ToLowerCamel(attribName),
+					SnakeCase:        strcase.ToSnake(attribName),
+					PascalCase:       strcase.ToCamel(attribName),
+					CamelCase:        strcase.ToLowerCamel(attribName),
+					LowerNoSpaceCase: strings.ToLower(attributeNameCamelCase),
 				},
 				Type:       attribType,
 				IsOptional: isOptional,

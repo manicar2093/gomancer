@@ -5,6 +5,7 @@ model PostTest {
      price Decimal? @db.Decimal(10,2)
      age Int
      case_of_use Int?
+     created_at DateTime
 
      @@map("post_test")
 }

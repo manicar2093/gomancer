@@ -32,6 +32,6 @@ var (
 	GeneratorsPkg Pkg = "generators"
 )
 
-func GetPackageQualifier(moduleName string, path Path, model string) jen.Code {
+func GetPackageQualifier(moduleName string, path Path, model string) *jen.Statement {
 	return jen.Qual(fmt.Sprintf("%s/%s", moduleName, path), model)
 }

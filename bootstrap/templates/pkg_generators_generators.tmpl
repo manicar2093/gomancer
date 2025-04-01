@@ -4,9 +4,7 @@ package generators
 import "github.com/go-viper/mapstructure/v2"
 
 type testingI interface {
-    mock.TestingT
     Fatal(args ...any)
-    Cleanup(func())
 }
 
 func decode(t testingI, args map[string]any, holder any) {

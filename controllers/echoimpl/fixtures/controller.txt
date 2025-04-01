@@ -8,14 +8,17 @@ import (
 	winter "github.com/manicar2093/winter"
 	commonreq "github.com/manicar2093/winter/commonreq"
 	models "github.com/user/project_name/internal/domain/models"
+	post_test "github.com/user/project_name/internal/post_test"
 )
 
 type PostTestController struct {
-	PostTestRepository *PostTestRepository
+	postTestRepository *post_test.PostTestRepository
 }
 
-func NewPostTestController(postTestRepository *PostTestRepository) *PostTestController {
-	return &PostTestController{postTestRepository: postTestRepository}
+func NewPostTestController(postTestRepository *post_test.PostTestRepository) *PostTestController {
+	return &PostTestController{
+		postTestRepository: postTestRepository,
+	}
 }
 
 func (c *PostTestController) SetUpRoutes(group *echo.Group) {
@@ -70,12 +73,12 @@ func (c *PostTestController) GetAllPaginatedHandler(ctx echo.Context) error {
 	return ctx.JSON(http.StatusOK, &res)
 }
 
-func (c *PostTestController) UpdateSelectiveByIdHandler(ctx echo.Context) error {
-	req := UpdateSelectiveByIdInput{}
+func (c *PostTestController) PartialUpdateByIdHandler(ctx echo.Context) error {
+	req := post_test.PartialUpdateByIdInput{}
 	if err := winter.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}
-	res, err := c.postTestRepository.UpdateSelectiveById(req)
+	res, err := c.postTestRepository.PartialUpdateById(req)
 	if err != nil {
 		return err
 	}

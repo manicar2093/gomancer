@@ -39,10 +39,12 @@ var (
 
 func QualifiersByType(t string) *jen.Statement {
 	switch t {
-	case "uuid":
+	case string(TypeUuid):
 		return jen.Qual(UUIDPkgPath, "UUID")
-	case "decimal":
+	case string(TypeDecimal):
 		return jen.Qual(DecimalPkgPath, "Decimal")
+	case string(TypeTime):
+		return jen.Qual(TimePkgPath, "Time")
 	default:
 		return jen.Id(t)
 	}

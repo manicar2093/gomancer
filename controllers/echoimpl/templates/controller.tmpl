@@ -8,14 +8,17 @@ import (
 	winter "{{.WinterDependency}}"
 	commonreq "{{.WinterCommonReqDependency}}"
 	models "{{.ModuleInfo.Name}}/{{.InternalDomainModelsPath}}"
+	{{.SnakeCase}} "{{.ModuleInfo.Name}}/{{.InternalPackagePath}}/{{.SnakeCase}}"
 )
 
 type {{.PascalCase}}Controller struct {
-	{{.PascalCase}}Repository *{{.PascalCase}}Repository
+	{{.CamelCase}}Repository *{{.SnakeCase}}.{{.PascalCase}}Repository
 }
 
-func New{{.PascalCase}}Controller({{.CamelCase}}Repository *{{.PascalCase}}Repository) *{{.PascalCase}}Controller {
-	return &{{.PascalCase}}Controller{postTestRepository: postTestRepository}
+func New{{.PascalCase}}Controller({{.CamelCase}}Repository *{{.SnakeCase}}.{{.PascalCase}}Repository) *{{.PascalCase}}Controller {
+	return &{{.PascalCase}}Controller{
+		{{.CamelCase}}Repository: {{.CamelCase}}Repository,
+	}
 }
 
 func (c *{{.PascalCase}}Controller) SetUpRoutes(group *echo.Group) {
@@ -43,7 +46,7 @@ func (c *{{.PascalCase}}Controller) SaveHandler(ctx echo.Context) error {
 }
 
 func (c *{{.PascalCase}}Controller) GetByIdHandler(ctx echo.Context) error {
-	req := commonreq.GetByIdUUID{}
+	req := commonreq.{{GetByType}}{}
 	if err := winter.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}
@@ -70,12 +73,12 @@ func (c *{{.PascalCase}}Controller) GetAllPaginatedHandler(ctx echo.Context) err
 	return ctx.JSON(http.StatusOK, &res)
 }
 
-func (c *{{.PascalCase}}Controller) UpdateSelectiveByIdHandler(ctx echo.Context) error {
-	req := UpdateSelectiveByIdInput{}
+func (c *{{.PascalCase}}Controller) PartialUpdateByIdHandler(ctx echo.Context) error {
+	req := {{.SnakeCase}}.PartialUpdateByIdInput{}
 	if err := winter.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}
-	res, err := c.{{.CamelCase}}Repository.UpdateSelectiveById(req)
+	res, err := c.{{.CamelCase}}Repository.PartialUpdateById(req)
 	if err != nil {
 		return err
 	}
@@ -84,7 +87,7 @@ func (c *{{.PascalCase}}Controller) UpdateSelectiveByIdHandler(ctx echo.Context)
 }
 
 func (c *{{.PascalCase}}Controller) DeleteByIdHandler(ctx echo.Context) error {
-	req := commonreq.GetByIdUUID{}
+	req := commonreq.{{GetByType}}{}
 	if err := winter.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}

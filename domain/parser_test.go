@@ -32,18 +32,20 @@ var _ = Describe("Parser", func() {
 			Expect(hasErr).To(BeFalse())
 			Expect(got).To(gstruct.MatchAllFields(gstruct.Fields{
 				"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
-					"SnakeCase":  Equal("hello_world"),
-					"PascalCase": Equal("HelloWorld"),
-					"CamelCase":  Equal("helloWorld"),
+					"SnakeCase":        Equal("hello_world"),
+					"PascalCase":       Equal("HelloWorld"),
+					"CamelCase":        Equal("helloWorld"),
+					"LowerNoSpaceCase": Equal("helloworld"),
 				}),
 				"ModuleInfo": gstruct.MatchAllFields(gstruct.Fields{
 					"Name": Equal(moduleName),
 				}),
 				"IdAttribute": gstruct.MatchAllFields(gstruct.Fields{
 					"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
-						"SnakeCase":  Equal("id"),
-						"PascalCase": Equal("Id"),
-						"CamelCase":  Equal("id"),
+						"SnakeCase":        Equal("id"),
+						"PascalCase":       Equal("Id"),
+						"CamelCase":        Equal("id"),
+						"LowerNoSpaceCase": Equal("id"),
 					}),
 					"Type":       Equal("int"),
 					"IsOptional": BeFalse(),
@@ -53,27 +55,30 @@ var _ = Describe("Parser", func() {
 					gstruct.Elements{
 						"0": gstruct.MatchAllFields(gstruct.Fields{
 							"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
-								"SnakeCase":  Equal("arg_1"),
-								"PascalCase": Equal("Arg1"),
-								"CamelCase":  Equal("arg1"),
+								"SnakeCase":        Equal("arg_1"),
+								"PascalCase":       Equal("Arg1"),
+								"CamelCase":        Equal("arg1"),
+								"LowerNoSpaceCase": Equal("arg1"),
 							}),
 							"Type":       Equal("string"),
 							"IsOptional": BeTrue(),
 						}),
 						"1": gstruct.MatchAllFields(gstruct.Fields{
 							"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
-								"SnakeCase":  Equal("arg_2"),
-								"PascalCase": Equal("Arg2"),
-								"CamelCase":  Equal("arg2"),
+								"SnakeCase":        Equal("arg_2"),
+								"PascalCase":       Equal("Arg2"),
+								"CamelCase":        Equal("arg2"),
+								"LowerNoSpaceCase": Equal("arg2"),
 							}),
 							"Type":       Equal("int"),
 							"IsOptional": BeFalse(),
 						}),
 						"2": gstruct.MatchAllFields(gstruct.Fields{
 							"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
-								"SnakeCase":  Equal("arg_3"),
-								"PascalCase": Equal("Arg3"),
-								"CamelCase":  Equal("arg3"),
+								"SnakeCase":        Equal("arg_3"),
+								"PascalCase":       Equal("Arg3"),
+								"CamelCase":        Equal("arg3"),
+								"LowerNoSpaceCase": Equal("arg3"),
 							}),
 							"Type":       Equal("decimal"),
 							"IsOptional": BeTrue(),

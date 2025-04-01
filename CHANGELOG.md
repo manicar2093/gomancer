@@ -1,3 +1,19 @@
+## v0.8.0 (2025-04-01)
+
+### Feat
+
+- add new package name for repository creation
+- add LowerNoSpaceCase to name packages
+- add time type handling
+
+### Fix
+
+- add changes to testingI for generator on bootstrap command
+- add id type generator for controller
+- add constructor generation for controller
+- add clause import in repository
+- change controller imports and method calls
+
 ## v0.7.0 (2025-03-28)
 
 ### Feat

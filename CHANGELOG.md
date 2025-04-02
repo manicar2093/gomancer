@@ -1,3 +1,16 @@
+## v0.9.0 (2025-04-02)
+
+### Feat
+
+- add pluralized to migration table name
+- add prisma migration creation on gen cmd
+- change name for package creation
+
+### Fix
+
+- change package name into controller generation
+- change download to tidy on bootstrap cmd success log
+
 ## v0.8.0 (2025-04-01)
 
 ### Feat

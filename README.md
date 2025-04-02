@@ -4,6 +4,23 @@
 
 Code generator to be BLAZINGLY! fast at coding API
 
+Create your new project with `gomancer new <project_name>`
+Create a new resource with `gomancer gen <model_name> <attribute:type[:optional]>`
+
+Like:
+
+`gomancer new github.com/user/great_api`
+
+and
+
+`gomancer gen User name:string age:int8 dob:time:optional --pk-uuid`
+
+Pum! You're ready to go!
+
+## Install
+
+`go install github.com/manicar2093/gomancer@latest`
+
 ## Why?
 
 I started with the following question: 
@@ -28,6 +45,7 @@ That's why Gomancer borned...
 - [X] Create crud repository
 - [ ] Create crud testing
 - [X] Create all at once: controller, model, migration and repository
-- [ ] Create only model with repository
 - [ ] Create API documentation
 - [ ] Create auth implementation
+- [ ] Add crud HTML templates
+- [ ] Add API testing

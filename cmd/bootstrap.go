@@ -60,7 +60,7 @@ Project structure:
 🏁 Next steps:
 
 	➡️ Run 'cd %s'
-	➡️ Run 'go mod download' to install deps
+	➡️ Run 'go mod tidy' to generate go.mod
 	➡️ Run 'npm i' to install prisma deps
 	➡️ Run 'gomancer gen' command to create your first API resource
 	➡️ Enjoy! 😎

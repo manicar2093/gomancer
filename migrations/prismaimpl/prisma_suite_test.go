@@ -1,4 +1,4 @@
-package prisma_test
+package prismaimpl_test
 
 import (
 	"testing"

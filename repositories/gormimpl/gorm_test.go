@@ -29,7 +29,7 @@ var _ = Describe("Gorm", func() {
 			err := gormimpl.GenerateRepository(input)
 
 			Expect(err).ToNot(HaveOccurred())
-			Expect(path.Join(string(domain.InternalPackagePath), "post_test", "repository_gomancer.go")).Should(
+			Expect(path.Join(string(domain.InternalPackagePath), "posttest", "repository_gomancer.go")).Should(
 				testmatchers.BeAnExistingFileWithEqualContent(path.Join("fixtures", "repository.txt")),
 			)
 		})

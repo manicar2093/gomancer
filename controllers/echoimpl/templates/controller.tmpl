@@ -8,14 +8,14 @@ import (
 	winter "{{.WinterDependency}}"
 	commonreq "{{.WinterCommonReqDependency}}"
 	models "{{.ModuleInfo.Name}}/{{.InternalDomainModelsPath}}"
-	{{.SnakeCase}} "{{.ModuleInfo.Name}}/{{.InternalPackagePath}}/{{.SnakeCase}}"
+	{{.LowerNoSpaceCase}} "{{.ModuleInfo.Name}}/{{.InternalPackagePath}}/{{.LowerNoSpaceCase}}"
 )
 
 type {{.PascalCase}}Controller struct {
-	{{.CamelCase}}Repository *{{.SnakeCase}}.{{.PascalCase}}Repository
+	{{.CamelCase}}Repository *{{.LowerNoSpaceCase}}.{{.PascalCase}}Repository
 }
 
-func New{{.PascalCase}}Controller({{.CamelCase}}Repository *{{.SnakeCase}}.{{.PascalCase}}Repository) *{{.PascalCase}}Controller {
+func New{{.PascalCase}}Controller({{.CamelCase}}Repository *{{.LowerNoSpaceCase}}.{{.PascalCase}}Repository) *{{.PascalCase}}Controller {
 	return &{{.PascalCase}}Controller{
 		{{.CamelCase}}Repository: {{.CamelCase}}Repository,
 	}
@@ -74,7 +74,7 @@ func (c *{{.PascalCase}}Controller) GetAllPaginatedHandler(ctx echo.Context) err
 }
 
 func (c *{{.PascalCase}}Controller) PartialUpdateByIdHandler(ctx echo.Context) error {
-	req := {{.SnakeCase}}.PartialUpdateByIdInput{}
+	req := {{.LowerNoSpaceCase}}.PartialUpdateByIdInput{}
 	if err := winter.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}

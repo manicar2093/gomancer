@@ -2,3 +2,4 @@
 .vscode
 bootstrap/test
 tmp
+*.log

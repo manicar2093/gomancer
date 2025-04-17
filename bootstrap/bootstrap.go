@@ -13,6 +13,12 @@ import (
 	"text/template"
 )
 
+//go:embed templates/*
+var templatesFS embed.FS
+
+//go:embed core/*
+var coreFS embed.FS
+
 type (
 	fileWithContent struct {
 		name, tmplName string
@@ -22,9 +28,6 @@ type (
 		files   []fileWithContent
 	}
 )
-
-//go:embed templates/*
-var templatesFS embed.FS
 
 var (
 	initialFiles = []dirsWithFiles{
@@ -158,6 +161,10 @@ func InitProject(input InitProjectInput) (string, error) {
 		if false {
 			return "", fmt.Errorf("%s already exists, use -f to force creation", projectDirName)
 		}
+	}
+
+	if err := copyCoreToProject(projectDirName, input); err != nil {
+		return "", err
 	}
 
 	var (

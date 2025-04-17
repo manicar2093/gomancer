@@ -1,3 +1,9 @@
+## v0.10.0 (2025-04-17)
+
+### Feat
+
+- add core packages to init project
+
 ## v0.9.0 (2025-04-02)
 
 ### Feat

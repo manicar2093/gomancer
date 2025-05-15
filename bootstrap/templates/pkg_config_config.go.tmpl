@@ -2,12 +2,12 @@
 package config
 
 import (
-    "github.com/manicar2093/winter"
-    "github.com/manicar2093/winter/connections"
+    "{{.ModuleName}}/core"
+    "{{.ModuleName}}/core/connections"
 )
 
 type Config struct {
-    winter.Config
+    core.Config
     connections.DatabaseConnectionConfig
 }
 {{ end }}

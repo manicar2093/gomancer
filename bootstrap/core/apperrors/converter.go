@@ -2,13 +2,13 @@ package apperrors
 
 import (
 	"fmt"
-	"github.com/manicar2093/gomancer/bootstrap/core/logger"
+
 	"github.com/manicar2093/gomancer/bootstrap/core/validator"
 	"net/http"
 
 	"github.com/coditory/go-errors"
 
-	"github.com/sirupsen/logrus"
+	log "github.com/sirupsen/logrus"
 
 	"github.com/labstack/echo/v4"
 )
@@ -26,12 +26,12 @@ type (
 
 func HandlerWEcho(err error, ctx echo.Context) {
 	code, body := handleErrorType(err) //nolint:varnamelen
-	fields := logrus.Fields{"response": body}
+	fields := log.Fields{"response": body}
 	stack, ok := hasStackTrace(err)
 	if ok {
 		fields["stack"] = stack
 	}
-	logger.GetLogger().WithFields(fields).Error(err)
+	log.WithFields(fields).Error(err)
 	ctx.JSON(code, body) //nolint:errcheck
 }
 

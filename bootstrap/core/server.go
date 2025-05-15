@@ -6,9 +6,10 @@ import (
 	"github.com/manicar2093/echoroutesview"
 	"github.com/manicar2093/gomancer/bootstrap/core/apperrors"
 	"github.com/manicar2093/gomancer/bootstrap/core/echoer"
-	"github.com/manicar2093/gomancer/bootstrap/core/logger"
+
 	"github.com/manicar2093/gomancer/bootstrap/core/stages"
 	"github.com/manicar2093/gomancer/bootstrap/core/validator"
+	log "github.com/sirupsen/logrus"
 
 	echoSwagger "github.com/swaggo/echo-swagger"
 )
@@ -65,7 +66,7 @@ func (c *Server) configEcho() {
 	c.Use(middleware.CORS())
 	c.Validator = c.gookitValidator
 	c.HTTPErrorHandler = apperrors.HandlerWEcho
-	logger.GetLogger().Debug("swagger docs available")
+	log.Debug("swagger docs available")
 	c.GET("/swagger/*", echoSwagger.WrapHandler)
 }
 
@@ -74,7 +75,7 @@ func (c *Server) configControllers() {
 		controller.SetUpRoutes(c.baseEndpoint)
 	}
 	if c.stage == stages.Dev {
-		logger.GetLogger().Info("/echo and /registered-routes endpoint registered")
+		log.Info("/echo and /registered-routes endpoint registered")
 		echoer.RegisterEchoer(c.Echo)               //nolint:errcheck
 		echoroutesview.RegisterRoutesViewer(c.Echo) //nolint:errcheck
 	}

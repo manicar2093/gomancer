@@ -71,13 +71,13 @@ func GenerateRepository(input domain.GenerateModelInput) error {
 
 func generateRepoStruct(input domain.GenerateModelInput, generatorData generatorData) Code {
 	return Type().Id(generatorData.repositoryStructName).Struct(
-		Id(generatorData.db).Op("*").Qual(domain.WinterConnPkgPath, "ConnWrapper"),
+		Id(generatorData.db).Op("*").Qual(domain.GetCorePackage(input.ModuleInfo, domain.CoreConnectionsPkg), "ConnWrapper"),
 	).Line().Line()
 }
 
 func generateRepoConstructor(input domain.GenerateModelInput, generatorData generatorData) Code {
 	return Func().Id(fmt.Sprintf("New%sRepository", input.PascalCase)).Params(
-		Id(generatorData.db).Op("*").Qual(domain.WinterConnPkgPath, "ConnWrapper"),
+		Id(generatorData.db).Op("*").Qual(domain.GetCorePackage(input.ModuleInfo, domain.CoreConnectionsPkg), "ConnWrapper"),
 	).Op("*").Id(generatorData.repositoryStructName).Block(
 		Return(
 			Op("&").Id(generatorData.repositoryStructName).Values(
@@ -220,6 +220,43 @@ func generatePartialUpdateFunction(input domain.GenerateModelInput, generatorDat
 						Call(),
 				)
 			})
+
+			g.
+				Line().
+				If(
+					Id("len").
+						Call(
+							Qual("slices", "Collect").
+								Call(
+									Qual("maps", "Keys").
+										Call(
+											Id("updates"),
+										),
+								),
+						).
+						Op("==").
+						Lit(0),
+				).Block(
+				If(
+					Id("res").
+						Op(":=").
+						Id(generatorData.receiverVar).
+						Dot(generatorData.db).
+						Dot("First").
+						Call(
+							Op("&").Id("result"),
+							Id("changes").Dot("Id"),
+						),
+					Id("res").
+						Dot("Error").
+						Op("!=").
+						Nil(),
+				).Block(
+					Return(Nil(), Id("res").Dot("Error")),
+				),
+
+				Return(Id("&result"), Nil()),
+			)
 
 			g.
 				Line().

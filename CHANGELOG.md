@@ -1,3 +1,12 @@
+## v0.11.0 (2025-05-15)
+
+### Feat
+
+- remove all winter references and point them to core package
+- add validation on SelectiveUpdate generation to avoid empty returns
+- remove code for prisma migrations due schema folder requirements
+- change logger implementation delivering a Config method
+
 ## v0.10.0 (2025-04-17)
 
 ### Feat

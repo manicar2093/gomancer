@@ -7,8 +7,9 @@ import (
 )
 
 type (
-	Path string
-	Pkg  string
+	Path        string
+	Pkg         string
+	CorePackage string
 )
 
 var (
@@ -25,6 +26,9 @@ var (
 	PrismaSchemaPackagePath              = Path(path.Join(string(PrismaPackagePath), "schema"))
 	InternalDomainModelsPackagePath      = Path(path.Join(string(InternalPackagePath), "domain", "models"))
 	GithubWorkflowsPackagePath           = Path(path.Join(string(GithubPackagePath), "workflows"))
+
+	CoreConnectionsPkg CorePackage = "connections"
+	CoreCommonReqPkg   CorePackage = "commonreq"
 )
 
 var (
@@ -34,4 +38,12 @@ var (
 
 func GetPackageQualifier(moduleName string, path Path, model string) *jen.Statement {
 	return jen.Qual(fmt.Sprintf("%s/%s", moduleName, path), model)
+}
+
+func GenerateCorePackage(info ModuleInfo) string {
+	return fmt.Sprintf("%s/core", info.Name)
+}
+
+func GetCorePackage(info ModuleInfo, pkg CorePackage) string {
+	return fmt.Sprintf("%s/%s", GenerateCorePackage(info), pkg)
 }

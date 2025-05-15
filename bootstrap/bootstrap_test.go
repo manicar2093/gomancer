@@ -52,6 +52,9 @@ PORT=3000
     },
     "dependencies": {
         "@prisma/client": "^6.3.0"
+    },
+    "prisma": {
+        "schema": "./prisma"
     }
 }
 `
@@ -65,7 +68,6 @@ PORT=3000
 
 generator client {
     provider        = "prisma-client-js"
-    previewFeatures = ["prismaSchemaFolder"]
 }
 
 datasource db {
@@ -172,12 +174,12 @@ func decode(t testingI, args map[string]any, holder any) {
 package config
 
 import (
-    "github.com/manicar2093/winter"
-    "github.com/manicar2093/winter/connections"
+    "test/core"
+    "test/core/connections"
 )
 
 type Config struct {
-    winter.Config
+    core.Config
     connections.DatabaseConnectionConfig
 }
 `

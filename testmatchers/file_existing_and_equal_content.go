@@ -10,23 +10,25 @@ import (
 
 type BeAnExistingFileAndEqualStringMatcher struct {
 	ExpectedStringContent string
+	isFileExists          bool
+	contentFile           []byte
 }
 
 func BeAnExistingFileAndEqualString(expectedStringContent string) types.GomegaMatcher {
 	return &BeAnExistingFileAndEqualStringMatcher{
-		expectedStringContent,
+		ExpectedStringContent: expectedStringContent,
 	}
 }
 
-func (c BeAnExistingFileAndEqualStringMatcher) Match(actual interface{}) (success bool, err error) {
+func (c *BeAnExistingFileAndEqualStringMatcher) Match(actual interface{}) (success bool, err error) {
 	sourceFilePath, ok := actual.(string)
 	if !ok {
 		return false, fmt.Errorf("BeAnExistingFileAndEqualStringMatcher matcher expects a file path")
 	}
 	existingFileMatcher := matchers.BeAnExistingFileMatcher{}
-	isExisting, err := existingFileMatcher.Match(sourceFilePath)
-	if err != nil || !isExisting {
-		return isExisting, err
+	c.isFileExists, err = existingFileMatcher.Match(sourceFilePath)
+	if err != nil || !c.isFileExists {
+		return c.isFileExists, err
 	}
 
 	sourceFilePathContent, err := os.ReadFile(sourceFilePath)
@@ -37,14 +39,18 @@ func (c BeAnExistingFileAndEqualStringMatcher) Match(actual interface{}) (succes
 	equalMatcher := matchers.EqualMatcher{
 		Expected: string(sourceFilePathContent),
 	}
+	c.contentFile = sourceFilePathContent
 	return equalMatcher.Match(c.ExpectedStringContent)
 
 }
 
-func (c BeAnExistingFileAndEqualStringMatcher) FailureMessage(actual interface{}) (message string) {
-	return format.Message(actual, "to exist and equal string")
+func (c *BeAnExistingFileAndEqualStringMatcher) FailureMessage(actual interface{}) (message string) {
+	if !c.isFileExists {
+		return format.Message(actual, "to exist")
+	}
+	return format.Message(string(c.contentFile), "to equal string content", c.ExpectedStringContent)
 }
 
-func (c BeAnExistingFileAndEqualStringMatcher) NegatedFailureMessage(actual interface{}) (message string) {
+func (c *BeAnExistingFileAndEqualStringMatcher) NegatedFailureMessage(actual interface{}) (message string) {
 	return format.Message(actual, "not to exist and not match string")
 }

@@ -118,10 +118,11 @@ import (
     "github.com/labstack/echo/v4"
     "github.com/labstack/echo/v4/middleware"
     "github.com/manicar2093/echoroutesview"
-    "github.com/manicar2093/winter"
-    "github.com/manicar2093/winter/apperrors"
-    "github.com/manicar2093/winter/converters"
-    "github.com/manicar2093/winter/validator"
+    "test/core"
+    "test/core/apperrors"
+    "test/core/converters"
+    "test/core/validator"
+    "test/core/logger"
     "test/pkg/config"
     "test/cmd/api/controllers"
 )
@@ -131,10 +132,11 @@ func main() {
         echoInstance = echo.New()
         baseEndpoint = "/api/v1"
         baseGroup    = echoInstance.Group(baseEndpoint)
-        conf         = converters.Must(winter.ParseConfig[config.Config]())
+        conf         = converters.Must(core.ParseConfig[config.Config]())
     )
+    logger.Config()
     echoInstance.Use(middleware.Logger())
-    winter.RegisterController(baseGroup, controllers.NewInitController())
+    core.RegisterController(baseGroup, controllers.NewInitController())
     echoroutesview.RegisterRoutesViewer(echoInstance)
 
     echoInstance.HTTPErrorHandler = apperrors.HandlerWEcho

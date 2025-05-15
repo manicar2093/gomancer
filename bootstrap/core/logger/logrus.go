@@ -14,8 +14,7 @@ var (
 	createBlackBox = func(stage string) (*os.File, error) {
 		file, err := os.OpenFile(fmt.Sprintf("black_box_%s.log", stage), os.O_CREATE|os.O_WRONLY|os.O_APPEND, 0666)
 		if err != nil {
-			log.Info("Failed to log to file, using default stderr")
-			return nil, err
+			panic(err)
 		}
 		return file, err
 	}
@@ -26,8 +25,10 @@ var (
 				return err
 			}
 			loggerOutput := io.MultiWriter(file, os.Stdout)
+
 			l.SetOutput(loggerOutput)
 			internalLog.SetOutput(loggerOutput)
+
 			l.SetFormatter(&logrus.JSONFormatter{
 				PrettyPrint: true,
 			})
@@ -58,22 +59,13 @@ var (
 			return nil
 		},
 	}
-
-	log *Logger
 )
 
-type (
-	Logger struct {
-		*logrus.Logger
-	}
-)
-
-func GetLogger() *Logger {
-	return log
-}
-
-func init() {
-	logger := logrus.New()
+// Config check configured environment to set configurations to logrus.
+// Depending on environment outputs will be (considering output from golang log package will be catched to).
+// A log file called black_box_<environment>.log will be created
+func Config() {
+	logger := logrus.StandardLogger()
 	currentStage, err := stages.GetCurrentStage()
 	if err != nil {
 		panic(err)
@@ -81,5 +73,4 @@ func init() {
 	if err := initializers[currentStage](logger); err != nil {
 		panic(err)
 	}
-	log = &Logger{Logger: logger}
 }

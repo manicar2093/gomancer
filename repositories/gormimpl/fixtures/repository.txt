@@ -5,10 +5,12 @@ import (
 	uuid "github.com/google/uuid"
 	goption "github.com/manicar2093/goption"
 	gormpager "github.com/manicar2093/gormpager"
-	connections "github.com/manicar2093/winter/connections"
 	udecimal "github.com/quagmt/udecimal"
+	connections "github.com/user/project_name/core/connections"
 	models "github.com/user/project_name/internal/domain/models"
 	clause "gorm.io/gorm/clause"
+	"maps"
+	"slices"
 	"time"
 )
 
@@ -78,6 +80,13 @@ func (c *PostTestRepository) PartialUpdateById(changes PartialUpdateByIdInput) (
 	}
 	if changes.CreatedAt.IsPresent() {
 		updates["created_at"] = changes.CreatedAt.MustGet()
+	}
+
+	if len(slices.Collect(maps.Keys(updates))) == 0 {
+		if res := c.db.First(&result, changes.Id); res.Error != nil {
+			return nil, res.Error
+		}
+		return &result, nil
 	}
 
 	if res := c.db.Model(&result).Clauses(clause.Returning{}).Where("id = ?", changes.Id).Updates(updates); res.Error != nil {

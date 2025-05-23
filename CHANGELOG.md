@@ -1,3 +1,14 @@
+## v0.12.0 (2025-05-23)
+
+### Feat
+
+- add package entity name to be shared on generation
+- add package pluralization on repo generation
+
+### Fix
+
+- add passing isPkUuid argumento to parseArgs
+
 ## v0.11.0 (2025-05-15)
 
 ### Feat

@@ -55,7 +55,7 @@ func GenerateRepository(input domain.GenerateModelInput) error {
 
 	modelPackagePath := path.Join(
 		string(domain.InternalPackagePath),
-		input.LowerNoSpaceCase,
+		input.PackageEntityName,
 	)
 	if err := os.MkdirAll(modelPackagePath, os.ModePerm); err != nil {
 		return err

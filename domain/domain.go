@@ -8,8 +8,9 @@ type (
 	}
 	GenerateModelInput struct {
 		TransformedText
-		ModuleInfo  ModuleInfo
-		IdAttribute Attribute
-		Attributes  []Attribute
+		PackageEntityName string
+		ModuleInfo        ModuleInfo
+		IdAttribute       Attribute
+		Attributes        []Attribute
 	}
 )

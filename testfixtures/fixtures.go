@@ -6,6 +6,7 @@ const TestPath = "github.com/user/project_name"
 
 var (
 	ModelSuccess = domain.GenerateModelInput{
+		PackageEntityName: "posttests",
 		ModuleInfo: domain.ModuleInfo{
 			Name: TestPath,
 		},

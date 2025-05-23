@@ -1,12 +1,13 @@
 module github.com/manicar2093/gomancer
 
-go 1.23.3
+go 1.24
 
 require (
 	github.com/caarlos0/env/v10 v10.0.0
 	github.com/charmbracelet/log v0.4.1
 	github.com/coditory/go-errors v0.0.6
 	github.com/dave/jennifer v1.7.1
+	github.com/gertd/go-pluralize v0.2.1
 	github.com/go-faker/faker/v4 v4.6.0
 	github.com/google/uuid v1.6.0
 	github.com/gookit/validate v1.5.4
@@ -17,8 +18,8 @@ require (
 	github.com/manicar2093/echoroutesview v0.1.0
 	github.com/manicar2093/goption v0.9.3
 	github.com/manicar2093/gormpager v0.6.0
-	github.com/onsi/ginkgo/v2 v2.23.1
-	github.com/onsi/gomega v1.36.2
+	github.com/onsi/ginkgo/v2 v2.23.4
+	github.com/onsi/gomega v1.36.3
 	github.com/redis/go-redis/v9 v9.7.3
 	github.com/rjNemo/underscore v0.7.0
 	github.com/sirupsen/logrus v1.9.3
@@ -41,7 +42,6 @@ require (
 	github.com/charmbracelet/lipgloss v1.0.0 // indirect
 	github.com/charmbracelet/x/ansi v0.4.2 // indirect
 	github.com/dgryski/go-rendezvous v0.0.0-20200823014737-9f7001d12a5f // indirect
-	github.com/gertd/go-pluralize v0.2.1 // indirect
 	github.com/ghodss/yaml v1.0.0 // indirect
 	github.com/go-logfmt/logfmt v0.6.0 // indirect
 	github.com/go-logr/logr v1.4.2 // indirect
@@ -50,8 +50,8 @@ require (
 	github.com/go-openapi/spec v0.20.4 // indirect
 	github.com/go-openapi/swag v0.19.15 // indirect
 	github.com/go-task/slim-sprig/v3 v3.0.0 // indirect
-	github.com/google/go-cmp v0.6.0 // indirect
-	github.com/google/pprof v0.0.0-20241210010833-40e02aabc2ad // indirect
+	github.com/google/go-cmp v0.7.0 // indirect
+	github.com/google/pprof v0.0.0-20250403155104-27863c87afa6 // indirect
 	github.com/gookit/filter v1.2.2 // indirect
 	github.com/gookit/goutil v0.6.18 // indirect
 	github.com/huandu/xstrings v1.3.3 // indirect
@@ -79,14 +79,17 @@ require (
 	github.com/swaggo/swag v1.8.12 // indirect
 	github.com/valyala/bytebufferpool v1.0.0 // indirect
 	github.com/valyala/fasttemplate v1.2.2 // indirect
+	go.uber.org/automaxprocs v1.6.0 // indirect
 	golang.org/x/crypto v0.36.0 // indirect
 	golang.org/x/exp v0.0.0-20240904232852-e7e105dedf7e // indirect
-	golang.org/x/net v0.36.0 // indirect
+	golang.org/x/net v0.37.0 // indirect
 	golang.org/x/sync v0.12.0 // indirect
-	golang.org/x/sys v0.31.0 // indirect
+	golang.org/x/sys v0.32.0 // indirect
 	golang.org/x/text v0.23.0 // indirect
 	golang.org/x/time v0.8.0 // indirect
-	golang.org/x/tools v0.30.0 // indirect
+	golang.org/x/tools v0.31.0 // indirect
 	gopkg.in/yaml.v2 v2.4.0 // indirect
 	gopkg.in/yaml.v3 v3.0.1 // indirect
 )
+
+tool github.com/onsi/ginkgo/v2/ginkgo

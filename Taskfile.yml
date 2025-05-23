@@ -6,7 +6,7 @@ tasks:
   test:
     desc: Run test with ginkgo
     cmds:
-      - ginkgo run -v ./...
+      - go tool ginkgo run -v ./...
 
   integration_test:
     desc: Run project integration test

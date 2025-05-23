@@ -1,3 +1,9 @@
+## v0.13.0 (2025-05-23)
+
+### Feat
+
+- add version 1.24 and ginkgo as go tool
+
 ## v0.12.0 (2025-05-23)
 
 ### Feat

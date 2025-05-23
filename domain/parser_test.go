@@ -31,6 +31,7 @@ var _ = Describe("Parser", func() {
 
 			Expect(hasErr).To(BeFalse())
 			Expect(got).To(gstruct.MatchAllFields(gstruct.Fields{
+				"PackageEntityName": Equal("helloworlds"),
 				"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
 					"SnakeCase":        Equal("hello_world"),
 					"PascalCase":       Equal("HelloWorld"),

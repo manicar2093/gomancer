@@ -3,6 +3,7 @@ package domain
 import (
 	"fmt"
 	"github.com/charmbracelet/log"
+	"github.com/gertd/go-pluralize"
 	"github.com/iancoleman/strcase"
 	"github.com/rjNemo/underscore"
 	"strings"
@@ -34,12 +35,15 @@ func ParseArgs(args []string, moduleName string, isPkUuid bool) (GenerateModelIn
 	)
 
 	modelNameCamelCase := strcase.ToLowerCamel(modelName)
+	lowerNoSpaceCase := strings.ToLower(modelNameCamelCase)
+	packageName := pluralize.NewClient().Plural(lowerNoSpaceCase)
 	response := GenerateModelInput{
+		PackageEntityName: packageName,
 		TransformedText: TransformedText{
 			SnakeCase:        strcase.ToSnake(modelName),
 			PascalCase:       strcase.ToCamel(modelName),
 			CamelCase:        modelNameCamelCase,
-			LowerNoSpaceCase: strings.ToLower(modelNameCamelCase),
+			LowerNoSpaceCase: lowerNoSpaceCase,
 		},
 		ModuleInfo: ModuleInfo{
 			Name: moduleName,

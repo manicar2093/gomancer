@@ -4,7 +4,6 @@ import (
 	"fmt"
 	"github.com/charmbracelet/log"
 	. "github.com/dave/jennifer/jen"
-	"github.com/gertd/go-pluralize"
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/rjNemo/underscore"
 	"os"
@@ -56,7 +55,7 @@ func GenerateRepository(input domain.GenerateModelInput) error {
 
 	modelPackagePath := path.Join(
 		string(domain.InternalPackagePath),
-		pluralize.NewClient().Plural(input.LowerNoSpaceCase),
+		input.PackageEntityName,
 	)
 	if err := os.MkdirAll(modelPackagePath, os.ModePerm); err != nil {
 		return err

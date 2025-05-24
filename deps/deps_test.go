@@ -252,7 +252,7 @@ var _ = Describe("Deps", func() {
 			It("contains all cmd usable callers", func() {
 				file := jen.NewFile("cmd_test")
 
-				Expect(container.Project.Cmd.Alias).To(Equal(""))
+				Expect(container.Project.Cmd.Alias).To(Equal("cmd"))
 				Expect(container.Project.Cmd.Path).To(Equal(testfixtures.TestPath + "/cmd"))
 				container.Project.Cmd.ImportAlias(file)
 

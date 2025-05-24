@@ -157,7 +157,7 @@ func Init(input domain.GenerateModelInput) Container {
 			Cmd: Cmd{
 				Dependency: Dependency{
 					Path:  buildPath(input.ModuleInfo.Name, "cmd"),
-					Alias: "",
+					Alias: "cmd",
 				},
 				Api: Api{
 					Dependency: Dependency{

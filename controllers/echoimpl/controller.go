@@ -3,6 +3,7 @@ package echoimpl
 import (
 	"embed"
 	"github.com/charmbracelet/log"
+	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/domain"
 	"os"
 	"path"
@@ -15,15 +16,12 @@ var templatesFS embed.FS
 type (
 	tplInput struct {
 		domain.GenerateModelInput
-		EchoDependency           string
-		CoreDependency           string
-		CoreCommonReqDependency  string
-		InternalDomainModelsPath domain.Path
-		InternalPackagePath      domain.Path
+		GoDeps     deps.Container
+		InCreation deps.Dependency
 	}
 )
 
-func GenerateController(input domain.GenerateModelInput) error {
+func GenerateController(input domain.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
 	log.Info("Generating echo controller...")
 	var tpl = template.Must(template.
 		New("controllers").
@@ -45,12 +43,9 @@ func GenerateController(input domain.GenerateModelInput) error {
 	defer f.Close()
 
 	if err := tpl.ExecuteTemplate(f, "controller_tmpl", tplInput{
-		GenerateModelInput:       input,
-		EchoDependency:           domain.EchoPkgPath,
-		CoreDependency:           domain.GenerateCorePackage(input.ModuleInfo),
-		CoreCommonReqDependency:  domain.GetCorePackage(input.ModuleInfo, domain.CoreCommonReqPkg),
-		InternalDomainModelsPath: domain.InternalDomainModelsPackagePath,
-		InternalPackagePath:      domain.InternalPackagePath,
+		GenerateModelInput: input,
+		GoDeps:             goDeps,
+		InCreation:         inCreation,
 	}); err != nil {
 		return err
 	}

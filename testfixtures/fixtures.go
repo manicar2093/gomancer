@@ -1,6 +1,9 @@
 package testfixtures
 
-import "github.com/manicar2093/gomancer/domain"
+import (
+	"github.com/manicar2093/gomancer/deps"
+	"github.com/manicar2093/gomancer/domain"
+)
 
 const TestPath = "github.com/user/project_name"
 
@@ -86,4 +89,7 @@ var (
 			},
 		},
 	}
+
+	ModelSuccessDepsContainer = deps.Init(ModelSuccess.ModuleInfo)
+	ModelSuccessDepInCreation = deps.InCreation(ModelSuccess)
 )

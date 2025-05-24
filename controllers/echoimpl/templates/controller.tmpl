@@ -2,20 +2,20 @@
 package controllers
 
 import (
-	"net/http"
+	{{.GoDeps.Std.Net.Http.GenerateImportString}}
 
-	echo "{{.EchoDependency}}"
-	core "{{.CoreDependency}}"
-	commonreq "{{.CoreCommonReqDependency}}"
-	models "{{.ModuleInfo.Name}}/{{.InternalDomainModelsPath}}"
-	{{.PackageEntityName}} "{{.ModuleInfo.Name}}/{{.InternalPackagePath}}/{{.PackageEntityName}}"
+	{{.GoDeps.Echo.GenerateImportString}}
+	{{.GoDeps.Project.Core.GenerateImportString}}
+	{{.GoDeps.Project.Core.CommonReq.GenerateImportString}}
+	{{.GoDeps.Project.Internal.Domain.Models.GenerateImportString}}
+	{{.InCreation.GenerateImportString}}
 )
 
 type {{.PascalCase}}Controller struct {
-	{{.CamelCase}}Repository *{{.PackageEntityName}}.{{.PascalCase}}Repository
+	{{.CamelCase}}Repository *{{.InCreation.Alias}}.{{.PascalCase}}Repository
 }
 
-func New{{.PascalCase}}Controller({{.CamelCase}}Repository *{{.PackageEntityName}}.{{.PascalCase}}Repository) *{{.PascalCase}}Controller {
+func New{{.PascalCase}}Controller({{.CamelCase}}Repository *{{.InCreation.Alias}}.{{.PascalCase}}Repository) *{{.PascalCase}}Controller {
 	return &{{.PascalCase}}Controller{
 		{{.CamelCase}}Repository: {{.CamelCase}}Repository,
 	}
@@ -74,7 +74,7 @@ func (c *{{.PascalCase}}Controller) GetAllPaginatedHandler(ctx echo.Context) err
 }
 
 func (c *{{.PascalCase}}Controller) PartialUpdateByIdHandler(ctx echo.Context) error {
-	req := {{.PackageEntityName}}.PartialUpdateByIdInput{}
+	req := {{.InCreation.Alias}}.PartialUpdateByIdInput{}
 	if err := core.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}

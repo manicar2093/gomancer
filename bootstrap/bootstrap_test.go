@@ -232,7 +232,7 @@ jobs:
             - name: Set up Go
                 uses: actions/setup-go@v3
                 with:
-                    go-version: 1.23.x
+                    go-version: 1.24.x
             - name: Set GOBIN
                 run: go env -w GOBIN=/usr/local/bin
             - name: Create bump and changelog
@@ -247,7 +247,7 @@ jobs:
 		It("creates go.mod file", func() {
 			content := `module test
 
-go 1.23
+go 1.24
 `
 			Expect(dirWithPath("go.mod")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})

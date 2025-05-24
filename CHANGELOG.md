@@ -1,3 +1,9 @@
+## v0.15.0 (2025-05-24)
+
+### Feat
+
+- add golang version 1.24 to generated code on boostrap package
+
 ## v0.14.0 (2025-05-24)
 
 ### Feat

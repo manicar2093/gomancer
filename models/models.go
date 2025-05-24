@@ -13,17 +13,17 @@ import (
 	"path"
 )
 
-func GenerateModel(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
-	if err := doGenerateModel(input, goDeps, inCreation); err != nil {
+func GenerateModel(input parser.GenerateModelInput, goDeps deps.Container) error {
+	if err := doGenerateModel(input, goDeps); err != nil {
 		return err
 	}
-	if err := doGenerateTestGeneratorFunc(input); err != nil {
+	if err := doGenerateTestGeneratorFunc(input, goDeps); err != nil {
 		return err
 	}
 	return nil
 }
 
-func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
+func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) error {
 	log.Info("Generating model...")
 	attribs := append(
 		[]Code{
@@ -62,14 +62,14 @@ func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container, inC
 	return destinyFile.Save(path.Join(string(domain.InternalDomainModelsPackagePath), input.SnakeCase+".go"))
 }
 
-func doGenerateTestGeneratorFunc(input parser.GenerateModelInput) error {
+func doGenerateTestGeneratorFunc(input parser.GenerateModelInput, goDeps deps.Container) error {
 	log.Info("Generating model testing generator...")
 	valuesDict := make(Dict)
 
-	valuesDict[Id("Id")] = FakerCallByType(input.IdAttribute.Type)
+	valuesDict[Id("Id")] = FakerCallByType(input.IdAttribute.Type, goDeps)
 
 	structValues := underscore.Reduce(input.Attributes, func(item parser.Attribute, acc Dict) Dict {
-		fakeTypeQualifier := FakerCallByType(item.Type)
+		fakeTypeQualifier := FakerCallByType(item.Type, goDeps)
 		if item.IsOptional {
 			fakeTypeQualifier = Qual(domain.GoptionPkgPath, "Of").Call(fakeTypeQualifier)
 		}
@@ -80,9 +80,9 @@ func doGenerateTestGeneratorFunc(input parser.GenerateModelInput) error {
 	constructor := Null().Func().Id(fmt.Sprintf("Generate%s", input.PascalCase)).Params(
 		Id("t").Id("testingI"),
 		Id("args").Map(String()).Any(),
-	).Add(domain.GetPackageQualifier(input.ModuleInfo.Name, domain.InternalDomainModelsPackagePath, input.PascalCase)).Block(
-		Id("fak").Op(":=").Add(
-			domain.GetPackageQualifier(input.ModuleInfo.Name, domain.InternalDomainModelsPackagePath, input.PascalCase),
+	).Qual(goDeps.Project.Internal.Domain.Models.Path, input.PascalCase).Block(
+		Id("fak").Op(":=").Qual(
+			goDeps.Project.Internal.Domain.Models.Path, input.PascalCase,
 		).Values(
 			structValues,
 		),
@@ -93,7 +93,7 @@ func doGenerateTestGeneratorFunc(input parser.GenerateModelInput) error {
 	)
 
 	destinyFile := NewFile(string(domain.GeneratorsPkg))
-	destinyFile.ImportAlias(fakerPkgPath, "gofakeit")
+	destinyFile.ImportAlias(goDeps.GoFakeIt.Path, goDeps.GoFakeIt.Alias)
 	destinyFile.Add(constructor)
 	return destinyFile.Save(path.Join(string(domain.PkgGeneratorsPackagePath), input.SnakeCase+".go"))
 }

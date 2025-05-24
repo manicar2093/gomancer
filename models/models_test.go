@@ -26,7 +26,7 @@ var _ = Describe("Models", func() {
 		It("creates text for model and function to generate models on test", func() {
 			var input = testfixtures.ModelSuccess
 
-			err := models.GenerateModel(input, testfixtures.ModelSuccessDepsContainer, testfixtures.ModelSuccessDepInCreation)
+			err := models.GenerateModel(input, testfixtures.ModelSuccessDepsContainer)
 
 			Expect(err).ToNot(HaveOccurred())
 			Expect(path.Join(string(domain.InternalDomainModelsPackagePath), "post_test.go")).Should(

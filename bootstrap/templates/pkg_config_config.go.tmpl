@@ -2,8 +2,8 @@
 package config
 
 import (
-    "{{.ModuleName}}/core"
-    "{{.ModuleName}}/core/connections"
+    {{.GoDeps.Project.Core.GenerateImportString}}
+    {{.GoDeps.Project.Core.Connections.GenerateImportString}}
 )
 
 type Config struct {

@@ -14,7 +14,7 @@ var _ = Describe("Deps", func() {
 	var container deps.Container
 
 	BeforeEach(func() {
-		container = deps.Init(testfixtures.ModelSuccess)
+		container = deps.Init(testfixtures.ModelSuccess.ModuleInfo)
 	})
 
 	Describe("InCreation", func() {
@@ -36,9 +36,9 @@ var _ = Describe("Deps", func() {
 			Expect(container.Echo.Path).To(Equal("github.com/labstack/echo/v4"))
 			container.Echo.ImportAlias(file)
 
-			Expect(container.Echo.Middleware.Alias).To(Equal("middleware"))
-			Expect(container.Echo.Middleware.Path).To(Equal("github.com/labstack/echo/v4/middleware"))
-			container.Echo.Middleware.ImportAlias(file)
+			Expect(container.Echo.Middlewares.Alias).To(Equal("middleware"))
+			Expect(container.Echo.Middlewares.Path).To(Equal("github.com/labstack/echo/v4/middleware"))
+			container.Echo.Middlewares.ImportAlias(file)
 		})
 	})
 
@@ -215,11 +215,11 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Core.Converters.Path).To(Equal(testfixtures.TestPath + "/core/converters"))
 				container.Project.Core.Converters.ImportAlias(file)
 
-				Expect(container.Project.Core.Validator.Alias).To(Equal(""))
+				Expect(container.Project.Core.Validator.Alias).To(Equal("validator"))
 				Expect(container.Project.Core.Validator.Path).To(Equal(testfixtures.TestPath + "/core/validator"))
 				container.Project.Core.Validator.ImportAlias(file)
 
-				Expect(container.Project.Core.Logger.Alias).To(Equal(""))
+				Expect(container.Project.Core.Logger.Alias).To(Equal("logger"))
 				Expect(container.Project.Core.Logger.Path).To(Equal(testfixtures.TestPath + "/core/logger"))
 				container.Project.Core.Logger.ImportAlias(file)
 

@@ -5,6 +5,7 @@ import (
 	"errors"
 	"fmt"
 	"github.com/charmbracelet/log"
+	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/domain"
 	"net/url"
 	"os"
@@ -174,12 +175,14 @@ func InitProject(input InitProjectInput) (string, error) {
 			ProjectName                     string
 			DevEnvironment, TestEnvironment string
 			GoVersion                       string
+			GoDeps                          deps.Container
 		}{
 			InitProjectInput: input,
 			ProjectName:      projectDirName,
 			DevEnvironment:   "dev",
 			TestEnvironment:  "test",
 			GoVersion:        "1.23",
+			GoDeps:           deps.Init(domain.ModuleInfo{Name: input.ModuleName}),
 		}
 	)
 	for _, dir := range initialFiles {

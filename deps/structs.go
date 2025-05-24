@@ -8,7 +8,7 @@ type (
 
 	Echo struct {
 		Dependency
-		Middleware Dependency
+		Middlewares Dependency
 	}
 	EchoRoutesView struct {
 		Dependency
@@ -57,7 +57,6 @@ type (
 	Internal struct {
 		Dependency
 		Domain
-		InCreation Dependency
 	}
 	Core struct {
 		Dependency

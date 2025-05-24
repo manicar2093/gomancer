@@ -116,17 +116,17 @@ func (c *InitController) GetHandler(ctx echo.Context) error {
 			content := `package main
 
 import (
-    "fmt"
-    "github.com/labstack/echo/v4"
-    "github.com/labstack/echo/v4/middleware"
-    "github.com/manicar2093/echoroutesview"
-    "test/core"
-    "test/core/apperrors"
-    "test/core/converters"
-    "test/core/validator"
-    "test/core/logger"
-    "test/pkg/config"
-    "test/cmd/api/controllers"
+    fmt	"fmt"
+    echo	"github.com/labstack/echo/v4"
+    middleware	"github.com/labstack/echo/v4/middleware"
+    echoroutesview	"github.com/manicar2093/echoroutesview"
+    core	"test/core"
+    apperrors	"test/core/apperrors"
+    converters	"test/core/converters"
+    validator	"test/core/validator"
+    logger	"test/core/logger"
+    config	"test/pkg/config"
+    controllers	"test/cmd/api/controllers"
 )
 
 func main() {
@@ -154,7 +154,7 @@ func main() {
 			content := `// Package generators contains all your models generators; functions used to generate mocked data and help you testing
 package generators
 
-import "github.com/go-viper/mapstructure/v2"
+import mapstructure	"github.com/go-viper/mapstructure/v2"
 
 type testingI interface {
     Fatal(args ...any)
@@ -174,8 +174,8 @@ func decode(t testingI, args map[string]any, holder any) {
 package config
 
 import (
-    "test/core"
-    "test/core/connections"
+    core	"test/core"
+    connections	"test/core/connections"
 )
 
 type Config struct {

@@ -14,14 +14,14 @@ var _ = Describe("Deps", func() {
 	var container deps.Container
 
 	BeforeEach(func() {
-		container = deps.Init(testfixtures.ModelSuccess.ModuleInfo)
+		container = deps.Init(testfixtures.ModelSuccess.ModuleInfo.Name)
 	})
 
 	Describe("InCreation", func() {
 		It("creates model package dependency", func() {
 			file := jen.NewFile("in_creation_test")
 
-			inCreation := deps.InCreation(testfixtures.ModelSuccess)
+			inCreation := deps.InCreation(testfixtures.ModelSuccess.ModuleInfo.Name, testfixtures.ModelSuccess.PackageEntityName)
 			Expect(inCreation.Alias).To(Equal(testfixtures.ModelSuccess.PackageEntityName))
 			Expect(inCreation.Path).To(Equal(testfixtures.TestPath + "/internal/" + testfixtures.ModelSuccess.PackageEntityName))
 			inCreation.ImportAlias(file)

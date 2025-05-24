@@ -4,14 +4,17 @@ import (
 	"fmt"
 	"github.com/charmbracelet/log"
 	. "github.com/dave/jennifer/jen"
+	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/domain"
+	"github.com/manicar2093/gomancer/parser"
+	"github.com/manicar2093/gomancer/types"
 	"github.com/rjNemo/underscore"
 
 	"path"
 )
 
-func GenerateModel(input domain.GenerateModelInput) error {
-	if err := doGenerateModel(input); err != nil {
+func GenerateModel(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
+	if err := doGenerateModel(input, goDeps, inCreation); err != nil {
 		return err
 	}
 	if err := doGenerateTestGeneratorFunc(input); err != nil {
@@ -20,11 +23,11 @@ func GenerateModel(input domain.GenerateModelInput) error {
 	return nil
 }
 
-func doGenerateModel(input domain.GenerateModelInput) error {
+func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
 	log.Info("Generating model...")
 	attribs := append(
 		[]Code{
-			Id("Id").Add(domain.QualifiersByType(input.IdAttribute.Type)).Tag(
+			Id("Id").Add(types.QualifiersByType(input.IdAttribute.Type, goDeps)).Tag(
 				domain.Tags(
 					input.IdAttribute,
 					domain.Validations{},
@@ -32,11 +35,11 @@ func doGenerateModel(input domain.GenerateModelInput) error {
 				),
 			),
 		},
-		underscore.Map(input.Attributes, func(item domain.Attribute) Code {
+		underscore.Map(input.Attributes, func(item parser.Attribute) Code {
 			builder := Null().Id(item.PascalCase)
-			itemType := domain.QualifiersByType(item.Type)
+			itemType := types.QualifiersByType(item.Type, goDeps)
 			if item.IsOptional {
-				builder.Add(domain.OptionalQualifier()).Index(itemType)
+				builder.Add(types.OptionalQualifier(goDeps)).Index(itemType)
 			} else {
 				builder.Add(itemType)
 			}
@@ -59,13 +62,13 @@ func doGenerateModel(input domain.GenerateModelInput) error {
 	return destinyFile.Save(path.Join(string(domain.InternalDomainModelsPackagePath), input.SnakeCase+".go"))
 }
 
-func doGenerateTestGeneratorFunc(input domain.GenerateModelInput) error {
+func doGenerateTestGeneratorFunc(input parser.GenerateModelInput) error {
 	log.Info("Generating model testing generator...")
 	valuesDict := make(Dict)
 
 	valuesDict[Id("Id")] = FakerCallByType(input.IdAttribute.Type)
 
-	structValues := underscore.Reduce(input.Attributes, func(item domain.Attribute, acc Dict) Dict {
+	structValues := underscore.Reduce(input.Attributes, func(item parser.Attribute, acc Dict) Dict {
 		fakeTypeQualifier := FakerCallByType(item.Type)
 		if item.IsOptional {
 			fakeTypeQualifier = Qual(domain.GoptionPkgPath, "Of").Call(fakeTypeQualifier)

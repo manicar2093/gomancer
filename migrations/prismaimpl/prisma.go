@@ -3,6 +3,8 @@ package prismaimpl
 import (
 	"fmt"
 	"github.com/manicar2093/gomancer/domain"
+	"github.com/manicar2093/gomancer/parser"
+	"github.com/manicar2093/gomancer/types"
 	"os"
 	"path"
 	"strings"
@@ -15,7 +17,7 @@ const (
 	newLine = "\n"
 )
 
-func GenerateMigration(input domain.GenerateModelInput) error {
+func GenerateMigration(input parser.GenerateModelInput) error {
 	var tpl = template.Must(template.
 		New("migrations").
 		Funcs(funcMap).
@@ -38,22 +40,22 @@ func writeString(sb *strings.Builder, content, prefix, suffix string) {
 }
 
 func getMigrationType(typ string) string {
-	switch domain.SupportedType(typ) {
-	case domain.TypeInt, domain.TypeInt8, domain.TypeInt16, domain.TypeInt32:
+	switch types.SupportedType(typ) {
+	case types.TypeInt, types.TypeInt8, types.TypeInt16, types.TypeInt32:
 		return "Int"
-	case domain.TypeInt64:
+	case types.TypeInt64:
 		return "BigInt"
-	case domain.TypeFloat32, domain.TypeFloat64:
+	case types.TypeFloat32, types.TypeFloat64:
 		return "Float"
-	case domain.TypeString:
+	case types.TypeString:
 		return "String"
-	case domain.TypeBool:
+	case types.TypeBool:
 		return "Boolean"
-	case domain.TypeTime:
+	case types.TypeTime:
 		return "DateTime"
-	case domain.TypeDecimal:
+	case types.TypeDecimal:
 		return "Decimal"
-	case domain.TypeUuid:
+	case types.TypeUuid:
 		return "String"
 	default:
 		panic(fmt.Sprintf("unsupported type %s for prisma migrations", typ))
@@ -61,10 +63,10 @@ func getMigrationType(typ string) string {
 }
 
 func getTypeAttribute(t string) string {
-	switch domain.SupportedType(t) {
-	case domain.TypeDecimal:
+	switch types.SupportedType(t) {
+	case types.TypeDecimal:
 		return "@db.Decimal(10,2)"
-	case domain.TypeUuid:
+	case types.TypeUuid:
 		return "@db.Uuid"
 	default:
 		return empty

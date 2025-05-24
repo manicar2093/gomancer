@@ -2,25 +2,25 @@ package testfixtures
 
 import (
 	"github.com/manicar2093/gomancer/deps"
-	"github.com/manicar2093/gomancer/domain"
+	"github.com/manicar2093/gomancer/parser"
 )
 
 const TestPath = "github.com/user/project_name"
 
 var (
-	ModelSuccess = domain.GenerateModelInput{
+	ModelSuccess = parser.GenerateModelInput{
 		PackageEntityName: "posttests",
-		ModuleInfo: domain.ModuleInfo{
+		ModuleInfo: parser.ModuleInfo{
 			Name: TestPath,
 		},
-		TransformedText: domain.TransformedText{
+		TransformedText: parser.TransformedText{
 			SnakeCase:        "post_test",
 			PascalCase:       "PostTest",
 			CamelCase:        "postTest",
 			LowerNoSpaceCase: "posttest",
 		},
-		IdAttribute: domain.Attribute{
-			TransformedText: domain.TransformedText{
+		IdAttribute: parser.Attribute{
+			TransformedText: parser.TransformedText{
 				SnakeCase:        "id",
 				PascalCase:       "Id",
 				CamelCase:        "id",
@@ -29,9 +29,9 @@ var (
 			Type:       "uuid",
 			IsOptional: false,
 		},
-		Attributes: []domain.Attribute{
+		Attributes: []parser.Attribute{
 			{
-				TransformedText: domain.TransformedText{
+				TransformedText: parser.TransformedText{
 					SnakeCase:        "name",
 					PascalCase:       "Name",
 					CamelCase:        "name",
@@ -41,7 +41,7 @@ var (
 				IsOptional: true,
 			},
 			{
-				TransformedText: domain.TransformedText{
+				TransformedText: parser.TransformedText{
 					SnakeCase:        "total_price",
 					PascalCase:       "TotalPrice",
 					CamelCase:        "totalPrice",
@@ -50,7 +50,7 @@ var (
 				Type: "decimal",
 			},
 			{
-				TransformedText: domain.TransformedText{
+				TransformedText: parser.TransformedText{
 					SnakeCase:        "price",
 					PascalCase:       "Price",
 					CamelCase:        "price",
@@ -60,7 +60,7 @@ var (
 				IsOptional: true,
 			},
 			{
-				TransformedText: domain.TransformedText{
+				TransformedText: parser.TransformedText{
 					SnakeCase:        "age",
 					PascalCase:       "Age",
 					CamelCase:        "age",
@@ -69,7 +69,7 @@ var (
 				Type: "int",
 			},
 			{
-				TransformedText: domain.TransformedText{
+				TransformedText: parser.TransformedText{
 					SnakeCase:        "case_of_use",
 					PascalCase:       "CaseOfUse",
 					CamelCase:        "caseOfUse",
@@ -79,7 +79,7 @@ var (
 				IsOptional: true,
 			},
 			{
-				TransformedText: domain.TransformedText{
+				TransformedText: parser.TransformedText{
 					SnakeCase:        "created_at",
 					PascalCase:       "CreatedAt",
 					CamelCase:        "createdAt",
@@ -90,6 +90,6 @@ var (
 		},
 	}
 
-	ModelSuccessDepsContainer = deps.Init(ModelSuccess.ModuleInfo)
-	ModelSuccessDepInCreation = deps.InCreation(ModelSuccess)
+	ModelSuccessDepsContainer = deps.Init(ModelSuccess.ModuleInfo.Name)
+	ModelSuccessDepInCreation = deps.InCreation(ModelSuccess.ModuleInfo.Name, ModelSuccess.PackageEntityName)
 )

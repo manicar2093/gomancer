@@ -5,6 +5,8 @@ import (
 	"github.com/charmbracelet/log"
 	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/domain"
+	"github.com/manicar2093/gomancer/parser"
+	"github.com/manicar2093/gomancer/types"
 	"os"
 	"path"
 	"text/template"
@@ -15,19 +17,19 @@ var templatesFS embed.FS
 
 type (
 	tplInput struct {
-		domain.GenerateModelInput
+		parser.GenerateModelInput
 		GoDeps     deps.Container
 		InCreation deps.Dependency
 	}
 )
 
-func GenerateController(input domain.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
+func GenerateController(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
 	log.Info("Generating echo controller...")
 	var tpl = template.Must(template.
 		New("controllers").
 		Funcs(map[string]any{
 			"GetByType": func() string {
-				if input.IdAttribute.Type == string(domain.TypeUuid) {
+				if input.IdAttribute.Type == string(types.TypeUuid) {
 					return "GetByIdUUID"
 				}
 

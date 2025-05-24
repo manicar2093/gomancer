@@ -1,12 +1,11 @@
-package domain_test
+package parser_test
 
 import (
+	"github.com/manicar2093/gomancer/parser"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/onsi/gomega/gstruct"
 	"strconv"
-
-	"github.com/manicar2093/gomancer/domain"
 )
 
 func idSliceGetter(index int, _ interface{}) string {
@@ -27,7 +26,7 @@ var _ = Describe("Parser", func() {
 				}
 			)
 
-			got, _, hasErr := domain.ParseArgs(args, moduleName, isPkUuid)
+			got, _, hasErr := parser.ParseArgs(args, moduleName, isPkUuid)
 
 			Expect(hasErr).To(BeFalse())
 			Expect(got).To(gstruct.MatchAllFields(gstruct.Fields{
@@ -102,7 +101,7 @@ var _ = Describe("Parser", func() {
 					}
 				)
 
-				_, errDetails, hasErr := domain.ParseArgs(args, moduleName, isPkUuid)
+				_, errDetails, hasErr := parser.ParseArgs(args, moduleName, isPkUuid)
 
 				Expect(hasErr).To(BeTrue())
 				Expect(errDetails[0]).To(gstruct.MatchAllFields(gstruct.Fields{
@@ -140,7 +139,7 @@ var _ = Describe("Parser", func() {
 					}
 				)
 
-				_, errDetails, hasErr := domain.ParseArgs(args, moduleName, isPkUuid)
+				_, errDetails, hasErr := parser.ParseArgs(args, moduleName, isPkUuid)
 
 				Expect(hasErr).To(BeTrue())
 				Expect(errDetails).To(gstruct.MatchAllElementsWithIndex(
@@ -179,7 +178,7 @@ var _ = Describe("Parser", func() {
 					}
 				)
 
-				_, errDetails, hasErr := domain.ParseArgs(args, moduleName, isPkUuid)
+				_, errDetails, hasErr := parser.ParseArgs(args, moduleName, isPkUuid)
 
 				Expect(hasErr).To(BeTrue())
 				Expect(errDetails).To(gstruct.MatchAllElementsWithIndex(

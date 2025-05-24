@@ -4,7 +4,10 @@ import (
 	"fmt"
 	"github.com/charmbracelet/log"
 	. "github.com/dave/jennifer/jen"
+	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/domain"
+	"github.com/manicar2093/gomancer/parser"
+	"github.com/manicar2093/gomancer/types"
 	"github.com/rjNemo/underscore"
 	"os"
 	"path"
@@ -18,10 +21,10 @@ type (
 		receiverVar          string
 		modelQualifier       Code
 	}
-	generatorType func(domain.GenerateModelInput, generatorData) Code
+	generatorType func(parser.GenerateModelInput, generatorData, deps.Container, deps.Dependency) Code
 )
 
-func GenerateRepository(input domain.GenerateModelInput) error {
+func GenerateRepository(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
 	log.Info("Generating gorm repository...")
 	repositoryStructName := fmt.Sprintf("%sRepository", input.PascalCase)
 	receiverVar := "c"
@@ -50,7 +53,7 @@ func GenerateRepository(input domain.GenerateModelInput) error {
 	}
 
 	underscore.Each(generators, func(generator generatorType) {
-		f.Add(generator(input, data))
+		f.Add(generator(input, data, goDeps, inCreation))
 	})
 
 	modelPackagePath := path.Join(
@@ -69,13 +72,13 @@ func GenerateRepository(input domain.GenerateModelInput) error {
 	)
 }
 
-func generateRepoStruct(input domain.GenerateModelInput, generatorData generatorData) Code {
+func generateRepoStruct(input parser.GenerateModelInput, generatorData generatorData, goDeps deps.Container, inCreation deps.Dependency) Code {
 	return Type().Id(generatorData.repositoryStructName).Struct(
 		Id(generatorData.db).Op("*").Qual(domain.GetCorePackage(input.ModuleInfo, domain.CoreConnectionsPkg), "ConnWrapper"),
 	).Line().Line()
 }
 
-func generateRepoConstructor(input domain.GenerateModelInput, generatorData generatorData) Code {
+func generateRepoConstructor(input parser.GenerateModelInput, generatorData generatorData, goDeps deps.Container, inCreation deps.Dependency) Code {
 	return Func().Id(fmt.Sprintf("New%sRepository", input.PascalCase)).Params(
 		Id(generatorData.db).Op("*").Qual(domain.GetCorePackage(input.ModuleInfo, domain.CoreConnectionsPkg), "ConnWrapper"),
 	).Op("*").Id(generatorData.repositoryStructName).Block(
@@ -89,7 +92,7 @@ func generateRepoConstructor(input domain.GenerateModelInput, generatorData gene
 	).Line().Line()
 }
 
-func generateSaveMethod(input domain.GenerateModelInput, generatorData generatorData) Code {
+func generateSaveMethod(input parser.GenerateModelInput, generatorData generatorData, goDeps deps.Container, inCreation deps.Dependency) Code {
 	return Comment("// Save can Create and Update an entity. You can use this for http PATH method. Check https://gorm.io/docs/update.html#Save-All-Fields for more info").
 		Line().
 		Func().Params(generatorData.receiverStatement).Id("Save").Params(
@@ -108,9 +111,9 @@ func generateSaveMethod(input domain.GenerateModelInput, generatorData generator
 	).Line().Line()
 }
 
-func generateGetByIdMethod(input domain.GenerateModelInput, generatorData generatorData) Code {
+func generateGetByIdMethod(input parser.GenerateModelInput, generatorData generatorData, goDeps deps.Container, inCreation deps.Dependency) Code {
 	return Func().Params(generatorData.receiverStatement).Id("GetById").Params(
-		Id("id").Add(domain.QualifiersByType(input.IdAttribute.Type)),
+		Id("id").Add(types.QualifiersByType(input.IdAttribute.Type, goDeps)),
 	).Params(
 		Op("*").Add(generatorData.modelQualifier),
 		Error(),
@@ -129,7 +132,7 @@ func generateGetByIdMethod(input domain.GenerateModelInput, generatorData genera
 	).Line().Line()
 }
 
-func generatedGetAllPaginatedMethod(input domain.GenerateModelInput, generatorData generatorData) Code {
+func generatedGetAllPaginatedMethod(input parser.GenerateModelInput, generatorData generatorData, goDeps deps.Container, inCreation deps.Dependency) Code {
 	return Func().Params(generatorData.receiverStatement).Id("GetAllPaginated").Params(
 		Id("pageNumber").Op(",").Id("pageSize").Int(),
 	).Params(
@@ -153,13 +156,13 @@ func generatedGetAllPaginatedMethod(input domain.GenerateModelInput, generatorDa
 	).Line().Line()
 }
 
-func generatePartialUpdateFunction(input domain.GenerateModelInput, generatorData generatorData) Code {
+func generatePartialUpdateFunction(input parser.GenerateModelInput, generatorData generatorData, goDeps deps.Container, inCreation deps.Dependency) Code {
 	return Type().
 		Id("PartialUpdateByIdInput").
 		StructFunc(func(g *Group) {
 			g.
 				Id(input.IdAttribute.PascalCase).
-				Add(domain.QualifiersByType(input.IdAttribute.Type)).
+				Add(types.QualifiersByType(input.IdAttribute.Type, goDeps)).
 				Tag(
 					domain.Tags(
 						input.IdAttribute,
@@ -167,9 +170,9 @@ func generatePartialUpdateFunction(input domain.GenerateModelInput, generatorDat
 						domain.JsonTag, domain.ParamTag,
 					),
 				)
-			underscore.Map(input.Attributes, func(item domain.Attribute) Code {
+			underscore.Map(input.Attributes, func(item parser.Attribute) Code {
 				return g.Id(item.PascalCase).Qual(domain.GoptionPkgPath, "Optional").Index(
-					domain.QualifiersByType(item.Type),
+					types.QualifiersByType(item.Type, goDeps),
 				).Tag(domain.Tags(item, domain.Validations{}, domain.JsonTag))
 			})
 		}).
@@ -204,7 +207,7 @@ func generatePartialUpdateFunction(input domain.GenerateModelInput, generatorDat
 				).
 				Line()
 
-			underscore.Each(input.Attributes, func(attribute domain.Attribute) {
+			underscore.Each(input.Attributes, func(attribute parser.Attribute) {
 				g.If(
 					Id("changes").
 						Dot(attribute.PascalCase).
@@ -292,13 +295,13 @@ func generatePartialUpdateFunction(input domain.GenerateModelInput, generatorDat
 
 }
 
-func generateDeleteByIdFunction(input domain.GenerateModelInput, generatorData generatorData) Code {
+func generateDeleteByIdFunction(input parser.GenerateModelInput, generatorData generatorData, goDeps deps.Container, inCreation deps.Dependency) Code {
 	return Func().
 		Params(generatorData.receiverStatement).
 		Id("DeleteById").
 		Params(
 			Id("id").
-				Add(domain.QualifiersByType(input.IdAttribute.Type)),
+				Add(types.QualifiersByType(input.IdAttribute.Type, goDeps)),
 		).
 		Error().
 		Block(

@@ -3,11 +3,10 @@ package deps
 import (
 	"fmt"
 	"github.com/dave/jennifer/jen"
-	"github.com/manicar2093/gomancer/domain"
 	"path"
 )
 
-func Init(input domain.ModuleInfo) Container {
+func Init(moduleName string) Container {
 	return Container{
 		Echo: Echo{
 			Dependency: Dependency{
@@ -92,72 +91,72 @@ func Init(input domain.ModuleInfo) Container {
 		Project: Project{
 			Pkg: Pkg{
 				Dependency: Dependency{
-					Path:  buildPath(input.Name, "pkg"),
+					Path:  buildPath(moduleName, "pkg"),
 					Alias: "pkg",
 				},
 				Config: Dependency{
-					Path:  buildPath(input.Name, "pkg", "config"),
+					Path:  buildPath(moduleName, "pkg", "config"),
 					Alias: "config",
 				},
 			},
 			Core: Core{
 				Dependency: Dependency{
-					Path:  buildPath(input.Name, "core"),
+					Path:  buildPath(moduleName, "core"),
 					Alias: "core",
 				},
 				Converters: Dependency{
-					Path:  buildPath(input.Name, "core", "converters"),
+					Path:  buildPath(moduleName, "core", "converters"),
 					Alias: "converters",
 				},
 				Validator: Dependency{
-					Path:  buildPath(input.Name, "core", "validator"),
+					Path:  buildPath(moduleName, "core", "validator"),
 					Alias: "validator",
 				},
 				Logger: Dependency{
-					Path:  buildPath(input.Name, "core", "logger"),
+					Path:  buildPath(moduleName, "core", "logger"),
 					Alias: "logger",
 				},
 				Connections: Dependency{
-					Path:  buildPath(input.Name, "core", "connections"),
+					Path:  buildPath(moduleName, "core", "connections"),
 					Alias: "connections",
 				},
 				CommonReq: Dependency{
-					Path:  buildPath(input.Name, "core", "commonreq"),
+					Path:  buildPath(moduleName, "core", "commonreq"),
 					Alias: "commonreq",
 				},
 				AppErrors: Dependency{
-					Path:  buildPath(input.Name, "core", "apperrors"),
+					Path:  buildPath(moduleName, "core", "apperrors"),
 					Alias: "apperrors",
 				},
 			},
 			Internal: Internal{
 				Dependency: Dependency{
-					Path:  buildPath(input.Name, "internal"),
+					Path:  buildPath(moduleName, "internal"),
 					Alias: "internal",
 				},
 				Domain: Domain{
 					Dependency: Dependency{
-						Path:  buildPath(input.Name, "internal", "domain"),
+						Path:  buildPath(moduleName, "internal", "domain"),
 						Alias: "domain",
 					},
 					Models: Dependency{
-						Path:  buildPath(input.Name, "internal", "domain", "models"),
+						Path:  buildPath(moduleName, "internal", "domain", "models"),
 						Alias: "models",
 					},
 				},
 			},
 			Cmd: Cmd{
 				Dependency: Dependency{
-					Path:  buildPath(input.Name, "cmd"),
+					Path:  buildPath(moduleName, "cmd"),
 					Alias: "cmd",
 				},
 				Api: Api{
 					Dependency: Dependency{
-						Path:  buildPath(input.Name, "cmd", "api"),
+						Path:  buildPath(moduleName, "cmd", "api"),
 						Alias: "api",
 					},
 					Controllers: Dependency{
-						Path:  buildPath(input.Name, "cmd", "api", "controllers"),
+						Path:  buildPath(moduleName, "cmd", "api", "controllers"),
 						Alias: "controllers",
 					},
 				},
@@ -166,10 +165,10 @@ func Init(input domain.ModuleInfo) Container {
 	}
 }
 
-func InCreation(input domain.GenerateModelInput) Dependency {
+func InCreation(moduleName, packageEntityName string) Dependency {
 	return Dependency{
-		Path:  buildPath(input.ModuleInfo.Name, "internal", input.PackageEntityName),
-		Alias: input.PackageEntityName,
+		Path:  buildPath(moduleName, "internal", packageEntityName),
+		Alias: packageEntityName,
 	}
 }
 

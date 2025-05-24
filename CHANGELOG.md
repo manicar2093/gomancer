@@ -1,3 +1,17 @@
+## v0.14.0 (2025-05-24)
+
+### Feat
+
+- add deps implementation gorm repository package
+- add deps implementation in models generator
+- add new godeps to controllers package
+- add new godeps to bootstrap package
+- add first deps handling approach
+
+### Refactor
+
+- add better way to build dependencies without fmt.Sprintf
+
 ## v0.13.0 (2025-05-23)
 
 ### Feat

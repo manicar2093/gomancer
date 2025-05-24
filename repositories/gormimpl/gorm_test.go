@@ -24,9 +24,11 @@ var _ = Describe("Gorm", func() {
 
 	Describe("GenerateRepository", func() {
 		It("creates a repository with given data", func() {
-			var input = testfixtures.ModelSuccess
 
-			err := gormimpl.GenerateRepository(input)
+			err := gormimpl.GenerateRepository(
+				testfixtures.ModelSuccess,
+				testfixtures.ModelSuccessDepsContainer,
+			)
 
 			Expect(err).ToNot(HaveOccurred())
 			Expect(path.Join(string(domain.InternalPackagePath), "posttests", "repository_gomancer.go")).Should(

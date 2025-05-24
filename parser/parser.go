@@ -1,10 +1,11 @@
-package domain
+package parser
 
 import (
 	"fmt"
 	"github.com/charmbracelet/log"
 	"github.com/gertd/go-pluralize"
 	"github.com/iancoleman/strcase"
+	"github.com/manicar2093/gomancer/types"
 	"github.com/rjNemo/underscore"
 	"strings"
 )
@@ -55,7 +56,7 @@ func ParseArgs(args []string, moduleName string, isPkUuid bool) (GenerateModelIn
 				CamelCase:        "id",
 				LowerNoSpaceCase: "id",
 			},
-			Type: underscore.Ternary(isPkUuid, string(TypeUuid), string(TypeInt)),
+			Type: underscore.Ternary(isPkUuid, string(types.TypeUuid), string(types.TypeInt)),
 		},
 		Attributes: []Attribute{},
 	}
@@ -91,7 +92,7 @@ ParsingFor:
 				})
 				continue ParsingFor
 			}
-			if !isValidType(attribType) {
+			if !types.IsValidType(attribType) {
 				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
 					Input: item,
 					Err:   fmt.Sprintf(typeNotSupported, attribType),
@@ -102,7 +103,7 @@ ParsingFor:
 			attribName = separated[0]
 			attribType = separated[1]
 			isOptionalString = separated[2]
-			if !isValidType(attribType) {
+			if !types.IsValidType(attribType) {
 				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
 					Input: item,
 					Err:   fmt.Sprintf(typeNotSupported, attribType),

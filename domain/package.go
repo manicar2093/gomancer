@@ -3,6 +3,7 @@ package domain
 import (
 	"fmt"
 	"github.com/dave/jennifer/jen"
+	"github.com/manicar2093/gomancer/parser"
 	"path"
 )
 
@@ -40,10 +41,10 @@ func GetPackageQualifier(moduleName string, path Path, model string) *jen.Statem
 	return jen.Qual(fmt.Sprintf("%s/%s", moduleName, path), model)
 }
 
-func GenerateCorePackage(info ModuleInfo) string {
+func GenerateCorePackage(info parser.ModuleInfo) string {
 	return fmt.Sprintf("%s/core", info.Name)
 }
 
-func GetCorePackage(info ModuleInfo, pkg CorePackage) string {
+func GetCorePackage(info parser.ModuleInfo, pkg CorePackage) string {
 	return fmt.Sprintf("%s/%s", GenerateCorePackage(info), pkg)
 }

@@ -1,17 +1,17 @@
 {{ define "cmd_api_main" }}package main
 
 import (
-    "fmt"
-    "github.com/labstack/echo/v4"
-    "github.com/labstack/echo/v4/middleware"
-    "github.com/manicar2093/echoroutesview"
-    "{{.ModuleName}}/core"
-    "{{.ModuleName}}/core/apperrors"
-    "{{.ModuleName}}/core/converters"
-    "{{.ModuleName}}/core/validator"
-    "{{.ModuleName}}/core/logger"
-    "{{.ModuleName}}/pkg/config"
-    "{{.ModuleName}}/cmd/api/controllers"
+    {{.GoDeps.Std.Fmt.GenerateImportString}}
+    {{.GoDeps.Echo.GenerateImportString}}
+    {{.GoDeps.Echo.Middlewares.GenerateImportString}}
+    {{.GoDeps.EchoRoutesView.GenerateImportString}}
+    {{.GoDeps.Project.Core.GenerateImportString}}
+    {{.GoDeps.Project.Core.AppErrors.GenerateImportString}}
+    {{.GoDeps.Project.Core.Converters.GenerateImportString}}
+    {{.GoDeps.Project.Core.Validator.GenerateImportString}}
+    {{.GoDeps.Project.Core.Logger.GenerateImportString}}
+    {{.GoDeps.Project.Pkg.Config.GenerateImportString}}
+    {{.GoDeps.Project.Cmd.Api.Controllers.GenerateImportString}}
 )
 
 func main() {

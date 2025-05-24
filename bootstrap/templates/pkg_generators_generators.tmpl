@@ -1,7 +1,7 @@
 {{ define "pkg_generators_generators" }}// Package generators contains all your models generators; functions used to generate mocked data and help you testing
 package generators
 
-import "github.com/go-viper/mapstructure/v2"
+import {{.GoDeps.MapStructure.GenerateImportString}}
 
 type testingI interface {
     Fatal(args ...any)

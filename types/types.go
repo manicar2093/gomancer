@@ -1,8 +1,9 @@
-package domain
+package types
 
 import (
 	"github.com/charmbracelet/log"
 	"github.com/dave/jennifer/jen"
+	"github.com/manicar2093/gomancer/deps"
 )
 
 type SupportedType string
@@ -37,24 +38,24 @@ var (
 	}
 )
 
-func QualifiersByType(t string) *jen.Statement {
+func QualifiersByType(t string, goDeps deps.Container) *jen.Statement {
 	switch t {
 	case string(TypeUuid):
-		return jen.Qual(UUIDPkgPath, "UUID")
+		return jen.Qual(goDeps.Uuid.Path, "UUID")
 	case string(TypeDecimal):
-		return jen.Qual(DecimalPkgPath, "Decimal")
+		return jen.Qual(goDeps.UDecimal.Path, "Decimal")
 	case string(TypeTime):
-		return jen.Qual(TimePkgPath, "Time")
+		return jen.Qual(goDeps.Std.Time.Path, "Time")
 	default:
 		return jen.Id(t)
 	}
 }
 
-func OptionalQualifier() jen.Code {
-	return jen.Qual(GoptionPkgPath, "Optional")
+func OptionalQualifier(goDeps deps.Container) jen.Code {
+	return jen.Qual(goDeps.Goption.Path, "Optional")
 }
 
-func isValidType(t string) bool {
+func IsValidType(t string) bool {
 	_, ok := ValidTypesMap[SupportedType(t)]
 	log.Debug("validating type", "type", t, "ok", ok)
 	return ok

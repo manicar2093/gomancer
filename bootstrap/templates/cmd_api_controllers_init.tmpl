@@ -1,8 +1,8 @@
 {{ define "cmd_api_controllers_init" }}package controllers
 
 import (
-    "github.com/labstack/echo/v4"
-    "net/http"
+    "{{.GoDeps.Echo.Path}}"
+    "{{.GoDeps.Std.Net.Http.Path}}"
 )
 
 type InitController struct {}

@@ -1,6 +1,8 @@
 package domain
 
 import (
+	"github.com/manicar2093/gomancer/parser"
+	"github.com/manicar2093/gomancer/types"
 	"strings"
 )
 
@@ -18,7 +20,7 @@ const (
 	GormUuidTag         = "gorm|default:gen_random_uuid()"
 )
 
-func Tags(attribute Attribute, validations Validations, tags ...Tag) map[string]string {
+func Tags(attribute parser.Attribute, validations Validations, tags ...Tag) map[string]string {
 	response := make(map[string]string)
 	for _, tag := range tags {
 		if tag == GormUuidTag {
@@ -31,7 +33,7 @@ func Tags(attribute Attribute, validations Validations, tags ...Tag) map[string]
 
 	validationsSB := strings.Builder{}
 	if validations.Required {
-		if attribute.Type == string(TypeUuid) {
+		if attribute.Type == string(types.TypeUuid) {
 			validationsSB.WriteString("required_uuid")
 		} else {
 			validationsSB.WriteString("required")

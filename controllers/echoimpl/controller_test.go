@@ -24,9 +24,11 @@ var _ = Describe("Controller", func() {
 
 	Describe("GenerateController", func() {
 		It("creates a new controller with given input", func() {
-			var input = testfixtures.ModelSuccess
+			var (
+				input = testfixtures.ModelSuccess
+			)
 
-			err := echoimpl.GenerateController(input)
+			err := echoimpl.GenerateController(input, testfixtures.ModelSuccessDepsContainer, testfixtures.ModelSuccessDepInCreation)
 
 			Expect(err).ToNot(HaveOccurred())
 			Expect(path.Join(string(domain.CmdApiControllersPackagePath), "post_test.go")).Should(

@@ -4,7 +4,8 @@ import (
 	"embed"
 	"fmt"
 	"github.com/jinzhu/inflection"
-	"github.com/manicar2093/gomancer/domain"
+	"github.com/manicar2093/gomancer/parser"
+	"github.com/manicar2093/gomancer/types"
 	"github.com/rjNemo/underscore"
 	"strings"
 	"text/template"
@@ -13,7 +14,7 @@ import (
 //go:embed templates/*
 var templatesFS embed.FS
 var funcMap = template.FuncMap{
-	"CreateIdAttribute": func(attribute domain.Attribute) string {
+	"CreateIdAttribute": func(attribute parser.Attribute) string {
 		sb := strings.Builder{}
 
 		writeString(&sb, attribute.SnakeCase, "     ", space)
@@ -26,7 +27,7 @@ var funcMap = template.FuncMap{
 		writeString(&sb, "@id", empty, space)
 		idDefault := "@default(%s)"
 		idGenerator := underscore.Ternary[string](
-			domain.SupportedType(attribute.Type) == domain.TypeUuid,
+			types.SupportedType(attribute.Type) == types.TypeUuid,
 			"dbgenerated(\"gen_random_uuid()\")",
 			"autoincrement()",
 		)
@@ -40,7 +41,7 @@ var funcMap = template.FuncMap{
 		)
 		return strings.TrimRight(sb.String(), " ")
 	},
-	"CreateAttribute": func(attribute domain.Attribute) string {
+	"CreateAttribute": func(attribute parser.Attribute) string {
 		sb := strings.Builder{}
 
 		writeString(&sb, attribute.SnakeCase, "     ", space)

@@ -2,13 +2,13 @@
 package controllers
 
 import (
-	"net/http"
+	http	"net/http"
 
-	echo "github.com/labstack/echo/v4"
-	core "github.com/user/project_name/core"
-	commonreq "github.com/user/project_name/core/commonreq"
-	models "github.com/user/project_name/internal/domain/models"
-	posttests "github.com/user/project_name/internal/posttests"
+	echo	"github.com/labstack/echo/v4"
+	core	"github.com/user/project_name/core"
+	commonreq	"github.com/user/project_name/core/commonreq"
+	models	"github.com/user/project_name/internal/domain/models"
+	posttests	"github.com/user/project_name/internal/posttests"
 )
 
 type PostTestController struct {

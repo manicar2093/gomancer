@@ -181,7 +181,7 @@ func InitProject(input InitProjectInput) (string, error) {
 			ProjectName:      projectDirName,
 			DevEnvironment:   "dev",
 			TestEnvironment:  "test",
-			GoVersion:        "1.23",
+			GoVersion:        "1.24",
 			GoDeps:           deps.Init(input.ModuleName),
 		}
 	)

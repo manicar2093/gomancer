@@ -28,7 +28,6 @@ var _ = Describe("Gorm", func() {
 			err := gormimpl.GenerateRepository(
 				testfixtures.ModelSuccess,
 				testfixtures.ModelSuccessDepsContainer,
-				testfixtures.ModelSuccessDepInCreation,
 			)
 
 			Expect(err).ToNot(HaveOccurred())

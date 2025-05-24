@@ -266,4 +266,35 @@ var _ = Describe("Deps", func() {
 			})
 		})
 	})
+
+	Describe("Dependency", func() {
+		It("should correctly generate import string", func() {
+			dep := deps.Dependency{
+				Path:  "github.com/example/package",
+				Alias: "pkg",
+			}
+
+			Expect(dep.GenerateImportString()).To(Equal("pkg\t\"github.com/example/package\""))
+		})
+
+		It("should correctly import alias to file", func() {
+			dep := deps.Dependency{
+				Path:  "github.com/example/package",
+				Alias: "pkg",
+			}
+			file := jen.NewFile("test")
+
+			dep.ImportAlias(file)
+
+			// Add a statement that uses the imported package to force it to be included in the output
+			file.Func().Id("TestFunc").Params().Block(
+				jen.Qual(dep.Path, "SomeFunction").Call(),
+			)
+
+			// Get the string representation of the file and check if it contains the expected import
+			fileStr := file.GoString()
+			Expect(fileStr).To(ContainSubstring(`import "github.com/example/package"`))
+			Expect(fileStr).To(ContainSubstring(`pkg.SomeFunction()`))
+		})
+	})
 })

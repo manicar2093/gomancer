@@ -1,15 +1,11 @@
 package deps
 
 import (
+	"fmt"
 	"github.com/dave/jennifer/jen"
 	"github.com/manicar2093/gomancer/domain"
 	"path"
 )
-
-// buildPath creates a path by joining the module name with the given path components
-func buildPath(moduleName string, components ...string) string {
-	return path.Join(append([]string{moduleName}, components...)...)
-}
 
 func Init(input domain.GenerateModelInput) Container {
 	return Container{
@@ -176,4 +172,12 @@ func Init(input domain.GenerateModelInput) Container {
 
 func (c Dependency) ImportAlias(file *jen.File) {
 	file.ImportName(c.Path, c.Alias)
+}
+func (c Dependency) GenerateImportString() string {
+	return fmt.Sprintf("%s\t\"%s\"", c.Alias, c.Path)
+}
+
+// buildPath creates a path by joining the module name with the given path components
+func buildPath(moduleName string, components ...string) string {
+	return path.Join(append([]string{moduleName}, components...)...)
 }

@@ -57,6 +57,7 @@ type (
 	Internal struct {
 		Dependency
 		Domain
+		InCreation Dependency
 	}
 	Core struct {
 		Dependency

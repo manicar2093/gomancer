@@ -241,6 +241,10 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Internal.Domain.Models.Alias).To(Equal("models"))
 				Expect(container.Project.Internal.Domain.Models.Path).To(Equal(testfixtures.TestPath + "/internal/domain/models"))
 				container.Project.Internal.Domain.Models.ImportAlias(file)
+
+				Expect(container.Project.Internal.InCreation.Alias).To(Equal(testfixtures.ModelSuccess.PackageEntityName))
+				Expect(container.Project.Internal.InCreation.Path).To(Equal(testfixtures.TestPath + "/internal/" + testfixtures.ModelSuccess.PackageEntityName))
+				container.Project.Internal.InCreation.ImportAlias(file)
 			})
 		})
 

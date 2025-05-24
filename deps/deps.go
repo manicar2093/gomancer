@@ -1,10 +1,15 @@
 package deps
 
 import (
-	"fmt"
 	"github.com/dave/jennifer/jen"
 	"github.com/manicar2093/gomancer/domain"
+	"path"
 )
+
+// buildPath creates a path by joining the module name with the given path components
+func buildPath(moduleName string, components ...string) string {
+	return path.Join(append([]string{moduleName}, components...)...)
+}
 
 func Init(input domain.GenerateModelInput) Container {
 	return Container{
@@ -91,72 +96,76 @@ func Init(input domain.GenerateModelInput) Container {
 		Project: Project{
 			Pkg: Pkg{
 				Dependency: Dependency{
-					Path:  fmt.Sprintf("%s/pkg", input.ModuleInfo.Name),
+					Path:  buildPath(input.ModuleInfo.Name, "pkg"),
 					Alias: "pkg",
 				},
 				Config: Dependency{
-					Path:  fmt.Sprintf("%s/pkg/config", input.ModuleInfo.Name),
+					Path:  buildPath(input.ModuleInfo.Name, "pkg", "config"),
 					Alias: "config",
 				},
 			},
 			Core: Core{
 				Dependency: Dependency{
-					Path:  fmt.Sprintf("%s/core", input.ModuleInfo.Name),
+					Path:  buildPath(input.ModuleInfo.Name, "core"),
 					Alias: "core",
 				},
 				Converters: Dependency{
-					Path:  fmt.Sprintf("%s/core/converters", input.ModuleInfo.Name),
+					Path:  buildPath(input.ModuleInfo.Name, "core", "converters"),
 					Alias: "converters",
 				},
 				Validator: Dependency{
-					Path:  fmt.Sprintf("%s/core/validator", input.ModuleInfo.Name),
+					Path:  buildPath(input.ModuleInfo.Name, "core", "validator"),
 					Alias: "",
 				},
 				Logger: Dependency{
-					Path:  fmt.Sprintf("%s/core/logger", input.ModuleInfo.Name),
+					Path:  buildPath(input.ModuleInfo.Name, "core", "logger"),
 					Alias: "",
 				},
 				Connections: Dependency{
-					Path:  fmt.Sprintf("%s/core/connections", input.ModuleInfo.Name),
+					Path:  buildPath(input.ModuleInfo.Name, "core", "connections"),
 					Alias: "connections",
 				},
 				CommonReq: Dependency{
-					Path:  fmt.Sprintf("%s/core/commonreq", input.ModuleInfo.Name),
+					Path:  buildPath(input.ModuleInfo.Name, "core", "commonreq"),
 					Alias: "commonreq",
 				},
 				AppErrors: Dependency{
-					Path:  fmt.Sprintf("%s/core/apperrors", input.ModuleInfo.Name),
+					Path:  buildPath(input.ModuleInfo.Name, "core", "apperrors"),
 					Alias: "apperrors",
 				},
 			},
 			Internal: Internal{
 				Dependency: Dependency{
-					Path:  fmt.Sprintf("%s/internal", input.ModuleInfo.Name),
+					Path:  buildPath(input.ModuleInfo.Name, "internal"),
 					Alias: "internal",
 				},
 				Domain: Domain{
 					Dependency: Dependency{
-						Path:  fmt.Sprintf("%s/internal/domain", input.ModuleInfo.Name),
+						Path:  buildPath(input.ModuleInfo.Name, "internal", "domain"),
 						Alias: "domain",
 					},
 					Models: Dependency{
-						Path:  fmt.Sprintf("%s/internal/domain/models", input.ModuleInfo.Name),
+						Path:  buildPath(input.ModuleInfo.Name, "internal", "domain", "models"),
 						Alias: "models",
 					},
+				},
+				InCreation: Dependency{
+					Path:  buildPath(input.ModuleInfo.Name, "internal", input.PackageEntityName),
+					Alias: input.PackageEntityName,
 				},
 			},
 			Cmd: Cmd{
 				Dependency: Dependency{
-					Path:  fmt.Sprintf("%s/cmd", input.ModuleInfo.Name),
+					Path:  buildPath(input.ModuleInfo.Name, "cmd"),
 					Alias: "",
 				},
 				Api: Api{
 					Dependency: Dependency{
-						Path:  fmt.Sprintf("%s/cmd/api", input.ModuleInfo.Name),
+						Path:  buildPath(input.ModuleInfo.Name, "cmd", "api"),
 						Alias: "api",
 					},
 					Controllers: Dependency{
-						Path:  fmt.Sprintf("%s/cmd/api/controllers", input.ModuleInfo.Name),
+						Path:  buildPath(input.ModuleInfo.Name, "cmd", "api", "controllers"),
 						Alias: "controllers",
 					},
 				},

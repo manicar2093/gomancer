@@ -17,6 +17,17 @@ var _ = Describe("Deps", func() {
 		container = deps.Init(testfixtures.ModelSuccess)
 	})
 
+	Describe("InCreation", func() {
+		It("creates model package dependency", func() {
+			file := jen.NewFile("in_creation_test")
+
+			inCreation := deps.InCreation(testfixtures.ModelSuccess)
+			Expect(inCreation.Alias).To(Equal(testfixtures.ModelSuccess.PackageEntityName))
+			Expect(inCreation.Path).To(Equal(testfixtures.TestPath + "/internal/" + testfixtures.ModelSuccess.PackageEntityName))
+			inCreation.ImportAlias(file)
+		})
+	})
+
 	Describe("Echo", func() {
 		It("contains all echo usable callers", func() {
 			file := jen.NewFile("echo_test")
@@ -241,10 +252,6 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Internal.Domain.Models.Alias).To(Equal("models"))
 				Expect(container.Project.Internal.Domain.Models.Path).To(Equal(testfixtures.TestPath + "/internal/domain/models"))
 				container.Project.Internal.Domain.Models.ImportAlias(file)
-
-				Expect(container.Project.Internal.InCreation.Alias).To(Equal(testfixtures.ModelSuccess.PackageEntityName))
-				Expect(container.Project.Internal.InCreation.Path).To(Equal(testfixtures.TestPath + "/internal/" + testfixtures.ModelSuccess.PackageEntityName))
-				container.Project.Internal.InCreation.ImportAlias(file)
 			})
 		})
 

@@ -145,10 +145,6 @@ func Init(input domain.GenerateModelInput) Container {
 						Alias: "models",
 					},
 				},
-				InCreation: Dependency{
-					Path:  buildPath(input.ModuleInfo.Name, "internal", input.PackageEntityName),
-					Alias: input.PackageEntityName,
-				},
 			},
 			Cmd: Cmd{
 				Dependency: Dependency{
@@ -167,6 +163,13 @@ func Init(input domain.GenerateModelInput) Container {
 				},
 			},
 		},
+	}
+}
+
+func InCreation(input domain.GenerateModelInput) Dependency {
+	return Dependency{
+		Path:  buildPath(input.ModuleInfo.Name, "internal", input.PackageEntityName),
+		Alias: input.PackageEntityName,
 	}
 }
 

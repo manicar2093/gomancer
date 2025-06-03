@@ -1,11 +1,31 @@
 model PostTest {
      id String @id @default(dbgenerated("gen_random_uuid()"))  @db.Uuid
-     name String?
-     total_price Decimal @db.Decimal(10,2)
-     price Decimal? @db.Decimal(10,2)
-     age Int
-     case_of_use Int?
-     created_at DateTime
+     an_optional_int Int?
+     an_int Int
+     an_optional_int8 Int?
+     an_int8 Int
+     an_optional_int16 Int?
+     an_int16 Int
+     an_optional_int32 Int?
+     an_int32 Int
+     an_optional_int64 BigInt?
+     an_int64 BigInt
+     an_optional_float_32 Float?
+     an_float_32 Float
+     an_optional_float_64 Float?
+     an_float_64 Float
+     optional_string String?
+     string String
+     optional_bool Boolean?
+     bool Boolean
+     optional_time DateTime?
+     time DateTime
+     optional_decimal Decimal? @db.Decimal(10,2)
+     decimal Decimal @db.Decimal(10,2)
+     optional_uuid String? @db.Uuid
+     uuid String @db.Uuid
+     optional_enum OptionalEnum?
+     enum Enum
 
      @@map("post_tests")
 }

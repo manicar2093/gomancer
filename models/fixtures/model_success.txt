@@ -8,11 +8,47 @@ import (
 )
 
 type PostTest struct {
-	Id         uuid.UUID                          `gorm:"default:gen_random_uuid()" json:"id" mapstructure:"id" param:"id"`
-	Name       goption.Optional[string]           `json:"name" mapstructure:"name" param:"name"`
-	TotalPrice udecimal.Decimal                   `json:"total_price" mapstructure:"total_price" param:"total_price" validate:"required"`
-	Price      goption.Optional[udecimal.Decimal] `json:"price" mapstructure:"price" param:"price"`
-	Age        int                                `json:"age" mapstructure:"age" param:"age" validate:"required"`
-	CaseOfUse  goption.Optional[int32]            `json:"case_of_use" mapstructure:"case_of_use" param:"case_of_use"`
-	CreatedAt  time.Time                          `json:"created_at" mapstructure:"created_at" param:"created_at" validate:"required"`
+	Id                uuid.UUID                          `gorm:"default:gen_random_uuid()" json:"id" mapstructure:"id" param:"id"`
+	AnOptionalInt     goption.Optional[int]              `json:"an_optional_int" mapstructure:"an_optional_int" param:"an_optional_int"`
+	AnInt             int                                `json:"an_int" mapstructure:"an_int" param:"an_int" validate:"required"`
+	AnOptionalInt8    goption.Optional[int8]             `json:"an_optional_int8" mapstructure:"an_optional_int8" param:"an_optional_int8"`
+	AnInt8            int8                               `json:"an_int8" mapstructure:"an_int8" param:"an_int8" validate:"required"`
+	AnOptionalInt16   goption.Optional[int16]            `json:"an_optional_int16" mapstructure:"an_optional_int16" param:"an_optional_int16"`
+	AnInt16           int16                              `json:"an_int16" mapstructure:"an_int16" param:"an_int16" validate:"required"`
+	AnOptionalInt32   goption.Optional[int32]            `json:"an_optional_int32" mapstructure:"an_optional_int32" param:"an_optional_int32"`
+	AnInt32           int32                              `json:"an_int32" mapstructure:"an_int32" param:"an_int32" validate:"required"`
+	AnOptionalInt64   goption.Optional[int64]            `json:"an_optional_int64" mapstructure:"an_optional_int64" param:"an_optional_int64"`
+	AnInt64           int64                              `json:"an_int64" mapstructure:"an_int64" param:"an_int64" validate:"required"`
+	AnOptionalFloat32 goption.Optional[float32]          `json:"an_optional_float_32" mapstructure:"an_optional_float_32" param:"an_optional_float_32"`
+	AnFloat32         float32                            `json:"an_float_32" mapstructure:"an_float_32" param:"an_float_32" validate:"required"`
+	AnOptionalFloat64 goption.Optional[float64]          `json:"an_optional_float_64" mapstructure:"an_optional_float_64" param:"an_optional_float_64"`
+	AnFloat64         float64                            `json:"an_float_64" mapstructure:"an_float_64" param:"an_float_64" validate:"required"`
+	OptionalString    goption.Optional[string]           `json:"optional_string" mapstructure:"optional_string" param:"optional_string"`
+	String            string                             `json:"string" mapstructure:"string" param:"string" validate:"required"`
+	OptionalBool      goption.Optional[bool]             `json:"optional_bool" mapstructure:"optional_bool" param:"optional_bool"`
+	Bool              bool                               `json:"bool" mapstructure:"bool" param:"bool" validate:"required"`
+	OptionalTime      goption.Optional[time.Time]        `json:"optional_time" mapstructure:"optional_time" param:"optional_time"`
+	Time              time.Time                          `json:"time" mapstructure:"time" param:"time" validate:"required"`
+	OptionalDecimal   goption.Optional[udecimal.Decimal] `json:"optional_decimal" mapstructure:"optional_decimal" param:"optional_decimal"`
+	Decimal           udecimal.Decimal                   `json:"decimal" mapstructure:"decimal" param:"decimal" validate:"required"`
+	OptionalUuid      goption.Optional[uuid.UUID]        `json:"optional_uuid" mapstructure:"optional_uuid" param:"optional_uuid"`
+	Uuid              uuid.UUID                          `json:"uuid" mapstructure:"uuid" param:"uuid" validate:"required_uuid"`
+	OptionalEnum      goption.Optional[OptionalEnum]     `json:"optional_enum" mapstructure:"optional_enum" param:"optional_enum"`
+	Enum              Enum                               `json:"enum" mapstructure:"enum" param:"enum" validate:"required"`
 }
+
+type OptionalEnum string
+
+const (
+	OptionalEnum1 OptionalEnum = "optional_enum_1"
+	OptionalEnum2 OptionalEnum = "optional_enum_2"
+	OptionalEnum3 OptionalEnum = "optional_enum_3"
+)
+
+type Enum string
+
+const (
+	Enum1 Enum = "enum_1"
+	Enum2 Enum = "enum_2"
+	Enum3 Enum = "enum_3"
+)

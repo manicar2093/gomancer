@@ -27,7 +27,7 @@ func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) err
 	log.Info("Generating model...")
 	attribs := append(
 		[]Code{
-			Id("Id").Add(types.QualifiersByType(input.IdAttribute.Type, goDeps)).Tag(
+			Id("Id").Add(types.QualifiersByType(input.IdAttribute.Type, goDeps, "")).Tag(
 				domain.Tags(
 					input.IdAttribute,
 					domain.Validations{},
@@ -37,7 +37,7 @@ func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) err
 		},
 		underscore.Map(input.Attributes, func(item parser.Attribute) Code {
 			builder := Null().Id(item.PascalCase)
-			itemType := types.QualifiersByType(item.Type, goDeps)
+			itemType := types.QualifiersByType(item.Type, goDeps, item.PascalCase)
 			if item.IsOptional {
 				builder.Add(types.OptionalQualifier(goDeps)).Index(itemType)
 			} else {
@@ -57,7 +57,20 @@ func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) err
 	destinyFile := NewFile(string(domain.ModelsPkg))
 	destinyFile.Null().Type().Id(input.PascalCase).Struct(
 		attribs...,
-	)
+	).Line()
+
+	enums := underscore.Filter(input.Attributes, func(item parser.Attribute) bool {
+		return item.Type == string(types.TypeEnum)
+	})
+	underscore.Each(enums, func(item parser.Attribute) {
+		destinyFile.Null().Type().Id(item.PascalCase).String()
+
+		destinyFile.Const().DefsFunc(func(group *Group) {
+			for _, enumItem := range item.EnumStrings {
+				group.Id(enumItem.PascalCase).Id(item.PascalCase).Op("=").Lit(enumItem.SnakeCase)
+			}
+		}).Line()
+	})
 
 	return destinyFile.Save(path.Join(string(domain.InternalDomainModelsPackagePath), input.SnakeCase+".go"))
 }
@@ -66,10 +79,10 @@ func doGenerateTestGeneratorFunc(input parser.GenerateModelInput, goDeps deps.Co
 	log.Info("Generating model testing generator...")
 	valuesDict := make(Dict)
 
-	valuesDict[Id("Id")] = FakerCallByType(input.IdAttribute.Type, goDeps)
+	valuesDict[Id("Id")] = FakerCallByType(input.IdAttribute.Type, goDeps, input.IdAttribute)
 
 	structValues := underscore.Reduce(input.Attributes, func(item parser.Attribute, acc Dict) Dict {
-		fakeTypeQualifier := FakerCallByType(item.Type, goDeps)
+		fakeTypeQualifier := FakerCallByType(item.Type, goDeps, item)
 		if item.IsOptional {
 			fakeTypeQualifier = Qual(domain.GoptionPkgPath, "Of").Call(fakeTypeQualifier)
 		}

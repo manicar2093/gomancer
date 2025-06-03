@@ -40,7 +40,10 @@ var (
 	}
 )
 
-func QualifiersByType(t string, goDeps deps.Container) *jen.Statement {
+// QualifiersByType maps a string type to its corresponding qualified identifier using provided dependencies. If t is enum, enumNameType is
+// the type name for this enum
+// Returns a *jen.Statement representing the qualified Go code for the type.
+func QualifiersByType(t string, goDeps deps.Container, enumNameType string) *jen.Statement {
 	switch t {
 	case string(TypeUuid):
 		return jen.Qual(goDeps.Uuid.Path, "UUID")
@@ -48,6 +51,8 @@ func QualifiersByType(t string, goDeps deps.Container) *jen.Statement {
 		return jen.Qual(goDeps.UDecimal.Path, "Decimal")
 	case string(TypeTime):
 		return jen.Qual(goDeps.Std.Time.Path, "Time")
+	case string(TypeEnum):
+		return jen.Id(enumNameType)
 	default:
 		return jen.Id(t)
 	}

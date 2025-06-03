@@ -39,7 +39,7 @@ func writeString(sb *strings.Builder, content, prefix, suffix string) {
 
 }
 
-func getMigrationType(typ string) string {
+func getMigrationType(typ string, attrib parser.Attribute) string {
 	switch types.SupportedType(typ) {
 	case types.TypeInt, types.TypeInt8, types.TypeInt16, types.TypeInt32:
 		return "Int"
@@ -57,6 +57,8 @@ func getMigrationType(typ string) string {
 		return "Decimal"
 	case types.TypeUuid:
 		return "String"
+	case types.TypeEnum:
+		return attrib.PascalCase
 	default:
 		panic(fmt.Sprintf("unsupported type %s for prisma migrations", typ))
 	}

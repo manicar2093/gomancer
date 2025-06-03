@@ -20,7 +20,7 @@ var funcMap = template.FuncMap{
 		writeString(&sb, attribute.SnakeCase, "     ", space)
 		writeString(
 			&sb,
-			getMigrationType(attribute.Type),
+			getMigrationType(attribute.Type, attribute),
 			empty,
 			space,
 		)
@@ -47,9 +47,9 @@ var funcMap = template.FuncMap{
 		writeString(&sb, attribute.SnakeCase, "     ", space)
 		writeString(
 			&sb,
-			getMigrationType(attribute.Type),
+			getMigrationType(attribute.Type, attribute),
 			empty,
-			underscore.Ternary(attribute.IsOptional, "?", empty),
+			underscore.Ternary[string](attribute.IsOptional, "?", empty),
 		)
 		typeAttribute := getTypeAttribute(attribute.Type)
 		writeString(

@@ -109,7 +109,7 @@ func generateSaveMethod(input parser.GenerateModelInput, generatorData generator
 
 func generateGetByIdMethod(input parser.GenerateModelInput, generatorData generatorData, goDeps deps.Container) Code {
 	return Func().Params(generatorData.receiverStatement).Id("GetById").Params(
-		Id("id").Add(types.QualifiersByType(input.IdAttribute.Type, goDeps)),
+		Id("id").Add(types.QualifiersByType(input.IdAttribute.Type, goDeps, input.IdAttribute.PascalCase)),
 	).Params(
 		Op("*").Add(generatorData.modelQualifier),
 		Error(),
@@ -158,7 +158,7 @@ func generatePartialUpdateFunction(input parser.GenerateModelInput, generatorDat
 		StructFunc(func(g *Group) {
 			g.
 				Id(input.IdAttribute.PascalCase).
-				Add(types.QualifiersByType(input.IdAttribute.Type, goDeps)).
+				Add(types.QualifiersByType(input.IdAttribute.Type, goDeps, input.IdAttribute.PascalCase)).
 				Tag(
 					domain.Tags(
 						input.IdAttribute,
@@ -168,7 +168,7 @@ func generatePartialUpdateFunction(input parser.GenerateModelInput, generatorDat
 				)
 			underscore.Map(input.Attributes, func(item parser.Attribute) Code {
 				return g.Id(item.PascalCase).Qual(domain.GoptionPkgPath, "Optional").Index(
-					types.QualifiersByType(item.Type, goDeps),
+					types.QualifiersByType(item.Type, goDeps, item.PascalCase),
 				).Tag(domain.Tags(item, domain.Validations{}, domain.JsonTag))
 			})
 		}).
@@ -297,7 +297,7 @@ func generateDeleteByIdFunction(input parser.GenerateModelInput, generatorData g
 		Id("DeleteById").
 		Params(
 			Id("id").
-				Add(types.QualifiersByType(input.IdAttribute.Type, goDeps)),
+				Add(types.QualifiersByType(input.IdAttribute.Type, goDeps, input.IdAttribute.PascalCase)),
 		).
 		Error().
 		Block(

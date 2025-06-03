@@ -27,7 +27,7 @@ func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) err
 	log.Info("Generating model...")
 	attribs := append(
 		[]Code{
-			Id("Id").Add(types.QualifiersByType(input.IdAttribute.Type, goDeps, "")).Tag(
+			Id("Id").Add(types.QualifiersByType(input.IdAttribute.Type, goDeps, "", false)).Tag(
 				domain.Tags(
 					input.IdAttribute,
 					domain.Validations{},
@@ -37,7 +37,7 @@ func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) err
 		},
 		underscore.Map(input.Attributes, func(item parser.Attribute) Code {
 			builder := Null().Id(item.PascalCase)
-			itemType := types.QualifiersByType(item.Type, goDeps, item.PascalCase)
+			itemType := types.QualifiersByType(item.Type, goDeps, item.PascalCase, false)
 			if item.IsOptional {
 				builder.Add(types.OptionalQualifier(goDeps)).Index(itemType)
 			} else {

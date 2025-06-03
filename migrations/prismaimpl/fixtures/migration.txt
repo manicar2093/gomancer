@@ -29,3 +29,15 @@ model PostTest {
 
      @@map("post_tests")
 }
+
+enum OptionalEnum {
+     optional_enum_1
+     optional_enum_2
+     optional_enum_3
+}
+
+enum Enum {
+     enum_1
+     enum_2
+     enum_3
+}

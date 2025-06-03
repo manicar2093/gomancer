@@ -37,6 +37,7 @@ var (
 	GeneratorsPkg Pkg = "generators"
 )
 
+// TODO: remove this unused code
 func GetPackageQualifier(moduleName string, path Path, model string) *jen.Statement {
 	return jen.Qual(fmt.Sprintf("%s/%s", moduleName, path), model)
 }
@@ -48,3 +49,5 @@ func GenerateCorePackage(info parser.ModuleInfo) string {
 func GetCorePackage(info parser.ModuleInfo, pkg CorePackage) string {
 	return fmt.Sprintf("%s/%s", GenerateCorePackage(info), pkg)
 }
+
+// TODO: Till here

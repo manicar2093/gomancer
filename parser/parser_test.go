@@ -23,11 +23,13 @@ var _ = Describe("Parser", func() {
 					"arg1:string:optional",
 					"arg2:int",
 					"arg3:decimal:optional",
+					"arg4:enum|terror|lol:optional",
 				}
 			)
 
-			got, _, hasErr := parser.ParseArgs(args, moduleName, isPkUuid)
+			got, errorss, hasErr := parser.ParseArgs(args, moduleName, isPkUuid)
 
+			Expect(errorss).To(BeEmpty())
 			Expect(hasErr).To(BeFalse())
 			Expect(got).To(gstruct.MatchAllFields(gstruct.Fields{
 				"PackageEntityName": Equal("helloworlds"),
@@ -47,8 +49,9 @@ var _ = Describe("Parser", func() {
 						"CamelCase":        Equal("id"),
 						"LowerNoSpaceCase": Equal("id"),
 					}),
-					"Type":       Equal("int"),
-					"IsOptional": BeFalse(),
+					"Type":        Equal("int"),
+					"IsOptional":  BeFalse(),
+					"EnumStrings": BeEmpty(),
 				}),
 				"Attributes": gstruct.MatchAllElementsWithIndex(
 					idSliceGetter,
@@ -60,8 +63,9 @@ var _ = Describe("Parser", func() {
 								"CamelCase":        Equal("arg1"),
 								"LowerNoSpaceCase": Equal("arg1"),
 							}),
-							"Type":       Equal("string"),
-							"IsOptional": BeTrue(),
+							"Type":        Equal("string"),
+							"IsOptional":  BeTrue(),
+							"EnumStrings": BeEmpty(),
 						}),
 						"1": gstruct.MatchAllFields(gstruct.Fields{
 							"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
@@ -70,8 +74,9 @@ var _ = Describe("Parser", func() {
 								"CamelCase":        Equal("arg2"),
 								"LowerNoSpaceCase": Equal("arg2"),
 							}),
-							"Type":       Equal("int"),
-							"IsOptional": BeFalse(),
+							"Type":        Equal("int"),
+							"IsOptional":  BeFalse(),
+							"EnumStrings": BeEmpty(),
 						}),
 						"2": gstruct.MatchAllFields(gstruct.Fields{
 							"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
@@ -80,8 +85,33 @@ var _ = Describe("Parser", func() {
 								"CamelCase":        Equal("arg3"),
 								"LowerNoSpaceCase": Equal("arg3"),
 							}),
-							"Type":       Equal("decimal"),
+							"Type":        Equal("decimal"),
+							"IsOptional":  BeTrue(),
+							"EnumStrings": BeEmpty(),
+						}),
+						"3": gstruct.MatchAllFields(gstruct.Fields{
+							"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
+								"SnakeCase":        Equal("arg_4"),
+								"PascalCase":       Equal("Arg4"),
+								"CamelCase":        Equal("arg4"),
+								"LowerNoSpaceCase": Equal("arg4"),
+							}),
+							"Type":       Equal("enum"),
 							"IsOptional": BeTrue(),
+							"EnumStrings": gstruct.MatchAllElementsWithIndex(idSliceGetter, gstruct.Elements{
+								"0": gstruct.MatchAllFields(gstruct.Fields{
+									"SnakeCase":        Equal("terror"),
+									"PascalCase":       Equal("Terror"),
+									"CamelCase":        Equal("terror"),
+									"LowerNoSpaceCase": Equal("terror"),
+								}),
+								"1": gstruct.MatchAllFields(gstruct.Fields{
+									"SnakeCase":        Equal("lol"),
+									"PascalCase":       Equal("Lol"),
+									"CamelCase":        Equal("lol"),
+									"LowerNoSpaceCase": Equal("lol"),
+								}),
+							}),
 						}),
 					},
 				),
@@ -190,7 +220,7 @@ var _ = Describe("Parser", func() {
 						}),
 						"1": gstruct.MatchAllFields(gstruct.Fields{
 							"Input": Equal("arg2:"),
-							"Err":   Equal("not enough data to continue. Remember syntax: attribute:type:optional"),
+							"Err":   Equal("type '' is not supported"),
 							"Index": Not(BeZero()),
 						}),
 					}),

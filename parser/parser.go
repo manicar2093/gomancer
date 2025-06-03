@@ -64,92 +64,95 @@ func ParseArgs(args []string, moduleName string, isPkUuid bool) (GenerateModelIn
 ParsingFor:
 	for index, item := range attributesArgs {
 		var (
-			separated        = strings.Split(item, ":")
-			separatedLen     = len(separated)
-			attribName       string
-			attribType       string
-			isOptionalString string
+			separated    = strings.Split(item, ":")
+			separatedLen = len(separated)
+			attribName   string
 		)
 		index++
 		log.Debug(item)
 
-		switch separatedLen {
-		case 1:
+		if separatedLen <= 1 {
 			parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
 				Input: item,
 				Err:   notEnoughDataToContinue,
 				Index: index,
 			})
 			continue ParsingFor
-		case 2:
-			attribName = separated[0]
-			attribType = separated[1]
-			if attribType == "" {
-				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
-					Input: item,
-					Err:   notEnoughDataToContinue,
-					Index: index,
-				})
-				continue ParsingFor
+		}
+
+		tempAttrib := Attribute{}
+
+		for attribIndex, attrib := range separated {
+			if attribIndex == 0 {
+				continue
 			}
-			if !types.IsValidType(attribType) {
-				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
-					Input: item,
-					Err:   fmt.Sprintf(typeNotSupported, attribType),
-					Index: index,
-				})
+
+			if attribIndex == 1 {
+				enumData, isEnumType := func(argument string) ([]string, bool) {
+					if !strings.Contains(argument, "enum") {
+						return nil, false
+					}
+					argumentSplitted := strings.Split(argument, "|")
+					return argumentSplitted[1:len(argumentSplitted)], strings.ToLower(argumentSplitted[0]) == "enum"
+				}(attrib)
+				if isEnumType {
+					attrib = string(types.TypeEnum)
+				}
+
+				isValidType := types.IsValidType(attrib)
+				if isValidType {
+					tempAttrib.Type = attrib
+					if isEnumType {
+						tempAttrib.EnumStrings = underscore.Map(enumData, func(enumItem string) TransformedText {
+							return TransformedText{
+								SnakeCase:        strcase.ToSnake(enumItem),
+								PascalCase:       strcase.ToCamel(enumItem),
+								CamelCase:        enumItem,
+								LowerNoSpaceCase: strings.ToLower(strcase.ToLowerCamel(enumItem)),
+							}
+						})
+					}
+				}
+				if !isValidType {
+					parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
+						Input: item,
+						Err:   fmt.Sprintf(typeNotSupported, attrib),
+						Index: index,
+					})
+					continue ParsingFor
+
+				}
 			}
-		case 3:
-			attribName = separated[0]
-			attribType = separated[1]
-			isOptionalString = separated[2]
-			if !types.IsValidType(attribType) {
-				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
-					Input: item,
-					Err:   fmt.Sprintf(typeNotSupported, attribType),
-					Index: index,
-				})
-				continue ParsingFor
-			}
-			if isOptionalString != "optional" {
-				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
-					Input: item,
-					Err: fmt.Sprintf(
-						optionalNotDeclared,
-						underscore.Ternary(isOptionalString == "", "<empty>", isOptionalString),
-					),
-					Index: index,
-				})
-				continue ParsingFor
+
+			if attribIndex == 2 {
+				isOptional := strings.ToLower(attrib) == "optional"
+				if isOptional {
+					tempAttrib.IsOptional = true
+				}
+				if !isOptional {
+					parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
+						Input: item,
+						Err: fmt.Sprintf(
+							optionalNotDeclared,
+							underscore.Ternary(attrib == "", "<empty>", attrib),
+						),
+						Index: index,
+					})
+					continue ParsingFor
+				}
 			}
 		}
+
+		attribName = separated[0]
 
 		attributeNameCamelCase := strcase.ToLowerCamel(attribName)
-		switch separatedLen {
-		case 2:
-			response.Attributes = append(response.Attributes, Attribute{
-				TransformedText: TransformedText{
-					SnakeCase:        strcase.ToSnake(attribName),
-					PascalCase:       strcase.ToCamel(attribName),
-					CamelCase:        attributeNameCamelCase,
-					LowerNoSpaceCase: strings.ToLower(attributeNameCamelCase),
-				},
-				Type: attribType,
-			})
-		case 3:
-			isOptional := strings.ToLower(isOptionalString) == "optional"
-
-			response.Attributes = append(response.Attributes, Attribute{
-				TransformedText: TransformedText{
-					SnakeCase:        strcase.ToSnake(attribName),
-					PascalCase:       strcase.ToCamel(attribName),
-					CamelCase:        strcase.ToLowerCamel(attribName),
-					LowerNoSpaceCase: strings.ToLower(attributeNameCamelCase),
-				},
-				Type:       attribType,
-				IsOptional: isOptional,
-			})
+		tempAttrib.TransformedText = TransformedText{
+			SnakeCase:        strcase.ToSnake(attribName),
+			PascalCase:       strcase.ToCamel(attribName),
+			CamelCase:        attributeNameCamelCase,
+			LowerNoSpaceCase: strings.ToLower(attributeNameCamelCase),
 		}
+		response.Attributes = append(response.Attributes, tempAttrib)
 	}
 
 	return response, parseErrorsDetails, len(parseErrorsDetails) > 0

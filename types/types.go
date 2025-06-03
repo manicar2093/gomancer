@@ -21,6 +21,7 @@ var (
 	TypeTime    SupportedType = "time"
 	TypeDecimal SupportedType = "decimal"
 	TypeUuid    SupportedType = "uuid"
+	TypeEnum    SupportedType = "enum"
 
 	ValidTypesMap = map[SupportedType]bool{
 		TypeInt:     true,
@@ -35,6 +36,7 @@ var (
 		TypeTime:    true,
 		TypeDecimal: true,
 		TypeUuid:    true,
+		TypeEnum:    true,
 	}
 )
 

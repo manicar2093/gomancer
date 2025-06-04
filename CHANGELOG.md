@@ -1,3 +1,21 @@
+## v0.16.0 (2025-06-04)
+
+### Feat
+
+- change enum separator to /
+- change enum parsing separator
+- add enum in migration generation
+- add enum in repository generation
+- add enum in model generation and greater testfixture
+- add enum data type to parser and change parsing implementation
+
+### Fix
+
+- add model package name to plural
+- add controller and model files to  pluralized names
+- add controller endpoint pluralized
+- add conditional to generate model id and make difference on uuid and int
+
 ## v0.15.0 (2025-05-24)
 
 ### Feat

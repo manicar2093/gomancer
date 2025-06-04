@@ -31,7 +31,7 @@ var _ = Describe("Controller", func() {
 			err := echoimpl.GenerateController(input, testfixtures.ModelSuccessDepsContainer, testfixtures.ModelSuccessDepInCreation)
 
 			Expect(err).ToNot(HaveOccurred())
-			Expect(path.Join(string(domain.CmdApiControllersPackagePath), "post_test.go")).Should(
+			Expect(path.Join(string(domain.CmdApiControllersPackagePath), "post_tests.go")).Should(
 				testmatchers.BeAnExistingFileWithEqualContent(path.Join("fixtures", "controller.txt")),
 			)
 		})

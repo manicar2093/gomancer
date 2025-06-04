@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/charmbracelet/log"
 	. "github.com/dave/jennifer/jen"
+	"github.com/jinzhu/inflection"
 	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/manicar2093/gomancer/parser"
@@ -78,7 +79,7 @@ func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) err
 		}).Line()
 	})
 
-	return destinyFile.Save(path.Join(string(domain.InternalDomainModelsPackagePath), input.SnakeCase+".go"))
+	return destinyFile.Save(path.Join(string(domain.InternalDomainModelsPackagePath), inflection.Plural(input.SnakeCase)+".go"))
 }
 
 func doGenerateTestGeneratorFunc(input parser.GenerateModelInput, goDeps deps.Container) error {
@@ -114,5 +115,5 @@ func doGenerateTestGeneratorFunc(input parser.GenerateModelInput, goDeps deps.Co
 	destinyFile := NewFile(string(domain.GeneratorsPkg))
 	destinyFile.ImportAlias(goDeps.GoFakeIt.Path, goDeps.GoFakeIt.Alias)
 	destinyFile.Add(constructor)
-	return destinyFile.Save(path.Join(string(domain.PkgGeneratorsPackagePath), input.SnakeCase+".go"))
+	return destinyFile.Save(path.Join(string(domain.PkgGeneratorsPackagePath), inflection.Plural(input.SnakeCase)+".go"))
 }

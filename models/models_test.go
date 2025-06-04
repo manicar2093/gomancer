@@ -29,10 +29,10 @@ var _ = Describe("Models", func() {
 			err := models.GenerateModel(input, testfixtures.ModelSuccessDepsContainer)
 
 			Expect(err).ToNot(HaveOccurred())
-			Expect(path.Join(string(domain.InternalDomainModelsPackagePath), "post_test.go")).Should(
+			Expect(path.Join(string(domain.InternalDomainModelsPackagePath), "post_tests.go")).Should(
 				testmatchers.BeAnExistingFileWithEqualContent(path.Join("fixtures", "model_success.txt")),
 			)
-			Expect(path.Join(string(domain.PkgGeneratorsPackagePath), "post_test.go")).Should(
+			Expect(path.Join(string(domain.PkgGeneratorsPackagePath), "post_tests.go")).Should(
 				testmatchers.BeAnExistingFileWithEqualContent(path.Join("fixtures", "generator_success.txt")),
 			)
 		})

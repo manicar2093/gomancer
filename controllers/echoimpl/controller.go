@@ -40,7 +40,7 @@ func GenerateController(input parser.GenerateModelInput, goDeps deps.Container, 
 		}).
 		ParseFS(templatesFS, "templates/*"))
 
-	f, err := os.OpenFile(path.Join(string(domain.CmdApiControllersPackagePath), input.SnakeCase+".go"), os.O_RDWR|os.O_CREATE, 0755)
+	f, err := os.OpenFile(path.Join(string(domain.CmdApiControllersPackagePath), inflection.Plural(input.SnakeCase)+".go"), os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
 		return err
 	}

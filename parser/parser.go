@@ -92,7 +92,7 @@ ParsingFor:
 					if !strings.Contains(argument, "enum") {
 						return nil, false
 					}
-					argumentSeparated := strings.Split(argument, "!")
+					argumentSeparated := strings.Split(argument, "/")
 					return argumentSeparated[1:len(argumentSeparated)], strings.ToLower(argumentSeparated[0]) == "enum"
 				}(attrib)
 				if isEnumType {

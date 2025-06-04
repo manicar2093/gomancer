@@ -3,6 +3,7 @@ package echoimpl
 import (
 	"embed"
 	"github.com/charmbracelet/log"
+	"github.com/jinzhu/inflection"
 	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/manicar2093/gomancer/parser"
@@ -35,6 +36,7 @@ func GenerateController(input parser.GenerateModelInput, goDeps deps.Container, 
 
 				return "GetById"
 			},
+			"Pluralize": inflection.Plural,
 		}).
 		ParseFS(templatesFS, "templates/*"))
 

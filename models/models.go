@@ -25,13 +25,19 @@ func GenerateModel(input parser.GenerateModelInput, goDeps deps.Container) error
 
 func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) error {
 	log.Info("Generating model...")
+	idTags := []domain.Tag{
+		domain.JsonTag, domain.ParamTag, domain.MapstructureTag,
+	}
+	if input.IdAttribute.Type == string(types.TypeUuid) {
+		idTags = append(idTags, domain.GormUuidTag)
+	}
 	attribs := append(
 		[]Code{
 			Id("Id").Add(types.QualifiersByType(input.IdAttribute.Type, goDeps, "", false)).Tag(
 				domain.Tags(
 					input.IdAttribute,
 					domain.Validations{},
-					domain.GormUuidTag, domain.JsonTag, domain.ParamTag, domain.MapstructureTag,
+					idTags...,
 				),
 			),
 		},

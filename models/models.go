@@ -4,6 +4,7 @@ import (
 	"fmt"
 	"github.com/charmbracelet/log"
 	. "github.com/dave/jennifer/jen"
+	"github.com/jinzhu/inflection"
 	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/manicar2093/gomancer/parser"
@@ -25,19 +26,25 @@ func GenerateModel(input parser.GenerateModelInput, goDeps deps.Container) error
 
 func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) error {
 	log.Info("Generating model...")
+	idTags := []domain.Tag{
+		domain.JsonTag, domain.ParamTag, domain.MapstructureTag,
+	}
+	if input.IdAttribute.Type == string(types.TypeUuid) {
+		idTags = append(idTags, domain.GormUuidTag)
+	}
 	attribs := append(
 		[]Code{
-			Id("Id").Add(types.QualifiersByType(input.IdAttribute.Type, goDeps)).Tag(
+			Id("Id").Add(types.QualifiersByType(input.IdAttribute.Type, goDeps, "", false)).Tag(
 				domain.Tags(
 					input.IdAttribute,
 					domain.Validations{},
-					domain.GormUuidTag, domain.JsonTag, domain.ParamTag, domain.MapstructureTag,
+					idTags...,
 				),
 			),
 		},
 		underscore.Map(input.Attributes, func(item parser.Attribute) Code {
 			builder := Null().Id(item.PascalCase)
-			itemType := types.QualifiersByType(item.Type, goDeps)
+			itemType := types.QualifiersByType(item.Type, goDeps, item.PascalCase, false)
 			if item.IsOptional {
 				builder.Add(types.OptionalQualifier(goDeps)).Index(itemType)
 			} else {
@@ -57,19 +64,32 @@ func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) err
 	destinyFile := NewFile(string(domain.ModelsPkg))
 	destinyFile.Null().Type().Id(input.PascalCase).Struct(
 		attribs...,
-	)
+	).Line()
 
-	return destinyFile.Save(path.Join(string(domain.InternalDomainModelsPackagePath), input.SnakeCase+".go"))
+	enums := underscore.Filter(input.Attributes, func(item parser.Attribute) bool {
+		return item.Type == string(types.TypeEnum)
+	})
+	underscore.Each(enums, func(item parser.Attribute) {
+		destinyFile.Null().Type().Id(item.PascalCase).String()
+
+		destinyFile.Const().DefsFunc(func(group *Group) {
+			for _, enumItem := range item.EnumStrings {
+				group.Id(enumItem.PascalCase).Id(item.PascalCase).Op("=").Lit(enumItem.SnakeCase)
+			}
+		}).Line()
+	})
+
+	return destinyFile.Save(path.Join(string(domain.InternalDomainModelsPackagePath), inflection.Plural(input.SnakeCase)+".go"))
 }
 
 func doGenerateTestGeneratorFunc(input parser.GenerateModelInput, goDeps deps.Container) error {
 	log.Info("Generating model testing generator...")
 	valuesDict := make(Dict)
 
-	valuesDict[Id("Id")] = FakerCallByType(input.IdAttribute.Type, goDeps)
+	valuesDict[Id("Id")] = FakerCallByType(input.IdAttribute.Type, goDeps, input.IdAttribute)
 
 	structValues := underscore.Reduce(input.Attributes, func(item parser.Attribute, acc Dict) Dict {
-		fakeTypeQualifier := FakerCallByType(item.Type, goDeps)
+		fakeTypeQualifier := FakerCallByType(item.Type, goDeps, item)
 		if item.IsOptional {
 			fakeTypeQualifier = Qual(domain.GoptionPkgPath, "Of").Call(fakeTypeQualifier)
 		}
@@ -95,5 +115,5 @@ func doGenerateTestGeneratorFunc(input parser.GenerateModelInput, goDeps deps.Co
 	destinyFile := NewFile(string(domain.GeneratorsPkg))
 	destinyFile.ImportAlias(goDeps.GoFakeIt.Path, goDeps.GoFakeIt.Alias)
 	destinyFile.Add(constructor)
-	return destinyFile.Save(path.Join(string(domain.PkgGeneratorsPackagePath), input.SnakeCase+".go"))
+	return destinyFile.Save(path.Join(string(domain.PkgGeneratorsPackagePath), inflection.Plural(input.SnakeCase)+".go"))
 }

@@ -3,6 +3,7 @@ package echoimpl
 import (
 	"embed"
 	"github.com/charmbracelet/log"
+	"github.com/jinzhu/inflection"
 	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/manicar2093/gomancer/parser"
@@ -35,10 +36,11 @@ func GenerateController(input parser.GenerateModelInput, goDeps deps.Container, 
 
 				return "GetById"
 			},
+			"Pluralize": inflection.Plural,
 		}).
 		ParseFS(templatesFS, "templates/*"))
 
-	f, err := os.OpenFile(path.Join(string(domain.CmdApiControllersPackagePath), input.SnakeCase+".go"), os.O_RDWR|os.O_CREATE, 0755)
+	f, err := os.OpenFile(path.Join(string(domain.CmdApiControllersPackagePath), inflection.Plural(input.SnakeCase)+".go"), os.O_RDWR|os.O_CREATE, 0755)
 	if err != nil {
 		return err
 	}

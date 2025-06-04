@@ -11,6 +11,12 @@ import (
 	"text/template"
 )
 
+const (
+	space   = " "
+	empty   = ""
+	newLine = "\n"
+)
+
 //go:embed templates/*
 var templatesFS embed.FS
 var funcMap = template.FuncMap{
@@ -20,7 +26,7 @@ var funcMap = template.FuncMap{
 		writeString(&sb, attribute.SnakeCase, "     ", space)
 		writeString(
 			&sb,
-			getMigrationType(attribute.Type),
+			getMigrationType(attribute.Type, attribute),
 			empty,
 			space,
 		)
@@ -47,9 +53,9 @@ var funcMap = template.FuncMap{
 		writeString(&sb, attribute.SnakeCase, "     ", space)
 		writeString(
 			&sb,
-			getMigrationType(attribute.Type),
+			getMigrationType(attribute.Type, attribute),
 			empty,
-			underscore.Ternary(attribute.IsOptional, "?", empty),
+			underscore.Ternary[string](attribute.IsOptional, "?", empty),
 		)
 		typeAttribute := getTypeAttribute(attribute.Type)
 		writeString(
@@ -61,4 +67,16 @@ var funcMap = template.FuncMap{
 		return sb.String()
 	},
 	"Pluralize": inflection.Plural,
+	"CreateEnumValue": func(attribute parser.TransformedText) string {
+		sb := strings.Builder{}
+
+		writeString(&sb, attribute.SnakeCase, "     ", newLine)
+
+		return sb.String()
+	},
+}
+
+func writeString(sb *strings.Builder, content, prefix, suffix string) {
+	sb.WriteString(fmt.Sprintf("%s%s%s", prefix, content, suffix))
+
 }

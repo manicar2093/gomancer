@@ -5,16 +5,10 @@ import (
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/manicar2093/gomancer/parser"
 	"github.com/manicar2093/gomancer/types"
+	"github.com/rjNemo/underscore"
 	"os"
 	"path"
-	"strings"
 	"text/template"
-)
-
-const (
-	space   = " "
-	empty   = ""
-	newLine = "\n"
 )
 
 func GenerateMigration(input parser.GenerateModelInput) error {
@@ -24,22 +18,35 @@ func GenerateMigration(input parser.GenerateModelInput) error {
 		ParseFS(templatesFS, "templates/*"))
 
 	migrationFilePath := path.Join(string(domain.PrismaSchemaPackagePath), fmt.Sprintf("%s.prisma", input.SnakeCase))
-	f, err := os.OpenFile(migrationFilePath, os.O_RDWR|os.O_CREATE, 0755)
+	f, err := os.OpenFile(migrationFilePath, os.O_WRONLY|os.O_APPEND|os.O_CREATE, 0755)
 	if err != nil {
 		return err
 	}
 	if err := tpl.ExecuteTemplate(f, "migration", input); err != nil {
 		return err
 	}
+
+	var (
+		enums = underscore.Filter(input.Attributes, func(attribute parser.Attribute) bool {
+			return attribute.Type == string(types.TypeEnum)
+		})
+		enumsLastItemIndex = len(enums) - 1
+	)
+	for enumIndex, enumAttrib := range enums {
+		if err := tpl.ExecuteTemplate(f, "enum", enumAttrib); err != nil {
+			return err
+		}
+		if enumIndex != enumsLastItemIndex {
+			if _, err := fmt.Fprintf(f, "\n"); err != nil {
+				return err
+			}
+
+		}
+	}
 	return nil
 }
 
-func writeString(sb *strings.Builder, content, prefix, suffix string) {
-	sb.WriteString(fmt.Sprintf("%s%s%s", prefix, content, suffix))
-
-}
-
-func getMigrationType(typ string) string {
+func getMigrationType(typ string, attrib parser.Attribute) string {
 	switch types.SupportedType(typ) {
 	case types.TypeInt, types.TypeInt8, types.TypeInt16, types.TypeInt32:
 		return "Int"
@@ -57,6 +64,8 @@ func getMigrationType(typ string) string {
 		return "Decimal"
 	case types.TypeUuid:
 		return "String"
+	case types.TypeEnum:
+		return attrib.PascalCase
 	default:
 		panic(fmt.Sprintf("unsupported type %s for prisma migrations", typ))
 	}

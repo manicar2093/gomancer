@@ -22,7 +22,7 @@ func NewPostTestController(postTestRepository *posttests.PostTestRepository) *Po
 }
 
 func (c *PostTestController) SetUpRoutes(group *echo.Group) {
-	postTestGroup := group.Group("/post_test")
+	postTestGroup := group.Group("/post_tests")
 
 	postTestGroup.GET("", c.GetAllPaginatedHandler)
 	postTestGroup.POST("", c.SaveHandler)

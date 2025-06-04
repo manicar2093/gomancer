@@ -22,7 +22,7 @@ var _ = Describe("Prisma", func() {
 
 	Describe("GenerateMigration", func() {
 		It("should generate migration with prisma", func() {
-			err := prismaimpl.GenerateMigration(testfixtures.ModelSuccess)
+			err := prismaimpl.GenerateMigration(testfixtures.ModelBinaryIdSuccess)
 
 			Expect(err).ToNot(HaveOccurred())
 

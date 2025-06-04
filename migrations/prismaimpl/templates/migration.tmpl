@@ -2,5 +2,9 @@
 {{CreateIdAttribute .IdAttribute}}{{range .Attributes}}{{CreateAttribute .}}{{end}}
      @@map("{{Pluralize .SnakeCase}}")
 }
+
 {{end}}
 
+{{define "enum"}}enum {{.PascalCase}} {
+{{range .EnumStrings}}{{CreateEnumValue .}}{{end}}}
+{{end}}

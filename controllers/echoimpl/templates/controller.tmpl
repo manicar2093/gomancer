@@ -22,7 +22,7 @@ func New{{.PascalCase}}Controller({{.CamelCase}}Repository *{{.InCreation.Alias}
 }
 
 func (c *{{.PascalCase}}Controller) SetUpRoutes(group *echo.Group) {
-	{{.CamelCase}}Group := group.Group("/{{.SnakeCase}}")
+	{{.CamelCase}}Group := group.Group("/{{ Pluralize .SnakeCase}}")
 
 	{{.CamelCase}}Group.GET("", c.GetAllPaginatedHandler)
 	{{.CamelCase}}Group.POST("", c.SaveHandler)

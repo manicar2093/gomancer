@@ -4,12 +4,13 @@ import (
 	"fmt"
 	"github.com/dave/jennifer/jen"
 	"github.com/manicar2093/gomancer/deps"
+	"github.com/manicar2093/gomancer/parser"
 	"github.com/manicar2093/gomancer/types"
 )
 
 const fakerPkgPath = "github.com/brianvoe/gofakeit/v7"
 
-func FakerCallByType(t string, goDeps deps.Container) jen.Code {
+func FakerCallByType(t string, goDeps deps.Container, attribute parser.Attribute) jen.Code {
 	switch types.SupportedType(t) {
 	case types.TypeString:
 		return jen.Qual(goDeps.GoFakeIt.Path, "Word").Call()
@@ -35,6 +36,10 @@ func FakerCallByType(t string, goDeps deps.Container) jen.Code {
 		)
 	case types.TypeUuid:
 		return jen.Qual(goDeps.Uuid.Path, "New").Call()
+	case types.TypeBool:
+		return jen.Qual(goDeps.GoFakeIt.Path, "Bool").Call()
+	case types.TypeEnum:
+		return jen.Qual(goDeps.Internal.Models.Path, attribute.EnumStrings[0].PascalCase)
 	default:
 		panic(fmt.Sprintf("type %s can be faked", t))
 	}

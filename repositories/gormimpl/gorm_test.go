@@ -15,7 +15,7 @@ import (
 var _ = Describe("Gorm", func() {
 
 	BeforeEach(func() {
-		os.MkdirAll(path.Join(string(domain.InternalPackagePath), testfixtures.ModelSuccess.SnakeCase), os.ModePerm)
+		os.MkdirAll(path.Join(string(domain.InternalPackagePath), testfixtures.ModelBinaryIdSuccess.SnakeCase), os.ModePerm)
 	})
 
 	AfterEach(func() {
@@ -26,7 +26,7 @@ var _ = Describe("Gorm", func() {
 		It("creates a repository with given data", func() {
 
 			err := gormimpl.GenerateRepository(
-				testfixtures.ModelSuccess,
+				testfixtures.ModelBinaryIdSuccess,
 				testfixtures.ModelSuccessDepsContainer,
 			)
 

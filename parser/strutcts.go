@@ -13,8 +13,9 @@ type (
 	}
 	Attribute struct {
 		TransformedText
-		Type       string
-		IsOptional bool
+		Type        string
+		IsOptional  bool
+		EnumStrings []TransformedText
 	}
 	GenerateModelInput struct {
 		TransformedText

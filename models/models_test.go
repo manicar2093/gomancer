@@ -24,7 +24,7 @@ var _ = Describe("Models", func() {
 
 	Describe("GenerateModel", func() {
 		It("creates text for model and function to generate models on test", func() {
-			var input = testfixtures.ModelSuccess
+			var input = testfixtures.ModelBinaryIdSuccess
 
 			err := models.GenerateModel(input, testfixtures.ModelSuccessDepsContainer)
 

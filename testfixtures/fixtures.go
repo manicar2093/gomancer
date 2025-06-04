@@ -8,7 +8,7 @@ import (
 const TestPath = "github.com/user/project_name"
 
 var (
-	ModelSuccess = parser.GenerateModelInput{
+	ModelBinaryIdSuccess = parser.GenerateModelInput{
 		PackageEntityName: "posttests",
 		ModuleInfo: parser.ModuleInfo{
 			Name: TestPath,
@@ -320,6 +320,6 @@ var (
 		},
 	}
 
-	ModelSuccessDepsContainer = deps.Init(ModelSuccess.ModuleInfo.Name)
-	ModelSuccessDepInCreation = deps.InCreation(ModelSuccess.ModuleInfo.Name, ModelSuccess.PackageEntityName)
+	ModelSuccessDepsContainer = deps.Init(ModelBinaryIdSuccess.ModuleInfo.Name)
+	ModelSuccessDepInCreation = deps.InCreation(ModelBinaryIdSuccess.ModuleInfo.Name, ModelBinaryIdSuccess.PackageEntityName)
 )

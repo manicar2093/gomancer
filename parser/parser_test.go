@@ -23,7 +23,7 @@ var _ = Describe("Parser", func() {
 					"arg1:string:optional",
 					"arg2:int",
 					"arg3:decimal:optional",
-					"arg4:enum|terror|lol:optional",
+					"arg4:enum!terror!lol:optional",
 				}
 			)
 

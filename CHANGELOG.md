@@ -1,3 +1,10 @@
+## v0.20.0 (2025-06-05)
+
+### Feat
+
+- add missing echo tags to repository partial update struct
+- add missing echo tags to model
+
 ## v0.19.0 (2025-06-05)
 
 ### Feat

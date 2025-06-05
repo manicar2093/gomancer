@@ -1,3 +1,9 @@
+## v0.19.0 (2025-06-05)
+
+### Feat
+
+- add new tag creation implementation
+
 ## v0.18.0 (2025-06-05)
 
 ### Feat

@@ -1,4 +1,4 @@
-package domain
+package tags
 
 import (
 	"github.com/manicar2093/gomancer/parser"
@@ -7,17 +7,22 @@ import (
 )
 
 type (
-	Tag         string
+	Generable interface {
+		Generate() (string, string)
+	}
+
 	Validations struct {
 		Required bool
 	}
+
+	Tag string
 )
 
-const (
+var (
 	JsonTag         Tag = "json"
-	MapstructureTag     = "mapstructure"
-	ParamTag            = "param"
-	GormUuidTag         = "gorm|default:gen_random_uuid()"
+	MapstructureTag Tag = "mapstructure"
+	ParamTag        Tag = "param"
+	GormUuidTag     Tag = "gorm|default:gen_random_uuid()"
 )
 
 func Tags(attribute parser.Attribute, validations Validations, tags ...Tag) map[string]string {

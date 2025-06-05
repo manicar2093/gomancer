@@ -8,6 +8,7 @@ import (
 	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/manicar2093/gomancer/parser"
+	"github.com/manicar2093/gomancer/tags"
 	"github.com/manicar2093/gomancer/types"
 	"github.com/rjNemo/underscore"
 
@@ -26,18 +27,18 @@ func GenerateModel(input parser.GenerateModelInput, goDeps deps.Container) error
 
 func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) error {
 	log.Info("Generating model...")
-	idTags := []domain.Tag{
-		domain.JsonTag, domain.ParamTag, domain.MapstructureTag,
+	idTags := []tags.Tag{
+		tags.JsonTag, tags.ParamTag, tags.MapstructureTag,
 	}
 	if input.IdAttribute.Type == string(types.TypeUuid) {
-		idTags = append(idTags, domain.GormUuidTag)
+		idTags = append(idTags, tags.GormUuidTag)
 	}
 	attribs := append(
 		[]Code{
 			Id("Id").Add(types.QualifiersByType(input.IdAttribute.Type, goDeps, "", false)).Tag(
-				domain.Tags(
+				tags.Tags(
 					input.IdAttribute,
-					domain.Validations{},
+					tags.Validations{},
 					idTags...,
 				),
 			),
@@ -51,12 +52,12 @@ func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) err
 				builder.Add(itemType)
 			}
 
-			return builder.Tag(domain.Tags(
+			return builder.Tag(tags.Tags(
 				item,
-				domain.Validations{
+				tags.Validations{
 					Required: !item.IsOptional,
 				},
-				domain.JsonTag, domain.MapstructureTag, domain.ParamTag,
+				tags.JsonTag, tags.MapstructureTag, tags.ParamTag,
 			))
 		})...,
 	)

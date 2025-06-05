@@ -170,6 +170,14 @@ func generatePartialUpdateFunction(input parser.GenerateModelInput, generatorDat
 							Name: input.IdAttribute.SnakeCase,
 							Tag:  tags.EchoParam,
 						}),
+						tags.NewEcho(tags.EchoOptions{
+							Name: input.IdAttribute.SnakeCase,
+							Tag:  tags.EchoForm,
+						}),
+						tags.NewEcho(tags.EchoOptions{
+							Name: input.IdAttribute.SnakeCase,
+							Tag:  tags.EchoQuery,
+						}),
 						tags.NewValidate(
 							underscore.Ternary[tags.ValidateGenerable](
 								input.IdAttribute.Type == string(types.TypeUuid),
@@ -189,6 +197,18 @@ func generatePartialUpdateFunction(input parser.GenerateModelInput, generatorDat
 								Name: item.SnakeCase,
 							},
 						),
+						tags.NewEcho(tags.EchoOptions{
+							Name: input.IdAttribute.SnakeCase,
+							Tag:  tags.EchoParam,
+						}),
+						tags.NewEcho(tags.EchoOptions{
+							Name: input.IdAttribute.SnakeCase,
+							Tag:  tags.EchoForm,
+						}),
+						tags.NewEcho(tags.EchoOptions{
+							Name: input.IdAttribute.SnakeCase,
+							Tag:  tags.EchoQuery,
+						}),
 					),
 				)
 			})

@@ -14,10 +14,6 @@ import (
 
 var _ = Describe("Gorm", func() {
 
-	BeforeEach(func() {
-		os.MkdirAll(path.Join(string(domain.InternalPackagePath), testfixtures.ModelBinaryIdSuccess.SnakeCase), os.ModePerm)
-	})
-
 	AfterEach(func() {
 		os.RemoveAll(string(domain.InternalPackagePath))
 	})

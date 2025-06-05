@@ -8,6 +8,7 @@ import (
 	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/manicar2093/gomancer/parser"
+	"github.com/manicar2093/gomancer/tags"
 	"github.com/manicar2093/gomancer/types"
 	"github.com/rjNemo/underscore"
 	"os"
@@ -161,16 +162,16 @@ func generatePartialUpdateFunction(input parser.GenerateModelInput, generatorDat
 				Id(input.IdAttribute.PascalCase).
 				Add(types.QualifiersByType(input.IdAttribute.Type, goDeps, input.IdAttribute.PascalCase, true)).
 				Tag(
-					domain.Tags(
+					tags.Tags(
 						input.IdAttribute,
-						domain.Validations{Required: true},
-						domain.JsonTag, domain.ParamTag,
+						tags.Validations{Required: true},
+						tags.JsonTag, tags.ParamTag,
 					),
 				)
 			underscore.Map(input.Attributes, func(item parser.Attribute) Code {
 				return g.Id(item.PascalCase).Qual(domain.GoptionPkgPath, "Optional").Index(
 					types.QualifiersByType(item.Type, goDeps, item.PascalCase, true),
-				).Tag(domain.Tags(item, domain.Validations{}, domain.JsonTag))
+				).Tag(tags.Tags(item, tags.Validations{}, tags.JsonTag))
 			})
 		}).
 		Line().

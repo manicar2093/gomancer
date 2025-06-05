@@ -47,33 +47,33 @@ func (c *PostTestRepository) GetAllPaginated(pageNumber, pageSize int) (*gormpag
 }
 
 type PartialUpdateByIdInput struct {
-	Id                uuid.UUID                             `json:"id" param:"id" validate:"required_uuid"`
-	AnOptionalInt     goption.Optional[int]                 `json:"an_optional_int"`
-	AnInt             goption.Optional[int]                 `json:"an_int"`
-	AnOptionalInt8    goption.Optional[int8]                `json:"an_optional_int8"`
-	AnInt8            goption.Optional[int8]                `json:"an_int8"`
-	AnOptionalInt16   goption.Optional[int16]               `json:"an_optional_int16"`
-	AnInt16           goption.Optional[int16]               `json:"an_int16"`
-	AnOptionalInt32   goption.Optional[int32]               `json:"an_optional_int32"`
-	AnInt32           goption.Optional[int32]               `json:"an_int32"`
-	AnOptionalInt64   goption.Optional[int64]               `json:"an_optional_int64"`
-	AnInt64           goption.Optional[int64]               `json:"an_int64"`
-	AnOptionalFloat32 goption.Optional[float32]             `json:"an_optional_float_32"`
-	AnFloat32         goption.Optional[float32]             `json:"an_float_32"`
-	AnOptionalFloat64 goption.Optional[float64]             `json:"an_optional_float_64"`
-	AnFloat64         goption.Optional[float64]             `json:"an_float_64"`
-	OptionalString    goption.Optional[string]              `json:"optional_string"`
-	String            goption.Optional[string]              `json:"string"`
-	OptionalBool      goption.Optional[bool]                `json:"optional_bool"`
-	Bool              goption.Optional[bool]                `json:"bool"`
-	OptionalTime      goption.Optional[time.Time]           `json:"optional_time"`
-	Time              goption.Optional[time.Time]           `json:"time"`
-	OptionalDecimal   goption.Optional[udecimal.Decimal]    `json:"optional_decimal"`
-	Decimal           goption.Optional[udecimal.Decimal]    `json:"decimal"`
-	OptionalUuid      goption.Optional[uuid.UUID]           `json:"optional_uuid"`
-	Uuid              goption.Optional[uuid.UUID]           `json:"uuid"`
-	OptionalEnum      goption.Optional[models.OptionalEnum] `json:"optional_enum"`
-	Enum              goption.Optional[models.Enum]         `json:"enum"`
+	Id                uuid.UUID                             `form:"id" json:"id" param:"id" query:"id" validate:"required_uuid"`
+	AnOptionalInt     goption.Optional[int]                 `form:"id" json:"an_optional_int" param:"id" query:"id"`
+	AnInt             goption.Optional[int]                 `form:"id" json:"an_int" param:"id" query:"id"`
+	AnOptionalInt8    goption.Optional[int8]                `form:"id" json:"an_optional_int8" param:"id" query:"id"`
+	AnInt8            goption.Optional[int8]                `form:"id" json:"an_int8" param:"id" query:"id"`
+	AnOptionalInt16   goption.Optional[int16]               `form:"id" json:"an_optional_int16" param:"id" query:"id"`
+	AnInt16           goption.Optional[int16]               `form:"id" json:"an_int16" param:"id" query:"id"`
+	AnOptionalInt32   goption.Optional[int32]               `form:"id" json:"an_optional_int32" param:"id" query:"id"`
+	AnInt32           goption.Optional[int32]               `form:"id" json:"an_int32" param:"id" query:"id"`
+	AnOptionalInt64   goption.Optional[int64]               `form:"id" json:"an_optional_int64" param:"id" query:"id"`
+	AnInt64           goption.Optional[int64]               `form:"id" json:"an_int64" param:"id" query:"id"`
+	AnOptionalFloat32 goption.Optional[float32]             `form:"id" json:"an_optional_float_32" param:"id" query:"id"`
+	AnFloat32         goption.Optional[float32]             `form:"id" json:"an_float_32" param:"id" query:"id"`
+	AnOptionalFloat64 goption.Optional[float64]             `form:"id" json:"an_optional_float_64" param:"id" query:"id"`
+	AnFloat64         goption.Optional[float64]             `form:"id" json:"an_float_64" param:"id" query:"id"`
+	OptionalString    goption.Optional[string]              `form:"id" json:"optional_string" param:"id" query:"id"`
+	String            goption.Optional[string]              `form:"id" json:"string" param:"id" query:"id"`
+	OptionalBool      goption.Optional[bool]                `form:"id" json:"optional_bool" param:"id" query:"id"`
+	Bool              goption.Optional[bool]                `form:"id" json:"bool" param:"id" query:"id"`
+	OptionalTime      goption.Optional[time.Time]           `form:"id" json:"optional_time" param:"id" query:"id"`
+	Time              goption.Optional[time.Time]           `form:"id" json:"time" param:"id" query:"id"`
+	OptionalDecimal   goption.Optional[udecimal.Decimal]    `form:"id" json:"optional_decimal" param:"id" query:"id"`
+	Decimal           goption.Optional[udecimal.Decimal]    `form:"id" json:"decimal" param:"id" query:"id"`
+	OptionalUuid      goption.Optional[uuid.UUID]           `form:"id" json:"optional_uuid" param:"id" query:"id"`
+	Uuid              goption.Optional[uuid.UUID]           `form:"id" json:"uuid" param:"id" query:"id"`
+	OptionalEnum      goption.Optional[models.OptionalEnum] `form:"id" json:"optional_enum" param:"id" query:"id"`
+	Enum              goption.Optional[models.Enum]         `form:"id" json:"enum" param:"id" query:"id"`
 }
 
 // PartialUpdateById can select which field has to be updated from given input

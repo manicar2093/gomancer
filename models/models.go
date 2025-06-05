@@ -27,19 +27,25 @@ func GenerateModel(input parser.GenerateModelInput, goDeps deps.Container) error
 
 func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) error {
 	log.Info("Generating model...")
-	idTags := []tags.Tag{
-		tags.JsonTag, tags.ParamTag, tags.MapstructureTag,
-	}
-	if input.IdAttribute.Type == string(types.TypeUuid) {
-		idTags = append(idTags, tags.GormUuidTag)
-	}
+	// Id does not need required validation due this is handled in core package via GetById or GetByUuid structs
+	// which has needed validations
 	attribs := append(
 		[]Code{
 			Id("Id").Add(types.QualifiersByType(input.IdAttribute.Type, goDeps, "", false)).Tag(
 				tags.Tags(
-					input.IdAttribute,
-					tags.Validations{},
-					idTags...,
+					tags.NewJson(tags.JsonOptions{
+						Name: input.IdAttribute.SnakeCase,
+					}),
+					tags.NewEcho(tags.EchoOptions{
+						Name: input.IdAttribute.SnakeCase,
+						Tag:  tags.EchoParam,
+					}),
+					tags.NewMapstructure(tags.MapstructureOptions{
+						Name: input.IdAttribute.SnakeCase,
+					}),
+					tags.NewGormPK(tags.GormPKOptions{
+						IsUuid: input.IdAttribute.Type == string(types.TypeUuid),
+					}),
 				),
 			),
 		},
@@ -52,12 +58,33 @@ func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) err
 				builder.Add(itemType)
 			}
 
+			var validationsTags []tags.ValidateGenerable
+
+			if !item.IsOptional {
+				if item.Type == string(types.TypeUuid) {
+					validationsTags = append(validationsTags, tags.ValidateRequiredUuid{})
+				} else {
+					validationsTags = append(validationsTags, tags.ValidateRequired{})
+				}
+			}
+
+			itemTags := []tags.Generable{
+				tags.NewJson(tags.JsonOptions{
+					Name: item.SnakeCase,
+				}),
+				tags.NewMapstructure(tags.MapstructureOptions{
+					Name: item.SnakeCase,
+				}),
+				tags.NewEcho(tags.EchoOptions{
+					Name: item.SnakeCase,
+					Tag:  tags.EchoParam,
+				}),
+			}
+			if len(validationsTags) > 0 {
+				itemTags = append(itemTags, tags.NewValidate(validationsTags...))
+			}
 			return builder.Tag(tags.Tags(
-				item,
-				tags.Validations{
-					Required: !item.IsOptional,
-				},
-				tags.JsonTag, tags.MapstructureTag, tags.ParamTag,
+				itemTags...,
 			))
 		})...,
 	)

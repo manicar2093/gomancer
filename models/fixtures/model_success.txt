@@ -8,7 +8,7 @@ import (
 )
 
 type PostTest struct {
-	Id                uuid.UUID                          `gorm:"default:gen_random_uuid()" json:"id" mapstructure:"id" param:"id"`
+	Id                uuid.UUID                          `gorm:"default:gen_random_uuid();primaryKey" json:"id" mapstructure:"id" param:"id"`
 	AnOptionalInt     goption.Optional[int]              `json:"an_optional_int" mapstructure:"an_optional_int" param:"an_optional_int"`
 	AnInt             int                                `json:"an_int" mapstructure:"an_int" param:"an_int" validate:"required"`
 	AnOptionalInt8    goption.Optional[int8]             `json:"an_optional_int8" mapstructure:"an_optional_int8" param:"an_optional_int8"`

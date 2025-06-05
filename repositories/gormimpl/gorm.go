@@ -163,15 +163,34 @@ func generatePartialUpdateFunction(input parser.GenerateModelInput, generatorDat
 				Add(types.QualifiersByType(input.IdAttribute.Type, goDeps, input.IdAttribute.PascalCase, true)).
 				Tag(
 					tags.Tags(
-						input.IdAttribute,
-						tags.Validations{Required: true},
-						tags.JsonTag, tags.ParamTag,
+						tags.NewJson(tags.JsonOptions{
+							Name: input.IdAttribute.SnakeCase,
+						}),
+						tags.NewEcho(tags.EchoOptions{
+							Name: input.IdAttribute.SnakeCase,
+							Tag:  tags.EchoParam,
+						}),
+						tags.NewValidate(
+							underscore.Ternary[tags.ValidateGenerable](
+								input.IdAttribute.Type == string(types.TypeUuid),
+								tags.ValidateRequiredUuid{},
+								tags.ValidateRequired{},
+							),
+						),
 					),
 				)
 			underscore.Map(input.Attributes, func(item parser.Attribute) Code {
 				return g.Id(item.PascalCase).Qual(domain.GoptionPkgPath, "Optional").Index(
 					types.QualifiersByType(item.Type, goDeps, item.PascalCase, true),
-				).Tag(tags.Tags(item, tags.Validations{}, tags.JsonTag))
+				).Tag(
+					tags.Tags(
+						tags.NewJson(
+							tags.JsonOptions{
+								Name: item.SnakeCase,
+							},
+						),
+					),
+				)
 			})
 		}).
 		Line().

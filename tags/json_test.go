@@ -7,11 +7,9 @@ import (
 )
 
 var _ = Describe("Tags", func() {
-	Expect(true).To(BeTrue())
-
 	Describe("NewJson", func() {
 		DescribeTable(
-			"creates into map a json tag with given options",
+			"creates tag and value for json tag with given options",
 			func(options tags.JsonOptions, expectedContent string) {
 				var (
 					generable = tags.NewJson(options)
@@ -19,7 +17,7 @@ var _ = Describe("Tags", func() {
 
 				tag, content := generable.Generate()
 
-				Expect(tag).To(Equal(options.Name))
+				Expect(tag).To(Equal("json"))
 				Expect(content).To(Equal(expectedContent))
 			},
 			Entry(

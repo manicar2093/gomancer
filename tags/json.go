@@ -2,6 +2,10 @@ package tags
 
 import "strings"
 
+const (
+	jsonTagName = "json"
+)
+
 type (
 	JsonOptions struct {
 		Name        string
@@ -23,7 +27,7 @@ func (c Json) Generate() (string, string) {
 
 	if c.IsInline {
 		sb.WriteString(",inline")
-		return c.Name, sb.String()
+		return jsonTagName, sb.String()
 	}
 	sb.WriteString(c.Name)
 	if c.IsOmitEmpty {
@@ -32,5 +36,5 @@ func (c Json) Generate() (string, string) {
 	if c.IsOmitZero {
 		sb.WriteString(",omitzero")
 	}
-	return c.Name, sb.String()
+	return jsonTagName, sb.String()
 }

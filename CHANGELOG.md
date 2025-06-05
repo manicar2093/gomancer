@@ -1,3 +1,13 @@
+## v0.18.0 (2025-06-05)
+
+### Feat
+
+- add validate tags generation
+- add gorm pk tag generator
+- add echo tags generation
+- add mapstructure tag generation
+- move tags to its own package and add new json tag implementation
+
 ## v0.17.0 (2025-06-05)
 
 ### Feat

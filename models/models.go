@@ -40,6 +40,14 @@ func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) err
 						Name: input.IdAttribute.SnakeCase,
 						Tag:  tags.EchoParam,
 					}),
+					tags.NewEcho(tags.EchoOptions{
+						Name: input.IdAttribute.SnakeCase,
+						Tag:  tags.EchoForm,
+					}),
+					tags.NewEcho(tags.EchoOptions{
+						Name: input.IdAttribute.SnakeCase,
+						Tag:  tags.EchoQuery,
+					}),
 					tags.NewMapstructure(tags.MapstructureOptions{
 						Name: input.IdAttribute.SnakeCase,
 					}),
@@ -78,6 +86,14 @@ func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) err
 				tags.NewEcho(tags.EchoOptions{
 					Name: item.SnakeCase,
 					Tag:  tags.EchoParam,
+				}),
+				tags.NewEcho(tags.EchoOptions{
+					Name: item.SnakeCase,
+					Tag:  tags.EchoForm,
+				}),
+				tags.NewEcho(tags.EchoOptions{
+					Name: item.SnakeCase,
+					Tag:  tags.EchoQuery,
 				}),
 			}
 			if len(validationsTags) > 0 {

@@ -12,7 +12,7 @@ jobs:
     runs-on: ubuntu-latest
     steps:
       - name: Set up Go
-        uses: actions/setup-go@v3
+        uses: actions/setup-go@v5
         with:
           go-version: 1.24.x
       - name: Set GOBIN
@@ -26,10 +26,6 @@ jobs:
       - name: Install dependencies
         run: |
           go mod download
-          go install -mod=mod github.com/onsi/ginkgo/v2/ginkgo@v2.23.1
-          curl -SsL https://packages.httpie.io/deb/KEY.gpg | sudo gpg --dearmor -o /usr/share/keyrings/httpie.gpg
-          echo "deb [arch=amd64 signed-by=/usr/share/keyrings/httpie.gpg] https://packages.httpie.io/deb ./" | sudo tee /etc/apt/sources.list.d/httpie.list > /dev/null
-          sudo apt update
-          sudo apt install httpie
       - name: Tests
         run: task test
+

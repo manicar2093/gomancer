@@ -41,6 +41,7 @@ var _ = Describe("Main", Ordered, func() {
 			content := `DATABASE_URL="postgresql://development:development@localhost:5432/test_dev?sslmode=disable"
 ENVIRONMENT=dev
 PORT=3000
+SESSION_SECRET_KEY=session_secret_key
 `
 			Expect(dirWithPath(".env")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})

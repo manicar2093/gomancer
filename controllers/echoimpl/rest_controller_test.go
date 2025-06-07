@@ -36,19 +36,4 @@ var _ = Describe("Controllers", func() {
 			)
 		})
 	})
-
-	Describe("GenerateWebController", func() {
-		It("creates a new web controller with given input", func() {
-			var (
-				input = testfixtures.ModelBinaryIdSuccess
-			)
-
-			err := echoimpl.GenerateWebController(input, testfixtures.ModelSuccessDepsContainer, testfixtures.ModelSuccessDepInCreation)
-
-			Expect(err).ToNot(HaveOccurred())
-			//Expect(path.Join(string(domain.CmdServiceControllersPackagePath), "post_web_tests.go")).Should(
-			//	testmatchers.BeAnExistingFileWithEqualContent(path.Join("fixtures", "controller.txt")),
-			//)
-		})
-	})
 })

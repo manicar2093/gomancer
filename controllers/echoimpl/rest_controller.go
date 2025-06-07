@@ -64,7 +64,3 @@ func GenerateRestController(input parser.GenerateModelInput, goDeps deps.Contain
 
 	return nil
 }
-
-func GenerateWebController(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
-	return nil
-}

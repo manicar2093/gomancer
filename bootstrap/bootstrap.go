@@ -59,6 +59,10 @@ var (
 					"taskfile.yml",
 				},
 				{
+					"Makefile",
+					"Makefile",
+				},
+				{
 					".air.toml",
 					"air.toml",
 				},

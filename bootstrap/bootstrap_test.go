@@ -202,6 +202,7 @@ import (
 
 type Config struct {
     core.Config
+    core.SessionSecretKeyConfig
     connections.DatabaseConnectionConfig
 }
 `

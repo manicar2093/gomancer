@@ -152,8 +152,8 @@ func Init(moduleName string) Container {
 				},
 				Service: Service{
 					Dependency: Dependency{
-						Path:  buildPath(moduleName, "cmd", "api"),
-						Alias: "api",
+						Path:  buildPath(moduleName, "cmd", "service"),
+						Alias: "service",
 					},
 					Controllers: Dependency{
 						Path:  buildPath(moduleName, "cmd", "service", "controllers"),

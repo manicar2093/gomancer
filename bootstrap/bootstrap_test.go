@@ -283,7 +283,7 @@ tasks:
     build:
         desc: Build your API to deploy anywhere
         cmds:
-            - go build -o .bin/api/server cmd/api/*.go
+            - go build -o .bin/service/server cmd/service/*.go
     fmt:
         desc: Format all your Golang and Prisma code
         cmds:
@@ -303,7 +303,7 @@ tasks:
         dotenv: ['.env']
         deps: [build]
         cmds:
-            - ./.bin/api/server
+            - ./.bin/service/server
 `
 			Expect(dirWithPath("Taskfile.yml")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})

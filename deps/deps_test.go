@@ -263,12 +263,12 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Cmd.Path).To(Equal(testfixtures.TestPath + "/cmd"))
 				container.Project.Cmd.ImportAlias(file)
 
-				Expect(container.Project.Cmd.Service.Alias).To(Equal("api"))
-				Expect(container.Project.Cmd.Service.Path).To(Equal(testfixtures.TestPath + "/cmd/api"))
+				Expect(container.Project.Cmd.Service.Alias).To(Equal("service"))
+				Expect(container.Project.Cmd.Service.Path).To(Equal(testfixtures.TestPath + "/cmd/service"))
 				container.Project.Cmd.Service.ImportAlias(file)
 
 				Expect(container.Project.Cmd.Service.Controllers.Alias).To(Equal("controllers"))
-				Expect(container.Project.Cmd.Service.Controllers.Path).To(Equal(testfixtures.TestPath + "/cmd/api/controllers"))
+				Expect(container.Project.Cmd.Service.Controllers.Path).To(Equal(testfixtures.TestPath + "/cmd/service/controllers"))
 				container.Project.Cmd.Service.Controllers.ImportAlias(file)
 			})
 		})

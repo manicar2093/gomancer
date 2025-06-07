@@ -95,17 +95,17 @@ import (
     "net/http"
 )
 
-type InitController struct {}
+type InitRestController struct {}
 
-func NewInitController() *InitController {
-    return &InitController{}
+func NewInitRestController() *InitRestController {
+    return &InitRestController{}
 }
 
-func (c *InitController) SetUpRoutes(group *echo.Group) {
+func (c *InitRestController) SetUpRoutes(group *echo.Group) {
     group.GET("/initial", c.GetHandler)
 }
 
-func (c *InitController) GetHandler(ctx echo.Context) error {
+func (c *InitRestController) GetHandler(ctx echo.Context) error {
     return ctx.String(http.StatusOK, "Hello from your new API :D")
 }
 `
@@ -291,14 +291,16 @@ tasks:
 tmp_dir = "tmp"
 
 [build]
+# Array of commands to run before each build
+pre_cmd = []
 # Just plain old shell command. You could use make as well.
 cmd = "task build"
 # Binary file yields from cmd.
-bin = "./.bin/api/server"
+bin = "./.bin/service/server"
 # Customize binary, can setup environment variables when run your app.
 full_bin = ""
 # Watch these filename extensions.
-include_ext = ["go", "tpl", "tmpl", "html"]
+include_ext = ["go", "tpl", "tmpl", "html", "templ"]
 # Ignore these filename extensions or directories.
 exclude_dir = ["assets", "tmp", "vendor", "node_modules", "bin", "temporal", "prisma", "scripts", "static"]
 # Watch these directories if you specified.
@@ -330,7 +332,7 @@ kill_delay = 500 # ms
 # Rerun binary or not
 rerun = false
 # Delay after each executions
-rerun_delay = 500
+rerun_delay = 2000
 # Add additional arguments when running binary (bin/full_bin). Will run './tmp/main hello world'.
 args_bin = []
 
@@ -385,12 +387,55 @@ Be yourself. Find joy by what you do. Happy coding :)
 			Expect(dirWithPath("core/commonreq")).Should(BeADirectory())
 			Expect(dirWithPath("core/connections")).Should(BeADirectory())
 			Expect(dirWithPath("core/converters")).Should(BeADirectory())
+			Expect(dirWithPath("core/coretpls")).Should(BeADirectory())
 			Expect(dirWithPath("core/echoer")).Should(BeADirectory())
 			Expect(dirWithPath("core/env")).Should(BeADirectory())
 			Expect(dirWithPath("core/httphealthcheck")).Should(BeADirectory())
 			Expect(dirWithPath("core/logger")).Should(BeADirectory())
 			Expect(dirWithPath("core/stages")).Should(BeADirectory())
+			Expect(dirWithPath("core/templutils")).Should(BeADirectory())
 			Expect(dirWithPath("core/validator")).Should(BeADirectory())
+			Expect(dirWithPath("core/config.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("core/controllers.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("core/ctx_utils.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("core/flash.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("core/middlewares.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("core/templctx.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("core/templrender.go")).Should(BeAnExistingFile())
+		})
+
+		It("creates cmd directory", func() {
+			Expect(dirWithPath("cmd/service/assets/css/styles.css")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/img/favicon.ico")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/img/gomancer.png")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/js/htmx@2.0.4.min.js")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/js/popover.min.js")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/js/selectbox.min.js")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/js/theme-setter.js")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/js/toggle-theme.js")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/sources/css/input.css")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/translations/translations.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/translations/en/translations.yaml")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/translations/es/translations.yaml")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/translations/es/validator.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/button/button.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/drawer/drawer.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/form/form.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/icon/icon.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/icon/icon_data.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/icon/icon_defs.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/input/input.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/label/label.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/pagination/pagination.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/popover/popover.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/selectbox/selectbox.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/table/table.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/layouts/drawer.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/layouts/flash_messages.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/layouts/initial.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/layouts/sidemenu.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/utils/templui.go")).Should(BeAnExistingFile())
+
 		})
 	})
 })

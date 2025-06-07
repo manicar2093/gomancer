@@ -1,0 +1,62 @@
+package datetime
+
+import (
+	"fmt"
+	"time"
+	"github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/input"
+	"github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/utils"
+)
+
+type DatetimeProps struct {
+	ID         string
+	Name       string
+	Value      time.Time
+	HasError   bool
+	Required   bool
+	Attributes templ.Attributes
+}
+
+templ Datetime(props DatetimeProps) {
+	{{ shadowingElementId := fmt.Sprintf("%s-shadowing", props.ID) }}
+	@input.Input(input.Props{
+		ID:       props.ID,
+		Type:     input.TypeDateTime,
+		HasError: props.HasError,
+		Required: props.Required,
+		Attributes: utils.MergeAttributes(
+		    props.Attributes,
+		    templ.Attributes{
+                "data-datetime-utc":    props.Value.Format(time.RFC3339),
+                "data-shadowing-input": shadowingElementId,
+            }) ,
+	})
+	<input id={ shadowingElementId } hidden type="text" name="created_at" value={ props.Value.Format(time.RFC3339) }/>
+	@Script()
+}
+
+templ Script() {
+	<script>
+        (function(){
+            const datetimeUtc = document.querySelectorAll("[data-datetime-utc]")
+            datetimeUtc.forEach(el => {
+                const unformatedDate = el.dataset.datetimeUtc
+                const asDate = new Date(unformatedDate)
+                const getMonth = (month) => {
+                    return addPrefixZero(month += 1)
+                }
+                const addPrefixZero = (number) => {
+                    if(number >= 10) return `${number}`
+                    return `0${number}`
+                }
+                const formatedDate = `${asDate.getFullYear()}-${getMonth(asDate.getMonth())}-${addPrefixZero(asDate.getDate())}T${addPrefixZero(asDate.getHours())}:${addPrefixZero(asDate.getMinutes())}`
+                el.value = formatedDate;
+            })
+            datetimeUtc.forEach(el => {
+                el.addEventListener('change', event => {
+                    const shadowingInput = document.querySelector(`#${el.dataset.shadowingInput}`)
+                    shadowingInput.value = (new Date(event.srcElement.value).toISOString())
+                })
+            })
+        })()
+    </script>
+}

@@ -3,6 +3,7 @@ package apperrors_test
 import (
 	"encoding/json"
 	"fmt"
+	"github.com/gookit/validate"
 	"net/http"
 	"net/http/httptest"
 
@@ -91,8 +92,10 @@ var _ = Describe("Converter", func() {
 				var (
 					expectedCode = http.StatusBadRequest
 					err          = &validator.ValidationError{
-						Errors: map[string]interface{}{
-							"name": "required",
+						Errors: validate.Errors{
+							"name": validate.MS{
+								"required": "is required",
+							},
 						},
 					}
 				)
@@ -101,9 +104,11 @@ var _ = Describe("Converter", func() {
 
 				var mapRes map[string]interface{}
 				Expect(json.NewDecoder(res.Body).Decode(&mapRes))
-				Expect(mapRes).To(MatchKeys(IgnoreExtras, Keys{
-					"errors": MatchKeys(IgnoreExtras, Keys{
-						"name": Equal("required"),
+				Expect(mapRes).To(MatchAllKeys(Keys{
+					"errors": MatchAllKeys(Keys{
+						"name": MatchAllKeys(Keys{
+							"required": Equal("is required"),
+						}),
 					}),
 					"code": Equal(float64(expectedCode)),
 				}))

@@ -20,6 +20,9 @@ var templatesFS embed.FS
 //go:embed core/*
 var coreFS embed.FS
 
+//go:embed cmd/*
+var cmdFS embed.FS
+
 type (
 	fileWithContent struct {
 		name, tmplName string
@@ -165,6 +168,9 @@ func InitProject(input InitProjectInput) (string, error) {
 	}
 
 	if err := copyCoreToProject(projectDirName, input); err != nil {
+		return "", err
+	}
+	if err := copyCmdToProject(projectDirName, input); err != nil {
 		return "", err
 	}
 

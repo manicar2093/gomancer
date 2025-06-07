@@ -1,9 +1,11 @@
 {{ define "cmd_service_controllers_init_web" }}package controllers
 
 import (
-    "{{.GoDeps.Echo.Path}}"
     "{{.GoDeps.Cmd.Service.Controllers.InitPages.Path}}"
+    "{{.GoDeps.Core.Path}}"
     "{{.GoDeps.Std.Net.Http.Path}}"
+
+    "{{.GoDeps.Echo.Path}}"
 )
 
 type InitWebController struct {}

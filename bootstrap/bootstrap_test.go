@@ -117,9 +117,11 @@ func (c *InitRestController) GetHandler(ctx echo.Context) error {
 			content := `package controllers
 
 import (
-    "github.com/labstack/echo/v4"
     "test/cmd/service/controllers/initpages"
+    "test/core"
     "net/http"
+
+    "github.com/labstack/echo/v4"
 )
 
 type InitWebController struct {}

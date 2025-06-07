@@ -3,9 +3,7 @@ package layouts
 import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/drawer"
 import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/icon"
 import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/button"
-import "strings"
 import "github.com/manicar2093/gomancer/bootstrap/core/templutils"
-import "github.com/rjNemo/underscore"
 import "github.com/manicar2093/gomancer/bootstrap/core"
 
 templ MenuAndDrawer(echoCtx *core.EchoContextTemplWrapper) {
@@ -33,21 +31,6 @@ templ MenuAndDrawer(echoCtx *core.EchoContextTemplWrapper) {
 									Class:   templutils.IsPathStyles(echoCtx.Path(), "/app/initial", "underline", ""),
 								}) {
 									Home
-								}
-							</li>
-							<li>
-								@button.Button(button.Props{
-									Href:    "/app/users",
-									Variant: button.VariantLink,
-									Class: strings.Join(
-										[]string{
-											templutils.IsPathStyles(echoCtx.Path(), "/app/users", "underline", ""),
-											underscore.Ternary(strings.Contains(echoCtx.Path(), "/app/users/"), "underline", ""),
-										},
-										" ",
-									),
-								}) {
-									Users
 								}
 							</li>
 							<li>

@@ -11,9 +11,7 @@ import templruntime "github.com/a-h/templ/runtime"
 import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/drawer"
 import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/icon"
 import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/button"
-import "strings"
 import "github.com/manicar2093/gomancer/bootstrap/core/templutils"
-import "github.com/rjNemo/underscore"
 import "github.com/manicar2093/gomancer/bootstrap/core"
 
 func MenuAndDrawer(echoCtx *core.EchoContextTemplWrapper) templ.Component {
@@ -133,42 +131,6 @@ func MenuAndDrawer(echoCtx *core.EchoContextTemplWrapper) templ.Component {
 					}()
 				}
 				ctx = templ.InitializeContext(ctx)
-				templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "Users")
-				if templ_7745c5c3_Err != nil {
-					return templ_7745c5c3_Err
-				}
-				return nil
-			})
-			templ_7745c5c3_Err = button.Button(button.Props{
-				Href:    "/app/users",
-				Variant: button.VariantLink,
-				Class: strings.Join(
-					[]string{
-						templutils.IsPathStyles(echoCtx.Path(), "/app/users", "underline", ""),
-						underscore.Ternary(strings.Contains(echoCtx.Path(), "/app/users/"), "underline", ""),
-					},
-					" ",
-				),
-			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 8, "</li><li>")
-			if templ_7745c5c3_Err != nil {
-				return templ_7745c5c3_Err
-			}
-			templ_7745c5c3_Var6 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
-				templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
-				templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
-				if !templ_7745c5c3_IsBuffer {
-					defer func() {
-						templ_7745c5c3_BufErr := templruntime.ReleaseBuffer(templ_7745c5c3_Buffer)
-						if templ_7745c5c3_Err == nil {
-							templ_7745c5c3_Err = templ_7745c5c3_BufErr
-						}
-					}()
-				}
-				ctx = templ.InitializeContext(ctx)
 				templ_7745c5c3_Err = icon.Sun(icon.Props{}).Render(ctx, templ_7745c5c3_Buffer)
 				if templ_7745c5c3_Err != nil {
 					return templ_7745c5c3_Err
@@ -179,15 +141,15 @@ func MenuAndDrawer(echoCtx *core.EchoContextTemplWrapper) templ.Component {
 				Size:    button.SizeIcon,
 				ID:      "theme-toggle",
 				Variant: button.VariantGhost,
-			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var6), templ_7745c5c3_Buffer)
+			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var5), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 9, "</li></ul></nav></div></div></div>")
+			templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 7, "</li></ul></nav></div></div></div>")
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}
-			templ_7745c5c3_Var7 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
+			templ_7745c5c3_Var6 := templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
 				templ_7745c5c3_W, ctx := templ_7745c5c3_Input.Writer, templ_7745c5c3_Input.Context
 				templ_7745c5c3_Buffer, templ_7745c5c3_IsBuffer := templruntime.GetBuffer(templ_7745c5c3_W)
 				if !templ_7745c5c3_IsBuffer {
@@ -207,7 +169,7 @@ func MenuAndDrawer(echoCtx *core.EchoContextTemplWrapper) templ.Component {
 			})
 			templ_7745c5c3_Err = drawer.Content(drawer.ContentProps{
 				Position: drawer.PositionLeft,
-			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var7), templ_7745c5c3_Buffer)
+			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var6), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err
 			}

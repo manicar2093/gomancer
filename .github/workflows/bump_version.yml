@@ -16,6 +16,13 @@ jobs:
         with:
           token: "${{ secrets.PERSONAL_ACCESS_TOKEN }}"
           fetch-depth: 0
+      - name: Install Task
+        uses: arduino/setup-task@v2
+        with:
+          version: 3.x
+          repo-token: ${{ secrets.GITHUB_TOKEN }}
+      - name: Generate project code
+        run: task generate
       - name: Create bump and changelog
         uses: commitizen-tools/commitizen-action@master
         with:

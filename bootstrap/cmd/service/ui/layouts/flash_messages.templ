@@ -8,7 +8,7 @@ templ showFlash(echoCtx *core.EchoContextTemplWrapper) {
 	for _, flash := range flashes {
 		@toast.Toast(toast.Props{
 			Icon:          true,
-			Variant:      toast.Variant(flash.Variant),
+			Variant:       flash.Variant,
 			Title:         flash.Title,
 			Description:   flash.Message,
 			Dismissible:   true,

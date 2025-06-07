@@ -26,3 +26,8 @@ tasks:
     desc: Current version of gomancer
     cmds:
       - cz version -p
+
+  generate:
+    desc: Generates all needed code for project
+    cmds:
+      - go tool templ generate --proxy="http://localhost:8090" --open-browser=false -v

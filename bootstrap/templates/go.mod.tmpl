@@ -1,4 +1,10 @@
 {{ define "go.mod" }}module {{.ModuleName}}
 
 go {{.GoVersion}}
+
+tool (
+{{"\t"}}github.com/a-h/templ/cmd/templ
+{{"\t"}}github.com/air-verse/air
+{{"\t"}}github.com/axzilla/templui/cmd/templui
+)
 {{ end }}

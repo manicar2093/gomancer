@@ -270,6 +270,12 @@ jobs:
 			content := `module test
 
 go 1.24
+
+tool (
+	github.com/a-h/templ/cmd/templ
+	github.com/air-verse/air
+	github.com/axzilla/templui/cmd/templui
+)
 `
 			Expect(dirWithPath("go.mod")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})

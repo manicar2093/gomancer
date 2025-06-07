@@ -118,6 +118,7 @@ func (c *InitRestController) GetHandler(ctx echo.Context) error {
 
 import (
     "github.com/labstack/echo/v4"
+    "test/cmd/service/controllers/initpages"
     "net/http"
 )
 
@@ -132,7 +133,7 @@ func (c *InitWebController) SetUpRoutes(group *echo.Group) {
 }
 
 func (c *InitWebController) GetHandler(ctx echo.Context) error {
-    return ctx.String(http.StatusOK, "Hello from your new API :D")
+	return core.Render(ctx, http.StatusOK, initpages.HomePage())
 }
 `
 			Expect(dirWithPath("cmd/service/controllers/init_web.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))

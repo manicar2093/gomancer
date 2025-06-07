@@ -42,9 +42,13 @@ type (
 		Dependency
 		Config Dependency
 	}
+	Controllers struct {
+		Dependency
+		InitPages Dependency
+	}
 	Service struct {
 		Dependency
-		Controllers  Dependency
+		Controllers
 		Translations Dependency
 	}
 	Cmd struct {

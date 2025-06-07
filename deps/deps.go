@@ -155,9 +155,15 @@ func Init(moduleName string) Container {
 						Path:  buildPath(moduleName, "cmd", "service"),
 						Alias: "service",
 					},
-					Controllers: Dependency{
-						Path:  buildPath(moduleName, "cmd", "service", "controllers"),
-						Alias: "controllers",
+					Controllers: Controllers{
+						Dependency: Dependency{
+							Path:  buildPath(moduleName, "cmd", "service", "controllers"),
+							Alias: "controllers",
+						},
+						InitPages: Dependency{
+							Path:  buildPath(moduleName, "cmd", "service", "controllers", "initpages"),
+							Alias: "initpages",
+						},
 					},
 					Translations: Dependency{
 						Path:  buildPath(moduleName, "cmd", "service", "translations"),

@@ -42,13 +42,14 @@ type (
 		Dependency
 		Config Dependency
 	}
-	Api struct {
+	Service struct {
 		Dependency
-		Controllers Dependency
+		Controllers  Dependency
+		Translations Dependency
 	}
 	Cmd struct {
 		Dependency
-		Api
+		Service
 	}
 	Domain struct {
 		Dependency

@@ -15,7 +15,7 @@ import (
 var _ = Describe("Controller", func() {
 
 	BeforeEach(func() {
-		os.MkdirAll(string(domain.CmdApiControllersPackagePath), os.ModePerm)
+		os.MkdirAll(string(domain.CmdServiceControllersPackagePath), os.ModePerm)
 	})
 
 	AfterEach(func() {
@@ -31,7 +31,7 @@ var _ = Describe("Controller", func() {
 			err := echoimpl.GenerateController(input, testfixtures.ModelSuccessDepsContainer, testfixtures.ModelSuccessDepInCreation)
 
 			Expect(err).ToNot(HaveOccurred())
-			Expect(path.Join(string(domain.CmdApiControllersPackagePath), "post_tests.go")).Should(
+			Expect(path.Join(string(domain.CmdServiceControllersPackagePath), "post_tests.go")).Should(
 				testmatchers.BeAnExistingFileWithEqualContent(path.Join("fixtures", "controller.txt")),
 			)
 		})

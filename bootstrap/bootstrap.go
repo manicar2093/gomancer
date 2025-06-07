@@ -87,7 +87,7 @@ var (
 			},
 		},
 		{
-			string(domain.CmdApiControllersPackagePath),
+			string(domain.CmdServiceControllersPackagePath),
 			[]fileWithContent{
 				{
 					"init.go",
@@ -96,7 +96,7 @@ var (
 			},
 		},
 		{
-			string(domain.CmdApiPackagePath),
+			string(domain.CmdServicePackagePath),
 			[]fileWithContent{
 				{
 					"main.go",

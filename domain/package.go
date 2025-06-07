@@ -14,19 +14,19 @@ type (
 )
 
 var (
-	InternalPackagePath             Path = "internal"
-	PkgPackagePath                  Path = "pkg"
-	PrismaPackagePath               Path = "prisma"
-	CmdPackagePath                  Path = "cmd"
-	GithubPackagePath               Path = ".github"
-	PkgGeneratorsPackagePath             = Path(path.Join(string(PkgPackagePath), "generators"))
-	PkgConfigPackagePath                 = Path(path.Join(string(PkgPackagePath), "config"))
-	PkgVersioningPackagePath             = Path(path.Join(string(PkgPackagePath), "versioning"))
-	CmdApiPackagePath                    = Path(path.Join(string(CmdPackagePath), "api"))
-	CmdApiControllersPackagePath         = Path(path.Join(string(CmdPackagePath), "api", "controllers"))
-	PrismaSchemaPackagePath              = Path(path.Join(string(PrismaPackagePath), "schema"))
-	InternalDomainModelsPackagePath      = Path(path.Join(string(InternalPackagePath), "domain", "models"))
-	GithubWorkflowsPackagePath           = Path(path.Join(string(GithubPackagePath), "workflows"))
+	InternalPackagePath              Path = "internal"
+	PkgPackagePath                   Path = "pkg"
+	PrismaPackagePath                Path = "prisma"
+	CmdPackagePath                   Path = "cmd"
+	GithubPackagePath                Path = ".github"
+	PkgGeneratorsPackagePath              = Path(path.Join(string(PkgPackagePath), "generators"))
+	PkgConfigPackagePath                  = Path(path.Join(string(PkgPackagePath), "config"))
+	PkgVersioningPackagePath              = Path(path.Join(string(PkgPackagePath), "versioning"))
+	CmdServicePackagePath                 = Path(path.Join(string(CmdPackagePath), "service"))
+	CmdServiceControllersPackagePath      = Path(path.Join(string(CmdPackagePath), "service", "controllers"))
+	PrismaSchemaPackagePath               = Path(path.Join(string(PrismaPackagePath), "schema"))
+	InternalDomainModelsPackagePath       = Path(path.Join(string(InternalPackagePath), "domain", "models"))
+	GithubWorkflowsPackagePath            = Path(path.Join(string(GithubPackagePath), "workflows"))
 
 	CoreConnectionsPkg CorePackage = "connections"
 	CoreCommonReqPkg   CorePackage = "commonreq"

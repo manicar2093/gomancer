@@ -87,7 +87,7 @@ package models
 			Expect(dirWithPath("internal/domain/models/init.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
 
-		It("creates cmd/api/controllers/init.go file", func() {
+		It("creates cmd/service/controllers/init.go file", func() {
 			content := `package controllers
 
 import (
@@ -109,10 +109,10 @@ func (c *InitRestController) GetHandler(ctx echo.Context) error {
     return ctx.String(http.StatusOK, "Hello from your new API :D")
 }
 `
-			Expect(dirWithPath("cmd/api/controllers/init.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+			Expect(dirWithPath("cmd/service/controllers/init.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
 
-		It("creates cmd/api/main.go file", func() {
+		It("creates cmd/service/main.go file", func() {
 			content := `package main
 
 import (
@@ -120,34 +120,56 @@ import (
     echo	"github.com/labstack/echo/v4"
     middleware	"github.com/labstack/echo/v4/middleware"
     echoroutesview	"github.com/manicar2093/echoroutesview"
+    controllers	"test/cmd/service/controllers"
+    translations	"test/cmd/service/translations"
     core	"test/core"
     apperrors	"test/core/apperrors"
     converters	"test/core/converters"
-    validator	"test/core/validator"
     logger	"test/core/logger"
+    validator	"test/core/validator"
     config	"test/pkg/config"
-    controllers	"test/cmd/api/controllers"
 )
 
 func main() {
     var (
-        echoInstance = echo.New()
-        baseEndpoint = "/api/v1"
-        baseGroup    = echoInstance.Group(baseEndpoint)
-        conf         = converters.Must(core.ParseConfig[config.Config]())
+        e                = echo.New()
+        restBaseEndpoint = "/api/v1"
+        webBaseEndpoint  = "/app"
+        restBaseGroup    = e.Group(restBaseEndpoint)
+        webBaseGroup     = e.Group(webBaseEndpoint)
+        conf             = converters.Must(core.ParseConfig[config.Config]())
     )
     logger.Config()
-    echoInstance.Use(middleware.Logger())
-    core.RegisterController(baseGroup, controllers.NewInitController())
-    echoroutesview.RegisterRoutesViewer(echoInstance)
 
-    echoInstance.HTTPErrorHandler = apperrors.HandlerWEcho
-    echoInstance.Validator = validator.NewGooKitValidator()
+    // Use only for web app. echo do not allow to register this on a group :/
+    e.Pre(middleware.MethodOverrideWithConfig(middleware.MethodOverrideConfig{
+        Getter: middleware.MethodFromForm("_method"),
+    }))
 
-    echoInstance.Logger.Fatal(echoInstance.Start(fmt.Sprintf(":%d", conf.Port)))
+    e.Use(core.I18nMiddleware(translations.Embed, "en"))
+
+    webBaseGroup.Static("/assets", "./cmd/service/assets")
+    webBaseGroup.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
+        TokenLookup: "form:X-XSRF-TOKEN",
+    }))
+    webBaseGroup.Use(core.SessionSecretKeyMiddleware(conf.SessionSecretKeyConfig))
+
+    e.Use(middleware.Logger())
+
+    core.RegisterController(webBaseGroup, controllers.NewInitWebController())
+    core.RegisterController(restBaseGroup, controllers.NewInitRestController())
+
+    if err := echoroutesview.RegisterRoutesViewer(e); err != nil {
+        panic(err)
+    }
+
+    e.HTTPErrorHandler = apperrors.HandlerWEcho
+    e.Validator = validator.NoValidatorWarning{}
+
+    e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", conf.Port)))
 }
 `
-			Expect(dirWithPath("cmd/api/main.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+			Expect(dirWithPath("cmd/service/main.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
 
 		It("creates pkg/generators/generators.go file", func() {

@@ -74,7 +74,7 @@ gomancer gen Client name:string dob:time:optional status:enum/active/deactivated
 			log.Error(err)
 			return
 		}
-		if err := echoimpl.GenerateController(input, goDeps, inCreation); err != nil {
+		if err := echoimpl.GenerateRestController(input, goDeps, inCreation); err != nil {
 			log.Error(err)
 			return
 		}

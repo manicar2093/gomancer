@@ -2,6 +2,7 @@ package echoimpl
 
 import (
 	"embed"
+	"fmt"
 	"github.com/charmbracelet/log"
 	"github.com/jinzhu/inflection"
 	"github.com/manicar2093/gomancer/deps"
@@ -24,8 +25,8 @@ type (
 	}
 )
 
-func GenerateController(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
-	log.Info("Generating echo controller...")
+func GenerateRestController(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
+	log.Info("Generating echo rest controller...")
 	var tpl = template.Must(template.
 		New("controllers").
 		Funcs(map[string]any{
@@ -40,13 +41,20 @@ func GenerateController(input parser.GenerateModelInput, goDeps deps.Container, 
 		}).
 		ParseFS(templatesFS, "templates/*"))
 
-	f, err := os.OpenFile(path.Join(string(domain.CmdServiceControllersPackagePath), inflection.Plural(input.SnakeCase)+".go"), os.O_RDWR|os.O_CREATE, 0755)
+	f, err := os.OpenFile(
+		path.Join(
+			string(domain.CmdServiceControllersPackagePath),
+			fmt.Sprintf("%s_rest.go", inflection.Plural(input.SnakeCase)),
+		),
+		os.O_RDWR|os.O_CREATE,
+		0755,
+	)
 	if err != nil {
 		return err
 	}
 	defer f.Close()
 
-	if err := tpl.ExecuteTemplate(f, "controller_tmpl", tplInput{
+	if err := tpl.ExecuteTemplate(f, "rest_controller_tmpl", tplInput{
 		GenerateModelInput: input,
 		GoDeps:             goDeps,
 		InCreation:         inCreation,
@@ -54,5 +62,9 @@ func GenerateController(input parser.GenerateModelInput, goDeps deps.Container, 
 		return err
 	}
 
+	return nil
+}
+
+func GenerateWebController(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
 	return nil
 }

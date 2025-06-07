@@ -94,8 +94,17 @@ var (
 			string(domain.CmdServiceControllersPackagePath),
 			[]fileWithContent{
 				{
-					"init.go",
-					"cmd_api_controllers_init",
+					"init_rest.go",
+					"cmd_service_controllers_init_rest",
+				},
+			},
+		},
+		{
+			string(domain.CmdServiceControllersPackagePath),
+			[]fileWithContent{
+				{
+					"init_web.go",
+					"cmd_service_controllers_init_web",
 				},
 			},
 		},

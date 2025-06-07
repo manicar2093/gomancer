@@ -88,7 +88,7 @@ package models
 			Expect(dirWithPath("internal/domain/models/init.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
 
-		It("creates cmd/service/controllers/init.go file", func() {
+		It("creates cmd/service/controllers/init_rest.go file", func() {
 			content := `package controllers
 
 import (
@@ -110,7 +110,32 @@ func (c *InitRestController) GetHandler(ctx echo.Context) error {
     return ctx.String(http.StatusOK, "Hello from your new API :D")
 }
 `
-			Expect(dirWithPath("cmd/service/controllers/init.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+			Expect(dirWithPath("cmd/service/controllers/init_rest.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates cmd/service/controllers/init_web.go file", func() {
+			content := `package controllers
+
+import (
+    "github.com/labstack/echo/v4"
+    "net/http"
+)
+
+type InitWebController struct {}
+
+func NewInitWebController() *InitWebController {
+    return &InitWebController{}
+}
+
+func (c *InitWebController) SetUpRoutes(group *echo.Group) {
+    group.GET("/initial", c.GetHandler)
+}
+
+func (c *InitWebController) GetHandler(ctx echo.Context) error {
+    return ctx.String(http.StatusOK, "Hello from your new API :D")
+}
+`
+			Expect(dirWithPath("cmd/service/controllers/init_web.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
 
 		It("creates cmd/service/main.go file", func() {

@@ -4,7 +4,6 @@ import (
 	"encoding/gob"
 	"github.com/gorilla/sessions"
 	"github.com/labstack/echo/v4"
-	"github.com/manicar2093/gomancer/bootstrap/core/coretpls/toast"
 	"github.com/sirupsen/logrus"
 )
 
@@ -14,7 +13,7 @@ const (
 )
 
 type FlashMessage struct {
-	Variant toast.Variant
+	Variant string
 	Message string
 	Title   string
 }

@@ -1,0 +1,19 @@
+package posttestpages
+
+import "test/internal/domain/models"
+import "test/cmd/service/ui/layouts"
+import "net/http"
+import "fmt"
+import "github.com/gookit/validate"
+
+templ EditPostTestPage(postTest *models.PostTest, errors validate.Errors) {
+	@layouts.Initial() {
+		@PostTestForm(
+			postTest,
+			errors,
+			PostTestFormProperties{
+				Action: fmt.Sprintf("/app/post_tests/%s", postTest.Id),
+				Method: http.MethodPut,
+			})
+	}
+}

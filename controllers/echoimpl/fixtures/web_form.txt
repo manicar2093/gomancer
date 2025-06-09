@@ -1,0 +1,832 @@
+package posttestpages
+
+import "test/internal/domain/models"
+import "test/cmd/service/ui/components/form"
+import "test/cmd/service/ui/components/label"
+import "test/cmd/service/ui/components/input"
+import "test/cmd/service/ui/components/button"
+import "test/cmd/service/ui/components/selectbox"
+import "test/core/coretpls/formtag"
+import "github.com/gookit/validate"
+import "github.com/invopop/ctxi18n/i18n"
+import "test/core/coretpls/datetime"
+
+type PostTestFormProperties struct {
+	Action string
+	Method string
+	Class  string
+}
+
+templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props PostTestFormProperties) {
+	@formtag.FormTag(formtag.FormTagProperties{
+		Action: props.Action,
+		Method: props.Method,
+		Class:  props.Class,
+	}) {
+		<div class="mb-2">
+
+			{{ anOptionalIntKey := "an_optional_int" }}
+			{{ hasAnOptionalIntErrors := errors.HasField(anOptionalIntKey) }}
+			@form.Item(form.ItemProps{}) {
+				@label.Label(label.Props{
+					For: anOptionalIntKey,
+				}) {
+					An Optional Int
+				}
+				@input.Input(input.Props{
+					ID:       anOptionalIntKey,
+					Name:     anOptionalIntKey,
+					Type:     input.TypeNumber,
+					Value:    postTest.AnOptionalInt,
+					HasError: hasAnOptionalIntErrors,
+				})
+				@form.Description() {
+					Enter An Optional Int
+				}
+				if hasEmailErrors {
+					for _,value := range errors.Field(anOptionalIntKey) {
+						@form.Message(form.MessageProps{
+							Variant: form.MessageVariantError,
+						}) {
+							{ value }
+						}
+					}
+				}
+			}
+
+			{{ anIntKey := "an_int" }}
+			{{ hasAnIntErrors := errors.HasField(anIntKey) }}
+			@form.Item(form.ItemProps{}) {
+				@label.Label(label.Props{
+					For: anIntKey,
+				}) {
+					An Int
+				}
+				@input.Input(input.Props{
+					ID:       anIntKey,
+					Name:     anIntKey,
+					Type:     input.TypeNumber,
+					Value:    postTest.AnInt,
+					HasError: hasAnIntErrors,
+					Required: true,
+				})
+				@form.Description() {
+					Enter An Int
+				}
+				if hasAnIntErrors {
+					for _,value := range errors.Field(anIntKey) {
+						@form.Message(form.MessageProps{
+							Variant: form.MessageVariantError,
+						}) {
+							{ value }
+						}
+					}
+				}
+			}
+
+			{{ anOptionalInt8Key := "an_optional_int8" }}
+            {{ hasAnOptionalInt8Errors := errors.HasField(anOptionalInt8Key) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: anOptionalInt8Key,
+                }) {
+                    An Optional Int 8
+                }
+                @input.Input(input.Props{
+                    ID:       anOptionalInt8Key,
+                    Name:     anOptionalInt8Key,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.AnOptionalInt8,
+                    HasError: hasAnOptionalInt8Errors,
+                })
+                @form.Description() {
+                    Enter An Optional Int 8
+                }
+                if hasAnOptionalInt8Errors {
+                    for _,value := range errors.Field(anOptionalInt8Key) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ anInt8Key := "an_int8" }}
+            {{ hasAnInt8Errors := errors.HasField(anInt8Key) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: anInt8Key,
+                }) {
+                    An Int 8
+                }
+                @input.Input(input.Props{
+                    ID:       anInt8Key,
+                    Name:     anInt8Key,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.AnInt8,
+                    HasError: hasAnInt8Errors,
+                    Required: true,
+                })
+                @form.Description() {
+                    Enter An Int 8
+                }
+                if hasAnInt8Errors {
+                    for _,value := range errors.Field(anInt8Key) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ anOptionalInt16Key := "an_optional_int16" }}
+            {{ hasAnOptionalInt16Errors := errors.HasField(anOptionalInt16Key) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: anOptionalInt16Key,
+                }) {
+                    An Optional Int 16
+                }
+                @input.Input(input.Props{
+                    ID:       anOptionalInt16Key,
+                    Name:     anOptionalInt16Key,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.AnOptionalInt8,
+                    HasError: hasAnOptionalInt16Errors,
+                })
+                @form.Description() {
+                    Enter An Optional Int 16
+                }
+                if hasAnOptionalInt16Errors {
+                    for _,value := range errors.Field(anOptionalInt16Key) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ anInt16Key := "an_int16" }}
+            {{ hasAnInt16Errors := errors.HasField(anInt16Key) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: anInt16Key,
+                }) {
+                    An Int 16
+                }
+                @input.Input(input.Props{
+                    ID:       anInt16Key,
+                    Name:     anInt16Key,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.AnInt16,
+                    HasError: hasAnInt16Errors,
+                    Required: true,
+                })
+                @form.Description() {
+                    Enter An Int 16
+                }
+                if hasAnInt16Errors {
+                    for _,value := range errors.Field(anInt16Key) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ anOptionalInt32Key := "an_optional_int32" }}
+            {{ hasAnOptionalInt32Errors := errors.HasField(anOptionalInt32Key) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: anOptionalInt32Key,
+                }) {
+                    An Optional Int 32
+                }
+                @input.Input(input.Props{
+                    ID:       anOptionalInt32Key,
+                    Name:     anOptionalInt32Key,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.AnOptionalInt32,
+                    HasError: hasAnOptionalInt32Errors,
+                })
+                @form.Description() {
+                    Enter An Optional Int 32
+                }
+                if hasAnOptionalInt32Errors {
+                    for _,value := range errors.Field(anOptionalInt32Key) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ anInt32Key := "an_int32" }}
+            {{ hasAnInt32Errors := errors.HasField(anInt32Key) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: anInt32Key,
+                }) {
+                    An Int 32
+                }
+                @input.Input(input.Props{
+                    ID:       anInt32Key,
+                    Name:     anInt32Key,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.AnInt32,
+                    HasError: hasAnInt32Errors,
+                    Required: true
+                })
+                @form.Description() {
+                    Enter An Int 32
+                }
+                if hasAnInt32Errors {
+                    for _,value := range errors.Field(anInt32Key) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ anOptionalInt64Key := "an_optional_int64" }}
+            {{ hasAnOptionalInt64Errors := errors.HasField(anOptionalInt64Key) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: anOptionalInt64Key,
+                }) {
+                    An Optional Int 64
+                }
+                @input.Input(input.Props{
+                    ID:       anOptionalInt64Key,
+                    Name:     anOptionalInt64Key,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.AnOptionalInt64,
+                    HasError: hasAnOptionalInt64Errors,
+                })
+                @form.Description() {
+                    Enter An Optional Int 64
+                }
+                if hasAnOptionalInt64Errors {
+                    for _,value := range errors.Field(anOptionalInt64Key) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ anInt64Key := "an_int64" }}
+            {{ hasAnInt64Errors := errors.HasField(anInt64Key) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: anInt64Key,
+                }) {
+                    An Int 64
+                }
+                @input.Input(input.Props{
+                    ID:       anInt64Key,
+                    Name:     anInt64Key,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.AnInt64,
+                    HasError: hasAnInt64Errors,
+                    Required: true
+                })
+                @form.Description() {
+                    Enter An Int 64
+                }
+                if hasAnInt64Errors {
+                    for _,value := range errors.Field(anInt64Key) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ anOptionalFloat32Key := "an_optional_float_32" }}
+            {{ hasAnOptionalFloat32Errors := errors.HasField(anOptionalFloat32Key) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: anOptionalFloat32Key,
+                }) {
+                    An Optional Float 32
+                }
+                @input.Input(input.Props{
+                    ID:       anOptionalFloat32Key,
+                    Name:     anOptionalFloat32Key,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.AnOptionalFloat32,
+                    HasError: hasAnOptionalFloat32Errors,
+                    Attributes: map[string]any{
+                        "step": "0.01",
+                    },
+                })
+                @form.Description() {
+                    Enter An Optional Float 32
+                }
+                if hasAnOptionalFloat32Errors {
+                    for _,value := range errors.Field(anOptionalFloat32Key) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ anFloat32Key := "an_float_32" }}
+            {{ hasAnFloat32Errors := errors.HasField(anFloat32Key) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: anFloat32Key,
+                }) {
+                    An Float 32
+                }
+                @input.Input(input.Props{
+                    ID:       anFloat32Key,
+                    Name:     anFloat32Key,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.AnFloat32,
+                    HasError: hasAnFloat32Errors,
+                    Required: true,
+                    Attributes: map[string]any{
+                        "step": "0.01",
+                    },
+                })
+                @form.Description() {
+                    Enter An Float 32
+                }
+                if hasAnFloat32Errors {
+                    for _,value := range errors.Field(anFloat32Key) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ anOptionalFloat64Key := "an_optional_float_64" }}
+            {{ hasAnOptionalFloat64Errors := errors.HasField(anOptionalFloat64Key) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: anOptionalFloat64Key,
+                }) {
+                    An Optional Float 32
+                }
+                @input.Input(input.Props{
+                    ID:       anOptionalFloat64Key,
+                    Name:     anOptionalFloat64Key,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.AnOptionalFloat64,
+                    HasError: hasAnOptionalFloat64Errors,
+                    Attributes: map[string]any{
+                        "step": "0.01",
+                    },
+                })
+                @form.Description() {
+                    Enter An Optional Float 32
+                }
+                if hasAnOptionalFloat64Errors {
+                    for _,value := range errors.Field(anOptionalFloat64Key) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ anFloat64Key := "an_float_64" }}
+            {{ hasAnFloat64Errors := errors.HasField(anFloat64Key) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: anFloat64Key,
+                }) {
+                    An Float 32
+                }
+                @input.Input(input.Props{
+                    ID:       anFloat64Key,
+                    Name:     anFloat64Key,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.AnFloat64,
+                    HasError: hasAnFloat64Errors,
+                    Required: true,
+                    Attributes: map[string]any{
+                        "step": "0.01",
+                    },
+                })
+                @form.Description() {
+                    Enter An Float 32
+                }
+                if hasAnFloat64Errors {
+                    for _,value := range errors.Field(anFloat64Key) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ optionalStringKey := "optional_string" }}
+            {{ hasOptionalStringErrors := errors.HasField(optionalStringKey) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: optionalStringKey,
+                }) {
+                    Optional String
+                }
+                @input.Input(input.Props{
+                    ID:       optionalStringKey,
+                    Name:     optionalStringKey,
+                    Type:     input.TypeText,
+                    Value:    postTest.OptionalString,
+                    HasError: hasOptionalStringErrors,
+                })
+                @form.Description() {
+                    Enter Optional String
+                }
+                if hasOptionalStringErrors {
+                    for _,value := range errors.Field(optionalStringKey) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ stringKey := "string" }}
+            {{ hasStringErrors := errors.HasField(stringKey) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: stringKey,
+                }) {
+                    String
+                }
+                @input.Input(input.Props{
+                    ID:       stringKey,
+                    Name:     stringKey,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.String,
+                    HasError: hasStringErrors,
+                    Required: true,
+                })
+                @form.Description() {
+                    Enter String
+                }
+                if hasStringErrors {
+                    for _,value := range errors.Field(stringKey) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+
+           // TODO: checkbox missing here
+
+
+			{{ optionalTimeKey := "optional_time" }}
+			{{ hasOptionalTimeErrors := errors.HasField(optionalTimeKey) }}
+			@form.Item(form.ItemProps{}) {
+				@label.Label(label.Props{
+					For: optionalTimeKey,
+				}) {
+					Optional Time
+				}
+				@datetime.Datetime(datetime.DatetimeProps{
+				    ID: optionalTimeKey,
+				    Name: optionalTimeKey,
+				    Value: user.OptionalTime.UTC(),
+				    HasError: hasOptionalTimeErrors,
+				})
+				@form.Description() {
+					Enter Optional Time
+				}
+				if hasOptionalTimeErrors {
+					for _,value := range errors.Field(optionalTimeKey) {
+						@form.Message(form.MessageProps{
+							Variant: form.MessageVariantError,
+						}) {
+							{ value }
+						}
+					}
+				}
+			}
+
+			{{ timeKey := "time" }}
+            {{ hasTimeErrors := errors.HasField(timeKey) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: timeKey,
+                }) {
+                    Time
+                }
+                @datetime.Datetime(datetime.DatetimeProps{
+                    ID: timeKey,
+                    Name: timeKey,
+                    Value: user.Time.UTC(),
+                    HasError: hasTimeErrors,
+                    Required: true,
+                })
+                @form.Description() {
+                    Enter Time
+                }
+                if hasTimeErrors {
+                    for _,value := range errors.Field(timeKey) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ optionalDecimalKey := "optional_decimal" }}
+            {{ hasOptionalDecimalErrors := errors.HasField(optionalDecimalKey) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: optionalDecimalKey,
+                }) {
+                    An Optional Decimal
+                }
+                @input.Input(input.Props{
+                    ID:       optionalDecimalKey,
+                    Name:     optionalDecimalKey,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.OptionalDecimal,
+                    HasError: hasOptionalDecimalErrors,
+                    Attributes: map[string]any{
+                        "step": "0.01",
+                    },
+                })
+                @form.Description() {
+                    Enter An Optional Decimal
+                }
+                if hasOptionalDecimalErrors {
+                    for _,value := range errors.Field(optionalDecimalKey) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ decimalKey := "decimal" }}
+            {{ hasDecimalErrors := errors.HasField(decimalKey) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: decimalKey,
+                }) {
+                    Decimal
+                }
+                @input.Input(input.Props{
+                    ID:       decimalKey,
+                    Name:     decimalKey,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.Decimal,
+                    HasError: hasDecimalErrors,
+                    Required: true,
+                    Attributes: map[string]any{
+                        "step": "0.01",
+                    },
+                })
+                @form.Description() {
+                    Enter Decimal
+                }
+                if hasDecimalErrors {
+                    for _,value := range errors.Field(decimalKey) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ optionalUuidKey := "optional_uuid" }}
+            {{ hasOptionalUuidErrors := errors.HasField(optionalUuidKey) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: optionalUuidKey,
+                }) {
+                    Optional Uuid
+                }
+                @input.Input(input.Props{
+                    ID:       optionalUuidKey,
+                    Name:     optionalUuidKey,
+                    Type:     input.TypeText,
+                    Value:    postTest.OptionalUuid,
+                    HasError: hasOptionalUuidErrors,
+                })
+                @form.Description() {
+                    Enter Optional Uuid
+                }
+                if hasOptionalUuidErrors {
+                    for _,value := range errors.Field(optionalUuidKey) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+            {{ uuidKey := "uuid" }}
+            {{ hasUuidErrors := errors.HasField(uuidKey) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: uuidKey,
+                }) {
+                    Uuid
+                }
+                @input.Input(input.Props{
+                    ID:       uuidKey,
+                    Name:     uuidKey,
+                    Type:     input.TypeNumber,
+                    Value:    postTest.Uuid,
+                    HasError: hasUuidErrors,
+                    Required: true,
+                })
+                @form.Description() {
+                    Enter Uuid
+                }
+                if hasUuidErrors {
+                    for _,value := range errors.Field(uuidKey) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
+            }
+
+			{{ optionalEnumKey := "optional_enum" }}
+            {{ hasOptionalEnumErrors := errors.HasField(optionalEnumKey) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: optionalEnumKey,
+                }) {
+                    Optional Enum
+                }
+                @selectbox.SelectBox() {
+                    @selectbox.Trigger(selectbox.TriggerProps{
+                        ID: optionalEnumKey,
+                        Name: optionalEnumKey,
+                        HasError: hasOptionalEnumErrors,
+                    }) {
+                        @selectbox.Value(selectbox.ValueProps{
+                            Placeholder: i18n.T(ctx, "select_placeholder"),
+                        })
+                    }
+                    @selectbox.Content() {
+                        @selectbox.Group() {
+                            @selectbox.Item(selectbox.ItemProps{
+                                Value: "optional_enum_1",
+                                Selected: user.OptionalEnum == "optional_enum_1",
+                                Disabled: user.OptionalEnum == "optional_enum_1",
+                            }) {
+                                Optional Enum 1
+                            }
+
+                            @selectbox.Item(selectbox.ItemProps{
+                                Value: "optional_enum_2",
+                                Selected: user.OptionalEnum == "optional_enum_2",
+                                Disabled: user.OptionalEnum == "optional_enum_2",
+                            }) {
+                                Optional Enum 2
+                            }
+                            @selectbox.Item(selectbox.ItemProps{
+                                Value: "optional_enum_3",
+                                Selected: user.OptionalEnum == "optional_enum_3",
+                                Disabled: user.OptionalEnum == "optional_enum_3",
+                            }) {
+                                Optional Enum 3
+                            }
+                        }
+                    }
+                }
+            }
+            @form.Description() {
+                Select Optional Enum
+            }
+            if hasOptionalEnumErrors {
+                for _,value := range errors.Field(optionalEnumKey) {
+                    @form.Message(form.MessageProps{
+                        Variant: form.MessageVariantError,
+                    }) {
+                        { value }
+                    }
+                }
+            }
+
+            {{ enumKey := "enum" }}
+            {{ hasEnumErrors := errors.HasField(enumKey) }}
+            @form.Item(form.ItemProps{}) {
+                @label.Label(label.Props{
+                    For: enumKey,
+                }) {
+                    Enum
+                }
+                @selectbox.SelectBox() {
+                    @selectbox.Trigger(selectbox.TriggerProps{
+                        ID: enumKey,
+                        Name: enumKey,
+                        HasError: hasEnumErrors,
+                        Required: true,
+                    }) {
+                        @selectbox.Value(selectbox.ValueProps{
+                            Placeholder: i18n.T(ctx, "select_placeholder"),
+                        })
+                    }
+                    @selectbox.Content() {
+                        @selectbox.Group() {
+                            @selectbox.Item(selectbox.ItemProps{
+                                Value: "enum_1",
+                                Selected: user.Enum == "enum_1",
+                                Disabled: user.Enum == "enum_1",
+                            }) {
+                                Enum 1
+                            }
+
+                            @selectbox.Item(selectbox.ItemProps{
+                                Value: "enum_2",
+                                Selected: user.Enum == "enum_2",
+                                Disabled: user.Enum == "enum_2",
+                            }) {
+                                Enum 2
+                            }
+                            @selectbox.Item(selectbox.ItemProps{
+                                Value: "enum_3",
+                                Selected: user.Enum == "enum_3",
+                                Disabled: user.Enum == "enum_3",
+                            }) {
+                                Enum 3
+                            }
+                        }
+                    }
+                }
+            }
+            @form.Description() {
+                Select Enum
+            }
+            if hasEnumErrors {
+                for _,value := range errors.Field(enumKey) {
+                    @form.Message(form.MessageProps{
+                        Variant: form.MessageVariantError,
+                    }) {
+                        { value }
+                    }
+                }
+            }
+
+		</div>
+
+		@button.Button(button.Props{
+			Variant: button.VariantDefault,
+			Type:    button.TypeSubmit,
+		}) {
+			{ i18n.T(ctx, "save") }
+		}
+		@button.Button(button.Props{
+			Type:    button.TypeSubmit,
+			Variant: button.VariantGhost,
+			Href:    "/app/post_tests?page_number=1",
+		}) {
+			{ i18n.T(ctx, "cancel") }
+		}
+	}
+}

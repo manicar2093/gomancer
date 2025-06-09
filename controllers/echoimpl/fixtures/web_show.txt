@@ -1,0 +1,71 @@
+package posttestpages
+
+import "test/internal/domain/models"
+import "test/cmd/service/ui/components/form"
+import "test/cmd/service/ui/components/label"
+import "test/cmd/service/ui/layouts"
+import "time"
+import "test/cmd/service/ui/components/button"
+import "fmt"
+import "net/http"
+import "test/core/coretpls/link"
+import "github.com/invopop/ctxi18n/i18n"
+
+templ ShowPostTest(user *models.PostTest) {
+	@layouts.Initial() {
+		<h1 class="mb-2 text-xl">User: { user.Id.String() }</h1>
+		<div class="mb-2">
+            @form.Item() {
+                @label.Label() {
+                    Email
+                }
+                <p>{ user.Email }</p>
+            }
+
+            @form.Item() {
+                @label.Label() {
+                    CreatedAt
+                }
+                <p>{ user.CreatedAt.Local().Format(time.DateTime) } hrs</p>
+            }
+
+            @form.Item() {
+                @label.Label() {
+                    Status
+                }
+                <p>{ user.Status }</p>
+            }
+		</div>
+
+		@link.Link(link.LinkProps{
+            Href:    fmt.Sprintf("/app/users/%s/edit", user.Id),
+            Variant: button.VariantDefault,
+        }) {
+            { i18n.T(ctx, "edit") }
+        }
+
+		@link.Link(link.LinkProps{
+			Href:    fmt.Sprintf("/app/users/%s", user.Id),
+			Confirm: fmt.Sprintf("Are you sure to delete %s", user.Email),
+			Method: http.MethodDelete,
+			Variant: button.VariantDestructive,
+			Class: "inline-block",
+		}) {
+			{ i18n.T(ctx, "delete") }
+		}
+
+		@button.Button(button.Props{
+			Variant: button.VariantSecondary,
+			Href: "/app/users/new",
+		}) {
+			 { i18n.T(ctx, "create_new") }
+		}
+
+		@button.Button(button.Props{
+			Variant: button.VariantOutline,
+			Href: "/app/users?page_number=1",
+		}) {
+		     { i18n.T(ctx, "show_all") }
+		}
+	}
+}

@@ -1,0 +1,19 @@
+package posttestpages
+
+import "test/internal/domain/models"
+import "github.com/manicar2093/gormpager"
+import "test/cmd/service/ui/layouts"
+import "test/cmd/service/ui/components/button"
+import "github.com/invopop/ctxi18n/i18n"
+
+templ PostTestIndex(page *gormpager.Page[models.PostTest]) {
+	@layouts.Initial() {
+		@PostTestsTable(page)
+		@button.Button(button.Props{
+			Variant: button.VariantLink,
+			Href: "/app/post_tests/new",
+		}) {
+		    { i18n.T(ctx, "create_new") }
+		}
+	}
+}

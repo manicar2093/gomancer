@@ -1,0 +1,148 @@
+package posttestpages
+
+import (
+	"fmt"
+	"github.com/manicar2093/gormpager"
+	"net/http"
+	"test/cmd/service/ui/components/button"
+	"test/cmd/service/ui/components/label"
+	"test/core/coretpls/link"
+	"test/cmd/service/ui/components/pagination"
+	"test/cmd/service/ui/components/table"
+	"test/internal/domain/models"
+	"time"
+	"github.com/invopop/ctxi18n/i18n"
+)
+
+var tableId = "post_test-data-table"
+var tableIdAsSelector = fmt.Sprintf("#%s", tableId)
+
+templ PostTestsTable(page *gormpager.Page[models.PostTest]) {
+	@table.Table(table.Props{
+		ID: tableId,
+	}) {
+		@table.Header() {
+			@table.Row() {
+				@table.Head() {
+					Email
+				}
+				@table.Head() {
+					Status
+				}
+				@table.Head() {
+					Created at
+				}
+				@table.Head() {
+					{ i18n.T(ctx, "actions") }
+				}
+			}
+		}
+		if page.TotalEntries > 0 {
+			@table.Body() {
+				for _, item := range page.Items {
+					@table.Row() {
+						@table.Cell() {
+							<a href={ templ.SafeURL(fmt.Sprintf("/app/post_tests/%s", item.Id)) }>
+								{ item.Email }
+							</a>
+						}
+						@table.Cell() {
+                            { item.Status }
+                        }
+						@table.Cell() {
+							{ item.CreatedAt.Local().Format(time.DateTime) } hrs
+						}
+						@table.Cell() {
+							@button.Button(button.Props{
+								Variant: button.VariantDefault,
+								Href:    fmt.Sprintf("/app/post_tests/%s/edit", item.Id),
+							}) {
+								{ i18n.T(ctx, "edit") }
+							}
+							@link.Link(link.LinkProps{
+								Href:    fmt.Sprintf("/app/post_tests/%s?page_number=%d", item.Id, page.CurrentPage),
+								Confirm: i18n.T(ctx, "confirm_deletion"),
+								Method:  http.MethodDelete,
+								Variant: button.VariantDestructive,
+								Class:   "inline-block",
+							}) {
+								{ i18n.T(ctx, "delete") }
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if page.TotalEntries > 0 {
+		<div class="mt-4">
+			{{ p := pagination.CreatePagination(int(page.CurrentPage), int(page.TotalPages), int(page.TotalPages)) }}
+			@pagination.Pagination() {
+				@pagination.Content() {
+					@pagination.Item() {
+						@pagination.Previous(pagination.PreviousProps{
+							Href:     fmt.Sprintf("?page_number=%d", p.CurrentPage-1),
+							Disabled: !p.HasPrevious,
+							Label:   i18n.T(ctx, "previous"),
+						})
+					}
+					// First page with ellipsis if needed
+					if p.Pages[0] > 1 {
+						@pagination.Item() {
+							@pagination.Link(pagination.LinkProps{
+								Href: "?page_number=1",
+							}) {
+								1
+							}
+						}
+						if p.Pages[0] > 2 {
+							@pagination.Item() {
+								@pagination.Ellipsis()
+							}
+						}
+					}
+					// Visible pages
+					for _, page := range p.Pages {
+						@pagination.Item() {
+							@pagination.Link(pagination.LinkProps{
+								Href:     fmt.Sprintf("?page_number=%d", page),
+								IsActive: page == p.CurrentPage,
+							}) {
+								{ fmt.Sprint(page) }
+							}
+						}
+					}
+					// Last page with ellipsis if needed
+					if p.Pages[len(p.Pages)-1] < p.TotalPages {
+						if p.Pages[len(p.Pages)-1] < p.TotalPages-1 {
+							@pagination.Item() {
+								@pagination.Ellipsis()
+							}
+						}
+						@pagination.Item() {
+							@pagination.Link(pagination.LinkProps{
+								Href: fmt.Sprintf("?page_number=%d", p.TotalPages),
+							}) {
+								{ fmt.Sprint(p.TotalPages) }
+							}
+						}
+					}
+					@pagination.Item() {
+						@pagination.Next(pagination.NextProps{
+							Href:     fmt.Sprintf("?page_number=%d", p.CurrentPage+1),
+							Disabled: !p.HasNext,
+							Label:    i18n.T(ctx, "next"),
+						})
+					}
+				}
+			}
+		</div>
+	}
+	if page.TotalEntries == 0 {
+		@label.Label(label.Props{
+		    Class: "text-center block p-5",
+		}) {
+			No data to show
+		}
+	}
+}

@@ -11,61 +11,193 @@ import "net/http"
 import "test/core/coretpls/link"
 import "github.com/invopop/ctxi18n/i18n"
 
-templ ShowPostTest(user *models.PostTest) {
+templ ShowPostTest(postTest *models.PostTest) {
 	@layouts.Initial() {
-		<h1 class="mb-2 text-xl">User: { user.Id.String() }</h1>
+		<h1 class="mb-2 text-xl">PostTest: { postTest.Id.String() }</h1>
 		<div class="mb-2">
-            @form.Item() {
-                @label.Label() {
-                    Email
-                }
-                <p>{ user.Email }</p>
-            }
-
-            @form.Item() {
-                @label.Label() {
-                    CreatedAt
-                }
-                <p>{ user.CreatedAt.Local().Format(time.DateTime) } hrs</p>
-            }
-
-            @form.Item() {
-                @label.Label() {
-                    Status
-                }
-                <p>{ user.Status }</p>
-            }
+			@form.Item() {
+				@label.Label() {
+					An Optional Int
+				}
+				<p>{ postTest.AnOptionalInt }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Int
+				}
+				<p>{ postTest.AnInt }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Optional Int 8
+				}
+				<p>{ postTest.AnOptionalInt8 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Int 8
+				}
+				<p>{ postTest.AnInt8 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Optional Int 16
+				}
+				<p>{ postTest.AnOptionalInt8 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Int 16
+				}
+				<p>{ postTest.AnInt16 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Optional Int 32
+				}
+				<p>{ postTest.AnOptionalInt32 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Int 32
+				}
+				<p>{ postTest.AnInt32 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Optional Int 64
+				}
+				<p>{ postTest.AnOptionalInt64 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Int 64
+				}
+				<p>{ postTest.AnInt64 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Optional Float 32
+				}
+				<p>{ postTest.AnOptionalFloat32 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Float 32
+				}
+				<p>{ postTest.AnFloat32 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Optional Float 64
+				}
+				<p>{ postTest.AnOptionalFloat64 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Float 64
+				}
+				<p>{ postTest.AnFloat64 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Optional String
+				}
+				<p>{ postTest.OptionalString }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					String
+				}
+				<p>{ postTest.String }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Optional Bool
+				}
+				<p>{ postTest.OptionalBool }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Bool
+				}
+				<p>{ postTest.Bool }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Optional Time
+				}
+				<p>{ postTest.OptionalTime.Format(time.DateTime) }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Time
+				}
+				<p>{ postTest.Time.Format(time.DateTime) }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					An Optional Decimal
+				}
+				<p>{ postTest.OptionalDecimal }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Decimal
+				}
+				<p>{ postTest.Decimal }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Optional Uuid
+				}
+				<p>{ postTest.OptionalUuid }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Uuid
+				}
+				<p>{ postTest.Uuid.String() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Optional Enum
+				}
+				<p>{ postTest.OptionalEnum }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Enum
+				}
+				<p>{ postTest.Enum }</p>
+			}
 		</div>
-
 		@link.Link(link.LinkProps{
-            Href:    fmt.Sprintf("/app/users/%s/edit", user.Id),
-            Variant: button.VariantDefault,
-        }) {
-            { i18n.T(ctx, "edit") }
-        }
-
+			Href:    fmt.Sprintf("/app/post_tests/%s/edit", postTest.Id),
+			Variant: button.VariantDefault,
+		}) {
+			{ i18n.T(ctx, "edit") }
+		}
 		@link.Link(link.LinkProps{
-			Href:    fmt.Sprintf("/app/users/%s", user.Id),
-			Confirm: fmt.Sprintf("Are you sure to delete %s", user.Email),
-			Method: http.MethodDelete,
+			Href:    fmt.Sprintf("/app/post_tests/%s", postTest.Id),
+			Confirm: fmt.Sprintf("Are you sure to delete %s", postTest.Email),
+			Method:  http.MethodDelete,
 			Variant: button.VariantDestructive,
-			Class: "inline-block",
+			Class:   "inline-block",
 		}) {
 			{ i18n.T(ctx, "delete") }
 		}
-
 		@button.Button(button.Props{
 			Variant: button.VariantSecondary,
-			Href: "/app/users/new",
+			Href:    "/app/post_tests/new",
 		}) {
-			 { i18n.T(ctx, "create_new") }
+			{ i18n.T(ctx, "create_new") }
 		}
-
 		@button.Button(button.Props{
 			Variant: button.VariantOutline,
-			Href: "/app/users?page_number=1",
+			Href:    "/app/post_tests?page_number=1",
 		}) {
-		     { i18n.T(ctx, "show_all") }
+			{ i18n.T(ctx, "show_all") }
 		}
 	}
 }

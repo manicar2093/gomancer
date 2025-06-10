@@ -1,18 +1,19 @@
-package userpages
+package posttestpages
 
 import "test/internal/domain/models"
 import "test/cmd/service/ui/layouts"
-import "net/http"
 import "github.com/gookit/validate"
+import "net/http"
 
-templ RegisterPostTestPage(user *models.PostTest, errors validate.Errors) {
+templ RegisterPostTestPage(postTest *models.PostTest, errors validate.Errors) {
 	@layouts.Initial() {
 		@PostTestForm(
-			user,
+			postTest,
 			errors,
 			PostTestFormProperties{
 				Action: "/app/post_tests",
 				Method: http.MethodPost,
-			})
+			},
+		)
 	}
 }

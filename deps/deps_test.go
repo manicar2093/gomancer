@@ -42,6 +42,26 @@ var _ = Describe("Deps", func() {
 		})
 	})
 
+	Describe("I18n", func() {
+		It("contains all i18n usable callers", func() {
+			file := jen.NewFile("i18n_test")
+
+			Expect(container.I18n.Alias).To(Equal("i18n"))
+			Expect(container.I18n.Path).To(Equal("github.com/invopop/ctxi18n/i18n"))
+			container.Echo.ImportAlias(file)
+		})
+	})
+
+	Describe("GookitValidate", func() {
+		It("contains all gookit usable callers", func() {
+			file := jen.NewFile("gookit_test")
+
+			Expect(container.GookitValidate.Alias).To(Equal("validate"))
+			Expect(container.GookitValidate.Path).To(Equal("github.com/gookit/validate"))
+			container.Echo.ImportAlias(file)
+		})
+	})
+
 	Describe("EchoRoutesView", func() {
 		It("contains all echoroutesview usable callers", func() {
 			file := jen.NewFile("echoroutesview_test")
@@ -234,6 +254,14 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Core.AppErrors.Alias).To(Equal("apperrors"))
 				Expect(container.Project.Core.AppErrors.Path).To(Equal(testfixtures.TestPath + "/core/apperrors"))
 				container.Project.Core.AppErrors.ImportAlias(file)
+
+				Expect(container.Project.Core.CoreTpls.Alias).To(Equal("coretpls"))
+				Expect(container.Project.Core.CoreTpls.Path).To(Equal(testfixtures.TestPath + "/core/coretpls"))
+				container.Project.Core.CoreTpls.ImportAlias(file)
+
+				Expect(container.Project.Core.CoreTpls.Toast.Alias).To(Equal("toast"))
+				Expect(container.Project.Core.CoreTpls.Toast.Path).To(Equal(testfixtures.TestPath + "/core/coretpls/toast"))
+				container.Project.Core.CoreTpls.ImportAlias(file)
 			})
 		})
 

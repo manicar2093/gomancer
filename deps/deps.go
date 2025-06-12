@@ -64,6 +64,18 @@ func Init(moduleName string) Container {
 				Alias: "clause",
 			},
 		},
+		I18n: I18n{
+			Dependency: Dependency{
+				Path:  "github.com/invopop/ctxi18n/i18n",
+				Alias: "i18n",
+			},
+		},
+		GookitValidate: GookitValidate{
+			Dependency: Dependency{
+				Path:  "github.com/gookit/validate",
+				Alias: "validate",
+			},
+		},
 		MapStructure: Dependency{
 			Path:  "github.com/go-viper/mapstructure/v2",
 			Alias: "mapstructure",
@@ -127,6 +139,16 @@ func Init(moduleName string) Container {
 				AppErrors: Dependency{
 					Path:  buildPath(moduleName, "core", "apperrors"),
 					Alias: "apperrors",
+				},
+				CoreTpls: CoreTpls{
+					Dependency: Dependency{
+						Path:  buildPath(moduleName, "core", "coretpls"),
+						Alias: "coretpls",
+					},
+					Toast: Dependency{
+						Path:  buildPath(moduleName, "core", "coretpls", "toast"),
+						Alias: "toast",
+					},
 				},
 			},
 			Internal: Internal{

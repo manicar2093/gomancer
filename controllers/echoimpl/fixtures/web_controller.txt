@@ -2,19 +2,19 @@
 package controllers
 
 import (
-	"github.com/gookit/validate"
-	"github.com/invopop/ctxi18n/i18n"
-	"net/http"
-	"test/cmd/service/controllers/posttestpages"
-	"test/core/coretpls/toast"
-	"test/core/validator"
+	validate	"github.com/gookit/validate"
+	i18n	"github.com/invopop/ctxi18n/i18n"
+	http	"net/http"
+	posttestpages "github.com/user/project_name/cmd/service/controllers/posttestpages"
+	toast	"github.com/user/project_name/core/coretpls/toast"
+	validator	"github.com/user/project_name/core/validator"
 
-	core "test/core"
-	commonreq "test/core/commonreq"
-	models "test/internal/domain/models"
-	posttests "test/internal/posttests"
+	core	"github.com/user/project_name/core"
+	commonreq	"github.com/user/project_name/core/commonreq"
+	models	"github.com/user/project_name/internal/domain/models"
+	posttests	"github.com/user/project_name/internal/posttests"
 
-	echo "github.com/labstack/echo/v4"
+	echo	"github.com/labstack/echo/v4"
 )
 
 const (
@@ -25,32 +25,31 @@ type PostTestWebController struct {
 	postTestRepository *posttests.PostTestRepository
 }
 
-func NewPostTestWebController(postTestRepository *posttests.UserRepository) *PostTestWebController {
+func NewPostTestWebController(postTestRepository *posttests.PostTestRepository) *PostTestWebController {
 	return &PostTestWebController{
 		postTestRepository: postTestRepository,
 	}
 }
 
 func (c *PostTestWebController) SetUpRoutes(group *echo.Group) {
-	postTestsGroup := group.Group("/post_tests")
+	postTestGroup := group.Group("/post_tests")
 
 	// Show all postTest
-	postTestsGroup.GET("", c.GetAllPaginatedHandler)
+	postTestGroup.GET("", c.GetAllPaginatedHandler)
 	// Send page to edit a user
-	postTestsGroup.GET("/:id/edit", c.GetEditionHandler)
+	postTestGroup.GET("/:id/edit", c.GetEditionHandler)
 	// Sends page to registry a user
-	postTestsGroup.GET("/new", c.GetRegistrationPageHandler)
+	postTestGroup.GET("/new", c.GetRegistrationPageHandler)
 	// Send page to show a user
-	postTestsGroup.GET("/:id", c.GetShowUserPageHandler).Name = ShowPostTestRouteName
+	postTestGroup.GET("/:id", c.GetShowPostTestPageHandler).Name = ShowPostTestRouteName
 	// Creates a user
-	postTestsGroup.POST("", c.SaveHandler)
+	postTestGroup.POST("", c.SaveHandler)
 	// Patch user
-	postTestsGroup.PATCH("/:id", c.SaveHandler)
+	postTestGroup.PATCH("/:id", c.SaveHandler)
 	// Updates all user
-	postTestsGroup.PUT("/:id", c.PartialUpdateByIdHandler)
+	postTestGroup.PUT("/:id", c.PartialUpdateByIdHandler)
 	// Deletes a user
-	postTestsGroup.DELETE("/:id", c.DeleteByIdHandler)
-
+	postTestGroup.DELETE("/:id", c.DeleteByIdHandler)
 }
 
 func (c *PostTestWebController) SaveHandler(ctx echo.Context) error {
@@ -58,10 +57,10 @@ func (c *PostTestWebController) SaveHandler(ctx echo.Context) error {
 	if err := core.BindAndValidate(ctx, &req); err != nil {
 		if errorsMap, isValidationErr := validator.IsValidationError(err); isValidationErr {
 			core.SetFlash(ctx, core.FlashMessage{
-				Variant: string(toast.VariantError),
+				Variant: toast.VariantError,
 				Message: i18n.T(ctx.Request().Context(), "validation_error"),
 			})
-			return core.Render(ctx, http.StatusBadRequest, posttestpages.RegisterUserPage(&req, errorsMap))
+			return core.Render(ctx, http.StatusBadRequest, posttestpages.RegisterPostTestPage(&req, errorsMap))
 		}
 		return err
 	}
@@ -71,7 +70,7 @@ func (c *PostTestWebController) SaveHandler(ctx echo.Context) error {
 	}
 
 	core.SetFlash(ctx, core.FlashMessage{
-		Variant: string(toast.VariantSuccess),
+		Variant: toast.VariantSuccess,
 		Message: i18n.T(ctx.Request().Context(), "correct_registry"),
 		Title:   i18n.T(ctx.Request().Context(), "success"),
 	})
@@ -104,12 +103,12 @@ func (c *PostTestWebController) PartialUpdateByIdHandler(ctx echo.Context) error
 	}
 
 	core.SetFlash(ctx, core.FlashMessage{
-		Variant: string(toast.VariantSuccess),
+		Variant: toast.VariantSuccess,
 		Message: i18n.T(ctx.Request().Context(), "correct_update"),
 		Title:   i18n.T(ctx.Request().Context(), "success"),
 	})
 
-	return ctx.Redirect(http.StatusSeeOther, ctx.Echo().Reverse(ShowUserRouteName, res.Id))
+	return ctx.Redirect(http.StatusSeeOther, ctx.Echo().Reverse(ShowPostTestRouteName, res.Id))
 }
 
 func (c *PostTestWebController) DeleteByIdHandler(ctx echo.Context) error {
@@ -125,7 +124,7 @@ func (c *PostTestWebController) DeleteByIdHandler(ctx echo.Context) error {
 	}
 
 	core.SetFlash(ctx, core.FlashMessage{
-		Variant: string(toast.VariantSuccess),
+		Variant: toast.VariantSuccess,
 		Message: i18n.T(ctx.Request().Context(), "correct_deletion"),
 		Title:   i18n.T(ctx.Request().Context(), "success"),
 	})
@@ -134,10 +133,10 @@ func (c *PostTestWebController) DeleteByIdHandler(ctx echo.Context) error {
 }
 
 func (c *PostTestWebController) GetRegistrationPageHandler(ctx echo.Context) error {
-	return core.Render(ctx, http.StatusOK, posttestpages.RegisterUserPage(&models.User{}, nil))
+	return core.Render(ctx, http.StatusOK, posttestpages.RegisterPostTestPage(&models.PostTest{}, nil))
 }
 
-func (c *PostTestWebController) GetShowUserPageHandler(ctx echo.Context) error {
+func (c *PostTestWebController) GetShowPostTestPageHandler(ctx echo.Context) error {
 	req := commonreq.GetByIdUUID{}
 	if err := core.BindAndValidate(ctx, &req); err != nil {
 		return err
@@ -148,7 +147,7 @@ func (c *PostTestWebController) GetShowUserPageHandler(ctx echo.Context) error {
 		return err
 	}
 
-	return core.Render(ctx, http.StatusOK, posttestpages.ShowUser(res))
+	return core.Render(ctx, http.StatusOK, posttestpages.ShowPostTest(res))
 }
 
 func (c *PostTestWebController) GetEditionHandler(ctx echo.Context) error {
@@ -160,5 +159,5 @@ func (c *PostTestWebController) GetEditionHandler(ctx echo.Context) error {
 	if err != nil {
 		return err
 	}
-	return core.Render(ctx, http.StatusOK, posttestpages.EditUserPage(res, validate.Errors{}))
+	return core.Render(ctx, http.StatusOK, posttestpages.EditPostTestPage(res, validate.Errors{}))
 }

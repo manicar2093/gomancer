@@ -8,10 +8,8 @@ import (
 	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/manicar2093/gomancer/parser"
-	"github.com/manicar2093/gomancer/types"
 	"os"
 	"path"
-	"text/template"
 )
 
 //go:embed templates/*
@@ -27,19 +25,7 @@ type (
 
 func GenerateRestController(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
 	log.Info("Generating echo rest controller...")
-	var tpl = template.Must(template.
-		New("controllers").
-		Funcs(map[string]any{
-			"GetByType": func() string {
-				if input.IdAttribute.Type == string(types.TypeUuid) {
-					return "GetByIdUUID"
-				}
-
-				return "GetById"
-			},
-			"Pluralize": inflection.Plural,
-		}).
-		ParseFS(templatesFS, "templates/*"))
+	var tpl = initTemplates(input)
 
 	f, err := os.OpenFile(
 		path.Join(

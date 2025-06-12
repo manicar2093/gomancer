@@ -31,7 +31,12 @@ type (
 		Dependency
 		Clause Dependency
 	}
-
+	I18n struct {
+		Dependency
+	}
+	GookitValidate struct {
+		Dependency
+	}
 	Project struct {
 		Pkg
 		Core
@@ -71,12 +76,19 @@ type (
 		Connections Dependency
 		CommonReq   Dependency
 		AppErrors   Dependency
+		CoreTpls    CoreTpls
+	}
+	CoreTpls struct {
+		Dependency
+		Toast Dependency
 	}
 	Container struct {
 		Echo
 		EchoRoutesView
 		Std
 		Gorm
+		I18n
+		GookitValidate
 		Project
 		MapStructure Dependency
 		GoFakeIt     Dependency

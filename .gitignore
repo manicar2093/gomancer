@@ -5,3 +5,4 @@ tmp
 *.log
 # Added by goreleaser init:
 dist/
+.fleet/

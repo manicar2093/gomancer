@@ -477,7 +477,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@input.Input(input.Props{
 					ID:       stringKey,
 					Name:     stringKey,
-					Type:     input.TypeNumber,
+					Type:     input.TypeText,
 					Value:    postTest.String,
 					HasError: hasStringErrors,
 					Required: true,

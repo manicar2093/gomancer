@@ -69,8 +69,6 @@ var _ = Describe("Input Components", func() {
 
 	DescribeTable("InputText", func(attr parser.Attribute, expectedResult string) {
 		result, err := components.InputText(attr)
-		fmt.Println(result)
-		fmt.Println(expectedResult)
 
 		Expect(err).ToNot(HaveOccurred())
 		Expect(result).To(Equal(expectedResult))
@@ -150,6 +148,69 @@ var _ = Describe("Input Components", func() {
 				{ value }
 			}
 		}
+	}
+}
+`),
+	)
+
+	DescribeTable("InputToggle", func(attr parser.Attribute, expectedResult string) {
+		result, err := components.InputToggle(attr)
+		fmt.Println(result)
+		fmt.Println(expectedResult)
+
+		Expect(err).ToNot(HaveOccurred())
+		Expect(result).To(Equal(expectedResult))
+
+	},
+
+		Entry("optional", parser.Attribute{
+			TransformedText: parser.TransformedText{
+				SnakeCase:        "optional_bool",
+				PascalCase:       "OptionalBool",
+				CamelCase:        "optionalBool",
+				LowerNoSpaceCase: "optionalbool",
+			},
+			Type:       "bool",
+			IsOptional: true,
+		}, `{{ optionalBoolKey := "optional_bool" }}
+@label.Label(label.Props{
+	For: optionalBoolKey,
+}) {
+	OptionalBool
+}
+@form.ItemFlex() {
+	@toggle.Toggle(toggle.Props{
+		ID:      optionalBoolKey,
+		Name:    optionalBoolKey,
+		Checked: postTest.OptionalBool,
+	})
+	@form.Description() {
+		Check for OptionalBool
+	}
+}
+`),
+		Entry("not optional", parser.Attribute{
+			TransformedText: parser.TransformedText{
+				SnakeCase:        "bool",
+				PascalCase:       "Bool",
+				CamelCase:        "bool",
+				LowerNoSpaceCase: "bool",
+			},
+			Type: "bool",
+		}, `{{ boolKey := "bool" }}
+@label.Label(label.Props{
+	For: boolKey,
+}) {
+	Bool
+}
+@form.ItemFlex() {
+	@toggle.Toggle(toggle.Props{
+		ID:      boolKey,
+		Name:    boolKey,
+		Checked: postTest.Bool,
+	})
+	@form.Description() {
+		Check for Bool
 	}
 }
 `),

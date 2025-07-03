@@ -1,0 +1,16 @@
+{{ printf "{{ %sKey := \"%s\" }}" .CamelCase .SnakeCase}}
+@label.Label(label.Props{
+	For: {{ .CamelCase }}Key,
+}) {
+	{{ .PascalCase }}
+}
+@form.ItemFlex() {
+	@toggle.Toggle(toggle.Props{
+		ID:      {{ .CamelCase }}Key,
+		Name:    {{ .CamelCase }}Key,
+		Checked: postTest.{{ .PascalCase }},
+	})
+	@form.Description() {
+		Check for {{ .PascalCase }}
+	}
+}

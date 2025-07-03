@@ -65,24 +65,20 @@ func InputText(attribute parser.Attribute) (string, error) {
 	return result, nil
 }
 
-type InputDateTime struct {
-	parser.Attribute
-}
-
-func (c InputDateTime) Generate() (string, error) {
-	result, err := executeTemplate("input_datetime.tmpl", c)
+func InputToggle(attribute parser.Attribute) (string, error) {
+	result, err := executeTemplate("input_toggle.tmpl", attribute)
 	if err != nil {
 		return "", err
 	}
 	return result, nil
 }
 
-type InputToggle struct {
+type InputDateTime struct {
 	parser.Attribute
 }
 
-func (c InputToggle) Generate() (string, error) {
-	result, err := executeTemplate("input_toggle.tmpl", c)
+func (c InputDateTime) Generate() (string, error) {
+	result, err := executeTemplate("input_datetime.tmpl", c)
 	if err != nil {
 		return "", err
 	}

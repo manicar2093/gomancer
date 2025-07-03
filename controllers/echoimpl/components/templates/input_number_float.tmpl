@@ -10,7 +10,7 @@
 		ID:       {{ .CamelCase }}Key,
 		Name:     {{ .CamelCase }}Key,
 		Type:     input.TypeNumber,
-		Value:    postTest.{{ .PascalCase }},
+		Value:    {{.ModelTransformedText.CamelCase}}.{{ .PascalCase }},
 		HasError: has{{ .PascalCase }}Errors,
 		{{- if not .IsOptional }}
 		Required: true,

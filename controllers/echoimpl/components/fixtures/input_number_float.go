@@ -13,7 +13,7 @@ const (
 		ID:       anOptionalFloat64Key,
 		Name:     anOptionalFloat64Key,
 		Type:     input.TypeNumber,
-		Value:    postTest.AnOptionalFloat64,
+		Value:    userData.AnOptionalFloat64,
 		HasError: hasAnOptionalFloat64Errors,
 		Attributes: map[string]any{
 			"step": "0.01",
@@ -45,7 +45,7 @@ const (
 		ID:       anFloat32Key,
 		Name:     anFloat32Key,
 		Type:     input.TypeNumber,
-		Value:    postTest.AnFloat32,
+		Value:    userData.AnFloat32,
 		HasError: hasAnFloat32Errors,
 		Required: true,
 		Attributes: map[string]any{

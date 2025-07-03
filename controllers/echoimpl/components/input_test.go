@@ -10,8 +10,19 @@ import (
 )
 
 var _ = Describe("Input Components", func() {
+
+	var generateModelTransformedText = parser.TransformedText{
+		SnakeCase:        "user_data",
+		PascalCase:       "UserData",
+		CamelCase:        "userData",
+		LowerNoSpaceCase: "userdata",
+	}
+
 	DescribeTable("InputNumber", func(attr parser.Attribute, expectedResult string) {
-		result, err := components.InputNumber(attr)
+		result, err := components.InputNumber(components.InputGenerationData{
+			Attribute:            attr,
+			ModelTransformedText: generateModelTransformedText,
+		})
 		fmt.Println(result)
 
 		Expect(err).ToNot(HaveOccurred())
@@ -40,7 +51,10 @@ var _ = Describe("Input Components", func() {
 	)
 
 	DescribeTable("InputNumberFloat", func(attr parser.Attribute, expectedResult string) {
-		result, err := components.InputNumberFloat(attr)
+		result, err := components.InputNumberFloat(components.InputGenerationData{
+			Attribute:            attr,
+			ModelTransformedText: generateModelTransformedText,
+		})
 
 		Expect(err).ToNot(HaveOccurred())
 		Expect(result).To(Equal(expectedResult))
@@ -68,7 +82,10 @@ var _ = Describe("Input Components", func() {
 	)
 
 	DescribeTable("InputText", func(attr parser.Attribute, expectedResult string) {
-		result, err := components.InputText(attr)
+		result, err := components.InputText(components.InputGenerationData{
+			Attribute:            attr,
+			ModelTransformedText: generateModelTransformedText,
+		})
 
 		Expect(err).ToNot(HaveOccurred())
 		Expect(result).To(Equal(expectedResult))
@@ -96,7 +113,7 @@ var _ = Describe("Input Components", func() {
 		ID:       optionalStringKey,
 		Name:     optionalStringKey,
 		Type:     input.TypeText,
-		Value:    postTest.OptionalString,
+		Value:    userData.OptionalString,
 		HasError: hasOptionalStringErrors,
 	})
 	@form.Description() {
@@ -133,7 +150,7 @@ var _ = Describe("Input Components", func() {
 		ID:       stringKey,
 		Name:     stringKey,
 		Type:     input.TypeText,
-		Value:    postTest.String,
+		Value:    userData.String,
 		HasError: hasStringErrors,
 		Required: true,
 	})
@@ -154,7 +171,10 @@ var _ = Describe("Input Components", func() {
 	)
 
 	DescribeTable("InputToggle", func(attr parser.Attribute, expectedResult string) {
-		result, err := components.InputToggle(attr)
+		result, err := components.InputToggle(components.InputGenerationData{
+			Attribute:            attr,
+			ModelTransformedText: generateModelTransformedText,
+		})
 		fmt.Println(result)
 		fmt.Println(expectedResult)
 
@@ -182,7 +202,7 @@ var _ = Describe("Input Components", func() {
 	@toggle.Toggle(toggle.Props{
 		ID:      optionalBoolKey,
 		Name:    optionalBoolKey,
-		Checked: postTest.OptionalBool,
+		Checked: userData.OptionalBool,
 	})
 	@form.Description() {
 		Check for OptionalBool
@@ -207,7 +227,7 @@ var _ = Describe("Input Components", func() {
 	@toggle.Toggle(toggle.Props{
 		ID:      boolKey,
 		Name:    boolKey,
-		Checked: postTest.Bool,
+		Checked: userData.Bool,
 	})
 	@form.Description() {
 		Check for Bool
@@ -232,7 +252,7 @@ var _ = Describe("Input Components", func() {
 	//        @datetime.Datetime(datetime.DatetimeProps{
 	//                ID:       decimalKey,
 	//                Name:     decimalKey,
-	//                Value:    postTest.Decimal.UTC(),
+	//                Value:    userData.Decimal.UTC(),
 	//                HasError: hasDecimalErrors,
 	//                Required: true,
 	//        })
@@ -283,7 +303,7 @@ var _ = Describe("Input Components", func() {
 	//        @toggle.Toggle(toggle.Props{
 	//                ID:      optionalTimeKey,
 	//                Name:    optionalTimeKey,
-	//                Checked: postTest.OptionalTime,
+	//                Checked: userData.OptionalTime,
 	//        })
 	//        @form.Description() {
 	//                Check for OptionalTime
@@ -331,22 +351,22 @@ var _ = Describe("Input Components", func() {
 	//			@selectbox.Group() {
 	//				@selectbox.Item(selectbox.ItemProps{
 	//					Value:    "enum_1",
-	//					Selected: postTest.Enum == "enum_1",
-	//					Disabled: postTest.Enum == "enum_1",
+	//					Selected: userData.Enum == "enum_1",
+	//					Disabled: userData.Enum == "enum_1",
 	//				}) {
 	//					Enum1
 	//				}
 	//				@selectbox.Item(selectbox.ItemProps{
 	//					Value:    "enum_2",
-	//					Selected: postTest.Enum == "enum_2",
-	//					Disabled: postTest.Enum == "enum_2",
+	//					Selected: userData.Enum == "enum_2",
+	//					Disabled: userData.Enum == "enum_2",
 	//				}) {
 	//					Enum2
 	//				}
 	//				@selectbox.Item(selectbox.ItemProps{
 	//					Value:    "enum_3",
-	//					Selected: postTest.Enum == "enum_3",
-	//					Disabled: postTest.Enum == "enum_3",
+	//					Selected: userData.Enum == "enum_3",
+	//					Disabled: userData.Enum == "enum_3",
 	//				}) {
 	//					Enum3
 	//				}

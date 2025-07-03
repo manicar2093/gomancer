@@ -8,6 +8,11 @@ import (
 	"text/template"
 )
 
+type InputGenerationData struct {
+	parser.Attribute
+	ModelTransformedText parser.TransformedText
+}
+
 // executeTemplate loads and executes a template with the given data
 func executeTemplate(templateName string, data interface{}) (string, error) {
 	// Try different paths to find the template
@@ -41,32 +46,32 @@ func executeTemplate(templateName string, data interface{}) (string, error) {
 	return buf.String(), nil
 }
 
-func InputNumber(attribute parser.Attribute) (string, error) {
-	result, err := executeTemplate("input_number.tmpl", attribute)
+func InputNumber(input InputGenerationData) (string, error) {
+	result, err := executeTemplate("input_number.tmpl", input)
 	if err != nil {
 		return "", err
 	}
 	return result, nil
 }
 
-func InputNumberFloat(attribute parser.Attribute) (string, error) {
-	result, err := executeTemplate("input_number_float.tmpl", attribute)
+func InputNumberFloat(input InputGenerationData) (string, error) {
+	result, err := executeTemplate("input_number_float.tmpl", input)
 	if err != nil {
 		return "", err
 	}
 	return result, nil
 }
 
-func InputText(attribute parser.Attribute) (string, error) {
-	result, err := executeTemplate("input_text.tmpl", attribute)
+func InputText(input InputGenerationData) (string, error) {
+	result, err := executeTemplate("input_text.tmpl", input)
 	if err != nil {
 		return "", err
 	}
 	return result, nil
 }
 
-func InputToggle(attribute parser.Attribute) (string, error) {
-	result, err := executeTemplate("input_toggle.tmpl", attribute)
+func InputToggle(input InputGenerationData) (string, error) {
+	result, err := executeTemplate("input_toggle.tmpl", input)
 	if err != nil {
 		return "", err
 	}

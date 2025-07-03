@@ -13,7 +13,7 @@ const (
 		ID:       anOptionalIntKey,
 		Name:     anOptionalIntKey,
 		Type:     input.TypeNumber,
-		Value:    postTest.AnOptionalInt,
+		Value:    userData.AnOptionalInt,
 		HasError: hasAnOptionalIntErrors,
 	})
 	@form.Description() {
@@ -42,7 +42,7 @@ const (
 		ID:       anIntKey,
 		Name:     anIntKey,
 		Type:     input.TypeNumber,
-		Value:    postTest.AnInt,
+		Value:    userData.AnInt,
 		HasError: hasAnIntErrors,
 		Required: true,
 	})

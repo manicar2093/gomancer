@@ -381,7 +381,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anOptionalFloat64Key,
 				}) {
-					An Optional Float 32
+					An Optional Float 64
 				}
 				@input.Input(input.Props{
 					ID:       anOptionalFloat64Key,
@@ -394,7 +394,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					},
 				})
 				@form.Description() {
-					Enter An Optional Float 32
+					Enter An Optional Float 64
 				}
 				if hasAnOptionalFloat64Errors {
 					for _,value := range errors.Field(anOptionalFloat64Key) {
@@ -412,7 +412,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anFloat64Key,
 				}) {
-					An Float 32
+					An Float 64
 				}
 				@input.Input(input.Props{
 					ID:       anFloat64Key,
@@ -426,7 +426,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					},
 				})
 				@form.Description() {
-					Enter An Float 32
+					Enter An Float 64
 				}
 				if hasAnFloat64Errors {
 					for _,value := range errors.Field(anFloat64Key) {

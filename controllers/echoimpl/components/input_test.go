@@ -3,6 +3,7 @@ package components_test
 import (
 	"fmt"
 	"github.com/manicar2093/gomancer/controllers/echoimpl/components"
+	"github.com/manicar2093/gomancer/controllers/echoimpl/components/fixtures"
 	"github.com/manicar2093/gomancer/parser"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -17,45 +18,7 @@ var _ = Describe("Input Components", func() {
 		Expect(result).To(Equal(expectedResult))
 
 	},
-		Entry("not optional", parser.Attribute{
-			TransformedText: parser.TransformedText{
-				SnakeCase:        "an_int",
-				PascalCase:       "AnInt",
-				CamelCase:        "anInt",
-				LowerNoSpaceCase: "anint",
-			},
-			Type: "int",
-		}, `{{ anIntKey := "an_int" }}
-{{ hasAnIntErrors := errors.HasField(anIntKey) }}
-@form.Item(form.ItemProps{}) {
-	@label.Label(label.Props{
-		For: anIntKey,
-	}) {
-		AnInt
-	}
-	@input.Input(input.Props{
-		ID:       anIntKey,
-		Name:     anIntKey,
-		Type:     input.TypeNumber,
-		Value:    postTest.AnInt,
-		HasError: hasAnIntErrors,
-		Required: true,
-	})
-	@form.Description() {
-		Enter AnInt
-	}
-	if hasAnIntErrors {
-		for _,value := range errors.Field(anIntKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
-}
-`),
-		Entry("optional", parser.Attribute{
+		Entry("optional int", parser.Attribute{
 			TransformedText: parser.TransformedText{
 				SnakeCase:        "an_optional_int",
 				PascalCase:       "AnOptionalInt",
@@ -64,36 +27,132 @@ var _ = Describe("Input Components", func() {
 			},
 			Type:       "int",
 			IsOptional: true,
-		}, `{{ anOptionalIntKey := "an_optional_int" }}
-{{ hasAnOptionalIntErrors := errors.HasField(anOptionalIntKey) }}
-@form.Item(form.ItemProps{}) {
-	@label.Label(label.Props{
-		For: anOptionalIntKey,
-	}) {
-		AnOptionalInt
-	}
-	@input.Input(input.Props{
-		ID:       anOptionalIntKey,
-		Name:     anOptionalIntKey,
-		Type:     input.TypeNumber,
-		Value:    postTest.AnOptionalInt,
-		HasError: hasAnOptionalIntErrors,
-	})
-	@form.Description() {
-		Enter AnOptionalInt
-	}
-	if hasAnOptionalIntErrors {
-		for _,value := range errors.Field(anOptionalIntKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
-}
-`),
+		}, fixtures.OptionalInputNumberInt),
+		Entry("not optional int", parser.Attribute{
+			TransformedText: parser.TransformedText{
+				SnakeCase:        "an_int",
+				PascalCase:       "AnInt",
+				CamelCase:        "anInt",
+				LowerNoSpaceCase: "anint",
+			},
+			Type: "int",
+		}, fixtures.RequiredInputNumberInt),
 	)
+
+	DescribeTable("InputNumberFloat", func(attr parser.Attribute, expectedResult string) {
+		result, err := components.InputNumberFloat(attr)
+
+		Expect(err).ToNot(HaveOccurred())
+		Expect(result).To(Equal(expectedResult))
+
+	},
+		Entry("optional float", parser.Attribute{
+			TransformedText: parser.TransformedText{
+				SnakeCase:        "an_optional_float_64",
+				PascalCase:       "AnOptionalFloat64",
+				CamelCase:        "anOptionalFloat64",
+				LowerNoSpaceCase: "anoptionalfloat64",
+			},
+			Type:       "float64",
+			IsOptional: true,
+		}, fixtures.OptionalInputNumberFloat),
+		Entry("not optional float", parser.Attribute{
+			TransformedText: parser.TransformedText{
+				SnakeCase:        "an_float_32",
+				PascalCase:       "AnFloat32",
+				CamelCase:        "anFloat32",
+				LowerNoSpaceCase: "anfloat32",
+			},
+			Type: "float32",
+		}, fixtures.RequiredInputNumberFloat),
+	)
+
+	//DescribeTable("InputText", func(attr parser.Attribute, expectedResult string) {
+	//	result, err := components.InputText(attr)
+	//	fmt.Println(result)
+	//
+	//	Expect(err).ToNot(HaveOccurred())
+	//	Expect(result).To(Equal(expectedResult))
+	//
+	//},
+	//
+	//	Entry("optional", parser.Attribute{
+	//		TransformedText: parser.TransformedText{
+	//			SnakeCase:        "an_optional_int",
+	//			PascalCase:       "AnOptionalInt",
+	//			CamelCase:        "anOptionalInt",
+	//			LowerNoSpaceCase: "anoptionalint",
+	//		},
+	//		Type:       "int",
+	//		IsOptional: true,
+	//	}, `{{ anOptionalIntKey := "an_optional_int" }}
+	//{{ hasAnOptionalIntErrors := errors.HasField(anOptionalIntKey) }}
+	//@form.Item(form.ItemProps{}) {
+	//	@label.Label(label.Props{
+	//		For: anOptionalIntKey,
+	//	}) {
+	//		AnOptionalInt
+	//	}
+	//	@input.Input(input.Props{
+	//		ID:       anOptionalIntKey,
+	//		Name:     anOptionalIntKey,
+	//		Type:     input.TypeNumber,
+	//		Value:    postTest.AnOptionalInt,
+	//		HasError: hasAnOptionalIntErrors,
+	//	})
+	//	@form.Description() {
+	//		Enter AnOptionalInt
+	//	}
+	//	if hasAnOptionalIntErrors {
+	//		for _,value := range errors.Field(anOptionalIntKey) {
+	//			@form.Message(form.MessageProps{
+	//				Variant: form.MessageVariantError,
+	//			}) {
+	//				{ value }
+	//			}
+	//		}
+	//	}
+	//}
+	//`),
+	//	Entry("not optional", parser.Attribute{
+	//		TransformedText: parser.TransformedText{
+	//			SnakeCase:        "an_int",
+	//			PascalCase:       "AnInt",
+	//			CamelCase:        "anInt",
+	//			LowerNoSpaceCase: "anint",
+	//		},
+	//		Type: "int",
+	//	}, `{{ anIntKey := "an_int" }}
+	//{{ hasAnIntErrors := errors.HasField(anIntKey) }}
+	//@form.Item(form.ItemProps{}) {
+	//	@label.Label(label.Props{
+	//		For: anIntKey,
+	//	}) {
+	//		AnInt
+	//	}
+	//	@input.Input(input.Props{
+	//		ID:       anIntKey,
+	//		Name:     anIntKey,
+	//		Type:     input.TypeNumber,
+	//		Value:    postTest.AnInt,
+	//		HasError: hasAnIntErrors,
+	//		Required: true,
+	//	})
+	//	@form.Description() {
+	//		Enter AnInt
+	//	}
+	//	if hasAnIntErrors {
+	//		for _,value := range errors.Field(anIntKey) {
+	//			@form.Message(form.MessageProps{
+	//				Variant: form.MessageVariantError,
+	//			}) {
+	//				{ value }
+	//			}
+	//		}
+	//	}
+	//}
+	//`),
+	//)
 
 	//	Describe("InputText", func() {
 	//		It("should generate HTML for a text input", func() {

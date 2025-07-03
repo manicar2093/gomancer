@@ -49,3 +49,54 @@ func InputNumber(attribute parser.Attribute) (string, error) {
 	return result, nil
 }
 
+func InputNumberFloat(attribute parser.Attribute) (string, error) {
+	result, err := executeTemplate("input_number_float.tmpl", attribute)
+	if err != nil {
+		return "", err
+	}
+	return result, nil
+}
+
+func InputText(attribute parser.Attribute) (string, error) {
+	result, err := executeTemplate("input_text.tmpl", attribute)
+	if err != nil {
+		return "", err
+	}
+	return result, nil
+}
+
+type InputDateTime struct {
+	parser.Attribute
+}
+
+func (c InputDateTime) Generate() (string, error) {
+	result, err := executeTemplate("input_datetime.tmpl", c)
+	if err != nil {
+		return "", err
+	}
+	return result, nil
+}
+
+type InputToggle struct {
+	parser.Attribute
+}
+
+func (c InputToggle) Generate() (string, error) {
+	result, err := executeTemplate("input_toggle.tmpl", c)
+	if err != nil {
+		return "", err
+	}
+	return result, nil
+}
+
+type InputSelectBox struct {
+	parser.Attribute
+}
+
+func (c InputSelectBox) Generate() (string, error) {
+	result, err := executeTemplate("input_selectbox.tmpl", c)
+	if err != nil {
+		return "", err
+	}
+	return result, nil
+}

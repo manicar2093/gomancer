@@ -2,9 +2,10 @@ package components
 
 import (
 	"bytes"
+	"embed"
 	"fmt"
 	"github.com/manicar2093/gomancer/parser"
-	"path/filepath"
+	"path"
 	"text/template"
 )
 
@@ -13,38 +14,8 @@ type InputGenerationData struct {
 	ModelTransformedText parser.TransformedText
 }
 
-// executeTemplate loads and executes a template with the given data
-func executeTemplate(templateName string, data InputGenerationData) (string, error) {
-	// Try different paths to find the template
-	possiblePaths := []string{
-		filepath.Join("templates", templateName),                                          // When running from components dir
-		filepath.Join("controllers", "echoimpl", "components", "templates", templateName), // When running from project root
-	}
-
-	var tmpl *template.Template
-	var err error
-	var foundPath string
-
-	// Try each path until we find the template
-	for _, path := range possiblePaths {
-		tmpl, err = template.ParseFiles(path)
-		if err == nil {
-			foundPath = path
-			break
-		}
-	}
-
-	if err != nil {
-		return "", fmt.Errorf("error parsing template %s: could not find template in any of the expected locations", templateName)
-	}
-
-	var buf bytes.Buffer
-	if err := tmpl.Execute(&buf, data); err != nil {
-		return "", fmt.Errorf("error executing template %s (found at %s): %w", templateName, foundPath, err)
-	}
-
-	return buf.String(), nil
-}
+//go:embed templates/*
+var templatesFS embed.FS
 
 func InputNumber(input InputGenerationData) (string, error) {
 	result, err := executeTemplate("input_number.tmpl", input)
@@ -92,4 +63,14 @@ func InputSelectBox(input InputGenerationData) (string, error) {
 		return "", err
 	}
 	return result, nil
+}
+
+func executeTemplate(templateName string, data InputGenerationData) (string, error) {
+	tplStarted := template.Must(template.ParseFS(templatesFS, path.Join("templates", templateName)))
+	var buf bytes.Buffer
+	if err := tplStarted.Execute(&buf, data); err != nil {
+		return "", fmt.Errorf("error executing template %s: %w", templateName, err)
+	}
+
+	return buf.String(), nil
 }

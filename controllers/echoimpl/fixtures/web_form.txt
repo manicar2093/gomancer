@@ -684,7 +684,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@input.Input(input.Props{
 					ID:       uuidKey,
 					Name:     uuidKey,
-					Type:     input.TypeNumber,
+					Type:     input.TypeText,
 					Value:    postTest.Uuid,
 					HasError: hasUuidErrors,
 					Required: true,
@@ -746,18 +746,18 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 						}
 					}
 				}
-			}
-			@form.Description() {
-				Select Optional Enum
-			}
-			if hasOptionalEnumErrors {
-				for _,value := range errors.Field(optionalEnumKey) {
-					@form.Message(form.MessageProps{
-						Variant: form.MessageVariantError,
-					}) {
-						{ value }
-					}
-				}
+                @form.Description() {
+                    Select Optional Enum
+                }
+                if hasOptionalEnumErrors {
+                    for _,value := range errors.Field(optionalEnumKey) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
 			}
 			{{ enumKey := "enum" }}
 			{{ hasEnumErrors := errors.HasField(enumKey) }}
@@ -804,18 +804,18 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 						}
 					}
 				}
-			}
-			@form.Description() {
-				Select Enum
-			}
-			if hasEnumErrors {
-				for _,value := range errors.Field(enumKey) {
-					@form.Message(form.MessageProps{
-						Variant: form.MessageVariantError,
-					}) {
-						{ value }
-					}
-				}
+                @form.Description() {
+                    Select Enum
+                }
+                if hasEnumErrors {
+                    for _,value := range errors.Field(enumKey) {
+                        @form.Message(form.MessageProps{
+                            Variant: form.MessageVariantError,
+                        }) {
+                            { value }
+                        }
+                    }
+                }
 			}
 		</div>
 		@button.Button(button.Props{

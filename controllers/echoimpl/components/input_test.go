@@ -466,6 +466,195 @@ var _ = Describe("Input Components", func() {
 `),
 	)
 
+	DescribeTable("InputSelectBox", func(attr parser.Attribute, expectedResult string) {
+		result, err := components.InputSelectBox(components.InputGenerationData{
+			Attribute:            attr,
+			ModelTransformedText: generateModelTransformedText,
+		})
+		fmt.Println(result)
+		fmt.Println(expectedResult)
+
+		Expect(err).ToNot(HaveOccurred())
+		Expect(result).To(Equal(expectedResult))
+
+	},
+
+		Entry("optional", parser.Attribute{
+			TransformedText: parser.TransformedText{
+				SnakeCase:        "optional_enum",
+				PascalCase:       "OptionalEnum",
+				CamelCase:        "optionalEnum",
+				LowerNoSpaceCase: "optionalenum",
+			},
+			Type:       "enum",
+			IsOptional: true,
+			EnumStrings: []parser.TransformedText{
+				{
+					SnakeCase:        "optional_enum_1",
+					PascalCase:       "OptionalEnum1",
+					CamelCase:        "optionalEnum1",
+					LowerNoSpaceCase: "optionalenum1",
+				},
+				{
+					SnakeCase:        "optional_enum_2",
+					PascalCase:       "OptionalEnum2",
+					CamelCase:        "optionalEnum2",
+					LowerNoSpaceCase: "optionalenum2",
+				},
+				{
+					SnakeCase:        "optional_enum_3",
+					PascalCase:       "OptionalEnum3",
+					CamelCase:        "optionalEnum3",
+					LowerNoSpaceCase: "optionalenum3",
+				},
+			},
+		}, `{{ optionalEnumKey := "optional_enum" }}
+{{ hasOptionalEnumErrors := errors.HasField(optionalEnumKey) }}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: optionalEnumKey,
+	}) {
+		OptionalEnum
+	}
+	@selectbox.SelectBox() {
+		@selectbox.Trigger(selectbox.TriggerProps{
+			ID:       optionalEnumKey,
+			Name:     optionalEnumKey,
+			HasError: hasOptionalEnumErrors,
+		}) {
+			@selectbox.Value(selectbox.ValueProps{
+				Placeholder: i18n.T(ctx, "select_placeholder"),
+			})
+		}
+		@selectbox.Content() {
+			@selectbox.Group() {
+				@selectbox.Item(selectbox.ItemProps{
+					Value:    "optional_enum_1",
+					Selected: postTest.OptionalEnum == "optional_enum_1",
+					Disabled: postTest.OptionalEnum == "optional_enum_1",
+				}) {
+					OptionalEnum1
+				}
+				@selectbox.Item(selectbox.ItemProps{
+					Value:    "optional_enum_2",
+					Selected: postTest.OptionalEnum == "optional_enum_2",
+					Disabled: postTest.OptionalEnum == "optional_enum_2",
+				}) {
+					OptionalEnum2
+				}
+				@selectbox.Item(selectbox.ItemProps{
+					Value:    "optional_enum_3",
+					Selected: postTest.OptionalEnum == "optional_enum_3",
+					Disabled: postTest.OptionalEnum == "optional_enum_3",
+				}) {
+					OptionalEnum3
+				}
+			}
+		}
+	}
+	@form.Description() {
+		Select OptionalEnum
+	}
+	if hasOptionalEnumErrors {
+		for _,value := range errors.Field(optionalEnumKey) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}
+`),
+		Entry("not optional", parser.Attribute{
+			TransformedText: parser.TransformedText{
+				SnakeCase:        "enum",
+				PascalCase:       "Enum",
+				CamelCase:        "enum",
+				LowerNoSpaceCase: "enum",
+			},
+			Type: "enum",
+			EnumStrings: []parser.TransformedText{
+				{
+					SnakeCase:        "enum_1",
+					PascalCase:       "Enum1",
+					CamelCase:        "enum1",
+					LowerNoSpaceCase: "enum1",
+				},
+				{
+					SnakeCase:        "enum_2",
+					PascalCase:       "Enum2",
+					CamelCase:        "enum2",
+					LowerNoSpaceCase: "enum2",
+				},
+				{
+					SnakeCase:        "enum_3",
+					PascalCase:       "Enum3",
+					CamelCase:        "enum3",
+					LowerNoSpaceCase: "enum3",
+				},
+			},
+		}, `{{ enumKey := "enum" }}
+{{ hasEnumErrors := errors.HasField(enumKey) }}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: enumKey,
+	}) {
+		Enum
+	}
+	@selectbox.SelectBox() {
+		@selectbox.Trigger(selectbox.TriggerProps{
+			ID:       enumKey,
+			Name:     enumKey,
+			HasError: hasEnumErrors,
+			Required: true,
+		}) {
+			@selectbox.Value(selectbox.ValueProps{
+				Placeholder: i18n.T(ctx, "select_placeholder"),
+			})
+		}
+		@selectbox.Content() {
+			@selectbox.Group() {
+				@selectbox.Item(selectbox.ItemProps{
+					Value:    "enum_1",
+					Selected: postTest.Enum == "enum_1",
+					Disabled: postTest.Enum == "enum_1",
+				}) {
+					Enum1
+				}
+				@selectbox.Item(selectbox.ItemProps{
+					Value:    "enum_2",
+					Selected: postTest.Enum == "enum_2",
+					Disabled: postTest.Enum == "enum_2",
+				}) {
+					Enum2
+				}
+				@selectbox.Item(selectbox.ItemProps{
+					Value:    "enum_3",
+					Selected: postTest.Enum == "enum_3",
+					Disabled: postTest.Enum == "enum_3",
+				}) {
+					Enum3
+				}
+			}
+		}
+	}
+	@form.Description() {
+		Select Enum
+	}
+	if hasEnumErrors {
+		for _,value := range errors.Field(enumKey) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}
+`),
+	)
+
 	//	Describe("InputSelectBox", func() {
 	//		It("should generate HTML for a select box with enum values", func() {
 	//			// Use test attribute from testfixtures

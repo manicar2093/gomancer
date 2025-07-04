@@ -86,12 +86,8 @@ func InputDateTime(input InputGenerationData) (string, error) {
 	return result, nil
 }
 
-type InputSelectBox struct {
-	parser.Attribute
-}
-
-func (c InputSelectBox) Generate() (string, error) {
-	result, err := executeTemplate("input_selectbox.tmpl", c)
+func InputSelectBox(input InputGenerationData) (string, error) {
+	result, err := executeTemplate("input_selectbox.tmpl", input)
 	if err != nil {
 		return "", err
 	}

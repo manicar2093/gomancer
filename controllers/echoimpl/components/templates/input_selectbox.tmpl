@@ -1,0 +1,72 @@
+{{ printf "{{ %sKey := \"%s\" }}" .CamelCase .SnakeCase }}
+{{ printf "{{ has%sErrors := errors.HasField(%sKey) }}" .PascalCase .CamelCase}}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: {{ .CamelCase }}Key,
+	}) {
+		{{ .PascalCase }}
+	}
+	@selectbox.SelectBox() {
+		@selectbox.Trigger(selectbox.TriggerProps{
+			ID:       {{ .CamelCase }}Key,
+			Name:     {{ .CamelCase }}Key,
+			HasError: has{{ .PascalCase }}Errors,
+			{{- if not .IsOptional }}
+			Required: true,
+			{{- end }}
+		}) {
+			@selectbox.Value(selectbox.ValueProps{
+				Placeholder: i18n.T(ctx, "select_placeholder"),
+			})
+		}
+		@selectbox.Content() {
+			@selectbox.Group() {
+				{{- if .EnumStrings }}
+				{{- range .EnumStrings }}
+				@selectbox.Item(selectbox.ItemProps{
+					Value:    "{{ .SnakeCase }}",
+					Selected: postTest.{{ $.PascalCase }} == "{{ .SnakeCase }}",
+					Disabled: postTest.{{ $.PascalCase }} == "{{ .SnakeCase }}",
+				}) {
+					{{ .PascalCase }}
+				}
+				{{- end }}
+				{{- else }}
+				@selectbox.Item(selectbox.ItemProps{
+					Value:    "{{ .SnakeCase }}_1",
+					Selected: postTest.{{ .PascalCase }} == "{{ .SnakeCase }}_1",
+					Disabled: postTest.{{ .PascalCase }} == "{{ .SnakeCase }}_1",
+				}) {
+					{{ .PascalCase }}1
+				}
+				@selectbox.Item(selectbox.ItemProps{
+					Value:    "{{ .SnakeCase }}_2",
+					Selected: postTest.{{ .PascalCase }} == "{{ .SnakeCase }}_2",
+					Disabled: postTest.{{ .PascalCase }} == "{{ .SnakeCase }}_2",
+				}) {
+					{{ .PascalCase }}2
+				}
+				@selectbox.Item(selectbox.ItemProps{
+					Value:    "{{ .SnakeCase }}_3",
+					Selected: postTest.{{ .PascalCase }} == "{{ .SnakeCase }}_3",
+					Disabled: postTest.{{ .PascalCase }} == "{{ .SnakeCase }}_3",
+				}) {
+					{{ .PascalCase }}3
+				}
+				{{- end }}
+			}
+		}
+	}
+	@form.Description() {
+		Select {{ .PascalCase }}
+	}
+	if has{{ .PascalCase }}Errors {
+		for _,value := range errors.Field({{ .CamelCase }}Key) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}

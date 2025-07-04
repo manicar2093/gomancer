@@ -588,7 +588,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: optionalDecimalKey,
 				}) {
-					An Optional Decimal
+					OptionalDecimal
 				}
 				@input.Input(input.Props{
 					ID:       optionalDecimalKey,
@@ -601,7 +601,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					},
 				})
 				@form.Description() {
-					Enter An Optional Decimal
+					Enter OptionalDecimal
 				}
 				if hasOptionalDecimalErrors {
 					for _,value := range errors.Field(optionalDecimalKey) {

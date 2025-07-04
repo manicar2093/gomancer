@@ -69,7 +69,38 @@ var _ = Describe("Input Components", func() {
 			},
 			Type:       "float64",
 			IsOptional: true,
-		}, fixtures.OptionalInputNumberFloat),
+		}, `{{ anOptionalFloat64Key := "an_optional_float_64" }}
+{{ hasAnOptionalFloat64Errors := errors.HasField(anOptionalFloat64Key) }}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: anOptionalFloat64Key,
+	}) {
+		AnOptionalFloat64
+	}
+	@input.Input(input.Props{
+		ID:       anOptionalFloat64Key,
+		Name:     anOptionalFloat64Key,
+		Type:     input.TypeNumber,
+		Value:    userData.AnOptionalFloat64,
+		HasError: hasAnOptionalFloat64Errors,
+		Attributes: map[string]any{
+			"step": "0.01",
+		},
+	})
+	@form.Description() {
+		Enter AnOptionalFloat64
+	}
+	if hasAnOptionalFloat64Errors {
+		for _,value := range errors.Field(anOptionalFloat64Key) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}
+`),
 		Entry("not optional float", parser.Attribute{
 			TransformedText: parser.TransformedText{
 				SnakeCase:        "an_float_32",
@@ -78,7 +109,121 @@ var _ = Describe("Input Components", func() {
 				LowerNoSpaceCase: "anfloat32",
 			},
 			Type: "float32",
-		}, fixtures.RequiredInputNumberFloat),
+		}, `{{ anFloat32Key := "an_float_32" }}
+{{ hasAnFloat32Errors := errors.HasField(anFloat32Key) }}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: anFloat32Key,
+	}) {
+		AnFloat32
+	}
+	@input.Input(input.Props{
+		ID:       anFloat32Key,
+		Name:     anFloat32Key,
+		Type:     input.TypeNumber,
+		Value:    userData.AnFloat32,
+		HasError: hasAnFloat32Errors,
+		Required: true,
+		Attributes: map[string]any{
+			"step": "0.01",
+		},
+	})
+	@form.Description() {
+		Enter AnFloat32
+	}
+	if hasAnFloat32Errors {
+		for _,value := range errors.Field(anFloat32Key) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}
+`),
+		Entry("optional decimal", parser.Attribute{
+			TransformedText: parser.TransformedText{
+				SnakeCase:        "optional_decimal",
+				PascalCase:       "OptionalDecimal",
+				CamelCase:        "optionalDecimal",
+				LowerNoSpaceCase: "optionaldecimal",
+			},
+			Type:       "decimal",
+			IsOptional: true,
+		}, `{{ optionalDecimalKey := "optional_decimal" }}
+{{ hasOptionalDecimalErrors := errors.HasField(optionalDecimalKey) }}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: optionalDecimalKey,
+	}) {
+		OptionalDecimal
+	}
+	@input.Input(input.Props{
+		ID:       optionalDecimalKey,
+		Name:     optionalDecimalKey,
+		Type:     input.TypeNumber,
+		Value:    userData.OptionalDecimal,
+		HasError: hasOptionalDecimalErrors,
+		Attributes: map[string]any{
+			"step": "0.01",
+		},
+	})
+	@form.Description() {
+		Enter OptionalDecimal
+	}
+	if hasOptionalDecimalErrors {
+		for _,value := range errors.Field(optionalDecimalKey) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}
+`),
+		Entry("not optional decimal", parser.Attribute{
+			TransformedText: parser.TransformedText{
+				SnakeCase:        "decimal",
+				PascalCase:       "Decimal",
+				CamelCase:        "decimal",
+				LowerNoSpaceCase: "decimal",
+			},
+			Type: "decimal",
+		}, `{{ decimalKey := "decimal" }}
+{{ hasDecimalErrors := errors.HasField(decimalKey) }}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: decimalKey,
+	}) {
+		Decimal
+	}
+	@input.Input(input.Props{
+		ID:       decimalKey,
+		Name:     decimalKey,
+		Type:     input.TypeNumber,
+		Value:    userData.Decimal,
+		HasError: hasDecimalErrors,
+		Required: true,
+		Attributes: map[string]any{
+			"step": "0.01",
+		},
+	})
+	@form.Description() {
+		Enter Decimal
+	}
+	if hasDecimalErrors {
+		for _,value := range errors.Field(decimalKey) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}
+`),
 	)
 
 	DescribeTable("InputText", func(attr parser.Attribute, expectedResult string) {
@@ -175,8 +320,6 @@ var _ = Describe("Input Components", func() {
 			Attribute:            attr,
 			ModelTransformedText: generateModelTransformedText,
 		})
-		fmt.Println(result)
-		fmt.Println(expectedResult)
 
 		Expect(err).ToNot(HaveOccurred())
 		Expect(result).To(Equal(expectedResult))
@@ -241,8 +384,6 @@ var _ = Describe("Input Components", func() {
 			Attribute:            attr,
 			ModelTransformedText: generateModelTransformedText,
 		})
-		fmt.Println(result)
-		fmt.Println(expectedResult)
 
 		Expect(err).ToNot(HaveOccurred())
 		Expect(result).To(Equal(expectedResult))

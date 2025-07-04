@@ -3,7 +3,6 @@ package components_test
 import (
 	"fmt"
 	"github.com/manicar2093/gomancer/controllers/echoimpl/components"
-	"github.com/manicar2093/gomancer/controllers/echoimpl/components/fixtures"
 	"github.com/manicar2093/gomancer/parser"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
@@ -38,7 +37,35 @@ var _ = Describe("Input Components", func() {
 			},
 			Type:       "int",
 			IsOptional: true,
-		}, fixtures.OptionalInputNumberInt),
+		}, `{{ anOptionalIntKey := "an_optional_int" }}
+{{ hasAnOptionalIntErrors := errors.HasField(anOptionalIntKey) }}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: anOptionalIntKey,
+	}) {
+		AnOptionalInt
+	}
+	@input.Input(input.Props{
+		ID:       anOptionalIntKey,
+		Name:     anOptionalIntKey,
+		Type:     input.TypeNumber,
+		Value:    userData.AnOptionalInt,
+		HasError: hasAnOptionalIntErrors,
+	})
+	@form.Description() {
+		Enter AnOptionalInt
+	}
+	if hasAnOptionalIntErrors {
+		for _,value := range errors.Field(anOptionalIntKey) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}
+`),
 		Entry("not optional int", parser.Attribute{
 			TransformedText: parser.TransformedText{
 				SnakeCase:        "an_int",
@@ -47,7 +74,36 @@ var _ = Describe("Input Components", func() {
 				LowerNoSpaceCase: "anint",
 			},
 			Type: "int",
-		}, fixtures.RequiredInputNumberInt),
+		}, `{{ anIntKey := "an_int" }}
+{{ hasAnIntErrors := errors.HasField(anIntKey) }}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: anIntKey,
+	}) {
+		AnInt
+	}
+	@input.Input(input.Props{
+		ID:       anIntKey,
+		Name:     anIntKey,
+		Type:     input.TypeNumber,
+		Value:    userData.AnInt,
+		HasError: hasAnIntErrors,
+		Required: true,
+	})
+	@form.Description() {
+		Enter AnInt
+	}
+	if hasAnIntErrors {
+		for _,value := range errors.Field(anIntKey) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}
+`),
 	)
 
 	DescribeTable("InputNumberFloat", func(attr parser.Attribute, expectedResult string) {
@@ -410,7 +466,7 @@ var _ = Describe("Input Components", func() {
 	@datetime.Datetime(datetime.DatetimeProps{
 		ID:       optionalTimeKey,
 		Name:     optionalTimeKey,
-		Value:    postTest.OptionalTime.UTC(),
+		Value:    userData.OptionalTime.UTC(),
 		HasError: hasOptionalTimeErrors,
 	})
 	@form.Description() {
@@ -446,7 +502,7 @@ var _ = Describe("Input Components", func() {
 	@datetime.Datetime(datetime.DatetimeProps{
 		ID:       timeKey,
 		Name:     timeKey,
-		Value:    postTest.Time.UTC(),
+		Value:    userData.Time.UTC(),
 		HasError: hasTimeErrors,
 		Required: true,
 	})
@@ -472,7 +528,6 @@ var _ = Describe("Input Components", func() {
 			ModelTransformedText: generateModelTransformedText,
 		})
 		fmt.Println(result)
-		fmt.Println(expectedResult)
 
 		Expect(err).ToNot(HaveOccurred())
 		Expect(result).To(Equal(expectedResult))
@@ -530,22 +585,22 @@ var _ = Describe("Input Components", func() {
 			@selectbox.Group() {
 				@selectbox.Item(selectbox.ItemProps{
 					Value:    "optional_enum_1",
-					Selected: postTest.OptionalEnum == "optional_enum_1",
-					Disabled: postTest.OptionalEnum == "optional_enum_1",
+					Selected: userData.OptionalEnum == "optional_enum_1",
+					Disabled: userData.OptionalEnum == "optional_enum_1",
 				}) {
 					OptionalEnum1
 				}
 				@selectbox.Item(selectbox.ItemProps{
 					Value:    "optional_enum_2",
-					Selected: postTest.OptionalEnum == "optional_enum_2",
-					Disabled: postTest.OptionalEnum == "optional_enum_2",
+					Selected: userData.OptionalEnum == "optional_enum_2",
+					Disabled: userData.OptionalEnum == "optional_enum_2",
 				}) {
 					OptionalEnum2
 				}
 				@selectbox.Item(selectbox.ItemProps{
 					Value:    "optional_enum_3",
-					Selected: postTest.OptionalEnum == "optional_enum_3",
-					Disabled: postTest.OptionalEnum == "optional_enum_3",
+					Selected: userData.OptionalEnum == "optional_enum_3",
+					Disabled: userData.OptionalEnum == "optional_enum_3",
 				}) {
 					OptionalEnum3
 				}
@@ -617,22 +672,22 @@ var _ = Describe("Input Components", func() {
 			@selectbox.Group() {
 				@selectbox.Item(selectbox.ItemProps{
 					Value:    "enum_1",
-					Selected: postTest.Enum == "enum_1",
-					Disabled: postTest.Enum == "enum_1",
+					Selected: userData.Enum == "enum_1",
+					Disabled: userData.Enum == "enum_1",
 				}) {
 					Enum1
 				}
 				@selectbox.Item(selectbox.ItemProps{
 					Value:    "enum_2",
-					Selected: postTest.Enum == "enum_2",
-					Disabled: postTest.Enum == "enum_2",
+					Selected: userData.Enum == "enum_2",
+					Disabled: userData.Enum == "enum_2",
 				}) {
 					Enum2
 				}
 				@selectbox.Item(selectbox.ItemProps{
 					Value:    "enum_3",
-					Selected: postTest.Enum == "enum_3",
-					Disabled: postTest.Enum == "enum_3",
+					Selected: userData.Enum == "enum_3",
+					Disabled: userData.Enum == "enum_3",
 				}) {
 					Enum3
 				}
@@ -655,78 +710,4 @@ var _ = Describe("Input Components", func() {
 `),
 	)
 
-	//	Describe("InputSelectBox", func() {
-	//		It("should generate HTML for a select box with enum values", func() {
-	//			// Use test attribute from testfixtures
-	//			attr := testfixtures.ModelBinaryIdSuccess.Attributes[25] // Enum (non-optional enum)
-	//
-	//			// Create the InputSelectBox component
-	//			component := InputSelectBox{
-	//				Attribute: attr,
-	//			}
-	//			expected := `{{ enumKey := "enum" }}
-	//{{ hasEnumErrors := errors.HasField(enumKey) }}
-	//@form.Item(form.ItemProps{}) {
-	//	@label.Label(label.Props{
-	//		For: enumKey,
-	//	}) {
-	//		Enum
-	//	}
-	//	@selectbox.SelectBox() {
-	//		@selectbox.Trigger(selectbox.TriggerProps{
-	//			ID:       enumKey,
-	//			Name:     enumKey,
-	//			HasError: hasEnumErrors,
-	//			Required: true,
-	//		}) {
-	//			@selectbox.Value(selectbox.ValueProps{
-	//				Placeholder: i18n.T(ctx, "select_placeholder"),
-	//			})
-	//		}
-	//		@selectbox.Content() {
-	//			@selectbox.Group() {
-	//				@selectbox.Item(selectbox.ItemProps{
-	//					Value:    "enum_1",
-	//					Selected: userData.Enum == "enum_1",
-	//					Disabled: userData.Enum == "enum_1",
-	//				}) {
-	//					Enum1
-	//				}
-	//				@selectbox.Item(selectbox.ItemProps{
-	//					Value:    "enum_2",
-	//					Selected: userData.Enum == "enum_2",
-	//					Disabled: userData.Enum == "enum_2",
-	//				}) {
-	//					Enum2
-	//				}
-	//				@selectbox.Item(selectbox.ItemProps{
-	//					Value:    "enum_3",
-	//					Selected: userData.Enum == "enum_3",
-	//					Disabled: userData.Enum == "enum_3",
-	//				}) {
-	//					Enum3
-	//				}
-	//			}
-	//		}
-	//	}
-	//	@form.Description() {
-	//		Select Enum
-	//	}
-	//	if hasEnumErrors {
-	//		for _,value := range errors.Field(enumKey) {
-	//			@form.Message(form.MessageProps{
-	//				Variant: form.MessageVariantError,
-	//			}) {
-	//				{ value }
-	//			}
-	//		}
-	//	}
-	//}`
-	//
-	//			result, err := component.Generate()
-	//
-	//			Expect(err).ToNot(HaveOccurred())
-	//			Expect(result).To(Equal(expected))
-	//		})
-	//	})
 })

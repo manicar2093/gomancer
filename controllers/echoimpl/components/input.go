@@ -14,7 +14,7 @@ type InputGenerationData struct {
 }
 
 // executeTemplate loads and executes a template with the given data
-func executeTemplate(templateName string, data interface{}) (string, error) {
+func executeTemplate(templateName string, data InputGenerationData) (string, error) {
 	// Try different paths to find the template
 	possiblePaths := []string{
 		filepath.Join("templates", templateName),                                          // When running from components dir

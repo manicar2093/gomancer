@@ -1,5 +1,6 @@
 {{ printf "{{ %sKey := \"%s\" }}" .CamelCase .SnakeCase }}
 {{ printf "{{ has%sErrors := errors.HasField(%sKey) }}" .PascalCase .CamelCase}}
+{{- $global	:= .}}
 @form.Item(form.ItemProps{}) {
 	@label.Label(label.Props{
 		For: {{ .CamelCase }}Key,
@@ -25,34 +26,12 @@
 				{{- range .EnumStrings }}
 				@selectbox.Item(selectbox.ItemProps{
 					Value:    "{{ .SnakeCase }}",
-					Selected: postTest.{{ $.PascalCase }} == "{{ .SnakeCase }}",
-					Disabled: postTest.{{ $.PascalCase }} == "{{ .SnakeCase }}",
+					Selected: {{ printf "%s.%s == \"%s\"" $global.ModelTransformedText.CamelCase $global.PascalCase .SnakeCase}},
+					Disabled: {{ printf "%s.%s == \"%s\"" $global.ModelTransformedText.CamelCase $global.PascalCase .SnakeCase}},
 				}) {
 					{{ .PascalCase }}
 				}
 				{{- end }}
-				{{- else }}
-				@selectbox.Item(selectbox.ItemProps{
-					Value:    "{{ .SnakeCase }}_1",
-					Selected: postTest.{{ .PascalCase }} == "{{ .SnakeCase }}_1",
-					Disabled: postTest.{{ .PascalCase }} == "{{ .SnakeCase }}_1",
-				}) {
-					{{ .PascalCase }}1
-				}
-				@selectbox.Item(selectbox.ItemProps{
-					Value:    "{{ .SnakeCase }}_2",
-					Selected: postTest.{{ .PascalCase }} == "{{ .SnakeCase }}_2",
-					Disabled: postTest.{{ .PascalCase }} == "{{ .SnakeCase }}_2",
-				}) {
-					{{ .PascalCase }}2
-				}
-				@selectbox.Item(selectbox.ItemProps{
-					Value:    "{{ .SnakeCase }}_3",
-					Selected: postTest.{{ .PascalCase }} == "{{ .SnakeCase }}_3",
-					Disabled: postTest.{{ .PascalCase }} == "{{ .SnakeCase }}_3",
-				}) {
-					{{ .PascalCase }}3
-				}
 				{{- end }}
 			}
 		}

@@ -1,7 +1,6 @@
 package components_test
 
 import (
-	"fmt"
 	"github.com/manicar2093/gomancer/controllers/echoimpl/components"
 	"github.com/manicar2093/gomancer/parser"
 	. "github.com/onsi/ginkgo/v2"
@@ -22,7 +21,6 @@ var _ = Describe("Input Components", func() {
 			Attribute:            attr,
 			ModelTransformedText: generateModelTransformedText,
 		})
-		fmt.Println(result)
 
 		Expect(err).ToNot(HaveOccurred())
 		Expect(result).To(Equal(expectedResult))
@@ -369,6 +367,82 @@ var _ = Describe("Input Components", func() {
 	}
 }
 `),
+		Entry("optional", parser.Attribute{
+			TransformedText: parser.TransformedText{
+				SnakeCase:        "optional_uuid",
+				PascalCase:       "OptionalUuid",
+				CamelCase:        "optionalUuid",
+				LowerNoSpaceCase: "optionaluuid",
+			},
+			Type:       "uuid",
+			IsOptional: true,
+		}, `{{ optionalUuidKey := "optional_uuid" }}
+{{ hasOptionalUuidErrors := errors.HasField(optionalUuidKey) }}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: optionalUuidKey,
+	}) {
+		OptionalUuid
+	}
+	@input.Input(input.Props{
+		ID:       optionalUuidKey,
+		Name:     optionalUuidKey,
+		Type:     input.TypeText,
+		Value:    userData.OptionalUuid,
+		HasError: hasOptionalUuidErrors,
+	})
+	@form.Description() {
+		Enter OptionalUuid
+	}
+	if hasOptionalUuidErrors {
+		for _,value := range errors.Field(optionalUuidKey) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}
+`),
+		Entry("not optional", parser.Attribute{
+			TransformedText: parser.TransformedText{
+				SnakeCase:        "uuid",
+				PascalCase:       "Uuid",
+				CamelCase:        "uuid",
+				LowerNoSpaceCase: "uuid",
+			},
+			Type: "uuid",
+		}, `{{ uuidKey := "uuid" }}
+{{ hasUuidErrors := errors.HasField(uuidKey) }}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: uuidKey,
+	}) {
+		Uuid
+	}
+	@input.Input(input.Props{
+		ID:       uuidKey,
+		Name:     uuidKey,
+		Type:     input.TypeText,
+		Value:    userData.Uuid,
+		HasError: hasUuidErrors,
+		Required: true,
+	})
+	@form.Description() {
+		Enter Uuid
+	}
+	if hasUuidErrors {
+		for _,value := range errors.Field(uuidKey) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}
+`),
 	)
 
 	DescribeTable("InputToggle", func(attr parser.Attribute, expectedResult string) {
@@ -527,7 +601,6 @@ var _ = Describe("Input Components", func() {
 			Attribute:            attr,
 			ModelTransformedText: generateModelTransformedText,
 		})
-		fmt.Println(result)
 
 		Expect(err).ToNot(HaveOccurred())
 		Expect(result).To(Equal(expectedResult))

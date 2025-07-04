@@ -651,7 +651,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: optionalUuidKey,
 				}) {
-					Optional Uuid
+					OptionalUuid
 				}
 				@input.Input(input.Props{
 					ID:       optionalUuidKey,
@@ -661,7 +661,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					HasError: hasOptionalUuidErrors,
 				})
 				@form.Description() {
-					Enter Optional Uuid
+					Enter OptionalUuid
 				}
 				if hasOptionalUuidErrors {
 					for _,value := range errors.Field(optionalUuidKey) {

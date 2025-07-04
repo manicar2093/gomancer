@@ -533,7 +533,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: optionalTimeKey,
 				}) {
-					Optional Time
+					OptionalTime
 				}
 				@datetime.Datetime(datetime.DatetimeProps{
 					ID:       optionalTimeKey,
@@ -542,7 +542,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					HasError: hasOptionalTimeErrors,
 				})
 				@form.Description() {
-					Enter Optional Time
+					Enter OptionalTime
 				}
 				if hasOptionalTimeErrors {
 					for _,value := range errors.Field(optionalTimeKey) {

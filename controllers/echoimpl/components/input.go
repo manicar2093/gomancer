@@ -78,12 +78,8 @@ func InputToggle(input InputGenerationData) (string, error) {
 	return result, nil
 }
 
-type InputDateTime struct {
-	parser.Attribute
-}
-
-func (c InputDateTime) Generate() (string, error) {
-	result, err := executeTemplate("input_datetime.tmpl", c)
+func InputDateTime(input InputGenerationData) (string, error) {
+	result, err := executeTemplate("input_datetime.tmpl", input)
 	if err != nil {
 		return "", err
 	}

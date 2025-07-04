@@ -236,89 +236,95 @@ var _ = Describe("Input Components", func() {
 `),
 	)
 
-	//	Describe("InputDateTime", func() {
-	//		It("should generate HTML for a datetime input", func() {
-	//			// Use test attribute from testfixtures
-	//			attr := testfixtures.ModelBinaryIdSuccess.Attributes[21] // Time (non-optional time)
-	//			// Expected output
-	//			expected := `{{ decimalKey := "decimal" }}
-	//{{ hasDecimalErrors := errors.HasField(decimalKey) }}
-	//@form.Item(form.ItemProps{}) {
-	//        @label.Label(label.Props{
-	//                For: decimalKey,
-	//        }) {
-	//                Decimal
-	//        }
-	//        @datetime.Datetime(datetime.DatetimeProps{
-	//                ID:       decimalKey,
-	//                Name:     decimalKey,
-	//                Value:    userData.Decimal.UTC(),
-	//                HasError: hasDecimalErrors,
-	//                Required: true,
-	//        })
-	//        @form.Description() {
-	//                Enter Decimal
-	//        }
-	//        if hasDecimalErrors {
-	//                for _,value := range errors.Field(decimalKey) {
-	//                        @form.Message(form.MessageProps{
-	//                                Variant: form.MessageVariantError,
-	//                        }) {
-	//                                { value }
-	//                        }
-	//                }
-	//        }
-	//}%`
-	//
-	//			// Create the InputDateTime component
-	//			component := InputDateTime{
-	//				Attribute: attr,
-	//			}
-	//
-	//			// Generate the HTML
-	//			result, err := component.Generate()
-	//
-	//			Expect(err).ToNot(HaveOccurred())
-	//			Expect(result).To(Equal(expected))
-	//		})
-	//	})
-	//
-	//	Describe("InputToggle", func() {
-	//		It("should generate HTML for a toggle input", func() {
-	//			// Use test attribute from testfixtures
-	//			attr := testfixtures.ModelBinaryIdSuccess.Attributes[18] // OptionalBool (optional bool)
-	//
-	//			// Create the InputToggle component
-	//			component := InputToggle{
-	//				Attribute: attr,
-	//			}
-	//			// Expected output
-	//			expected := `{{ optionalTimeKey := "optional_time" }}
-	//@label.Label(label.Props{
-	//        For: optionalTimeKey,
-	//}) {
-	//        OptionalTime
-	//}
-	//@form.ItemFlex() {
-	//        @toggle.Toggle(toggle.Props{
-	//                ID:      optionalTimeKey,
-	//                Name:    optionalTimeKey,
-	//                Checked: userData.OptionalTime,
-	//        })
-	//        @form.Description() {
-	//                Check for OptionalTime
-	//        }
-	//}%`
-	//
-	//			// Generate the HTML
-	//			// Generate the HTML
-	//			result, err := component.Generate()
-	//
-	//			Expect(err).ToNot(HaveOccurred())
-	//			Expect(result).To(Equal(expected))
-	//		})
-	//	})
-	//
+	DescribeTable("InputDateTime", func(attr parser.Attribute, expectedResult string) {
+		result, err := components.InputDateTime(components.InputGenerationData{
+			Attribute:            attr,
+			ModelTransformedText: generateModelTransformedText,
+		})
+		fmt.Println(result)
+		fmt.Println(expectedResult)
+
+		Expect(err).ToNot(HaveOccurred())
+		Expect(result).To(Equal(expectedResult))
+
+	},
+
+		Entry("optional", parser.Attribute{
+			TransformedText: parser.TransformedText{
+				SnakeCase:        "optional_time",
+				PascalCase:       "OptionalTime",
+				CamelCase:        "optionalTime",
+				LowerNoSpaceCase: "optionaltime",
+			},
+			Type:       "time",
+			IsOptional: true,
+		}, `{{ optionalTimeKey := "optional_time" }}
+{{ hasOptionalTimeErrors := errors.HasField(optionalTimeKey) }}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: optionalTimeKey,
+	}) {
+		OptionalTime
+	}
+	@datetime.Datetime(datetime.DatetimeProps{
+		ID:       optionalTimeKey,
+		Name:     optionalTimeKey,
+		Value:    postTest.OptionalTime.UTC(),
+		HasError: hasOptionalTimeErrors,
+	})
+	@form.Description() {
+		Enter OptionalTime
+	}
+	if hasOptionalTimeErrors {
+		for _,value := range errors.Field(optionalTimeKey) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}
+`),
+		Entry("not optional", parser.Attribute{
+			TransformedText: parser.TransformedText{
+				SnakeCase:        "time",
+				PascalCase:       "Time",
+				CamelCase:        "time",
+				LowerNoSpaceCase: "time",
+			},
+			Type: "time",
+		}, `{{ timeKey := "time" }}
+{{ hasTimeErrors := errors.HasField(timeKey) }}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: timeKey,
+	}) {
+		Time
+	}
+	@datetime.Datetime(datetime.DatetimeProps{
+		ID:       timeKey,
+		Name:     timeKey,
+		Value:    postTest.Time.UTC(),
+		HasError: hasTimeErrors,
+		Required: true,
+	})
+	@form.Description() {
+		Enter Time
+	}
+	if hasTimeErrors {
+		for _,value := range errors.Field(timeKey) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}
+`),
+	)
+
 	//	Describe("InputSelectBox", func() {
 	//		It("should generate HTML for a select box with enum values", func() {
 	//			// Use test attribute from testfixtures

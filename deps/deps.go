@@ -149,6 +149,14 @@ func Init(moduleName string) Container {
 						Path:  buildPath(moduleName, "core", "coretpls", "toast"),
 						Alias: "toast",
 					},
+					DateTime: Dependency{
+						Path:  buildPath(moduleName, "core", "coretpls", "datetime"),
+						Alias: "datetime",
+					},
+					FormTag: Dependency{
+						Path:  buildPath(moduleName, "core", "coretpls", "formtag"),
+						Alias: "formtag",
+					},
 				},
 			},
 			Internal: Internal{
@@ -185,6 +193,54 @@ func Init(moduleName string) Container {
 						InitPages: Dependency{
 							Path:  buildPath(moduleName, "cmd", "service", "controllers", "initpages"),
 							Alias: "initpages",
+						},
+					},
+					Ui: Ui{
+						Components: Components{
+							Button: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "button"),
+								Alias: "button",
+							},
+							Drawer: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "drawer"),
+								Alias: "drawer",
+							},
+							Form: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "form"),
+								Alias: "form",
+							},
+							Icon: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "icon"),
+								Alias: "icon",
+							},
+							Input: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "input"),
+								Alias: "input",
+							},
+							Label: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "label"),
+								Alias: "label",
+							},
+							Pagination: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "pagination"),
+								Alias: "pagination",
+							},
+							Popover: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "popover"),
+								Alias: "popover",
+							},
+							SelectBox: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "selectbox"),
+								Alias: "selectbox",
+							},
+							Table: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "table"),
+								Alias: "table",
+							},
+							Toggle: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "toggle"),
+								Alias: "toggle",
+							},
 						},
 					},
 					Translations: Dependency{

@@ -1,26 +1,22 @@
 package posttestpages
 
 import (
-	"github.com/gookit/validate"
-	"github.com/invopop/ctxi18n/i18n"
-	"templ-demo/cmd/service/ui/components/toggle"
-	"test/cmd/service/ui/components/button"
-	"test/cmd/service/ui/components/form"
-	"test/cmd/service/ui/components/input"
-	"test/cmd/service/ui/components/label"
-	"test/cmd/service/ui/components/selectbox"
-	"test/core/coretpls/datetime"
-	"test/core/coretpls/formtag"
-	"test/internal/domain/models"
+	validate "github.com/gookit/validate"
+	i18n "github.com/invopop/ctxi18n/i18n"
+	button "github.com/user/project_name/cmd/service/ui/components/button"
+	form "github.com/user/project_name/cmd/service/ui/components/form"
+	input "github.com/user/project_name/cmd/service/ui/components/input"
+	label "github.com/user/project_name/cmd/service/ui/components/label"
+	selectbox "github.com/user/project_name/cmd/service/ui/components/selectbox"
+	toggle "github.com/user/project_name/cmd/service/ui/components/toggle"
+	datetime "github.com/user/project_name/core/coretpls/datetime"
+
+	coretpls "github.com/user/project_name/core/coretpls"
+	formtag "github.com/user/project_name/core/coretpls/formtag"
+	models "github.com/user/project_name/internal/domain/models"
 )
 
-type PostTestFormProperties struct {
-	Action string
-	Method string
-	Class  string
-}
-
-templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props PostTestFormProperties) {
+templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props coretpls.FormProperties) {
 	@formtag.FormTag(formtag.FormTagProperties{
 		Action: props.Action,
 		Method: props.Method,
@@ -33,7 +29,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anOptionalIntKey,
 				}) {
-					An Optional Int
+					AnOptionalInt
 				}
 				@input.Input(input.Props{
 					ID:       anOptionalIntKey,
@@ -43,7 +39,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					HasError: hasAnOptionalIntErrors,
 				})
 				@form.Description() {
-					Enter An Optional Int
+					Enter AnOptionalInt
 				}
 				if hasAnOptionalIntErrors {
 					for _,value := range errors.Field(anOptionalIntKey) {
@@ -61,7 +57,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anIntKey,
 				}) {
-					An Int
+					AnInt
 				}
 				@input.Input(input.Props{
 					ID:       anIntKey,
@@ -72,7 +68,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					Required: true,
 				})
 				@form.Description() {
-					Enter An Int
+					Enter AnInt
 				}
 				if hasAnIntErrors {
 					for _,value := range errors.Field(anIntKey) {
@@ -90,7 +86,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anOptionalInt8Key,
 				}) {
-					An Optional Int 8
+					AnOptionalInt8
 				}
 				@input.Input(input.Props{
 					ID:       anOptionalInt8Key,
@@ -100,7 +96,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					HasError: hasAnOptionalInt8Errors,
 				})
 				@form.Description() {
-					Enter An Optional Int 8
+					Enter AnOptionalInt8
 				}
 				if hasAnOptionalInt8Errors {
 					for _,value := range errors.Field(anOptionalInt8Key) {
@@ -118,7 +114,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anInt8Key,
 				}) {
-					An Int 8
+					AnInt8
 				}
 				@input.Input(input.Props{
 					ID:       anInt8Key,
@@ -129,7 +125,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					Required: true,
 				})
 				@form.Description() {
-					Enter An Int 8
+					Enter AnInt8
 				}
 				if hasAnInt8Errors {
 					for _,value := range errors.Field(anInt8Key) {
@@ -147,17 +143,17 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anOptionalInt16Key,
 				}) {
-					An Optional Int 16
+					AnOptionalInt16
 				}
 				@input.Input(input.Props{
 					ID:       anOptionalInt16Key,
 					Name:     anOptionalInt16Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalInt8,
+					Value:    postTest.AnOptionalInt16,
 					HasError: hasAnOptionalInt16Errors,
 				})
 				@form.Description() {
-					Enter An Optional Int 16
+					Enter AnOptionalInt16
 				}
 				if hasAnOptionalInt16Errors {
 					for _,value := range errors.Field(anOptionalInt16Key) {
@@ -175,7 +171,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anInt16Key,
 				}) {
-					An Int 16
+					AnInt16
 				}
 				@input.Input(input.Props{
 					ID:       anInt16Key,
@@ -186,7 +182,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					Required: true,
 				})
 				@form.Description() {
-					Enter An Int 16
+					Enter AnInt16
 				}
 				if hasAnInt16Errors {
 					for _,value := range errors.Field(anInt16Key) {
@@ -204,7 +200,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anOptionalInt32Key,
 				}) {
-					An Optional Int 32
+					AnOptionalInt32
 				}
 				@input.Input(input.Props{
 					ID:       anOptionalInt32Key,
@@ -214,7 +210,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					HasError: hasAnOptionalInt32Errors,
 				})
 				@form.Description() {
-					Enter An Optional Int 32
+					Enter AnOptionalInt32
 				}
 				if hasAnOptionalInt32Errors {
 					for _,value := range errors.Field(anOptionalInt32Key) {
@@ -232,7 +228,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anInt32Key,
 				}) {
-					An Int 32
+					AnInt32
 				}
 				@input.Input(input.Props{
 					ID:       anInt32Key,
@@ -243,7 +239,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					Required: true,
 				})
 				@form.Description() {
-					Enter An Int 32
+					Enter AnInt32
 				}
 				if hasAnInt32Errors {
 					for _,value := range errors.Field(anInt32Key) {
@@ -261,7 +257,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anOptionalInt64Key,
 				}) {
-					An Optional Int 64
+					AnOptionalInt64
 				}
 				@input.Input(input.Props{
 					ID:       anOptionalInt64Key,
@@ -271,7 +267,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					HasError: hasAnOptionalInt64Errors,
 				})
 				@form.Description() {
-					Enter An Optional Int 64
+					Enter AnOptionalInt64
 				}
 				if hasAnOptionalInt64Errors {
 					for _,value := range errors.Field(anOptionalInt64Key) {
@@ -289,7 +285,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anInt64Key,
 				}) {
-					An Int 64
+					AnInt64
 				}
 				@input.Input(input.Props{
 					ID:       anInt64Key,
@@ -300,7 +296,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					Required: true,
 				})
 				@form.Description() {
-					Enter An Int 64
+					Enter AnInt64
 				}
 				if hasAnInt64Errors {
 					for _,value := range errors.Field(anInt64Key) {
@@ -318,7 +314,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anOptionalFloat32Key,
 				}) {
-					An Optional Float 32
+					AnOptionalFloat32
 				}
 				@input.Input(input.Props{
 					ID:       anOptionalFloat32Key,
@@ -331,7 +327,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					},
 				})
 				@form.Description() {
-					Enter An Optional Float 32
+					Enter AnOptionalFloat32
 				}
 				if hasAnOptionalFloat32Errors {
 					for _,value := range errors.Field(anOptionalFloat32Key) {
@@ -349,7 +345,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anFloat32Key,
 				}) {
-					An Float 32
+					AnFloat32
 				}
 				@input.Input(input.Props{
 					ID:       anFloat32Key,
@@ -363,7 +359,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					},
 				})
 				@form.Description() {
-					Enter An Float 32
+					Enter AnFloat32
 				}
 				if hasAnFloat32Errors {
 					for _,value := range errors.Field(anFloat32Key) {
@@ -381,7 +377,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anOptionalFloat64Key,
 				}) {
-					An Optional Float 64
+					AnOptionalFloat64
 				}
 				@input.Input(input.Props{
 					ID:       anOptionalFloat64Key,
@@ -394,7 +390,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					},
 				})
 				@form.Description() {
-					Enter An Optional Float 64
+					Enter AnOptionalFloat64
 				}
 				if hasAnOptionalFloat64Errors {
 					for _,value := range errors.Field(anOptionalFloat64Key) {
@@ -412,7 +408,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: anFloat64Key,
 				}) {
-					An Float 64
+					AnFloat64
 				}
 				@input.Input(input.Props{
 					ID:       anFloat64Key,
@@ -426,7 +422,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					},
 				})
 				@form.Description() {
-					Enter An Float 64
+					Enter AnFloat64
 				}
 				if hasAnFloat64Errors {
 					for _,value := range errors.Field(anFloat64Key) {
@@ -444,7 +440,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: optionalStringKey,
 				}) {
-					Optional String
+					OptionalString
 				}
 				@input.Input(input.Props{
 					ID:       optionalStringKey,
@@ -454,7 +450,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					HasError: hasOptionalStringErrors,
 				})
 				@form.Description() {
-					Enter Optional String
+					Enter OptionalString
 				}
 				if hasOptionalStringErrors {
 					for _,value := range errors.Field(optionalStringKey) {
@@ -499,7 +495,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 			@label.Label(label.Props{
 				For: optionalBoolKey,
 			}) {
-				Optional Bool
+				OptionalBool
 			}
 			@form.ItemFlex() {
 				@toggle.Toggle(toggle.Props{
@@ -508,7 +504,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 					Checked: postTest.OptionalBool,
 				})
 				@form.Description() {
-					Check for Optional Bool
+					Check for OptionalBool
 				}
 			}
 			{{ boolKey := "bool" }}
@@ -708,7 +704,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 				@label.Label(label.Props{
 					For: optionalEnumKey,
 				}) {
-					Optional Enum
+					OptionalEnum
 				}
 				@selectbox.SelectBox() {
 					@selectbox.Trigger(selectbox.TriggerProps{
@@ -727,37 +723,37 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 								Selected: postTest.OptionalEnum == "optional_enum_1",
 								Disabled: postTest.OptionalEnum == "optional_enum_1",
 							}) {
-								Optional Enum 1
+								OptionalEnum1
 							}
 							@selectbox.Item(selectbox.ItemProps{
 								Value:    "optional_enum_2",
 								Selected: postTest.OptionalEnum == "optional_enum_2",
 								Disabled: postTest.OptionalEnum == "optional_enum_2",
 							}) {
-								Optional Enum 2
+								OptionalEnum2
 							}
 							@selectbox.Item(selectbox.ItemProps{
 								Value:    "optional_enum_3",
 								Selected: postTest.OptionalEnum == "optional_enum_3",
 								Disabled: postTest.OptionalEnum == "optional_enum_3",
 							}) {
-								Optional Enum 3
+								OptionalEnum3
 							}
 						}
 					}
 				}
-                @form.Description() {
-                    Select Optional Enum
-                }
-                if hasOptionalEnumErrors {
-                    for _,value := range errors.Field(optionalEnumKey) {
-                        @form.Message(form.MessageProps{
-                            Variant: form.MessageVariantError,
-                        }) {
-                            { value }
-                        }
-                    }
-                }
+				@form.Description() {
+					Select OptionalEnum
+				}
+				if hasOptionalEnumErrors {
+					for _,value := range errors.Field(optionalEnumKey) {
+						@form.Message(form.MessageProps{
+							Variant: form.MessageVariantError,
+						}) {
+							{ value }
+						}
+					}
+				}
 			}
 			{{ enumKey := "enum" }}
 			{{ hasEnumErrors := errors.HasField(enumKey) }}
@@ -785,37 +781,37 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props Post
 								Selected: postTest.Enum == "enum_1",
 								Disabled: postTest.Enum == "enum_1",
 							}) {
-								Enum 1
+								Enum1
 							}
 							@selectbox.Item(selectbox.ItemProps{
 								Value:    "enum_2",
 								Selected: postTest.Enum == "enum_2",
 								Disabled: postTest.Enum == "enum_2",
 							}) {
-								Enum 2
+								Enum2
 							}
 							@selectbox.Item(selectbox.ItemProps{
 								Value:    "enum_3",
 								Selected: postTest.Enum == "enum_3",
 								Disabled: postTest.Enum == "enum_3",
 							}) {
-								Enum 3
+								Enum3
 							}
 						}
 					}
 				}
-                @form.Description() {
-                    Select Enum
-                }
-                if hasEnumErrors {
-                    for _,value := range errors.Field(enumKey) {
-                        @form.Message(form.MessageProps{
-                            Variant: form.MessageVariantError,
-                        }) {
-                            { value }
-                        }
-                    }
-                }
+				@form.Description() {
+					Select Enum
+				}
+				if hasEnumErrors {
+					for _,value := range errors.Field(enumKey) {
+						@form.Message(form.MessageProps{
+							Variant: form.MessageVariantError,
+						}) {
+							{ value }
+						}
+					}
+				}
 			}
 		</div>
 		@button.Button(button.Props{

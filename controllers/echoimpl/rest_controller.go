@@ -15,14 +15,6 @@ import (
 //go:embed templates/*
 var templatesFS embed.FS
 
-type (
-	tplInput struct {
-		parser.GenerateModelInput
-		GoDeps     deps.Container
-		InCreation deps.Dependency
-	}
-)
-
 func GenerateRestController(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
 	log.Info("Generating echo rest controller...")
 	var tpl = initTemplates(input)

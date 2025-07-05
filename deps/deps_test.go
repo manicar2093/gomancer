@@ -262,6 +262,14 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Core.CoreTpls.Toast.Alias).To(Equal("toast"))
 				Expect(container.Project.Core.CoreTpls.Toast.Path).To(Equal(testfixtures.TestPath + "/core/coretpls/toast"))
 				container.Project.Core.CoreTpls.ImportAlias(file)
+
+				Expect(container.Project.Core.CoreTpls.DateTime.Alias).To(Equal("datetime"))
+				Expect(container.Project.Core.CoreTpls.DateTime.Path).To(Equal(testfixtures.TestPath + "/core/coretpls/datetime"))
+				container.Project.Core.CoreTpls.ImportAlias(file)
+
+				Expect(container.Project.Core.CoreTpls.FormTag.Alias).To(Equal("formtag"))
+				Expect(container.Project.Core.CoreTpls.FormTag.Path).To(Equal(testfixtures.TestPath + "/core/coretpls/formtag"))
+				container.Project.Core.CoreTpls.ImportAlias(file)
 			})
 		})
 
@@ -302,6 +310,50 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Cmd.Service.Controllers.InitPages.Alias).To(Equal("initpages"))
 				Expect(container.Project.Cmd.Service.Controllers.InitPages.Path).To(Equal(testfixtures.TestPath + "/cmd/service/controllers/initpages"))
 				container.Project.Cmd.Service.Controllers.ImportAlias(file)
+
+				Expect(container.Project.Cmd.Service.Ui.Components.Button.Alias).To(Equal("button"))
+				Expect(container.Project.Cmd.Service.Ui.Components.Button.Path).To(Equal(testfixtures.TestPath + "/cmd/service/ui/components/button"))
+				container.Project.Cmd.Service.Ui.Components.Button.ImportAlias(file)
+
+				Expect(container.Project.Cmd.Service.Ui.Components.Drawer.Alias).To(Equal("drawer"))
+				Expect(container.Project.Cmd.Service.Ui.Components.Drawer.Path).To(Equal(testfixtures.TestPath + "/cmd/service/ui/components/drawer"))
+				container.Project.Cmd.Service.Ui.Components.Drawer.ImportAlias(file)
+
+				Expect(container.Project.Cmd.Service.Ui.Components.Form.Alias).To(Equal("form"))
+				Expect(container.Project.Cmd.Service.Ui.Components.Form.Path).To(Equal(testfixtures.TestPath + "/cmd/service/ui/components/form"))
+				container.Project.Cmd.Service.Ui.Components.Form.ImportAlias(file)
+
+				Expect(container.Project.Cmd.Service.Ui.Components.Icon.Alias).To(Equal("icon"))
+				Expect(container.Project.Cmd.Service.Ui.Components.Icon.Path).To(Equal(testfixtures.TestPath + "/cmd/service/ui/components/icon"))
+				container.Project.Cmd.Service.Ui.Components.Icon.ImportAlias(file)
+
+				Expect(container.Project.Cmd.Service.Ui.Components.Input.Alias).To(Equal("input"))
+				Expect(container.Project.Cmd.Service.Ui.Components.Input.Path).To(Equal(testfixtures.TestPath + "/cmd/service/ui/components/input"))
+				container.Project.Cmd.Service.Ui.Components.Input.ImportAlias(file)
+
+				Expect(container.Project.Cmd.Service.Ui.Components.Label.Alias).To(Equal("label"))
+				Expect(container.Project.Cmd.Service.Ui.Components.Label.Path).To(Equal(testfixtures.TestPath + "/cmd/service/ui/components/label"))
+				container.Project.Cmd.Service.Ui.Components.Label.ImportAlias(file)
+
+				Expect(container.Project.Cmd.Service.Ui.Components.Pagination.Alias).To(Equal("pagination"))
+				Expect(container.Project.Cmd.Service.Ui.Components.Pagination.Path).To(Equal(testfixtures.TestPath + "/cmd/service/ui/components/pagination"))
+				container.Project.Cmd.Service.Ui.Components.Pagination.ImportAlias(file)
+
+				Expect(container.Project.Cmd.Service.Ui.Components.Popover.Alias).To(Equal("popover"))
+				Expect(container.Project.Cmd.Service.Ui.Components.Popover.Path).To(Equal(testfixtures.TestPath + "/cmd/service/ui/components/popover"))
+				container.Project.Cmd.Service.Ui.Components.Popover.ImportAlias(file)
+
+				Expect(container.Project.Cmd.Service.Ui.Components.SelectBox.Alias).To(Equal("selectbox"))
+				Expect(container.Project.Cmd.Service.Ui.Components.SelectBox.Path).To(Equal(testfixtures.TestPath + "/cmd/service/ui/components/selectbox"))
+				container.Project.Cmd.Service.Ui.Components.SelectBox.ImportAlias(file)
+
+				Expect(container.Project.Cmd.Service.Ui.Components.Table.Alias).To(Equal("table"))
+				Expect(container.Project.Cmd.Service.Ui.Components.Table.Path).To(Equal(testfixtures.TestPath + "/cmd/service/ui/components/table"))
+				container.Project.Cmd.Service.Ui.Components.Table.ImportAlias(file)
+
+				Expect(container.Project.Cmd.Service.Ui.Components.Toggle.Alias).To(Equal("toggle"))
+				Expect(container.Project.Cmd.Service.Ui.Components.Toggle.Path).To(Equal(testfixtures.TestPath + "/cmd/service/ui/components/toggle"))
+				container.Project.Cmd.Service.Ui.Components.Toggle.ImportAlias(file)
 			})
 		})
 	})

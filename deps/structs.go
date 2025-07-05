@@ -51,9 +51,27 @@ type (
 		Dependency
 		InitPages Dependency
 	}
+
+	Components struct {
+		Button     Dependency
+		Drawer     Dependency
+		Form       Dependency
+		Icon       Dependency
+		Input      Dependency
+		Label      Dependency
+		Pagination Dependency
+		Popover    Dependency
+		SelectBox  Dependency
+		Table      Dependency
+		Toggle     Dependency
+	}
+	Ui struct {
+		Components
+	}
 	Service struct {
 		Dependency
 		Controllers
+		Ui
 		Translations Dependency
 	}
 	Cmd struct {
@@ -80,7 +98,9 @@ type (
 	}
 	CoreTpls struct {
 		Dependency
-		Toast Dependency
+		Toast    Dependency
+		DateTime Dependency
+		FormTag  Dependency
 	}
 	Container struct {
 		Echo

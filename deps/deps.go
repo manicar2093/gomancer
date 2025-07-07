@@ -157,6 +157,10 @@ func Init(moduleName string) Container {
 						Path:  buildPath(moduleName, "core", "coretpls", "formtag"),
 						Alias: "formtag",
 					},
+					Link: Dependency{
+						Path:  buildPath(moduleName, "core", "coretpls", "link"),
+						Alias: "link",
+					},
 				},
 			},
 			Internal: Internal{

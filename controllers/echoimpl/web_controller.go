@@ -60,8 +60,10 @@ func generateTemplates(input parser.GenerateModelInput, tplData tplInput, tpl *t
 	templsToGenerate := []struct {
 		TemplateName, Filename string
 		AdditionalComponents   []string
+		GetTemplComponents     bool
 	}{
-		{TemplateName: "web_form", Filename: fmt.Sprintf("%s_form.templ", input.SnakeCase)},
+		{TemplateName: "web_form", Filename: fmt.Sprintf("%s_form.templ", input.SnakeCase), GetTemplComponents: true},
+		{TemplateName: "web_table", Filename: fmt.Sprintf("%s_table.templ", input.SnakeCase)},
 	}
 
 	for _, item := range templsToGenerate {
@@ -79,7 +81,9 @@ func generateTemplates(input parser.GenerateModelInput, tplData tplInput, tpl *t
 			return errors.Wrap(err, "Error opening file")
 		}
 
-		tplData.ComponentsDeps = getComponentsToBeUsed(input.Attributes, goDeps)
+		if item.GetTemplComponents {
+			tplData.ComponentsDeps = getComponentsToBeUsed(input.Attributes, goDeps)
+		}
 
 		bytesContent := bytes.NewBufferString("")
 		if err := tpl.ExecuteTemplate(bytesContent, item.TemplateName, tplData); err != nil {

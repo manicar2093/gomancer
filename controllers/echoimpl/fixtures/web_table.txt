@@ -1,16 +1,16 @@
 package posttestpages
 
 import (
-	"fmt"
-	"github.com/invopop/ctxi18n/i18n"
-	"github.com/manicar2093/gormpager"
-	"net/http"
-	"github.com/user/project_name/cmd/service/ui/components/button"
-	"github.com/user/project_name/cmd/service/ui/components/label"
-	"github.com/user/project_name/cmd/service/ui/components/pagination"
-	"github.com/user/project_name/cmd/service/ui/components/table"
-	"github.com/user/project_name/core/coretpls/link"
-	"github.com/user/project_name/internal/domain/models"
+	fmt "fmt"
+	i18n "github.com/invopop/ctxi18n/i18n"
+	gormpager "github.com/manicar2093/gormpager"
+	http "net/http"
+	button "github.com/user/project_name/cmd/service/ui/components/button"
+	label "github.com/user/project_name/cmd/service/ui/components/label"
+	pagination "github.com/user/project_name/cmd/service/ui/components/pagination"
+	table "github.com/user/project_name/cmd/service/ui/components/table"
+	link "github.com/user/project_name/core/coretpls/link"
+	models "github.com/user/project_name/internal/domain/models"
 )
 
 var tableId = "post_test-data-table"
@@ -32,74 +32,74 @@ templ PostTestsTable(page *gormpager.Page[models.PostTest]) {
 					AnOptionalInt8
 				}
 				@table.Head() {
-                    AnInt8
-                }
-                @table.Head() {
-                    AnOptionalInt16
-                }
-                @table.Head() {
-                    AnInt16
-                }
-                @table.Head() {
-                    AnOptionalInt32
-                }
-                @table.Head() {
-                    AnInt32
-                }
-                @table.Head() {
-                    AnOptionalInt64
-                }
-                @table.Head() {
-                    AnInt64
-                }
-                @table.Head() {
-                    AnOptionalFloat32
-                }
-                @table.Head() {
-                    AnFloat32
-                }
-                @table.Head() {
-                    AnOptionalFloat64
-                }
-                @table.Head() {
-                    AnFloat64
-                }
-                @table.Head() {
-                    OptionalString
-                }
-                @table.Head() {
-                    String
-                }
-                @table.Head() {
-                    OptionalBool
-                }
-                @table.Head() {
-                    Bool
-                }
-                @table.Head() {
-                    OptionalTime
-                }
-                @table.Head() {
-                    Time
-                }
-                @table.Head() {
-                    OptionalDecimal
-                }
-                @table.Head() {
-                    Decimal
-                }
-                @table.Head() {
-                    OptionalUuid
-                }
-                @table.Head() {
-                    Uuid
-                }
-                @table.Head() {
-                    OptionalEnum
-                }
-                @table.Head() {
-                    Enum
-                }
+					AnInt8
+				}
+				@table.Head() {
+					AnOptionalInt16
+				}
+				@table.Head() {
+					AnInt16
+				}
+				@table.Head() {
+					AnOptionalInt32
+				}
+				@table.Head() {
+					AnInt32
+				}
+				@table.Head() {
+					AnOptionalInt64
+				}
+				@table.Head() {
+					AnInt64
+				}
+				@table.Head() {
+					AnOptionalFloat32
+				}
+				@table.Head() {
+					AnFloat32
+				}
+				@table.Head() {
+					AnOptionalFloat64
+				}
+				@table.Head() {
+					AnFloat64
+				}
+				@table.Head() {
+					OptionalString
+				}
+				@table.Head() {
+					String
+				}
+				@table.Head() {
+					OptionalBool
+				}
+				@table.Head() {
+					Bool
+				}
+				@table.Head() {
+					OptionalTime
+				}
+				@table.Head() {
+					Time
+				}
+				@table.Head() {
+					OptionalDecimal
+				}
+				@table.Head() {
+					Decimal
+				}
+				@table.Head() {
+					OptionalUuid
+				}
+				@table.Head() {
+					Uuid
+				}
+				@table.Head() {
+					OptionalEnum
+				}
+				@table.Head() {
+					Enum
+				}
 				@table.Head() {
 					{ i18n.T(ctx, "actions") }
 				}
@@ -110,87 +110,90 @@ templ PostTestsTable(page *gormpager.Page[models.PostTest]) {
 				for _, item := range page.Items {
 					@table.Row() {
 						@table.Cell() {
-                            { item.AnOptionalInt }
+							{ item.AnOptionalInt }
 						}
 						@table.Cell() {
-                            { item.AnInt }
-                        }
-                        @table.Cell() {
-                            { item.AnOptionalInt8 }
-                        }
-                        @table.Cell() {
-                            { item.AnInt8 }
-                        }
-                        @table.Cell() {
-                            { item.AnOptionalInt16 }
-                        }
-                        @table.Cell() {
-                            { item.AnInt16 }
-                        }
-                        @table.Cell() {
-                            { item.AnOptionalInt32 }
-                        }
-                        @table.Cell() {
-                            { item.AnInt32 }
-                        }
-                        @table.Cell() {
-                            { item.AnOptionalInt64 }
-                        }
-                        @table.Cell() {
-                            { item.AnInt64 }
-                        }
-                        @table.Cell() {
-                            { item.AnOptionalFloat32 }
-                        }
-                        @table.Cell() {
-                            { item.AnFloat32 }
-                        }
-                        @table.Cell() {
-                            { item.AnOptionalFloat64 }
-                        }
-                        @table.Cell() {
-                            { item.AnFloat64 }
-                        }
-                        @table.Cell() {
-                            { item.OptionalString }
-                        }
-                        @table.Cell() {
-                            { item.String }
-                        }
-                        @table.Cell() {
-                            { item.OptionalBool }
-                        }
-                        @table.Cell() {
-                            { item.OptionalTime }
-                        }
-                        @table.Cell() {
-                            { item.Time }
-                        }
-                        @table.Cell() {
-                            { item.OptionalDecimal }
-                        }
-                        @table.Cell() {
-                            { item.Decimal }
-                        }
-                        @table.Cell() {
-                            { item.OptionalUuid }
-                        }
-                        @table.Cell() {
-                            { item.Uuid }
-                        }
-                        @table.Cell() {
-                            { item.OptionalEnum }
-                        }
-                        @table.Cell() {
-                            { item.Enum }
-                        }
+							{ item.AnInt }
+						}
 						@table.Cell() {
-						    @button.Button(button.Props{
-                                Variant: button.VariantSecondary,
-                                Href:    fmt.Sprintf("/app/post_tests", item.Id),
-                            }) {
-                                { i18n.T(ctx, "show") }
-                            }
+							{ item.AnOptionalInt8 }
+						}
+						@table.Cell() {
+							{ item.AnInt8 }
+						}
+						@table.Cell() {
+							{ item.AnOptionalInt16 }
+						}
+						@table.Cell() {
+							{ item.AnInt16 }
+						}
+						@table.Cell() {
+							{ item.AnOptionalInt32 }
+						}
+						@table.Cell() {
+							{ item.AnInt32 }
+						}
+						@table.Cell() {
+							{ item.AnOptionalInt64 }
+						}
+						@table.Cell() {
+							{ item.AnInt64 }
+						}
+						@table.Cell() {
+							{ item.AnOptionalFloat32 }
+						}
+						@table.Cell() {
+							{ item.AnFloat32 }
+						}
+						@table.Cell() {
+							{ item.AnOptionalFloat64 }
+						}
+						@table.Cell() {
+							{ item.AnFloat64 }
+						}
+						@table.Cell() {
+							{ item.OptionalString }
+						}
+						@table.Cell() {
+							{ item.String }
+						}
+						@table.Cell() {
+							{ item.OptionalBool }
+						}
+						@table.Cell() {
+							{ item.Bool }
+						}
+						@table.Cell() {
+							{ item.OptionalTime }
+						}
+						@table.Cell() {
+							{ item.Time }
+						}
+						@table.Cell() {
+							{ item.OptionalDecimal }
+						}
+						@table.Cell() {
+							{ item.Decimal }
+						}
+						@table.Cell() {
+							{ item.OptionalUuid }
+						}
+						@table.Cell() {
+							{ item.Uuid }
+						}
+						@table.Cell() {
+							{ item.OptionalEnum }
+						}
+						@table.Cell() {
+							{ item.Enum }
+						}
+						@table.Cell() {
+							@button.Button(button.Props{
+								Variant: button.VariantSecondary,
+								Href:    fmt.Sprintf("/app/post_tests", item.Id),
+							}) {
+								{ i18n.T(ctx, "show") }
+							}
 							@button.Button(button.Props{
 								Variant: button.VariantDefault,
 								Href:    fmt.Sprintf("/app/post_tests/%s/edit", item.Id),

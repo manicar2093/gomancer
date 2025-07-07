@@ -101,6 +101,7 @@ type (
 		Toast    Dependency
 		DateTime Dependency
 		FormTag  Dependency
+		Link     Dependency
 	}
 	Container struct {
 		Echo

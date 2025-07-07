@@ -1,0 +1,144 @@
+{{define "web_table"}}package {{print .LowerNoSpaceCase "pages"}}
+
+import (
+    {{.GoDeps.Std.Fmt.GenerateImportString}}
+    {{.GoDeps.I18n.GenerateImportString}}
+    {{.GoDeps.GormPager.GenerateImportString}}
+    {{.GoDeps.Std.Net.Http.GenerateImportString}}
+    {{.GoDeps.Cmd.Service.Ui.Components.Button.GenerateImportString}}
+    {{.GoDeps.Cmd.Service.Ui.Components.Label.GenerateImportString}}
+    {{.GoDeps.Cmd.Service.Ui.Components.Pagination.GenerateImportString}}
+    {{.GoDeps.Cmd.Service.Ui.Components.Table.GenerateImportString}}
+    {{.GoDeps.Core.CoreTpls.Link.GenerateImportString}}
+    {{ .GoDeps.Project.Internal.Domain.Models.GenerateImportString }}
+)
+
+var tableId = "{{.SnakeCase}}-data-table"
+var tableIdAsSelector = fmt.Sprintf("#%s", tableId)
+
+templ {{Pluralize .PascalCase}}Table(page *gormpager.Page[models.{{.PascalCase}}]) {
+    @table.Table(table.Props{
+        ID: tableId,
+    }) {
+        @table.Header() {
+            @table.Row() {
+                {{ range $item := .Attributes }}
+                @table.Head() {
+                    {{$item.PascalCase}}
+                }
+                {{ end }}
+                @table.Head() {
+                    { i18n.T(ctx, "actions") }
+                }
+            }
+        }
+        if page.TotalEntries > 0 {
+            @table.Body() {
+                for _, item := range page.Items {
+                    @table.Row() {
+                        {{ range $item := .Attributes }}
+                        @table.Cell() {
+                            { item.{{$item.PascalCase}} }
+                        }
+                        {{ end }}
+                        @table.Cell() {
+                            @button.Button(button.Props{
+                                Variant: button.VariantSecondary,
+                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}", item.Id),
+                            }) {
+                                { i18n.T(ctx, "show") }
+                            }
+                            @button.Button(button.Props{
+                                Variant: button.VariantDefault,
+                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%s/edit", item.Id),
+                            }) {
+                                { i18n.T(ctx, "edit") }
+                            }
+                            @link.Link(link.LinkProps{
+                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%s?page_number=%d", item.Id, page.CurrentPage),
+                                Confirm: i18n.T(ctx, "confirm_deletion"),
+                                Method:  http.MethodDelete,
+                                Variant: button.VariantDestructive,
+                                Class:   "inline-block",
+                            }) {
+                                { i18n.T(ctx, "delete") }
+                            }
+                        }
+                    }
+                }
+            }
+        }
+    }
+    if page.TotalEntries > 0 {
+        <div class="mt-4">
+            {{ print "{{ p := pagination.CreatePagination(int(page.CurrentPage), int(page.TotalPages), int(page.TotalPages)) }}" }}
+            @pagination.Pagination() {
+                @pagination.Content() {
+                    @pagination.Item() {
+                        @pagination.Previous(pagination.PreviousProps{
+                            Href:     fmt.Sprintf("?page_number=%d", p.CurrentPage-1),
+                            Disabled: !p.HasPrevious,
+                            Label:    i18n.T(ctx, "previous"),
+                        })
+                    }
+                    // First page with ellipsis if needed
+                    if p.Pages[0] > 1 {
+                        @pagination.Item() {
+                            @pagination.Link(pagination.LinkProps{
+                                Href: "?page_number=1",
+                            }) {
+                                1
+                            }
+                        }
+                        if p.Pages[0] > 2 {
+                            @pagination.Item() {
+                                @pagination.Ellipsis()
+                            }
+                        }
+                    }
+                    // Visible pages
+                    for _, page := range p.Pages {
+                        @pagination.Item() {
+                            @pagination.Link(pagination.LinkProps{
+                                Href:     fmt.Sprintf("?page_number=%d", page),
+                                IsActive: page == p.CurrentPage,
+                            }) {
+                                { fmt.Sprint(page) }
+                            }
+                        }
+                    }
+                    // Last page with ellipsis if needed
+                    if p.Pages[len(p.Pages)-1] < p.TotalPages {
+                        if p.Pages[len(p.Pages)-1] < p.TotalPages-1 {
+                            @pagination.Item() {
+                                @pagination.Ellipsis()
+                            }
+                        }
+                        @pagination.Item() {
+                            @pagination.Link(pagination.LinkProps{
+                                Href: fmt.Sprintf("?page_number=%d", p.TotalPages),
+                            }) {
+                                { fmt.Sprint(p.TotalPages) }
+                            }
+                        }
+                    }
+                    @pagination.Item() {
+                        @pagination.Next(pagination.NextProps{
+                            Href:     fmt.Sprintf("?page_number=%d", p.CurrentPage+1),
+                            Disabled: !p.HasNext,
+                            Label:    i18n.T(ctx, "next"),
+                        })
+                    }
+                }
+            }
+        </div>
+    }
+    if page.TotalEntries == 0 {
+        @label.Label(label.Props{
+            Class: "text-center block p-5",
+        }) {
+            No data to show
+        }
+    }
+}
+{{end}}

@@ -261,15 +261,19 @@ var _ = Describe("Deps", func() {
 
 				Expect(container.Project.Core.CoreTpls.Toast.Alias).To(Equal("toast"))
 				Expect(container.Project.Core.CoreTpls.Toast.Path).To(Equal(testfixtures.TestPath + "/core/coretpls/toast"))
-				container.Project.Core.CoreTpls.ImportAlias(file)
+				container.Project.Core.CoreTpls.Toast.ImportAlias(file)
 
 				Expect(container.Project.Core.CoreTpls.DateTime.Alias).To(Equal("datetime"))
 				Expect(container.Project.Core.CoreTpls.DateTime.Path).To(Equal(testfixtures.TestPath + "/core/coretpls/datetime"))
-				container.Project.Core.CoreTpls.ImportAlias(file)
+				container.Project.Core.CoreTpls.DateTime.ImportAlias(file)
 
 				Expect(container.Project.Core.CoreTpls.FormTag.Alias).To(Equal("formtag"))
 				Expect(container.Project.Core.CoreTpls.FormTag.Path).To(Equal(testfixtures.TestPath + "/core/coretpls/formtag"))
-				container.Project.Core.CoreTpls.ImportAlias(file)
+				container.Project.Core.CoreTpls.FormTag.ImportAlias(file)
+
+				Expect(container.Project.Core.CoreTpls.Link.Alias).To(Equal("link"))
+				Expect(container.Project.Core.CoreTpls.Link.Path).To(Equal(testfixtures.TestPath + "/core/coretpls/link"))
+				container.Project.Core.CoreTpls.Link.ImportAlias(file)
 			})
 		})
 

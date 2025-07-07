@@ -1,16 +1,19 @@
 package posttestpages
 
-import "test/internal/domain/models"
-import "test/cmd/service/ui/layouts"
-import "github.com/gookit/validate"
-import "net/http"
+import (
+	http "net/http"
+	models "github.com/user/project_name/internal/domain/models"
+	layouts "github.com/user/project_name/cmd/service/ui/layouts"
+	coretpls "github.com/user/project_name/core/coretpls"
+	validate "github.com/gookit/validate"
+)
 
 templ RegisterPostTestPage(postTest *models.PostTest, errors validate.Errors) {
 	@layouts.Initial() {
 		@PostTestForm(
 			postTest,
 			errors,
-			PostTestFormProperties{
+			coretpls.FormProperties{
 				Action: "/app/post_tests",
 				Method: http.MethodPost,
 			},

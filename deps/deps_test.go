@@ -315,6 +315,10 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Cmd.Service.Controllers.InitPages.Path).To(Equal(testfixtures.TestPath + "/cmd/service/controllers/initpages"))
 				container.Project.Cmd.Service.Controllers.ImportAlias(file)
 
+				Expect(container.Project.Cmd.Service.Ui.Layouts.Alias).To(Equal("layouts"))
+				Expect(container.Project.Cmd.Service.Ui.Layouts.Path).To(Equal(testfixtures.TestPath + "/cmd/service/ui/layouts"))
+				container.Project.Cmd.Service.Ui.Layouts.ImportAlias(file)
+
 				Expect(container.Project.Cmd.Service.Ui.Components.Button.Alias).To(Equal("button"))
 				Expect(container.Project.Cmd.Service.Ui.Components.Button.Path).To(Equal(testfixtures.TestPath + "/cmd/service/ui/components/button"))
 				container.Project.Cmd.Service.Ui.Components.Button.ImportAlias(file)

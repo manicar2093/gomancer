@@ -39,6 +39,9 @@ var _ = Describe("WebController", func() {
 			Expect(path.Join(string(domain.CmdServiceControllersPackagePath), "posttestpages", "post_test_table.templ")).Should(
 				testmatchers.BeAnExistingFileWithEqualContent(path.Join("fixtures", "web_table.txt")),
 			)
+			Expect(path.Join(string(domain.CmdServiceControllersPackagePath), "posttestpages", "post_test_show.templ")).Should(
+				testmatchers.BeAnExistingFileWithEqualContent(path.Join("fixtures", "web_show.txt")),
+			)
 		})
 	})
 })

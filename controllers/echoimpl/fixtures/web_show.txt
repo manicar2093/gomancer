@@ -1,15 +1,17 @@
 package posttestpages
 
-import "test/internal/domain/models"
-import "test/cmd/service/ui/components/form"
-import "test/cmd/service/ui/components/label"
-import "test/cmd/service/ui/layouts"
-import "time"
-import "test/cmd/service/ui/components/button"
-import "fmt"
-import "net/http"
-import "test/core/coretpls/link"
-import "github.com/invopop/ctxi18n/i18n"
+import (
+	fmt "fmt"
+	http "net/http"
+	time "time"
+	i18n "github.com/invopop/ctxi18n/i18n"
+	models "github.com/user/project_name/internal/domain/models"
+	form "github.com/user/project_name/cmd/service/ui/components/form"
+	label "github.com/user/project_name/cmd/service/ui/components/label"
+	button "github.com/user/project_name/cmd/service/ui/components/button"
+	layouts "github.com/user/project_name/cmd/service/ui/layouts"
+	link "github.com/user/project_name/core/coretpls/link"
+)
 
 templ ShowPostTest(postTest *models.PostTest) {
 	@layouts.Initial() {
@@ -17,93 +19,93 @@ templ ShowPostTest(postTest *models.PostTest) {
 		<div class="mb-2">
 			@form.Item() {
 				@label.Label() {
-					An Optional Int
+					AnOptionalInt
 				}
-				<p>{ postTest.AnOptionalInt }</p>
+				<p>{ postTest.AnOptionalInt.GetValue() }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					An Int
+					AnInt
 				}
 				<p>{ postTest.AnInt }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					An Optional Int 8
+					AnOptionalInt8
 				}
-				<p>{ postTest.AnOptionalInt8 }</p>
+				<p>{ postTest.AnOptionalInt8.GetValue() }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					An Int 8
+					AnInt8
 				}
 				<p>{ postTest.AnInt8 }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					An Optional Int 16
+					AnOptionalInt16
 				}
-				<p>{ postTest.AnOptionalInt8 }</p>
+				<p>{ postTest.AnOptionalInt16.GetValue() }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					An Int 16
+					AnInt16
 				}
 				<p>{ postTest.AnInt16 }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					An Optional Int 32
+					AnOptionalInt32
 				}
-				<p>{ postTest.AnOptionalInt32 }</p>
+				<p>{ postTest.AnOptionalInt32.GetValue() }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					An Int 32
+					AnInt32
 				}
 				<p>{ postTest.AnInt32 }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					An Optional Int 64
+					AnOptionalInt64
 				}
-				<p>{ postTest.AnOptionalInt64 }</p>
+				<p>{ postTest.AnOptionalInt64.GetValue() }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					An Int 64
+					AnInt64
 				}
 				<p>{ postTest.AnInt64 }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					An Optional Float 32
+					AnOptionalFloat32
 				}
-				<p>{ postTest.AnOptionalFloat32 }</p>
+				<p>{ postTest.AnOptionalFloat32.GetValue() }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					An Float 32
+					AnFloat32
 				}
 				<p>{ postTest.AnFloat32 }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					An Optional Float 64
+					AnOptionalFloat64
 				}
-				<p>{ postTest.AnOptionalFloat64 }</p>
+				<p>{ postTest.AnOptionalFloat64.GetValue() }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					An Float 64
+					AnFloat64
 				}
 				<p>{ postTest.AnFloat64 }</p>
 			}
 			@form.Item() {
 				@label.Label() {
-					Optional String
+					OptionalString
 				}
-				<p>{ postTest.OptionalString }</p>
+				<p>{ postTest.OptionalString.GetValue() }</p>
 			}
 			@form.Item() {
 				@label.Label() {
@@ -113,9 +115,9 @@ templ ShowPostTest(postTest *models.PostTest) {
 			}
 			@form.Item() {
 				@label.Label() {
-					Optional Bool
+					OptionalBool
 				}
-				<p>{ postTest.OptionalBool }</p>
+				<p>{ postTest.OptionalBool.GetValue() }</p>
 			}
 			@form.Item() {
 				@label.Label() {
@@ -125,9 +127,9 @@ templ ShowPostTest(postTest *models.PostTest) {
 			}
 			@form.Item() {
 				@label.Label() {
-					Optional Time
+					OptionalTime
 				}
-				<p>{ postTest.OptionalTime.Format(time.DateTime) }</p>
+				<p>{ postTest.OptionalTime.GetValue().Format(time.DateTime) }</p>
 			}
 			@form.Item() {
 				@label.Label() {
@@ -137,9 +139,9 @@ templ ShowPostTest(postTest *models.PostTest) {
 			}
 			@form.Item() {
 				@label.Label() {
-					An Optional Decimal
+					OptionalDecimal
 				}
-				<p>{ postTest.OptionalDecimal }</p>
+				<p>{ postTest.OptionalDecimal.GetValue() }</p>
 			}
 			@form.Item() {
 				@label.Label() {
@@ -149,9 +151,9 @@ templ ShowPostTest(postTest *models.PostTest) {
 			}
 			@form.Item() {
 				@label.Label() {
-					Optional Uuid
+					OptionalUuid
 				}
-				<p>{ postTest.OptionalUuid }</p>
+				<p>{ postTest.OptionalUuid.GetValue().String() }</p>
 			}
 			@form.Item() {
 				@label.Label() {
@@ -161,9 +163,9 @@ templ ShowPostTest(postTest *models.PostTest) {
 			}
 			@form.Item() {
 				@label.Label() {
-					Optional Enum
+					OptionalEnum
 				}
-				<p>{ postTest.OptionalEnum }</p>
+				<p>{ postTest.OptionalEnum.GetValue() }</p>
 			}
 			@form.Item() {
 				@label.Label() {
@@ -180,7 +182,7 @@ templ ShowPostTest(postTest *models.PostTest) {
 		}
 		@link.Link(link.LinkProps{
 			Href:    fmt.Sprintf("/app/post_tests/%s", postTest.Id),
-			Confirm: fmt.Sprintf("Are you sure to delete %s", postTest.Email),
+			Confirm: fmt.Sprintf("Are you sure to delete %s", postTest.Id),
 			Method:  http.MethodDelete,
 			Variant: button.VariantDestructive,
 			Class:   "inline-block",

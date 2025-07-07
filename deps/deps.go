@@ -246,6 +246,10 @@ func Init(moduleName string) Container {
 								Alias: "toggle",
 							},
 						},
+						Layouts: Dependency{
+							Path:  buildPath(moduleName, "cmd", "service", "ui", "layouts"),
+							Alias: "layouts",
+						},
 					},
 					Translations: Dependency{
 						Path:  buildPath(moduleName, "cmd", "service", "translations"),

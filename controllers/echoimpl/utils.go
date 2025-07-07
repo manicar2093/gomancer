@@ -1,6 +1,7 @@
 package echoimpl
 
 import (
+	"fmt"
 	"github.com/jinzhu/inflection"
 	"github.com/manicar2093/gomancer/controllers/echoimpl/components"
 	"github.com/manicar2093/gomancer/deps"
@@ -36,6 +37,25 @@ func initTemplates(input parser.GenerateModelInput) *template.Template {
 					panic(err)
 				}
 				return comp
+			},
+			"GenerateParagraphToShow": func(a parser.Attribute) string {
+				switch types.SupportedType(a.Type) {
+				case types.TypeUuid:
+					if a.IsOptional {
+						return fmt.Sprintf("%s.GetValue().String()", a.PascalCase)
+					}
+					return fmt.Sprintf("%s.String()", a.PascalCase)
+				case types.TypeTime:
+					if a.IsOptional {
+						return fmt.Sprintf("%s.GetValue().Format(time.DateTime)", a.PascalCase)
+					}
+					return fmt.Sprintf("%s.Format(time.DateTime)", a.PascalCase)
+				default:
+					if a.IsOptional {
+						return fmt.Sprintf("%s.GetValue()", a.PascalCase)
+					}
+					return a.PascalCase
+				}
 			},
 		}).
 		ParseFS(templatesFS, "templates/*"))

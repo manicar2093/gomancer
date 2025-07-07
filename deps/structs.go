@@ -67,6 +67,7 @@ type (
 	}
 	Ui struct {
 		Components
+		Layouts Dependency
 	}
 	Service struct {
 		Dependency

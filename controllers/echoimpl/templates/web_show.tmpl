@@ -1,0 +1,58 @@
+{{define "web_show"}}package {{print .LowerNoSpaceCase "pages"}}
+
+import (
+	{{.GoDeps.Std.Fmt.GenerateImportString}}
+	{{.GoDeps.Std.Net.Http.GenerateImportString}}
+	{{.GoDeps.Std.Time.GenerateImportString}}
+	{{.GoDeps.I18n.GenerateImportString}}
+	{{ .GoDeps.Project.Internal.Domain.Models.GenerateImportString }}
+	{{.GoDeps.Cmd.Service.Ui.Components.Form.GenerateImportString}}
+	{{.GoDeps.Cmd.Service.Ui.Components.Label.GenerateImportString}}
+	{{.GoDeps.Cmd.Service.Ui.Components.Button.GenerateImportString}}
+	{{.GoDeps.Cmd.Service.Ui.Layouts.GenerateImportString}}
+	{{.GoDeps.Core.CoreTpls.Link.GenerateImportString}}
+)
+templ Show{{.PascalCase}}({{.CamelCase}} *models.{{.PascalCase}}) {
+	@layouts.Initial() {
+		<h1 class="mb-2 text-xl">{{.PascalCase}}: { {{.CamelCase}}.Id.String() }</h1>
+		<div class="mb-2">
+			{{	$global := . }}
+			{{range $item := .Attributes}}
+			@form.Item() {
+				@label.Label() {
+					{{$item.PascalCase}}
+				}
+				<p>{ {{$global.CamelCase}}.{{GenerateParagraphToShow $item}} }</p>
+			}
+			{{end}}
+		</div>
+		@link.Link(link.LinkProps{
+			Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%s/edit", {{.CamelCase}}.Id),
+			Variant: button.VariantDefault,
+		}) {
+			{ i18n.T(ctx, "edit") }
+		}
+		@link.Link(link.LinkProps{
+			Href:    fmt.Sprintf("/app/post_tests/%s", {{.CamelCase}}.Id),
+			Confirm: fmt.Sprintf("Are you sure to delete %s", {{.CamelCase}}.Id),
+			Method:  http.MethodDelete,
+			Variant: button.VariantDestructive,
+			Class:   "inline-block",
+		}) {
+			{ i18n.T(ctx, "delete") }
+		}
+		@button.Button(button.Props{
+			Variant: button.VariantSecondary,
+			Href:    "/app/{{Pluralize .SnakeCase}}/new",
+		}) {
+			{ i18n.T(ctx, "create_new") }
+		}
+		@button.Button(button.Props{
+			Variant: button.VariantOutline,
+			Href:    "/app/{{Pluralize .SnakeCase}}?page_number=1",
+		}) {
+			{ i18n.T(ctx, "show_all") }
+		}
+	}
+}
+{{end}}

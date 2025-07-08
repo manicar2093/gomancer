@@ -1,17 +1,20 @@
 package posttestpages
 
-import "test/internal/domain/models"
-import "test/cmd/service/ui/layouts"
-import "net/http"
-import "fmt"
-import "github.com/gookit/validate"
+import (
+	fmt "fmt"
+	http "net/http"
+	validate "github.com/gookit/validate"
+	layouts "github.com/user/project_name/cmd/service/ui/layouts"
+	models "github.com/user/project_name/internal/domain/models"
+	coretpls "github.com/user/project_name/core/coretpls"
+)
 
 templ EditPostTestPage(postTest *models.PostTest, errors validate.Errors) {
 	@layouts.Initial() {
 		@PostTestForm(
 			postTest,
 			errors,
-			PostTestFormProperties{
+			coretpls.FormProperties{
 				Action: fmt.Sprintf("/app/post_tests/%s", postTest.Id),
 				Method: http.MethodPut,
 			},

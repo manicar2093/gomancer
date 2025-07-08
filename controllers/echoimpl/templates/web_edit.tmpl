@@ -1,0 +1,24 @@
+{{define "web_edit"}}package {{print .LowerNoSpaceCase "pages"}}
+
+import (
+	{{.GoDeps.Std.Fmt.GenerateImportString}}
+	{{.GoDeps.Std.Net.Http.GenerateImportString}}
+	{{ .GoDeps.GookitValidate.GenerateImportString }}
+	{{.GoDeps.Cmd.Service.Ui.Layouts.GenerateImportString}}
+	{{ .GoDeps.Project.Internal.Domain.Models.GenerateImportString }}
+	{{.GoDeps.Core.CoreTpls.GenerateImportString}}
+)
+
+templ Edit{{.PascalCase}}Page({{.CamelCase}} *models.{{.PascalCase}}, errors validate.Errors) {
+	@layouts.Initial() {
+		@{{.PascalCase}}Form(
+			{{.CamelCase}},
+			errors,
+			coretpls.FormProperties{
+				Action: fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%s", {{.CamelCase}}.Id),
+				Method: http.MethodPut,
+			},
+		)
+	}
+}
+{{end}}

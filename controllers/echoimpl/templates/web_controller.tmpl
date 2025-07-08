@@ -113,7 +113,7 @@ func (c *{{.PascalCase}}WebController) PartialUpdateByIdHandler(ctx echo.Context
 
 func (c *{{.PascalCase}}WebController) DeleteByIdHandler(ctx echo.Context) error {
 	req := struct {
-		commonreq.GetByIdUUID
+		commonreq.{{GetByType}}
 		commonreq.PageData
 	}{}
 	if err := core.BindAndValidate(ctx, &req); err != nil {
@@ -137,7 +137,7 @@ func (c *{{.PascalCase}}WebController) GetRegistrationPageHandler(ctx echo.Conte
 }
 
 func (c *{{.PascalCase}}WebController) GetShowPostTestPageHandler(ctx echo.Context) error {
-	req := commonreq.GetByIdUUID{}
+	req := commonreq.{{GetByType}}{}
 	if err := core.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}
@@ -151,7 +151,7 @@ func (c *{{.PascalCase}}WebController) GetShowPostTestPageHandler(ctx echo.Conte
 }
 
 func (c *{{.PascalCase}}WebController) GetEditionHandler(ctx echo.Context) error {
-	req := commonreq.GetByIdUUID{}
+	req := commonreq.{{GetByType}}{}
 	if err := core.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}

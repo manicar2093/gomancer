@@ -22,7 +22,7 @@ templ Show{{.PascalCase}}({{.CamelCase}} *models.{{.PascalCase}}) {
 				@label.Label() {
 					{{$item.PascalCase}}
 				}
-				<p>{ {{$global.CamelCase}}.{{GenerateParagraphToShow $item}} }</p>
+				<p>{ {{$global.CamelCase}}.{{GenerateStringableValue $item}} }</p>
 			}
 			{{end}}
 		</div>

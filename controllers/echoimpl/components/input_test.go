@@ -47,7 +47,7 @@ var _ = Describe("Input Components", func() {
 		ID:       anOptionalIntKey,
 		Name:     anOptionalIntKey,
 		Type:     input.TypeNumber,
-		Value:    userData.AnOptionalInt,
+		Value:    userData.AnOptionalInt.GetValue(),
 		HasError: hasAnOptionalIntErrors,
 	})
 	@form.Description() {
@@ -135,7 +135,7 @@ var _ = Describe("Input Components", func() {
 		ID:       anOptionalFloat64Key,
 		Name:     anOptionalFloat64Key,
 		Type:     input.TypeNumber,
-		Value:    userData.AnOptionalFloat64,
+		Value:    userData.AnOptionalFloat64.GetValue(),
 		HasError: hasAnOptionalFloat64Errors,
 		Attributes: map[string]any{
 			"step": "0.01",
@@ -217,7 +217,7 @@ var _ = Describe("Input Components", func() {
 		ID:       optionalDecimalKey,
 		Name:     optionalDecimalKey,
 		Type:     input.TypeNumber,
-		Value:    userData.OptionalDecimal,
+		Value:    userData.OptionalDecimal.GetValue(),
 		HasError: hasOptionalDecimalErrors,
 		Attributes: map[string]any{
 			"step": "0.01",
@@ -312,7 +312,7 @@ var _ = Describe("Input Components", func() {
 		ID:       optionalStringKey,
 		Name:     optionalStringKey,
 		Type:     input.TypeText,
-		Value:    userData.OptionalString,
+		Value:    userData.OptionalString.GetValue(),
 		HasError: hasOptionalStringErrors,
 	})
 	@form.Description() {
@@ -388,7 +388,7 @@ var _ = Describe("Input Components", func() {
 		ID:       optionalUuidKey,
 		Name:     optionalUuidKey,
 		Type:     input.TypeText,
-		Value:    userData.OptionalUuid,
+		Value:    userData.OptionalUuid.GetValue(),
 		HasError: hasOptionalUuidErrors,
 	})
 	@form.Description() {
@@ -475,7 +475,7 @@ var _ = Describe("Input Components", func() {
 	@toggle.Toggle(toggle.Props{
 		ID:      optionalBoolKey,
 		Name:    optionalBoolKey,
-		Checked: userData.OptionalBool,
+		Checked: userData.OptionalBool.GetValue(),
 	})
 	@form.Description() {
 		Check for OptionalBool
@@ -540,7 +540,7 @@ var _ = Describe("Input Components", func() {
 	@datetime.Datetime(datetime.DatetimeProps{
 		ID:       optionalTimeKey,
 		Name:     optionalTimeKey,
-		Value:    userData.OptionalTime.UTC(),
+		Value:    userData.OptionalTime.GetValue().UTC(),
 		HasError: hasOptionalTimeErrors,
 	})
 	@form.Description() {
@@ -658,22 +658,22 @@ var _ = Describe("Input Components", func() {
 			@selectbox.Group() {
 				@selectbox.Item(selectbox.ItemProps{
 					Value:    "optional_enum_1",
-					Selected: userData.OptionalEnum == "optional_enum_1",
-					Disabled: userData.OptionalEnum == "optional_enum_1",
+					Selected: userData.OptionalEnum.GetValue() == "optional_enum_1",
+					Disabled: userData.OptionalEnum.GetValue() == "optional_enum_1",
 				}) {
 					OptionalEnum1
 				}
 				@selectbox.Item(selectbox.ItemProps{
 					Value:    "optional_enum_2",
-					Selected: userData.OptionalEnum == "optional_enum_2",
-					Disabled: userData.OptionalEnum == "optional_enum_2",
+					Selected: userData.OptionalEnum.GetValue() == "optional_enum_2",
+					Disabled: userData.OptionalEnum.GetValue() == "optional_enum_2",
 				}) {
 					OptionalEnum2
 				}
 				@selectbox.Item(selectbox.ItemProps{
 					Value:    "optional_enum_3",
-					Selected: userData.OptionalEnum == "optional_enum_3",
-					Disabled: userData.OptionalEnum == "optional_enum_3",
+					Selected: userData.OptionalEnum.GetValue() == "optional_enum_3",
+					Disabled: userData.OptionalEnum.GetValue() == "optional_enum_3",
 				}) {
 					OptionalEnum3
 				}

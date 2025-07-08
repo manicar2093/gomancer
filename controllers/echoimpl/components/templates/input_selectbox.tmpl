@@ -26,8 +26,13 @@
 				{{- range .EnumStrings }}
 				@selectbox.Item(selectbox.ItemProps{
 					Value:    "{{ .SnakeCase }}",
+					{{- if $global.IsOptional }}
+					Selected: {{ printf "%s.%s.GetValue() == \"%s\"" $global.ModelTransformedText.CamelCase $global.PascalCase .SnakeCase}},
+					Disabled: {{ printf "%s.%s.GetValue() == \"%s\"" $global.ModelTransformedText.CamelCase $global.PascalCase .SnakeCase}},
+					{{- else }}
 					Selected: {{ printf "%s.%s == \"%s\"" $global.ModelTransformedText.CamelCase $global.PascalCase .SnakeCase}},
 					Disabled: {{ printf "%s.%s == \"%s\"" $global.ModelTransformedText.CamelCase $global.PascalCase .SnakeCase}},
+					{{- end }}
 				}) {
 					{{ .PascalCase }}
 				}

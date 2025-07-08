@@ -35,7 +35,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalIntKey,
 					Name:     anOptionalIntKey,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalInt,
+					Value:    postTest.AnOptionalInt.GetValue(),
 					HasError: hasAnOptionalIntErrors,
 				})
 				@form.Description() {
@@ -92,7 +92,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalInt8Key,
 					Name:     anOptionalInt8Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalInt8,
+					Value:    postTest.AnOptionalInt8.GetValue(),
 					HasError: hasAnOptionalInt8Errors,
 				})
 				@form.Description() {
@@ -149,7 +149,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalInt16Key,
 					Name:     anOptionalInt16Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalInt16,
+					Value:    postTest.AnOptionalInt16.GetValue(),
 					HasError: hasAnOptionalInt16Errors,
 				})
 				@form.Description() {
@@ -206,7 +206,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalInt32Key,
 					Name:     anOptionalInt32Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalInt32,
+					Value:    postTest.AnOptionalInt32.GetValue(),
 					HasError: hasAnOptionalInt32Errors,
 				})
 				@form.Description() {
@@ -263,7 +263,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalInt64Key,
 					Name:     anOptionalInt64Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalInt64,
+					Value:    postTest.AnOptionalInt64.GetValue(),
 					HasError: hasAnOptionalInt64Errors,
 				})
 				@form.Description() {
@@ -320,7 +320,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalFloat32Key,
 					Name:     anOptionalFloat32Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalFloat32,
+					Value:    postTest.AnOptionalFloat32.GetValue(),
 					HasError: hasAnOptionalFloat32Errors,
 					Attributes: map[string]any{
 						"step": "0.01",
@@ -383,7 +383,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalFloat64Key,
 					Name:     anOptionalFloat64Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalFloat64,
+					Value:    postTest.AnOptionalFloat64.GetValue(),
 					HasError: hasAnOptionalFloat64Errors,
 					Attributes: map[string]any{
 						"step": "0.01",
@@ -446,7 +446,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       optionalStringKey,
 					Name:     optionalStringKey,
 					Type:     input.TypeText,
-					Value:    postTest.OptionalString,
+					Value:    postTest.OptionalString.GetValue(),
 					HasError: hasOptionalStringErrors,
 				})
 				@form.Description() {
@@ -501,7 +501,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@toggle.Toggle(toggle.Props{
 					ID:      optionalBoolKey,
 					Name:    optionalBoolKey,
-					Checked: postTest.OptionalBool,
+					Checked: postTest.OptionalBool.GetValue(),
 				})
 				@form.Description() {
 					Check for OptionalBool
@@ -534,7 +534,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@datetime.Datetime(datetime.DatetimeProps{
 					ID:       optionalTimeKey,
 					Name:     optionalTimeKey,
-					Value:    postTest.OptionalTime.UTC(),
+					Value:    postTest.OptionalTime.GetValue().UTC(),
 					HasError: hasOptionalTimeErrors,
 				})
 				@form.Description() {
@@ -590,7 +590,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       optionalDecimalKey,
 					Name:     optionalDecimalKey,
 					Type:     input.TypeNumber,
-					Value:    postTest.OptionalDecimal,
+					Value:    postTest.OptionalDecimal.GetValue(),
 					HasError: hasOptionalDecimalErrors,
 					Attributes: map[string]any{
 						"step": "0.01",
@@ -653,7 +653,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       optionalUuidKey,
 					Name:     optionalUuidKey,
 					Type:     input.TypeText,
-					Value:    postTest.OptionalUuid,
+					Value:    postTest.OptionalUuid.GetValue(),
 					HasError: hasOptionalUuidErrors,
 				})
 				@form.Description() {
@@ -720,22 +720,22 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 						@selectbox.Group() {
 							@selectbox.Item(selectbox.ItemProps{
 								Value:    "optional_enum_1",
-								Selected: postTest.OptionalEnum == "optional_enum_1",
-								Disabled: postTest.OptionalEnum == "optional_enum_1",
+								Selected: postTest.OptionalEnum.GetValue() == "optional_enum_1",
+								Disabled: postTest.OptionalEnum.GetValue() == "optional_enum_1",
 							}) {
 								OptionalEnum1
 							}
 							@selectbox.Item(selectbox.ItemProps{
 								Value:    "optional_enum_2",
-								Selected: postTest.OptionalEnum == "optional_enum_2",
-								Disabled: postTest.OptionalEnum == "optional_enum_2",
+								Selected: postTest.OptionalEnum.GetValue() == "optional_enum_2",
+								Disabled: postTest.OptionalEnum.GetValue() == "optional_enum_2",
 							}) {
 								OptionalEnum2
 							}
 							@selectbox.Item(selectbox.ItemProps{
 								Value:    "optional_enum_3",
-								Selected: postTest.OptionalEnum == "optional_enum_3",
-								Disabled: postTest.OptionalEnum == "optional_enum_3",
+								Selected: postTest.OptionalEnum.GetValue() == "optional_enum_3",
+								Disabled: postTest.OptionalEnum.GetValue() == "optional_enum_3",
 							}) {
 								OptionalEnum3
 							}

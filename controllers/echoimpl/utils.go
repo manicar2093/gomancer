@@ -38,7 +38,7 @@ func initTemplates(input parser.GenerateModelInput) *template.Template {
 				}
 				return comp
 			},
-			"GenerateParagraphToShow": func(a parser.Attribute) string {
+			"GenerateStringableValue": func(a parser.Attribute) string {
 				switch types.SupportedType(a.Type) {
 				case types.TypeUuid:
 					if a.IsOptional {

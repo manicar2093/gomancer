@@ -8,7 +8,11 @@
 	@toggle.Toggle(toggle.Props{
 		ID:      {{ .CamelCase }}Key,
 		Name:    {{ .CamelCase }}Key,
+		{{- if .IsOptional }}
+		Checked: {{.ModelTransformedText.CamelCase}}.{{ .PascalCase }}.GetValue(),
+		{{- else }}
 		Checked: {{.ModelTransformedText.CamelCase}}.{{ .PascalCase }},
+		{{- end }}
 	})
 	@form.Description() {
 		Check for {{ .PascalCase }}

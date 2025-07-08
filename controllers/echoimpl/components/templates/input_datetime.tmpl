@@ -9,7 +9,11 @@
 	@datetime.Datetime(datetime.DatetimeProps{
 		ID:       {{ .CamelCase }}Key,
 		Name:     {{ .CamelCase }}Key,
+		{{- if .IsOptional }}
+		Value:    {{.ModelTransformedText.CamelCase}}.{{ .PascalCase }}.GetValue().UTC(),
+		{{- else }}
 		Value:    {{.ModelTransformedText.CamelCase}}.{{ .PascalCase }}.UTC(),
+		{{- end }}
 		HasError: has{{ .PascalCase }}Errors,
 		{{- if not .IsOptional }}
 		Required: true,

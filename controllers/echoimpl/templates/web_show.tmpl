@@ -3,7 +3,6 @@
 import (
 	{{.GoDeps.Std.Fmt.GenerateImportString}}
 	{{.GoDeps.Std.Net.Http.GenerateImportString}}
-	{{.GoDeps.Std.Time.GenerateImportString}}
 	{{.GoDeps.I18n.GenerateImportString}}
 	{{ .GoDeps.Project.Internal.Domain.Models.GenerateImportString }}
 	{{.GoDeps.Cmd.Service.Ui.Components.Form.GenerateImportString}}
@@ -14,7 +13,7 @@ import (
 )
 templ Show{{.PascalCase}}({{.CamelCase}} *models.{{.PascalCase}}) {
 	@layouts.Initial() {
-		<h1 class="mb-2 text-xl">{{.PascalCase}}: { {{.CamelCase}}.Id.String() }</h1>
+		<h1 class="mb-2 text-xl">{{.PascalCase}}: { {{.CamelCase}}.{{ GenerateStringableValue .IdAttribute}} }</h1>
 		<div class="mb-2">
 			{{	$global := . }}
 			{{range $item := .Attributes}}

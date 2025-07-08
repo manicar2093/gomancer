@@ -38,13 +38,13 @@ templ {{Pluralize .PascalCase}}Table(page *gormpager.Page[models.{{.PascalCase}}
                     @table.Row() {
                         {{ range $item := .Attributes }}
                         @table.Cell() {
-                            { item.{{$item.PascalCase}} }
+                            { item.{{GenerateStringableValue $item}} }
                         }
                         {{ end }}
                         @table.Cell() {
                             @button.Button(button.Props{
                                 Variant: button.VariantSecondary,
-                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}", item.Id),
+                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%s", item.Id),
                             }) {
                                 { i18n.T(ctx, "show") }
                             }

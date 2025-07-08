@@ -47,9 +47,15 @@ func initTemplates(input parser.GenerateModelInput) *template.Template {
 					return fmt.Sprintf("%s.String()", a.PascalCase)
 				case types.TypeTime:
 					if a.IsOptional {
-						return fmt.Sprintf("%s.GetValue().Format(time.DateTime)", a.PascalCase)
+						return fmt.Sprintf("%s.GetValue().String()", a.PascalCase)
 					}
-					return fmt.Sprintf("%s.Format(time.DateTime)", a.PascalCase)
+					return fmt.Sprintf("%s.String()", a.PascalCase)
+				case types.TypeDecimal:
+					if a.IsOptional {
+						return fmt.Sprintf("%s.GetValue().StringFixed(2)", a.PascalCase)
+					}
+					return fmt.Sprintf("%s.StringFixed(2)", a.PascalCase)
+
 				default:
 					if a.IsOptional {
 						return fmt.Sprintf("%s.GetValue()", a.PascalCase)

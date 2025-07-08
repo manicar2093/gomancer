@@ -110,79 +110,79 @@ templ PostTestsTable(page *gormpager.Page[models.PostTest]) {
 				for _, item := range page.Items {
 					@table.Row() {
 						@table.Cell() {
-							{ item.AnOptionalInt }
+							{ item.AnOptionalInt.GetValue() }
 						}
 						@table.Cell() {
 							{ item.AnInt }
 						}
 						@table.Cell() {
-							{ item.AnOptionalInt8 }
+							{ item.AnOptionalInt8.GetValue() }
 						}
 						@table.Cell() {
 							{ item.AnInt8 }
 						}
 						@table.Cell() {
-							{ item.AnOptionalInt16 }
+							{ item.AnOptionalInt16.GetValue() }
 						}
 						@table.Cell() {
 							{ item.AnInt16 }
 						}
 						@table.Cell() {
-							{ item.AnOptionalInt32 }
+							{ item.AnOptionalInt32.GetValue() }
 						}
 						@table.Cell() {
 							{ item.AnInt32 }
 						}
 						@table.Cell() {
-							{ item.AnOptionalInt64 }
+							{ item.AnOptionalInt64.GetValue() }
 						}
 						@table.Cell() {
 							{ item.AnInt64 }
 						}
 						@table.Cell() {
-							{ item.AnOptionalFloat32 }
+							{ item.AnOptionalFloat32.GetValue() }
 						}
 						@table.Cell() {
 							{ item.AnFloat32 }
 						}
 						@table.Cell() {
-							{ item.AnOptionalFloat64 }
+							{ item.AnOptionalFloat64.GetValue() }
 						}
 						@table.Cell() {
 							{ item.AnFloat64 }
 						}
 						@table.Cell() {
-							{ item.OptionalString }
+							{ item.OptionalString.GetValue() }
 						}
 						@table.Cell() {
 							{ item.String }
 						}
 						@table.Cell() {
-							{ item.OptionalBool }
+							{ item.OptionalBool.GetValue() }
 						}
 						@table.Cell() {
 							{ item.Bool }
 						}
 						@table.Cell() {
-							{ item.OptionalTime }
+							{ item.OptionalTime.GetValue().String() }
 						}
 						@table.Cell() {
-							{ item.Time }
+							{ item.Time.String() }
 						}
 						@table.Cell() {
-							{ item.OptionalDecimal }
+							{ item.OptionalDecimal.GetValue().StringFixed(2) }
 						}
 						@table.Cell() {
-							{ item.Decimal }
+							{ item.Decimal.StringFixed(2) }
 						}
 						@table.Cell() {
-							{ item.OptionalUuid }
+							{ item.OptionalUuid.GetValue().String() }
 						}
 						@table.Cell() {
-							{ item.Uuid }
+							{ item.Uuid.String() }
 						}
 						@table.Cell() {
-							{ item.OptionalEnum }
+							{ item.OptionalEnum.GetValue() }
 						}
 						@table.Cell() {
 							{ item.Enum }
@@ -190,7 +190,7 @@ templ PostTestsTable(page *gormpager.Page[models.PostTest]) {
 						@table.Cell() {
 							@button.Button(button.Props{
 								Variant: button.VariantSecondary,
-								Href:    fmt.Sprintf("/app/post_tests", item.Id),
+								Href:    fmt.Sprintf("/app/post_tests/%s", item.Id),
 							}) {
 								{ i18n.T(ctx, "show") }
 							}

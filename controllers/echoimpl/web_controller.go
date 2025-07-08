@@ -66,6 +66,7 @@ func generateTemplates(input parser.GenerateModelInput, tplData tplInput, tpl *t
 		{TemplateName: "web_table", Filename: fmt.Sprintf("%s_table.templ", input.SnakeCase)},
 		{TemplateName: "web_show", Filename: fmt.Sprintf("%s_show.templ", input.SnakeCase)},
 		{TemplateName: "web_register", Filename: fmt.Sprintf("%s_register.templ", input.SnakeCase)},
+		{TemplateName: "web_index", Filename: fmt.Sprintf("%s_index.templ", input.SnakeCase)},
 	}
 
 	for _, item := range templsToGenerate {

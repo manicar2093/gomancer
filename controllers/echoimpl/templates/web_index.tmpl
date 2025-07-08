@@ -1,0 +1,22 @@
+{{define "web_index"}}package {{.LowerNoSpaceCase}}pages
+
+import (
+	{{ .GoDeps.Project.Internal.Domain.Models.GenerateImportString }}
+	{{.GoDeps.GormPager.GenerateImportString}}
+	{{.GoDeps.Cmd.Service.Ui.Layouts.GenerateImportString}}
+	{{.GoDeps.Cmd.Service.Ui.Components.Button.GenerateImportString}}
+	{{.GoDeps.I18n.GenerateImportString}}
+)
+
+templ {{.PascalCase}}Index(page *gormpager.Page[models.{{.PascalCase}}]) {
+	@layouts.Initial() {
+		@{{Pluralize .PascalCase}}Table(page)
+		@button.Button(button.Props{
+			Variant: button.VariantLink,
+			Href: "/app/{{Pluralize .SnakeCase}}/new",
+		}) {
+		    { i18n.T(ctx, "create_new") }
+		}
+	}
+}
+{{end}}

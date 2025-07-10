@@ -190,18 +190,18 @@ templ PostTestsTable(page *gormpager.Page[models.PostTest]) {
 						@table.Cell() {
 							@button.Button(button.Props{
 								Variant: button.VariantSecondary,
-								Href:    fmt.Sprintf("/app/post_tests/%s", item.Id),
+								Href:    fmt.Sprintf("/app/post_tests/%v", item.Id),
 							}) {
 								{ i18n.T(ctx, "show") }
 							}
 							@button.Button(button.Props{
 								Variant: button.VariantDefault,
-								Href:    fmt.Sprintf("/app/post_tests/%s/edit", item.Id),
+								Href:    fmt.Sprintf("/app/post_tests/%v/edit", item.Id),
 							}) {
 								{ i18n.T(ctx, "edit") }
 							}
 							@link.Link(link.LinkProps{
-								Href:    fmt.Sprintf("/app/post_tests/%s?page_number=%d", item.Id, page.CurrentPage),
+								Href:    fmt.Sprintf("/app/post_tests/%v?page_number=%d", item.Id, page.CurrentPage),
 								Confirm: i18n.T(ctx, "confirm_deletion"),
 								Method:  http.MethodDelete,
 								Variant: button.VariantDestructive,

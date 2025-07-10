@@ -44,18 +44,18 @@ templ {{Pluralize .PascalCase}}Table(page *gormpager.Page[models.{{.PascalCase}}
                         @table.Cell() {
                             @button.Button(button.Props{
                                 Variant: button.VariantSecondary,
-                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%s", item.Id),
+                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v", item.Id),
                             }) {
                                 { i18n.T(ctx, "show") }
                             }
                             @button.Button(button.Props{
                                 Variant: button.VariantDefault,
-                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%s/edit", item.Id),
+                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v/edit", item.Id),
                             }) {
                                 { i18n.T(ctx, "edit") }
                             }
                             @link.Link(link.LinkProps{
-                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%s?page_number=%d", item.Id, page.CurrentPage),
+                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v?page_number=%d", item.Id, page.CurrentPage),
                                 Confirm: i18n.T(ctx, "confirm_deletion"),
                                 Method:  http.MethodDelete,
                                 Variant: button.VariantDestructive,

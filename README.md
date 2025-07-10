@@ -147,6 +147,10 @@ We have everything: ORMs, HTTP Servers, UI Libraries, Validation packages..._EVE
 
 That's why Gomancer was born.
 
+## About types
+
+Now the only thing to notice is all dates are handled as UTC and show as Local when data is shown in a HTML input :/. There is an issue [#27](https://github.com/manicar2093/gomancer/issues/27) to review this.
+
 ## Roadmap
 
 - [X] Start a project

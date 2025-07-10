@@ -15,7 +15,7 @@ templ EditPostTestPage(postTest *models.PostTest, errors validate.Errors) {
 			postTest,
 			errors,
 			coretpls.FormProperties{
-				Action: fmt.Sprintf("/app/post_tests/%s", postTest.Id),
+				Action: fmt.Sprintf("/app/post_tests/%v", postTest.Id),
 				Method: http.MethodPut,
 			},
 		)

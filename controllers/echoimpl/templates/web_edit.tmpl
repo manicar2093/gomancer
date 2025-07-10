@@ -15,7 +15,7 @@ templ Edit{{.PascalCase}}Page({{.CamelCase}} *models.{{.PascalCase}}, errors val
 			{{.CamelCase}},
 			errors,
 			coretpls.FormProperties{
-				Action: fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%s", {{.CamelCase}}.Id),
+				Action: fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v", {{.CamelCase}}.Id),
 				Method: http.MethodPut,
 			},
 		)

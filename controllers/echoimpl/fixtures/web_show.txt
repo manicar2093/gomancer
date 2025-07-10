@@ -15,7 +15,7 @@ import (
 templ ShowPostTest(postTest *models.PostTest) {
 	@layouts.Initial() {
 		<h1 class="mb-2 text-xl">PostTest: { postTest.Id.String() }</h1>
-		<div class="mb-2">
+		<div class="mb-2 space-y-2">
 			@form.Item() {
 				@label.Label() {
 					AnOptionalInt
@@ -174,14 +174,14 @@ templ ShowPostTest(postTest *models.PostTest) {
 			}
 		</div>
 		@link.Link(link.LinkProps{
-			Href:    fmt.Sprintf("/app/post_tests/%s/edit", postTest.Id),
+			Href:    fmt.Sprintf("/app/post_tests/%v/edit", postTest.Id),
 			Variant: button.VariantDefault,
 		}) {
 			{ i18n.T(ctx, "edit") }
 		}
 		@link.Link(link.LinkProps{
-			Href:    fmt.Sprintf("/app/post_tests/%s", postTest.Id),
-			Confirm: fmt.Sprintf("Are you sure to delete %s", postTest.Id),
+			Href:    fmt.Sprintf("/app/post_tests/%v", postTest.Id),
+			Confirm: fmt.Sprintf("Are you sure to delete %v", postTest.Id),
 			Method:  http.MethodDelete,
 			Variant: button.VariantDestructive,
 			Class:   "inline-block",

@@ -49,7 +49,7 @@ templ Item(props ...ItemProps) {
 		if p.ID != "" {
 			id={ p.ID }
 		}
-		class={ utils.TwMerge("space-y-2", p.Class) }
+		class={ utils.TwMerge(p.Class) }
 		{ p.Attributes... }
 	>
 		{ children... }

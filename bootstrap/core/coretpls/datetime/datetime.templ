@@ -30,7 +30,7 @@ templ Datetime(props DatetimeProps) {
                 "data-shadowing-input": shadowingElementId,
             }) ,
 	})
-	<input id={ shadowingElementId } hidden type="text" name="created_at" value={ props.Value.Format(time.RFC3339) }/>
+	<input id={ shadowingElementId } hidden type="text" name={props.ID} value={ props.Value.Format(time.RFC3339) }/>
 	@Script()
 }
 

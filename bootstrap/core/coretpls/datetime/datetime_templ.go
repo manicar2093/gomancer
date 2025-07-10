@@ -74,20 +74,33 @@ func Datetime(props DatetimeProps) templ.Component {
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" hidden type=\"text\" name=\"created_at\" value=\"")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 2, "\" hidden type=\"text\" name=\"")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
 		var templ_7745c5c3_Var3 string
-		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(props.Value.Format(time.RFC3339))
+		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(props.ID)
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `bootstrap/core/coretpls/datetime/datetime.templ`, Line: 33, Col: 111}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `bootstrap/core/coretpls/datetime/datetime.templ`, Line: 33, Col: 67}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\">")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 3, "\" value=\"")
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		var templ_7745c5c3_Var4 string
+		templ_7745c5c3_Var4, templ_7745c5c3_Err = templ.JoinStringErrs(props.Value.Format(time.RFC3339))
+		if templ_7745c5c3_Err != nil {
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `bootstrap/core/coretpls/datetime/datetime.templ`, Line: 33, Col: 109}
+		}
+		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var4))
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "\">")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}
@@ -115,12 +128,12 @@ func Script() templ.Component {
 			}()
 		}
 		ctx = templ.InitializeContext(ctx)
-		templ_7745c5c3_Var4 := templ.GetChildren(ctx)
-		if templ_7745c5c3_Var4 == nil {
-			templ_7745c5c3_Var4 = templ.NopComponent
+		templ_7745c5c3_Var5 := templ.GetChildren(ctx)
+		if templ_7745c5c3_Var5 == nil {
+			templ_7745c5c3_Var5 = templ.NopComponent
 		}
 		ctx = templ.ClearChildren(ctx)
-		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 4, "<script>\n        (function(){\n            const datetimeUtc = document.querySelectorAll(\"[data-datetime-utc]\")\n            datetimeUtc.forEach(el => {\n                const unformatedDate = el.dataset.datetimeUtc\n                const asDate = new Date(unformatedDate)\n                const getMonth = (month) => {\n                    return addPrefixZero(month += 1)\n                }\n                const addPrefixZero = (number) => {\n                    if(number >= 10) return `${number}`\n                    return `0${number}`\n                }\n                const formatedDate = `${asDate.getFullYear()}-${getMonth(asDate.getMonth())}-${addPrefixZero(asDate.getDate())}T${addPrefixZero(asDate.getHours())}:${addPrefixZero(asDate.getMinutes())}`\n                el.value = formatedDate;\n            })\n            datetimeUtc.forEach(el => {\n                el.addEventListener('change', event => {\n                    const shadowingInput = document.querySelector(`#${el.dataset.shadowingInput}`)\n                    shadowingInput.value = (new Date(event.srcElement.value).toISOString())\n                })\n            })\n        })()\n    </script>")
+		templ_7745c5c3_Err = templruntime.WriteString(templ_7745c5c3_Buffer, 5, "<script>\n        (function(){\n            const datetimeUtc = document.querySelectorAll(\"[data-datetime-utc]\")\n            datetimeUtc.forEach(el => {\n                const unformatedDate = el.dataset.datetimeUtc\n                const asDate = new Date(unformatedDate)\n                const getMonth = (month) => {\n                    return addPrefixZero(month += 1)\n                }\n                const addPrefixZero = (number) => {\n                    if(number >= 10) return `${number}`\n                    return `0${number}`\n                }\n                const formatedDate = `${asDate.getFullYear()}-${getMonth(asDate.getMonth())}-${addPrefixZero(asDate.getDate())}T${addPrefixZero(asDate.getHours())}:${addPrefixZero(asDate.getMinutes())}`\n                el.value = formatedDate;\n            })\n            datetimeUtc.forEach(el => {\n                el.addEventListener('change', event => {\n                    const shadowingInput = document.querySelector(`#${el.dataset.shadowingInput}`)\n                    shadowingInput.value = (new Date(event.srcElement.value).toISOString())\n                })\n            })\n        })()\n    </script>")
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

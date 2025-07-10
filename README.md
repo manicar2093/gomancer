@@ -44,6 +44,8 @@ Gomancer creates a well-structured project with:
 - Echo web framework configuration
 - Prisma for database migrations
 - GORM for database access
+- Templ for SSR (Server Side Rendering)
+- TemplUI for html components
 - Environment configuration
 - GitHub workflow (bump_version) for automatic semantic versioning and changelog generation
 - Air for hot reloading
@@ -102,35 +104,99 @@ When you create a new project with Gomancer, it generates the following structur
 
 ```
 <project_name>/
-├── .air.toml                # Configuration for hot reloading
-├── .cz.toml                 # Commitizen configuration
-├── .env                     # Environment variables
-├── README.md                # Project documentation
-├── Taskfile.yml             # Task runner configuration
-├── go.mod                   # Go module definition
-├── package.json             # Node.js dependencies (for Prisma)
-├── .github/
-│   └── workflows/
-│       └── bump_version.yml  # GitHub Actions workflow for automatic version bumping
-├── cmd/
-│   └── api/
-│       ├── main.go          # Application entry point
-│       └── controllers/
-│           └── init.go      # Controllers initialization
-├── internal/
-│   └── domain/
-│       └── models/
-│           └── init.go      # Domain models initialization
-├── pkg/
-│   ├── config/
-│   │   └── config.go        # Configuration settings
-│   ├── generators/
-│   │   └── generators.go    # Code generation utilities
-│   └── versioning/
-│       └── version.go       # Version management
-└── prisma/
-    └── schema/
-        └── schema.prisma    # Database schema definitions
+├── .air.toml           # Configuration for hot reloading
+├── .cz.toml            # Commitizen configuration
+├── .env                # Environment variables
+├── .gitignore
+├── go.mod              # Go module definition
+├── Makefile            # Templ and Tailwind used commands
+├── package.json        # Node.js dependencies (for Prisma)
+├── README.md           # Project documentation
+├── Taskfile.yml        # Task runner configuration
+├── .github
+│   └── workflows
+│       └── bump_version.yml        # GitHub Actions workflow for automatic version bumping
+├── cmd
+│   └── service
+│       ├── main.go                 # Application entry point
+│       ├── assets
+│       │   ├── css
+│       │   │   └── styles.css
+│       │   ├── img
+│       │   │   ├── favicon.ico
+│       │   │   └── gomancer.png
+│       │   └── js
+│       │       ├── htmx@2.0.4.min.js
+│       │       ├── popover.min.js
+│       │       ├── selectbox.min.js
+│       │       ├── theme-setter.js
+│       │       └── toggle-theme.js
+│       ├── controllers
+│       │   ├── init_rest.go        # REST initial controller
+│       │   ├── init_web.go         # Web initial controller
+│       │   └── initpages           # Initial templ docs
+│       │       └── home.templ
+│       ├── sources
+│       │   └── css
+│       │       └── input.css
+│       ├── translations
+│       │   ├── translations.go
+│       │   ├── en
+│       │   │   └── translations.yaml
+│       │   └── es
+│       │       ├── translations.yaml
+│       │       └── validator.go
+│       └── ui
+│           ├── components
+│           │   ├── button
+│           │   │   └── button.templ
+│           │   ├── drawer
+│           │   │   └── drawer.templ
+│           │   ├── form
+│           │   │   └── form.templ
+│           │   ├── icon
+│           │   │   ├── icon_data.go
+│           │   │   ├── icon_defs.go
+│           │   │   └── icon.go
+│           │   ├── input
+│           │   │   └── input.templ
+│           │   ├── label
+│           │   │   └── label.templ
+│           │   ├── pagination
+│           │   │   └── pagination.templ
+│           │   ├── popover
+│           │   │   └── popover.templ
+│           │   ├── selectbox
+│           │   │   └── selectbox.templ
+│           │   ├── table
+│           │   │   └── table.templ
+│           │   └── toggle
+│           │       └── toggle.templ
+│           ├── layouts
+│           │   ├── drawer.templ
+│           │   ├── flash_messages.templ
+│           │   ├── Initial.templ
+│           │   └── sidemenu.templ
+│           └── utils
+│               └── templui.go
+├── core
+│   └── ...
+├── internal
+│   ├── domain
+│   │   └── models                  # Here will be all your models
+│   │       └── init.go
+├── pkg
+│   ├── config
+│   │   └── config.go
+│   ├── generators
+│   │   ├── entities.go
+│   │   └── generators.go
+│   └── versioning
+│       └── version.go
+└── prisma
+    └── schema
+        └── schema.prisma
+
 ```
 
 ## Why Gomancer?
@@ -163,7 +229,8 @@ Now the only thing to notice is all dates are handled as UTC and show as Local w
 - [X] Create all at once: controller, model, migration and repository
 - [ ] Create API documentation
 - [ ] Create auth implementation
-- [ ] Add CRUD HTML templates
+- [X] Add CRUD HTML templates
+- [X] Add CRUD HTML testing
 - [ ] Add API testing
 
 ## License

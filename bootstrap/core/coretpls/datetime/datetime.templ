@@ -37,9 +37,7 @@ templ Datetime(props DatetimeProps) {
 templ Script() {
 	<script>
         (function(){
-            const datetimeUtc = document.querySelectorAll("[data-datetime-utc]")
-            datetimeUtc.forEach(el => {
-                const unformatedDate = el.dataset.datetimeUtc
+            function formatDateToUtc(unformatedDate){
                 const asDate = new Date(unformatedDate)
                 const getMonth = (month) => {
                     return addPrefixZero(month += 1)
@@ -48,13 +46,17 @@ templ Script() {
                     if(number >= 10) return `${number}`
                     return `0${number}`
                 }
-                const formatedDate = `${asDate.getFullYear()}-${getMonth(asDate.getMonth())}-${addPrefixZero(asDate.getDate())}T${addPrefixZero(asDate.getHours())}:${addPrefixZero(asDate.getMinutes())}`
-                el.value = formatedDate;
+                return `${asDate.getFullYear()}-${getMonth(asDate.getMonth())}-${addPrefixZero(asDate.getDate())}T${addPrefixZero(asDate.getHours())}:${addPrefixZero(asDate.getMinutes())}:${addPrefixZero(asDate.getSeconds())}`
+            }
+
+            const datetimeUtc = document.querySelectorAll("[data-datetime-utc]")
+            datetimeUtc.forEach(el => {
+                el.value = formatDateToUtc(el.dataset.datetimeUtc);
             })
             datetimeUtc.forEach(el => {
                 el.addEventListener('change', event => {
                     const shadowingInput = document.querySelector(`#${el.dataset.shadowingInput}`)
-                    shadowingInput.value = (new Date(event.srcElement.value).toISOString())
+                    shadowingInput.value = `${formatDateToUtc(event.srcElement.value)}.000Z`
                 })
             })
         })()

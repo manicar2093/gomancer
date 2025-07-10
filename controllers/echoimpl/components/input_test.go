@@ -217,7 +217,7 @@ var _ = Describe("Input Components", func() {
 		ID:       optionalDecimalKey,
 		Name:     optionalDecimalKey,
 		Type:     input.TypeNumber,
-		Value:    userData.OptionalDecimal.GetValue(),
+		Value:    userData.OptionalDecimal.GetValue().StringFixed(2),
 		HasError: hasOptionalDecimalErrors,
 		Attributes: map[string]any{
 			"step": "0.01",
@@ -257,7 +257,7 @@ var _ = Describe("Input Components", func() {
 		ID:       decimalKey,
 		Name:     decimalKey,
 		Type:     input.TypeNumber,
-		Value:    userData.Decimal,
+		Value:    userData.Decimal.StringFixed(2),
 		HasError: hasDecimalErrors,
 		Required: true,
 		Attributes: map[string]any{

@@ -590,7 +590,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       optionalDecimalKey,
 					Name:     optionalDecimalKey,
 					Type:     input.TypeNumber,
-					Value:    postTest.OptionalDecimal.GetValue(),
+					Value:    postTest.OptionalDecimal.GetValue().StringFixed(2),
 					HasError: hasOptionalDecimalErrors,
 					Attributes: map[string]any{
 						"step": "0.01",
@@ -621,7 +621,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       decimalKey,
 					Name:     decimalKey,
 					Type:     input.TypeNumber,
-					Value:    postTest.Decimal,
+					Value:    postTest.Decimal.StringFixed(2),
 					HasError: hasDecimalErrors,
 					Required: true,
 					Attributes: map[string]any{

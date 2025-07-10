@@ -32,7 +32,7 @@ templ Show{{.PascalCase}}({{.CamelCase}} *models.{{.PascalCase}}) {
 			{ i18n.T(ctx, "edit") }
 		}
 		@link.Link(link.LinkProps{
-			Href:    fmt.Sprintf("/app/post_tests/%v", {{.CamelCase}}.Id),
+			Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v", {{.CamelCase}}.Id),
 			Confirm: fmt.Sprintf("Are you sure to delete %v", {{.CamelCase}}.Id),
 			Method:  http.MethodDelete,
 			Variant: button.VariantDestructive,

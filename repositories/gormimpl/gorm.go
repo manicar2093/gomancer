@@ -198,15 +198,15 @@ func generatePartialUpdateFunction(input parser.GenerateModelInput, generatorDat
 							},
 						),
 						tags.NewEcho(tags.EchoOptions{
-							Name: input.IdAttribute.SnakeCase,
+							Name: item.SnakeCase,
 							Tag:  tags.EchoParam,
 						}),
 						tags.NewEcho(tags.EchoOptions{
-							Name: input.IdAttribute.SnakeCase,
+							Name: item.SnakeCase,
 							Tag:  tags.EchoForm,
 						}),
 						tags.NewEcho(tags.EchoOptions{
-							Name: input.IdAttribute.SnakeCase,
+							Name: item.SnakeCase,
 							Tag:  tags.EchoQuery,
 						}),
 					),

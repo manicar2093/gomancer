@@ -48,32 +48,32 @@ func (c *PostTestRepository) GetAllPaginated(pageNumber, pageSize int) (*gormpag
 
 type PartialUpdateByIdInput struct {
 	Id                uuid.UUID                             `form:"id" json:"id" param:"id" query:"id" validate:"required_uuid"`
-	AnOptionalInt     goption.Optional[int]                 `form:"id" json:"an_optional_int" param:"id" query:"id"`
-	AnInt             goption.Optional[int]                 `form:"id" json:"an_int" param:"id" query:"id"`
-	AnOptionalInt8    goption.Optional[int8]                `form:"id" json:"an_optional_int8" param:"id" query:"id"`
-	AnInt8            goption.Optional[int8]                `form:"id" json:"an_int8" param:"id" query:"id"`
-	AnOptionalInt16   goption.Optional[int16]               `form:"id" json:"an_optional_int16" param:"id" query:"id"`
-	AnInt16           goption.Optional[int16]               `form:"id" json:"an_int16" param:"id" query:"id"`
-	AnOptionalInt32   goption.Optional[int32]               `form:"id" json:"an_optional_int32" param:"id" query:"id"`
-	AnInt32           goption.Optional[int32]               `form:"id" json:"an_int32" param:"id" query:"id"`
-	AnOptionalInt64   goption.Optional[int64]               `form:"id" json:"an_optional_int64" param:"id" query:"id"`
-	AnInt64           goption.Optional[int64]               `form:"id" json:"an_int64" param:"id" query:"id"`
-	AnOptionalFloat32 goption.Optional[float32]             `form:"id" json:"an_optional_float_32" param:"id" query:"id"`
-	AnFloat32         goption.Optional[float32]             `form:"id" json:"an_float_32" param:"id" query:"id"`
-	AnOptionalFloat64 goption.Optional[float64]             `form:"id" json:"an_optional_float_64" param:"id" query:"id"`
-	AnFloat64         goption.Optional[float64]             `form:"id" json:"an_float_64" param:"id" query:"id"`
-	OptionalString    goption.Optional[string]              `form:"id" json:"optional_string" param:"id" query:"id"`
-	String            goption.Optional[string]              `form:"id" json:"string" param:"id" query:"id"`
-	OptionalBool      goption.Optional[bool]                `form:"id" json:"optional_bool" param:"id" query:"id"`
-	Bool              goption.Optional[bool]                `form:"id" json:"bool" param:"id" query:"id"`
-	OptionalTime      goption.Optional[time.Time]           `form:"id" json:"optional_time" param:"id" query:"id"`
-	Time              goption.Optional[time.Time]           `form:"id" json:"time" param:"id" query:"id"`
-	OptionalDecimal   goption.Optional[udecimal.Decimal]    `form:"id" json:"optional_decimal" param:"id" query:"id"`
-	Decimal           goption.Optional[udecimal.Decimal]    `form:"id" json:"decimal" param:"id" query:"id"`
-	OptionalUuid      goption.Optional[uuid.UUID]           `form:"id" json:"optional_uuid" param:"id" query:"id"`
-	Uuid              goption.Optional[uuid.UUID]           `form:"id" json:"uuid" param:"id" query:"id"`
-	OptionalEnum      goption.Optional[models.OptionalEnum] `form:"id" json:"optional_enum" param:"id" query:"id"`
-	Enum              goption.Optional[models.Enum]         `form:"id" json:"enum" param:"id" query:"id"`
+	AnOptionalInt     goption.Optional[int]                 `form:"an_optional_int" json:"an_optional_int" param:"an_optional_int" query:"an_optional_int"`
+	AnInt             goption.Optional[int]                 `form:"an_int" json:"an_int" param:"an_int" query:"an_int"`
+	AnOptionalInt8    goption.Optional[int8]                `form:"an_optional_int8" json:"an_optional_int8" param:"an_optional_int8" query:"an_optional_int8"`
+	AnInt8            goption.Optional[int8]                `form:"an_int8" json:"an_int8" param:"an_int8" query:"an_int8"`
+	AnOptionalInt16   goption.Optional[int16]               `form:"an_optional_int16" json:"an_optional_int16" param:"an_optional_int16" query:"an_optional_int16"`
+	AnInt16           goption.Optional[int16]               `form:"an_int16" json:"an_int16" param:"an_int16" query:"an_int16"`
+	AnOptionalInt32   goption.Optional[int32]               `form:"an_optional_int32" json:"an_optional_int32" param:"an_optional_int32" query:"an_optional_int32"`
+	AnInt32           goption.Optional[int32]               `form:"an_int32" json:"an_int32" param:"an_int32" query:"an_int32"`
+	AnOptionalInt64   goption.Optional[int64]               `form:"an_optional_int64" json:"an_optional_int64" param:"an_optional_int64" query:"an_optional_int64"`
+	AnInt64           goption.Optional[int64]               `form:"an_int64" json:"an_int64" param:"an_int64" query:"an_int64"`
+	AnOptionalFloat32 goption.Optional[float32]             `form:"an_optional_float_32" json:"an_optional_float_32" param:"an_optional_float_32" query:"an_optional_float_32"`
+	AnFloat32         goption.Optional[float32]             `form:"an_float_32" json:"an_float_32" param:"an_float_32" query:"an_float_32"`
+	AnOptionalFloat64 goption.Optional[float64]             `form:"an_optional_float_64" json:"an_optional_float_64" param:"an_optional_float_64" query:"an_optional_float_64"`
+	AnFloat64         goption.Optional[float64]             `form:"an_float_64" json:"an_float_64" param:"an_float_64" query:"an_float_64"`
+	OptionalString    goption.Optional[string]              `form:"optional_string" json:"optional_string" param:"optional_string" query:"optional_string"`
+	String            goption.Optional[string]              `form:"string" json:"string" param:"string" query:"string"`
+	OptionalBool      goption.Optional[bool]                `form:"optional_bool" json:"optional_bool" param:"optional_bool" query:"optional_bool"`
+	Bool              goption.Optional[bool]                `form:"bool" json:"bool" param:"bool" query:"bool"`
+	OptionalTime      goption.Optional[time.Time]           `form:"optional_time" json:"optional_time" param:"optional_time" query:"optional_time"`
+	Time              goption.Optional[time.Time]           `form:"time" json:"time" param:"time" query:"time"`
+	OptionalDecimal   goption.Optional[udecimal.Decimal]    `form:"optional_decimal" json:"optional_decimal" param:"optional_decimal" query:"optional_decimal"`
+	Decimal           goption.Optional[udecimal.Decimal]    `form:"decimal" json:"decimal" param:"decimal" query:"decimal"`
+	OptionalUuid      goption.Optional[uuid.UUID]           `form:"optional_uuid" json:"optional_uuid" param:"optional_uuid" query:"optional_uuid"`
+	Uuid              goption.Optional[uuid.UUID]           `form:"uuid" json:"uuid" param:"uuid" query:"uuid"`
+	OptionalEnum      goption.Optional[models.OptionalEnum] `form:"optional_enum" json:"optional_enum" param:"optional_enum" query:"optional_enum"`
+	Enum              goption.Optional[models.Enum]         `form:"enum" json:"enum" param:"enum" query:"enum"`
 }
 
 // PartialUpdateById can select which field has to be updated from given input

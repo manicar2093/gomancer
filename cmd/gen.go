@@ -78,6 +78,10 @@ gomancer gen Client name:string dob:time:optional status:enum/active/deactivated
 			log.Error(err)
 			return
 		}
+		if err := echoimpl.GenerateWebController(input, goDeps, inCreation); err != nil {
+			log.Error(err)
+			return
+		}
 		if err := prismaimpl.GenerateMigration(input); err != nil {
 			log.Error(err)
 			return

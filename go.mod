@@ -14,7 +14,6 @@ require (
 	github.com/google/uuid v1.6.0
 	github.com/gookit/validate v1.5.4
 	github.com/gorilla/sessions v1.4.0
-	github.com/iancoleman/strcase v0.3.0
 	github.com/invopop/ctxi18n v0.9.0
 	github.com/jackc/pgx/v5 v5.7.4
 	github.com/jinzhu/inflection v1.0.0
@@ -27,6 +26,7 @@ require (
 	github.com/rjNemo/underscore v0.7.0
 	github.com/sirupsen/logrus v1.9.3
 	github.com/spf13/cobra v1.9.1
+	github.com/stoewer/go-strcase v1.3.1
 	golang.org/x/mod v0.24.0
 	gorm.io/driver/postgres v1.5.11
 	gorm.io/gorm v1.25.12

@@ -58,7 +58,7 @@ var _ = Describe("Parser", func() {
 					gstruct.Elements{
 						"0": gstruct.MatchAllFields(gstruct.Fields{
 							"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
-								"SnakeCase":        Equal("arg_1"),
+								"SnakeCase":        Equal("arg1"),
 								"PascalCase":       Equal("Arg1"),
 								"CamelCase":        Equal("arg1"),
 								"LowerNoSpaceCase": Equal("arg1"),
@@ -69,7 +69,7 @@ var _ = Describe("Parser", func() {
 						}),
 						"1": gstruct.MatchAllFields(gstruct.Fields{
 							"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
-								"SnakeCase":        Equal("arg_2"),
+								"SnakeCase":        Equal("arg2"),
 								"PascalCase":       Equal("Arg2"),
 								"CamelCase":        Equal("arg2"),
 								"LowerNoSpaceCase": Equal("arg2"),
@@ -80,7 +80,7 @@ var _ = Describe("Parser", func() {
 						}),
 						"2": gstruct.MatchAllFields(gstruct.Fields{
 							"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
-								"SnakeCase":        Equal("arg_3"),
+								"SnakeCase":        Equal("arg3"),
 								"PascalCase":       Equal("Arg3"),
 								"CamelCase":        Equal("arg3"),
 								"LowerNoSpaceCase": Equal("arg3"),
@@ -91,7 +91,7 @@ var _ = Describe("Parser", func() {
 						}),
 						"3": gstruct.MatchAllFields(gstruct.Fields{
 							"TransformedText": gstruct.MatchAllFields(gstruct.Fields{
-								"SnakeCase":        Equal("arg_4"),
+								"SnakeCase":        Equal("arg4"),
 								"PascalCase":       Equal("Arg4"),
 								"CamelCase":        Equal("arg4"),
 								"LowerNoSpaceCase": Equal("arg4"),

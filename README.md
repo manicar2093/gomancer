@@ -2,7 +2,6 @@
 
 <div align="center">
   <img src="https://img.shields.io/github/go-mod/go-version/manicar2093/gomancer" alt="Go Version">
-  <img src="https://img.shields.io/github/v/release/manicar2093/gomancer" alt="Latest Release">
   <img src="https://img.shields.io/github/license/manicar2093/gomancer" alt="License">
 </div>
 
@@ -77,6 +76,8 @@ gomancer new github.com/username/awesome-api
 ```
 
 ### Generating Resources
+
+All resources will generate Web and Rest controllers
 
 Basic resource with auto-increment ID:
 ```bash
@@ -230,7 +231,7 @@ Now the only thing to notice is all dates are handled as UTC and show as Local w
 - [ ] Create API documentation
 - [ ] Create auth implementation
 - [X] Add CRUD HTML templates
-- [X] Add CRUD HTML testing
+- [ ] Add CRUD HTML testing
 - [ ] Add API testing
 
 ## License

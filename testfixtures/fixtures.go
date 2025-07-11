@@ -320,6 +320,6 @@ var (
 		},
 	}
 
-	ModelSuccessDepsContainer = deps.Init(ModelBinaryIdSuccess.ModuleInfo.Name)
+	ModelSuccessDepsContainer = deps.Init(ModelBinaryIdSuccess.ModuleInfo.Name, ModelBinaryIdSuccess.TransformedText.LowerNoSpaceCase)
 	ModelSuccessDepInCreation = deps.InCreation(ModelBinaryIdSuccess.ModuleInfo.Name, ModelBinaryIdSuccess.PackageEntityName)
 )

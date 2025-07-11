@@ -201,7 +201,7 @@ func InitProject(input InitProjectInput) (string, error) {
 			DevEnvironment:   "dev",
 			TestEnvironment:  "test",
 			GoVersion:        "1.24",
-			GoDeps:           deps.Init(input.ModuleName),
+			GoDeps:           deps.Init(input.ModuleName, ""),
 		}
 	)
 	for _, dir := range initialFiles {

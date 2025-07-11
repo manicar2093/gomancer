@@ -49,7 +49,8 @@ type (
 	}
 	Controllers struct {
 		Dependency
-		InitPages Dependency
+		InitPages  Dependency
+		ModelPages Dependency
 	}
 
 	Components struct {

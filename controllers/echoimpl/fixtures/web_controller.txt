@@ -5,7 +5,7 @@ import (
 	validate	"github.com/gookit/validate"
 	i18n	"github.com/invopop/ctxi18n/i18n"
 	http	"net/http"
-	posttestpages "github.com/user/project_name/cmd/service/controllers/posttestpages"
+	posttestpages	"github.com/user/project_name/cmd/service/controllers/posttestpages"
 	toast	"github.com/user/project_name/core/coretpls/toast"
 	validator	"github.com/user/project_name/core/validator"
 

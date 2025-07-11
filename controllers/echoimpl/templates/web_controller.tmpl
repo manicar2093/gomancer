@@ -5,7 +5,7 @@ import (
 	{{.GoDeps.GookitValidate.GenerateImportString}}
 	{{.GoDeps.I18n.GenerateImportString}}
 	{{.GoDeps.Std.Net.Http.GenerateImportString}}
-	{{$pagesPackage}} "{{print .GoDeps.Project.Cmd.Controllers.Path "/" $pagesPackage}}"
+	{{.GoDeps.Project.Cmd.Controllers.ModelPages.GenerateImportString}}
 	{{.GoDeps.Project.Core.CoreTpls.Toast.GenerateImportString}}
 	{{.GoDeps.Project.Core.Validator.GenerateImportString}}
 

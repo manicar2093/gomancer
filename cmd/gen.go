@@ -64,7 +64,7 @@ gomancer gen Client name:string dob:time:optional status:enum/active/deactivated
 		}
 		log.Debug("input generated", "input", input)
 
-		goDeps, inCreation := deps.Init(input.ModuleInfo.Name), deps.InCreation(input.ModuleInfo.Name, input.PackageEntityName)
+		goDeps, inCreation := deps.Init(input.ModuleInfo.Name, input.LowerNoSpaceCase), deps.InCreation(input.ModuleInfo.Name, input.PackageEntityName)
 
 		if err := models.GenerateModel(input, goDeps); err != nil {
 			log.Error(err)

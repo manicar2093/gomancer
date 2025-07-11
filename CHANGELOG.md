@@ -1,3 +1,57 @@
+## v0.21.0 (2025-07-11)
+
+### Feat
+
+- add way to get string shell cmd
+- add decimal string fixed to input component
+- change %s holder to %v holder
+- remove space for form item component
+- change strcase dep to handle snake case correctly
+- add goptional handling to get values in templs
+- add web_edit generation
+- add web_index generation
+- add web_register generation
+- add web_show generation
+- add web_table generation
+- add web_form generation
+- add function to get component via attribute type
+- add new way to execute embed templates for components
+- add uuid input text generator
+- add select box component generation
+- add decimal input generation on InputNumberFloat
+- add datetime component generation
+- add model transformed text to inputs generators
+- add InputToggle generator
+- add InputText generator
+- add InputNumberFLoat generator
+- add input number generations
+- add web controller creation
+- change naming for current controller generator to indicates generates rest controller
+- add home template to be rendered on initial web controller
+- add page render on init_web controller
+- add generation code for gomancer for templates by the moment
+- add init web controller generation
+- add env var for session secret key
+- add variable transforme to flash_messages.templ
+- add sessionSecretKeyConfi to pkg/config package
+- add tools to go.mod
+- add \t to makefile generation
+- change taskfile build and run commands generation
+- add taskfile.yml changes and makefile generation
+- add new main func
+- add new init rest controller
+- remove templ go generated files and change toast.Variant to string
+- add cmd package initialization
+
+### Fix
+
+- add endpoint to call when delete dinamically
+- change script to format string to utc in datetime.templ input issue #27
+- add correct way to create ParialUpdateByIdInput in repository.txt
+- add correct name generator on datetime.templ
+- add optional handling to web pages generators
+- add GetByType into web_controller.tmpl
+
 ## v0.20.0 (2025-06-05)
 
 ### Feat

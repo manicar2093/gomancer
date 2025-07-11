@@ -1,0 +1,23 @@
+{{define "web_register"}}package {{print .LowerNoSpaceCase "pages"}}
+
+import (
+	{{.GoDeps.Std.Net.Http.GenerateImportString}}
+	{{.GoDeps.Project.Internal.Domain.Models.GenerateImportString}}
+	{{.GoDeps.Cmd.Service.Ui.Layouts.GenerateImportString}}
+	{{.GoDeps.Core.CoreTpls.GenerateImportString}}
+	{{.GoDeps.GookitValidate.GenerateImportString}}
+)
+
+templ Register{{.PascalCase}}Page({{.CamelCase}} *models.{{.PascalCase}}, errors validate.Errors) {
+	@layouts.Initial() {
+		@{{.PascalCase}}Form(
+			{{.CamelCase}},
+			errors,
+			coretpls.FormProperties{
+				Action: "/app/{{Pluralize .SnakeCase}}",
+				Method: http.MethodPost,
+			},
+		)
+	}
+}
+{{end}}

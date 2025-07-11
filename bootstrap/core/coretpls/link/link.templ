@@ -1,0 +1,46 @@
+package link
+
+import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/button"
+import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/utils"
+import "github.com/manicar2093/gomancer/bootstrap/core/coretpls/formtag"
+import "net/http"
+
+type LinkProps struct {
+	Href    string
+	Confirm string
+	Method  string
+	Variant button.Variant
+	Class   string
+}
+
+templ Link(props LinkProps) {
+	{{ id := utils.RandomID() }}
+	if props.Method == "" {
+		{{ props.Method = http.MethodGet }}
+	}
+	if props.Method != http.MethodGet {
+		@formtag.FormTag(formtag.FormTagProperties{
+			Id:      id,
+			Action:  props.Href,
+			Method:  props.Method,
+			Confirm: props.Confirm,
+			Class:   props.Class,
+		}) {
+			@button.Button(button.Props{
+				Type:    button.TypeSubmit,
+				Variant: props.Variant,
+			}) {
+				{ children... }
+			}
+		}
+	} else {
+		@button.Button(button.Props{
+			ID:      id,
+			Href:    props.Href,
+			Variant: props.Variant,
+			Class:   props.Class,
+		}) {
+			{ children... }
+		}
+	}
+}

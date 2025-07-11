@@ -1,0 +1,56 @@
+{{ printf "{{ %sKey := \"%s\" }}" .CamelCase .SnakeCase }}
+{{ printf "{{ has%sErrors := errors.HasField(%sKey) }}" .PascalCase .CamelCase}}
+{{- $global	:= .}}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: {{ .CamelCase }}Key,
+	}) {
+		{{ .PascalCase }}
+	}
+	@selectbox.SelectBox() {
+		@selectbox.Trigger(selectbox.TriggerProps{
+			ID:       {{ .CamelCase }}Key,
+			Name:     {{ .CamelCase }}Key,
+			HasError: has{{ .PascalCase }}Errors,
+			{{- if not .IsOptional }}
+			Required: true,
+			{{- end }}
+		}) {
+			@selectbox.Value(selectbox.ValueProps{
+				Placeholder: i18n.T(ctx, "select_placeholder"),
+			})
+		}
+		@selectbox.Content() {
+			@selectbox.Group() {
+				{{- if .EnumStrings }}
+				{{- range .EnumStrings }}
+				@selectbox.Item(selectbox.ItemProps{
+					Value:    "{{ .SnakeCase }}",
+					{{- if $global.IsOptional }}
+					Selected: {{ printf "%s.%s.GetValue() == \"%s\"" $global.ModelTransformedText.CamelCase $global.PascalCase .SnakeCase}},
+					Disabled: {{ printf "%s.%s.GetValue() == \"%s\"" $global.ModelTransformedText.CamelCase $global.PascalCase .SnakeCase}},
+					{{- else }}
+					Selected: {{ printf "%s.%s == \"%s\"" $global.ModelTransformedText.CamelCase $global.PascalCase .SnakeCase}},
+					Disabled: {{ printf "%s.%s == \"%s\"" $global.ModelTransformedText.CamelCase $global.PascalCase .SnakeCase}},
+					{{- end }}
+				}) {
+					{{ .PascalCase }}
+				}
+				{{- end }}
+				{{- end }}
+			}
+		}
+	}
+	@form.Description() {
+		Select {{ .PascalCase }}
+	}
+	if has{{ .PascalCase }}Errors {
+		for _,value := range errors.Field({{ .CamelCase }}Key) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}

@@ -2,8 +2,10 @@ package bootstrap
 
 import (
 	"bytes"
+	"embed"
 	"fmt"
 	"github.com/charmbracelet/log"
+	"github.com/coditory/go-errors"
 	"go/format"
 	"io/fs"
 	"os"
@@ -11,7 +13,15 @@ import (
 )
 
 func copyCoreToProject(projectDirName string, input InitProjectInput) error {
-	return fs.WalkDir(coreFS, "core", func(currentPath string, d fs.DirEntry, err error) error {
+	return copyDirToProject(coreFS, "core", projectDirName, input)
+}
+
+func copyCmdToProject(projectDirName string, input InitProjectInput) error {
+	return copyDirToProject(cmdFS, "cmd", projectDirName, input)
+}
+
+func copyDirToProject(atFs embed.FS, dir, projectDirName string, input InitProjectInput) error {
+	return fs.WalkDir(atFs, dir, func(currentPath string, d fs.DirEntry, err error) error {
 		if err != nil {
 			return err
 		}
@@ -29,13 +39,7 @@ func copyCoreToProject(projectDirName string, input InitProjectInput) error {
 
 			fileExt := path.Ext(currentPath)
 
-			//FIXME: this should not be, but now due logger package I put it here to avoid errors. When adding new logger impl this should
-			// be erased
-			if fileExt != ".go" {
-				return nil
-			}
-
-			content, err := fs.ReadFile(coreFS, currentPath)
+			content, err := fs.ReadFile(atFs, currentPath)
 			if err != nil {
 				fmt.Println("Error reading file:", currentPath, err)
 				return err
@@ -43,9 +47,11 @@ func copyCoreToProject(projectDirName string, input InitProjectInput) error {
 
 			content = bytes.Replace(content, []byte("\"github.com/manicar2093/gomancer/bootstrap"), []byte(fmt.Sprintf("\"%s", input.ModuleName)), -1)
 
-			content, err = format.Source(content)
-			if err != nil {
-				return err
+			if fileExt == ".go" {
+				content, err = format.Source(content)
+				if err != nil {
+					return errors.Wrap(err, "Error formatting .go file")
+				}
 			}
 
 			if err := os.WriteFile(path.Join(projectDir), content, 0755); err != nil {

@@ -2,6 +2,7 @@ package apperrors
 
 import (
 	"fmt"
+	"github.com/gookit/validate"
 
 	"github.com/manicar2093/gomancer/bootstrap/core/validator"
 	"net/http"
@@ -19,8 +20,8 @@ type (
 		Error interface{} `json:"error"`
 	}
 	ValidationError struct {
-		validator.ValidationError `json:",inline"`
-		Code                      int `json:"code"`
+		validate.Errors `json:"errors"`
+		Code            int `json:"code"`
 	}
 )
 
@@ -45,8 +46,8 @@ func handleErrorType(err error) (int, interface{}) {
 		switch hErr := iterErr.(type) {
 		case *validator.ValidationError:
 			return http.StatusBadRequest, ValidationError{
-				Code:            http.StatusBadRequest,
-				ValidationError: *hErr,
+				Code:   http.StatusBadRequest,
+				Errors: hErr.Errors,
 			}
 		case HandleableError:
 			return hErr.StatusCode(), BasicError{

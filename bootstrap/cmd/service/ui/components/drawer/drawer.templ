@@ -1,0 +1,432 @@
+// templui component drawer - version: main installed by templui v0.70.0
+package drawer
+
+import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/utils"
+
+type Position string
+
+const (
+	PositionTop    Position = "top"
+	PositionRight  Position = "right"
+	PositionBottom Position = "bottom"
+	PositionLeft   Position = "left"
+)
+
+type Props struct {
+	ID         string
+	Class      string
+	Attributes templ.Attributes
+	Side       Position
+}
+
+type TriggerProps struct {
+	ID         string
+	Class      string
+	Attributes templ.Attributes
+}
+
+type ContentProps struct {
+	ID         string
+	Class      string
+	Attributes templ.Attributes
+	Position   Position
+}
+
+type HeaderProps struct {
+	ID         string
+	Class      string
+	Attributes templ.Attributes
+}
+
+type FooterProps struct {
+	ID         string
+	Class      string
+	Attributes templ.Attributes
+}
+
+type TitleProps struct {
+	ID         string
+	Class      string
+	Attributes templ.Attributes
+}
+
+type DescriptionProps struct {
+	ID         string
+	Class      string
+	Attributes templ.Attributes
+}
+
+type CloseProps struct {
+	ID         string
+	Class      string
+	Attributes templ.Attributes
+}
+
+templ Drawer(props ...Props) {
+	@Script()
+	{{ var p Props }}
+	if len(props) > 0 {
+		{{ p = props[0] }}
+	}
+	if p.ID == "" {
+		{{ p.ID = utils.RandomID() }}
+	}
+	<div
+		id={ p.ID }
+		class={ utils.TwMerge("relative", p.Class) }
+		data-component="drawer"
+		data-drawer-id={ p.ID }
+		{ p.Attributes... }
+	>
+		{ children... }
+	</div>
+}
+
+templ Trigger(props ...TriggerProps) {
+	{{ var p TriggerProps }}
+	if len(props) > 0 {
+		{{ p = props[0] }}
+	}
+	<div
+		if p.ID != "" {
+			id={ p.ID }
+		}
+		class={ utils.TwMerge("cursor-pointer", p.Class) }
+		data-drawer-trigger
+		{ p.Attributes... }
+	>
+		{ children... }
+	</div>
+}
+
+templ Content(props ...ContentProps) {
+	{{ var p ContentProps }}
+	if len(props) > 0 {
+		{{ p = props[0] }}
+	}
+	if p.ID == "" {
+		{{ p.ID = utils.RandomID() }}
+	}
+	<div
+		if p.ID != "" {
+			id={ p.ID }
+		}
+		class="fixed inset-0 z-50 bg-background/80 backdrop-blur-xs templui-drawer-backdrop hidden"
+		data-drawer-backdrop
+	></div>
+	<div
+		id={ p.ID + "-content" }
+		class={
+			utils.TwMerge(
+				"fixed z-50 templui-drawer-content hidden",
+				p.Class,
+				utils.If(p.Position == PositionRight, "inset-y-0 right-0 w-3/4 md:w-1/2 lg:w-1/3"),
+				utils.If(p.Position == PositionLeft, "inset-y-0 left-0 w-3/4 md:w-1/2 lg:w-1/3"),
+				utils.If(p.Position == PositionTop, "inset-x-0 top-0 h-auto sm:h-1/2"),
+				utils.If(p.Position == PositionBottom, "inset-x-0 bottom-0 h-auto sm:h-1/2"),
+			),
+		}
+		data-drawer-content
+		data-drawer-position={ string(p.Position) }
+		{ p.Attributes... }
+	>
+		<div
+			class={
+				utils.TwMerge(
+					"h-full overflow-y-auto bg-background p-6 shadow-lg",
+					utils.If(p.Position == PositionRight, "border-l"),
+					utils.If(p.Position == PositionLeft, "border-r"),
+					utils.If(p.Position == PositionBottom, "border-t"),
+					utils.If(p.Position == PositionTop, "border-b"),
+				),
+			}
+			data-drawer-inner
+		>
+			{ children... }
+		</div>
+	</div>
+}
+
+templ Header(props ...HeaderProps) {
+	{{ var p HeaderProps }}
+	if len(props) > 0 {
+		{{ p = props[0] }}
+	}
+	<div
+		if p.ID != "" {
+			id={ p.ID }
+		}
+		class={ utils.TwMerge("flex flex-col space-y-1.5 pb-4", p.Class) }
+		{ p.Attributes... }
+	>
+		{ children... }
+	</div>
+}
+
+templ Title(props ...TitleProps) {
+	{{ var p TitleProps }}
+	if len(props) > 0 {
+		{{ p = props[0] }}
+	}
+	<h2
+		if p.ID != "" {
+			id={ p.ID }
+		}
+		class={ utils.TwMerge("text-lg font-semibold leading-none tracking-tight", p.Class) }
+		{ p.Attributes... }
+	>
+		{ children... }
+	</h2>
+}
+
+templ Description(props ...DescriptionProps) {
+	{{ var p DescriptionProps }}
+	if len(props) > 0 {
+		{{ p = props[0] }}
+	}
+	<p
+		if p.ID != "" {
+			id={ p.ID }
+		}
+		class={ utils.TwMerge("text-sm text-muted-foreground", p.Class) }
+		{ p.Attributes... }
+	>
+		{ children... }
+	</p>
+}
+
+templ Footer(props ...FooterProps) {
+	{{ var p FooterProps }}
+	if len(props) > 0 {
+		{{ p = props[0] }}
+	}
+	<div
+		if p.ID != "" {
+			id={ p.ID }
+		}
+		class={ utils.TwMerge("flex flex-col-reverse sm:flex-row sm:justify-end sm:space-x-2 pt-4", p.Class) }
+		{ p.Attributes... }
+	>
+		{ children... }
+	</div>
+}
+
+templ Close(props ...CloseProps) {
+	{{ var p CloseProps }}
+	if len(props) > 0 {
+		{{ p = props[0] }}
+	}
+	<button
+		if p.ID != "" {
+			id={ p.ID }
+		}
+		class={
+			utils.TwMerge(
+				"inline-flex items-center justify-center rounded-md text-sm font-medium ring-offset-background",
+				"transition-colors focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+				"disabled:pointer-events-none disabled:opacity-50 border border-input bg-background hover:bg-accent",
+				"hover:text-accent-foreground h-10 px-4 py-2",
+				p.Class,
+			),
+		}
+		data-drawer-close
+		{ p.Attributes... }
+	>
+		{ children... }
+	</button>
+}
+
+var handle = templ.NewOnceHandle()
+
+templ Script() {
+	@handle.Once() {
+		<script nonce={ templ.GetNonce(ctx) }>
+   
+			(function() { // IIFE
+				function initDrawer(drawer) {
+					// Get the drawer elements
+					const triggers = drawer.querySelectorAll('[data-drawer-trigger]');
+					const content = drawer.querySelector('[data-drawer-content]');
+					const backdrop = drawer.querySelector('[data-drawer-backdrop]');
+					const closeButtons = drawer.querySelectorAll('[data-drawer-close]');
+					const position = content?.getAttribute('data-drawer-position') || 'right';
+					
+					if (!content || !backdrop) return;
+					
+					// Set up animations based on position
+					const transitions = {
+						'left': {
+							enterFrom: 'opacity-0 -translate-x-full',
+							enterTo: 'opacity-100 translate-x-0',
+							leaveFrom: 'opacity-100 translate-x-0',
+							leaveTo: 'opacity-0 -translate-x-full'
+						},
+						'right': {
+							enterFrom: 'opacity-0 translate-x-full',
+							enterTo: 'opacity-100 translate-x-0',
+							leaveFrom: 'opacity-100 translate-x-0',
+							leaveTo: 'opacity-0 translate-x-full'
+						},
+						'top': {
+							enterFrom: 'opacity-0 -translate-y-full',
+							enterTo: 'opacity-100 translate-y-0',
+							leaveFrom: 'opacity-100 translate-y-0',
+							leaveTo: 'opacity-0 -translate-y-full'
+						},
+						'bottom': {
+							enterFrom: 'opacity-0 translate-y-full',
+							enterTo: 'opacity-100 translate-y-0',
+							leaveFrom: 'opacity-100 translate-y-0',
+							leaveTo: 'opacity-0 translate-y-full'
+						}
+					};
+
+					// Check if drawer is already initialized
+					if (drawer.dataset.drawerInitialized) {
+						return;
+					}
+					drawer.dataset.drawerInitialized = 'true';
+
+					// Initial styles
+					content.style.transform = position === 'left' ? 'translateX(-100%)' : 
+											position === 'right' ? 'translateX(100%)' :
+											position === 'top' ? 'translateY(-100%)' : 
+											'translateY(100%)';
+					content.style.opacity = '0';
+					backdrop.style.opacity = '0';
+					content.style.display = 'none'; // Ensure it starts hidden
+					backdrop.style.display = 'none'; // Ensure it starts hidden
+					
+					// Function to open the drawer
+					function openDrawer() {
+						// Display elements
+						backdrop.style.display = 'block';
+						content.style.display = 'block';
+						
+						// Trigger reflow
+						void content.offsetWidth;
+						
+						// Apply transitions
+						backdrop.style.transition = 'opacity 300ms ease-out';
+						content.style.transition = 'opacity 300ms ease-out, transform 300ms ease-out';
+						
+						// Animate in
+						backdrop.style.opacity = '1';
+						content.style.opacity = '1';
+						content.style.transform = 'translate(0)';
+						
+						// Lock body scroll
+						document.body.style.overflow = 'hidden';
+						
+						// Add event listeners for close actions
+						backdrop.addEventListener('click', closeDrawer);
+						document.addEventListener('keydown', handleEscKey);
+						document.addEventListener('click', handleClickAway);
+					}
+					
+					// Function to close the drawer
+					function closeDrawer() {
+						// Remove event listeners before animation starts
+						backdrop.removeEventListener('click', closeDrawer);
+						document.removeEventListener('keydown', handleEscKey);
+						document.removeEventListener('click', handleClickAway);
+
+						// Apply transitions
+						backdrop.style.transition = 'opacity 300ms ease-in';
+						content.style.transition = 'opacity 300ms ease-in, transform 300ms ease-in';
+						
+						// Animate out
+						backdrop.style.opacity = '0';
+						
+						if (position === 'left') {
+							content.style.transform = 'translateX(-100%)';
+						} else if (position === 'right') {
+							content.style.transform = 'translateX(100%)';
+						} else if (position === 'top') {
+							content.style.transform = 'translateY(-100%)';
+						} else if (position === 'bottom') {
+							content.style.transform = 'translateY(100%)';
+						}
+						
+						content.style.opacity = '0';
+						
+						// Hide elements after animation
+						setTimeout(() => {
+							if (content.style.opacity === '0') { // Check if it wasn't reopened during the timeout
+								backdrop.style.display = 'none';
+								content.style.display = 'none';
+							}
+							// Unlock body scroll only if no other drawers are open
+							const anyDrawerOpen = document.querySelector('[data-component="drawer"] [data-drawer-backdrop][style*="display: block"]');
+							if (!anyDrawerOpen) {
+								document.body.style.overflow = '';
+							}
+						}, 300);
+					}
+					
+					// Click away handler
+					function handleClickAway(e) {
+						// Check if the click is outside the content AND not on any trigger associated with THIS drawer
+						if (content.style.display === 'block' &&
+							!content.contains(e.target) &&
+							!Array.from(triggers).some(trigger => trigger.contains(e.target))) {
+							closeDrawer();
+						}
+					}
+					
+					// ESC key handler
+					function handleEscKey(e) {
+						if (e.key === 'Escape' && content.style.display === 'block') {
+							closeDrawer();
+						}
+					}
+					
+					// Set up trigger click listeners
+					triggers.forEach(trigger => {
+						trigger.removeEventListener('click', openDrawer); // Remove potential duplicates
+						trigger.addEventListener('click', openDrawer);
+					});
+					
+					// Set up close button listeners
+					closeButtons.forEach(button => {
+						button.removeEventListener('click', closeDrawer); // Remove potential duplicates
+						button.addEventListener('click', closeDrawer);
+					});
+					
+					// Stop propagation on the inner content click to prevent backdrop click handler
+					const inner = content.querySelector('[data-drawer-inner]');
+					if (inner) {
+						inner.removeEventListener('click', stopPropagationHandler); // Remove potential duplicates
+						inner.addEventListener('click', stopPropagationHandler);
+					}
+				}
+
+				function stopPropagationHandler(e) {
+					e.stopPropagation();
+				}
+
+				function initAllComponents(root = document) {
+					if (root instanceof Element && root.matches('[data-component="drawer"]')) {
+						initDrawer(root);
+					}
+					if (root && typeof root.querySelectorAll === 'function') {
+						const drawers = root.querySelectorAll('[data-component="drawer"]');
+						drawers.forEach(initDrawer);
+					}
+				}
+
+				const handleHtmxSwap = (event) => {
+					const target = event.detail.elt
+					if (target instanceof Element) {
+						requestAnimationFrame(() => initAllComponents(target));
+					}
+				};
+
+				initAllComponents();
+				document.addEventListener('DOMContentLoaded', () => initAllComponents());
+				document.body.addEventListener('htmx:afterSwap', handleHtmxSwap);
+				document.body.addEventListener('htmx:oobAfterSwap', handleHtmxSwap);
+			})(); // End of IIFE
+        </script>
+	}
+}

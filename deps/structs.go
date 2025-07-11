@@ -31,7 +31,12 @@ type (
 		Dependency
 		Clause Dependency
 	}
-
+	I18n struct {
+		Dependency
+	}
+	GookitValidate struct {
+		Dependency
+	}
 	Project struct {
 		Pkg
 		Core
@@ -42,13 +47,37 @@ type (
 		Dependency
 		Config Dependency
 	}
-	Api struct {
+	Controllers struct {
 		Dependency
-		Controllers Dependency
+		InitPages Dependency
+	}
+
+	Components struct {
+		Button     Dependency
+		Drawer     Dependency
+		Form       Dependency
+		Icon       Dependency
+		Input      Dependency
+		Label      Dependency
+		Pagination Dependency
+		Popover    Dependency
+		SelectBox  Dependency
+		Table      Dependency
+		Toggle     Dependency
+	}
+	Ui struct {
+		Components
+		Layouts Dependency
+	}
+	Service struct {
+		Dependency
+		Controllers
+		Ui
+		Translations Dependency
 	}
 	Cmd struct {
 		Dependency
-		Api
+		Service
 	}
 	Domain struct {
 		Dependency
@@ -66,12 +95,22 @@ type (
 		Connections Dependency
 		CommonReq   Dependency
 		AppErrors   Dependency
+		CoreTpls    CoreTpls
+	}
+	CoreTpls struct {
+		Dependency
+		Toast    Dependency
+		DateTime Dependency
+		FormTag  Dependency
+		Link     Dependency
 	}
 	Container struct {
 		Echo
 		EchoRoutesView
 		Std
 		Gorm
+		I18n
+		GookitValidate
 		Project
 		MapStructure Dependency
 		GoFakeIt     Dependency

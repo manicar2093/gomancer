@@ -1,0 +1,38 @@
+{{define "web_form"}}package {{.LowerNoSpaceCase}}pages
+
+import (
+    {{ .GoDeps.GookitValidate.GenerateImportString }}
+    {{ .GoDeps.I18n.GenerateImportString }}
+    {{ range .ComponentsDeps }}{{ println .GenerateImportString  }}{{ end }}
+    {{ .GoDeps.Project.Core.CoreTpls.GenerateImportString }}
+    {{ .GoDeps.Project.Core.CoreTpls.FormTag.GenerateImportString }}
+    {{ .GoDeps.Project.Internal.Domain.Models.GenerateImportString }}
+)
+
+templ {{.PascalCase}}Form({{.CamelCase}} *models.{{.PascalCase}}, errors validate.Errors, props coretpls.FormProperties) {
+    @formtag.FormTag(formtag.FormTagProperties{
+        Action: props.Action,
+        Method: props.Method,
+        Class:  props.Class,
+    }) {
+        <div class="mb-2">
+{{ range .Attributes }}
+            {{GenerateFormItemInput .}}
+{{ end }}
+        </div>
+        @button.Button(button.Props{
+            Variant: button.VariantDefault,
+            Type:    button.TypeSubmit,
+        }) {
+            { i18n.T(ctx, "save") }
+        }
+        @button.Button(button.Props{
+            Type:    button.TypeSubmit,
+            Variant: button.VariantGhost,
+            Href:    "/app/{{ Pluralize .SnakeCase }}?page_number=1",
+        }) {
+            { i18n.T(ctx, "cancel") }
+        }
+    }
+}
+{{end}}

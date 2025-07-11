@@ -5,30 +5,52 @@ import (
     {{.GoDeps.Echo.GenerateImportString}}
     {{.GoDeps.Echo.Middlewares.GenerateImportString}}
     {{.GoDeps.EchoRoutesView.GenerateImportString}}
+    {{.GoDeps.Project.Cmd.Service.Controllers.GenerateImportString}}
+    {{.GoDeps.Project.Cmd.Service.Translations.GenerateImportString}}
     {{.GoDeps.Project.Core.GenerateImportString}}
     {{.GoDeps.Project.Core.AppErrors.GenerateImportString}}
     {{.GoDeps.Project.Core.Converters.GenerateImportString}}
-    {{.GoDeps.Project.Core.Validator.GenerateImportString}}
     {{.GoDeps.Project.Core.Logger.GenerateImportString}}
+    {{.GoDeps.Project.Core.Validator.GenerateImportString}}
     {{.GoDeps.Project.Pkg.Config.GenerateImportString}}
-    {{.GoDeps.Project.Cmd.Api.Controllers.GenerateImportString}}
 )
 
 func main() {
     var (
-        echoInstance = echo.New()
-        baseEndpoint = "/api/v1"
-        baseGroup    = echoInstance.Group(baseEndpoint)
-        conf         = converters.Must(core.ParseConfig[config.Config]())
+        e                = echo.New()
+        restBaseEndpoint = "/api/v1"
+        webBaseEndpoint  = "/app"
+        restBaseGroup    = e.Group(restBaseEndpoint)
+        webBaseGroup     = e.Group(webBaseEndpoint)
+        conf             = converters.Must(core.ParseConfig[config.Config]())
     )
     logger.Config()
-    echoInstance.Use(middleware.Logger())
-    core.RegisterController(baseGroup, controllers.NewInitController())
-    echoroutesview.RegisterRoutesViewer(echoInstance)
 
-    echoInstance.HTTPErrorHandler = apperrors.HandlerWEcho
-    echoInstance.Validator = validator.NewGooKitValidator()
+    // Use only for web app. echo do not allow to register this on a group :/
+    e.Pre(middleware.MethodOverrideWithConfig(middleware.MethodOverrideConfig{
+        Getter: middleware.MethodFromForm("_method"),
+    }))
 
-    echoInstance.Logger.Fatal(echoInstance.Start(fmt.Sprintf(":%d", conf.Port)))
+    e.Use(core.I18nMiddleware(translations.Embed, "en"))
+
+    webBaseGroup.Static("/assets", "./cmd/service/assets")
+    webBaseGroup.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
+        TokenLookup: "form:X-XSRF-TOKEN",
+    }))
+    webBaseGroup.Use(core.SessionSecretKeyMiddleware(conf.SessionSecretKeyConfig))
+
+    e.Use(middleware.Logger())
+
+    core.RegisterController(webBaseGroup, controllers.NewInitWebController())
+    core.RegisterController(restBaseGroup, controllers.NewInitRestController())
+
+    if err := echoroutesview.RegisterRoutesViewer(e); err != nil {
+        panic(err)
+    }
+
+    e.HTTPErrorHandler = apperrors.HandlerWEcho
+    e.Validator = validator.NoValidatorWarning{}
+
+    e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", conf.Port)))
 }
 {{ end }}

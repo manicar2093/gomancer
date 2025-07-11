@@ -3,6 +3,7 @@ package connections
 import (
 	"github.com/manicar2093/gomancer/bootstrap/core/httphealthcheck"
 	"log"
+
 	"time"
 
 	_ "github.com/jackc/pgx/v5"

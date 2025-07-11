@@ -64,6 +64,18 @@ func Init(moduleName string) Container {
 				Alias: "clause",
 			},
 		},
+		I18n: I18n{
+			Dependency: Dependency{
+				Path:  "github.com/invopop/ctxi18n/i18n",
+				Alias: "i18n",
+			},
+		},
+		GookitValidate: GookitValidate{
+			Dependency: Dependency{
+				Path:  "github.com/gookit/validate",
+				Alias: "validate",
+			},
+		},
 		MapStructure: Dependency{
 			Path:  "github.com/go-viper/mapstructure/v2",
 			Alias: "mapstructure",
@@ -128,6 +140,28 @@ func Init(moduleName string) Container {
 					Path:  buildPath(moduleName, "core", "apperrors"),
 					Alias: "apperrors",
 				},
+				CoreTpls: CoreTpls{
+					Dependency: Dependency{
+						Path:  buildPath(moduleName, "core", "coretpls"),
+						Alias: "coretpls",
+					},
+					Toast: Dependency{
+						Path:  buildPath(moduleName, "core", "coretpls", "toast"),
+						Alias: "toast",
+					},
+					DateTime: Dependency{
+						Path:  buildPath(moduleName, "core", "coretpls", "datetime"),
+						Alias: "datetime",
+					},
+					FormTag: Dependency{
+						Path:  buildPath(moduleName, "core", "coretpls", "formtag"),
+						Alias: "formtag",
+					},
+					Link: Dependency{
+						Path:  buildPath(moduleName, "core", "coretpls", "link"),
+						Alias: "link",
+					},
+				},
 			},
 			Internal: Internal{
 				Dependency: Dependency{
@@ -150,14 +184,76 @@ func Init(moduleName string) Container {
 					Path:  buildPath(moduleName, "cmd"),
 					Alias: "cmd",
 				},
-				Api: Api{
+				Service: Service{
 					Dependency: Dependency{
-						Path:  buildPath(moduleName, "cmd", "api"),
-						Alias: "api",
+						Path:  buildPath(moduleName, "cmd", "service"),
+						Alias: "service",
 					},
-					Controllers: Dependency{
-						Path:  buildPath(moduleName, "cmd", "api", "controllers"),
-						Alias: "controllers",
+					Controllers: Controllers{
+						Dependency: Dependency{
+							Path:  buildPath(moduleName, "cmd", "service", "controllers"),
+							Alias: "controllers",
+						},
+						InitPages: Dependency{
+							Path:  buildPath(moduleName, "cmd", "service", "controllers", "initpages"),
+							Alias: "initpages",
+						},
+					},
+					Ui: Ui{
+						Components: Components{
+							Button: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "button"),
+								Alias: "button",
+							},
+							Drawer: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "drawer"),
+								Alias: "drawer",
+							},
+							Form: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "form"),
+								Alias: "form",
+							},
+							Icon: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "icon"),
+								Alias: "icon",
+							},
+							Input: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "input"),
+								Alias: "input",
+							},
+							Label: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "label"),
+								Alias: "label",
+							},
+							Pagination: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "pagination"),
+								Alias: "pagination",
+							},
+							Popover: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "popover"),
+								Alias: "popover",
+							},
+							SelectBox: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "selectbox"),
+								Alias: "selectbox",
+							},
+							Table: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "table"),
+								Alias: "table",
+							},
+							Toggle: Dependency{
+								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "toggle"),
+								Alias: "toggle",
+							},
+						},
+						Layouts: Dependency{
+							Path:  buildPath(moduleName, "cmd", "service", "ui", "layouts"),
+							Alias: "layouts",
+						},
+					},
+					Translations: Dependency{
+						Path:  buildPath(moduleName, "cmd", "service", "translations"),
+						Alias: "translations",
 					},
 				},
 			},

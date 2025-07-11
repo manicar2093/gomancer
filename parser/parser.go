@@ -4,9 +4,9 @@ import (
 	"fmt"
 	"github.com/charmbracelet/log"
 	"github.com/gertd/go-pluralize"
-	"github.com/iancoleman/strcase"
 	"github.com/manicar2093/gomancer/types"
 	"github.com/rjNemo/underscore"
+	strcase "github.com/stoewer/go-strcase"
 	"strings"
 )
 
@@ -35,14 +35,14 @@ func ParseArgs(args []string, moduleName string, isPkUuid bool) (GenerateModelIn
 		parseErrorsDetails []ParsingErrorDetail
 	)
 
-	modelNameCamelCase := strcase.ToLowerCamel(modelName)
+	modelNameCamelCase := strcase.LowerCamelCase(modelName)
 	lowerNoSpaceCase := strings.ToLower(modelNameCamelCase)
 	packageName := pluralize.NewClient().Plural(lowerNoSpaceCase)
 	response := GenerateModelInput{
 		PackageEntityName: packageName,
 		TransformedText: TransformedText{
-			SnakeCase:        strcase.ToSnake(modelName),
-			PascalCase:       strcase.ToCamel(modelName),
+			SnakeCase:        strcase.SnakeCase(modelName),
+			PascalCase:       strcase.UpperCamelCase(modelName),
 			CamelCase:        modelNameCamelCase,
 			LowerNoSpaceCase: lowerNoSpaceCase,
 		},
@@ -105,10 +105,10 @@ ParsingFor:
 					if isEnumType {
 						tempAttrib.EnumStrings = underscore.Map(enumData, func(enumItem string) TransformedText {
 							return TransformedText{
-								SnakeCase:        strcase.ToSnake(enumItem),
-								PascalCase:       strcase.ToCamel(enumItem),
+								SnakeCase:        strcase.SnakeCase(enumItem),
+								PascalCase:       strcase.UpperCamelCase(enumItem),
 								CamelCase:        enumItem,
-								LowerNoSpaceCase: strings.ToLower(strcase.ToLowerCamel(enumItem)),
+								LowerNoSpaceCase: strings.ToLower(strcase.LowerCamelCase(enumItem)),
 							}
 						})
 					}
@@ -145,10 +145,10 @@ ParsingFor:
 
 		attribName = separated[0]
 
-		attributeNameCamelCase := strcase.ToLowerCamel(attribName)
+		attributeNameCamelCase := strcase.LowerCamelCase(attribName)
 		tempAttrib.TransformedText = TransformedText{
-			SnakeCase:        strcase.ToSnake(attribName),
-			PascalCase:       strcase.ToCamel(attribName),
+			SnakeCase:        strcase.SnakeCase(attribName),
+			PascalCase:       strcase.UpperCamelCase(attribName),
 			CamelCase:        attributeNameCamelCase,
 			LowerNoSpaceCase: strings.ToLower(attributeNameCamelCase),
 		}

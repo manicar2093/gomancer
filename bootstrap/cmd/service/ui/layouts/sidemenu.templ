@@ -1,0 +1,32 @@
+package layouts
+
+import "github.com/manicar2093/gomancer/bootstrap/core/templutils"
+import "github.com/manicar2093/gomancer/bootstrap/core"
+
+templ SideMenu(echoCtx *core.EchoContextTemplWrapper) {
+	<div class="flex h-full flex-col justify-between bg-background">
+		<div class="px-4 py-6">
+			<span class="grid h-10 w-32 place-content-center rounded-lg bg-background text-xs">
+				Gomancer
+			</span>
+			<ul class="mt-6 space-y-1">
+				<li>
+					<a
+						href="/app/initial"
+						class={
+						    "block rounded-lg px-4 py-2 text-sm font-medium",
+						    templutils.IsPathStyles(
+						        echoCtx.Path(),
+						        "/app/initial",
+						        "bg-primary text-primary-foreground hover:bg-primary/90",
+						        "hover:bg-accent hover:text-accent-foreground",
+						    ),
+						}
+					>
+						Home
+					</a>
+				</li>
+			</ul>
+		</div>
+	</div>
+}

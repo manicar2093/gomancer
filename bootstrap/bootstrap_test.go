@@ -41,6 +41,7 @@ var _ = Describe("Main", Ordered, func() {
 			content := `DATABASE_URL="postgresql://development:development@localhost:5432/test_dev?sslmode=disable"
 ENVIRONMENT=dev
 PORT=3000
+SESSION_SECRET_KEY=session_secret_key
 `
 			Expect(dirWithPath(".env")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
@@ -87,7 +88,7 @@ package models
 			Expect(dirWithPath("internal/domain/models/init.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
 
-		It("creates cmd/api/controllers/init.go file", func() {
+		It("creates cmd/service/controllers/init_rest.go file", func() {
 			content := `package controllers
 
 import (
@@ -95,24 +96,52 @@ import (
     "net/http"
 )
 
-type InitController struct {}
+type InitRestController struct {}
 
-func NewInitController() *InitController {
-    return &InitController{}
+func NewInitRestController() *InitRestController {
+    return &InitRestController{}
 }
 
-func (c *InitController) SetUpRoutes(group *echo.Group) {
+func (c *InitRestController) SetUpRoutes(group *echo.Group) {
     group.GET("/initial", c.GetHandler)
 }
 
-func (c *InitController) GetHandler(ctx echo.Context) error {
+func (c *InitRestController) GetHandler(ctx echo.Context) error {
     return ctx.String(http.StatusOK, "Hello from your new API :D")
 }
 `
-			Expect(dirWithPath("cmd/api/controllers/init.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+			Expect(dirWithPath("cmd/service/controllers/init_rest.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
 
-		It("creates cmd/api/main.go file", func() {
+		It("creates cmd/service/controllers/init_web.go file", func() {
+			content := `package controllers
+
+import (
+    "test/cmd/service/controllers/initpages"
+    "test/core"
+    "net/http"
+
+    "github.com/labstack/echo/v4"
+)
+
+type InitWebController struct {}
+
+func NewInitWebController() *InitWebController {
+    return &InitWebController{}
+}
+
+func (c *InitWebController) SetUpRoutes(group *echo.Group) {
+    group.GET("/initial", c.GetHandler)
+}
+
+func (c *InitWebController) GetHandler(ctx echo.Context) error {
+	return core.Render(ctx, http.StatusOK, initpages.HomePage())
+}
+`
+			Expect(dirWithPath("cmd/service/controllers/init_web.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates cmd/service/main.go file", func() {
 			content := `package main
 
 import (
@@ -120,34 +149,56 @@ import (
     echo	"github.com/labstack/echo/v4"
     middleware	"github.com/labstack/echo/v4/middleware"
     echoroutesview	"github.com/manicar2093/echoroutesview"
+    controllers	"test/cmd/service/controllers"
+    translations	"test/cmd/service/translations"
     core	"test/core"
     apperrors	"test/core/apperrors"
     converters	"test/core/converters"
-    validator	"test/core/validator"
     logger	"test/core/logger"
+    validator	"test/core/validator"
     config	"test/pkg/config"
-    controllers	"test/cmd/api/controllers"
 )
 
 func main() {
     var (
-        echoInstance = echo.New()
-        baseEndpoint = "/api/v1"
-        baseGroup    = echoInstance.Group(baseEndpoint)
-        conf         = converters.Must(core.ParseConfig[config.Config]())
+        e                = echo.New()
+        restBaseEndpoint = "/api/v1"
+        webBaseEndpoint  = "/app"
+        restBaseGroup    = e.Group(restBaseEndpoint)
+        webBaseGroup     = e.Group(webBaseEndpoint)
+        conf             = converters.Must(core.ParseConfig[config.Config]())
     )
     logger.Config()
-    echoInstance.Use(middleware.Logger())
-    core.RegisterController(baseGroup, controllers.NewInitController())
-    echoroutesview.RegisterRoutesViewer(echoInstance)
 
-    echoInstance.HTTPErrorHandler = apperrors.HandlerWEcho
-    echoInstance.Validator = validator.NewGooKitValidator()
+    // Use only for web app. echo do not allow to register this on a group :/
+    e.Pre(middleware.MethodOverrideWithConfig(middleware.MethodOverrideConfig{
+        Getter: middleware.MethodFromForm("_method"),
+    }))
 
-    echoInstance.Logger.Fatal(echoInstance.Start(fmt.Sprintf(":%d", conf.Port)))
+    e.Use(core.I18nMiddleware(translations.Embed, "en"))
+
+    webBaseGroup.Static("/assets", "./cmd/service/assets")
+    webBaseGroup.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
+        TokenLookup: "form:X-XSRF-TOKEN",
+    }))
+    webBaseGroup.Use(core.SessionSecretKeyMiddleware(conf.SessionSecretKeyConfig))
+
+    e.Use(middleware.Logger())
+
+    core.RegisterController(webBaseGroup, controllers.NewInitWebController())
+    core.RegisterController(restBaseGroup, controllers.NewInitRestController())
+
+    if err := echoroutesview.RegisterRoutesViewer(e); err != nil {
+        panic(err)
+    }
+
+    e.HTTPErrorHandler = apperrors.HandlerWEcho
+    e.Validator = validator.NoValidatorWarning{}
+
+    e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", conf.Port)))
 }
 `
-			Expect(dirWithPath("cmd/api/main.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+			Expect(dirWithPath("cmd/service/main.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
 
 		It("creates pkg/generators/generators.go file", func() {
@@ -180,6 +231,7 @@ import (
 
 type Config struct {
     core.Config
+    core.SessionSecretKeyConfig
     connections.DatabaseConnectionConfig
 }
 `
@@ -248,6 +300,12 @@ jobs:
 			content := `module test
 
 go 1.24
+
+tool (
+	github.com/a-h/templ/cmd/templ
+	github.com/air-verse/air
+	github.com/axzilla/templui/cmd/templui
+)
 `
 			Expect(dirWithPath("go.mod")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
@@ -261,7 +319,7 @@ tasks:
     build:
         desc: Build your API to deploy anywhere
         cmds:
-            - go build -o .bin/api/server cmd/api/*.go
+            - go build -o .bin/service/server cmd/service/*.go
     fmt:
         desc: Format all your Golang and Prisma code
         cmds:
@@ -275,15 +333,31 @@ tasks:
         desc: Start project with air using your .env file
         dotenv: ['.env']
         cmds:
-            - air
+            - make -j3 tailwind templ dev
     run:
         desc: Start project from build
         dotenv: ['.env']
         deps: [build]
         cmds:
-            - ./.bin/api/server
+            - ./.bin/service/server
 `
 			Expect(dirWithPath("Taskfile.yml")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates Makefile file", func() {
+			content := `# Run templ generation in watch mode
+templ:
+	go tool templ generate --watch --proxy="http://localhost:8090" --open-browser=false -v
+
+# Watch Tailwind CSS changes
+tailwind:
+	tailwindcss -i ./cmd/service/sources/css/input.css -o ./cmd/service/assets/css/styles.css --watch
+
+# Start development server with all watchers
+dev:
+	go tool air
+`
+			Expect(dirWithPath("Makefile")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
 
 		It("creates .air.toml file", func() {
@@ -291,14 +365,16 @@ tasks:
 tmp_dir = "tmp"
 
 [build]
+# Array of commands to run before each build
+pre_cmd = []
 # Just plain old shell command. You could use make as well.
 cmd = "task build"
 # Binary file yields from cmd.
-bin = "./.bin/api/server"
+bin = "./.bin/service/server"
 # Customize binary, can setup environment variables when run your app.
 full_bin = ""
 # Watch these filename extensions.
-include_ext = ["go", "tpl", "tmpl", "html"]
+include_ext = ["go", "tpl", "tmpl", "html", "templ"]
 # Ignore these filename extensions or directories.
 exclude_dir = ["assets", "tmp", "vendor", "node_modules", "bin", "temporal", "prisma", "scripts", "static"]
 # Watch these directories if you specified.
@@ -330,7 +406,7 @@ kill_delay = 500 # ms
 # Rerun binary or not
 rerun = false
 # Delay after each executions
-rerun_delay = 500
+rerun_delay = 2000
 # Add additional arguments when running binary (bin/full_bin). Will run './tmp/main hello world'.
 args_bin = []
 
@@ -385,12 +461,55 @@ Be yourself. Find joy by what you do. Happy coding :)
 			Expect(dirWithPath("core/commonreq")).Should(BeADirectory())
 			Expect(dirWithPath("core/connections")).Should(BeADirectory())
 			Expect(dirWithPath("core/converters")).Should(BeADirectory())
+			Expect(dirWithPath("core/coretpls")).Should(BeADirectory())
 			Expect(dirWithPath("core/echoer")).Should(BeADirectory())
 			Expect(dirWithPath("core/env")).Should(BeADirectory())
 			Expect(dirWithPath("core/httphealthcheck")).Should(BeADirectory())
 			Expect(dirWithPath("core/logger")).Should(BeADirectory())
 			Expect(dirWithPath("core/stages")).Should(BeADirectory())
+			Expect(dirWithPath("core/templutils")).Should(BeADirectory())
 			Expect(dirWithPath("core/validator")).Should(BeADirectory())
+			Expect(dirWithPath("core/config.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("core/controllers.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("core/ctx_utils.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("core/flash.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("core/middlewares.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("core/templctx.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("core/templrender.go")).Should(BeAnExistingFile())
+		})
+
+		It("creates cmd directory", func() {
+			Expect(dirWithPath("cmd/service/assets/css/styles.css")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/img/favicon.ico")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/img/gomancer.png")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/js/htmx@2.0.4.min.js")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/js/popover.min.js")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/js/selectbox.min.js")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/js/theme-setter.js")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/assets/js/toggle-theme.js")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/sources/css/input.css")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/translations/translations.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/translations/en/translations.yaml")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/translations/es/translations.yaml")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/translations/es/validator.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/button/button.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/drawer/drawer.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/form/form.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/icon/icon.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/icon/icon_data.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/icon/icon_defs.go")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/input/input.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/label/label.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/pagination/pagination.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/popover/popover.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/selectbox/selectbox.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/components/table/table.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/layouts/drawer.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/layouts/flash_messages.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/layouts/initial.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/layouts/sidemenu.templ")).Should(BeAnExistingFile())
+			Expect(dirWithPath("cmd/service/ui/utils/templui.go")).Should(BeAnExistingFile())
+
 		})
 	})
 })

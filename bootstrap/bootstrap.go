@@ -20,6 +20,9 @@ var templatesFS embed.FS
 //go:embed core/*
 var coreFS embed.FS
 
+//go:embed cmd/*
+var cmdFS embed.FS
+
 type (
 	fileWithContent struct {
 		name, tmplName string
@@ -56,6 +59,10 @@ var (
 					"taskfile.yml",
 				},
 				{
+					"Makefile",
+					"Makefile",
+				},
+				{
 					".air.toml",
 					"air.toml",
 				},
@@ -84,16 +91,25 @@ var (
 			},
 		},
 		{
-			string(domain.CmdApiControllersPackagePath),
+			string(domain.CmdServiceControllersPackagePath),
 			[]fileWithContent{
 				{
-					"init.go",
-					"cmd_api_controllers_init",
+					"init_rest.go",
+					"cmd_service_controllers_init_rest",
 				},
 			},
 		},
 		{
-			string(domain.CmdApiPackagePath),
+			string(domain.CmdServiceControllersPackagePath),
+			[]fileWithContent{
+				{
+					"init_web.go",
+					"cmd_service_controllers_init_web",
+				},
+			},
+		},
+		{
+			string(domain.CmdServicePackagePath),
 			[]fileWithContent{
 				{
 					"main.go",
@@ -165,6 +181,9 @@ func InitProject(input InitProjectInput) (string, error) {
 	}
 
 	if err := copyCoreToProject(projectDirName, input); err != nil {
+		return "", err
+	}
+	if err := copyCmdToProject(projectDirName, input); err != nil {
 		return "", err
 	}
 

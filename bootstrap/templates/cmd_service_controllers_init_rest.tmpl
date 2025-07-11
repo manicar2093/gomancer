@@ -1,0 +1,21 @@
+{{ define "cmd_service_controllers_init_rest" }}package controllers
+
+import (
+    "{{.GoDeps.Echo.Path}}"
+    "{{.GoDeps.Std.Net.Http.Path}}"
+)
+
+type InitRestController struct {}
+
+func NewInitRestController() *InitRestController {
+    return &InitRestController{}
+}
+
+func (c *InitRestController) SetUpRoutes(group *echo.Group) {
+    group.GET("/initial", c.GetHandler)
+}
+
+func (c *InitRestController) GetHandler(ctx echo.Context) error {
+    return ctx.String(http.StatusOK, "Hello from your new API :D")
+}
+{{ end }}

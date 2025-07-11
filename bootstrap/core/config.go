@@ -12,29 +12,29 @@ type Config struct {
 	Port        int    `env:"PORT" validate:"required|min:1|max:65535"`
 }
 
-// ParseConfigWithOptions creates an instance of needed struct passing some env.Options. It is necesary struct contains env and validate tags to be parsed correctly
+// ParseConfigWithOptions creates an instance of the necessary struct passing some env.Options. It is necessary the struct contains env and validate tags to be parsed correctly
 func ParseConfigWithOptions[T any](opts env.Options) (T, error) {
 	var instance T
 	if err := env.ParseWithOptions(&instance, opts); err != nil {
 		return instance, err
 	}
 
-	v := validator.NewGooKitValidator()
-	if err := v.ValidateStruct(&instance); err != nil {
+	v := validator.NewStructValidatorConfigured(&instance, "en")
+	if err := validator.ValidateAndTransform(v); err != nil {
 		return instance, err
 	}
 	return instance, nil
 }
 
-// ParseConfig creates an instance of needed struct. It is necesary struct contains env and validate tags to be parsed correctly
+// ParseConfig creates an instance of the necessary struct. It is necessary the struct contains env and validate tags to be parsed correctly
 func ParseConfig[T any]() (T, error) {
 	var instance T
 	if err := env.Parse(&instance); err != nil {
 		return instance, err
 	}
 
-	v := validator.NewGooKitValidator()
-	if err := v.ValidateStruct(&instance); err != nil {
+	v := validator.NewStructValidatorConfigured(&instance, "en")
+	if err := validator.ValidateAndTransform(v); err != nil {
 		return instance, err
 	}
 	return instance, nil

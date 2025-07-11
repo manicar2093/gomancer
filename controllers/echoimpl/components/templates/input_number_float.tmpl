@@ -1,0 +1,38 @@
+{{ printf  "{{ %sKey := \"%s\" }}" .CamelCase .SnakeCase }}
+{{ printf "{{ has%sErrors := errors.HasField(%sKey) }}" .PascalCase .CamelCase}}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: {{ .CamelCase }}Key,
+	}) {
+		{{ .PascalCase }}
+	}
+	@input.Input(input.Props{
+		ID:       {{ .CamelCase }}Key,
+		Name:     {{ .CamelCase }}Key,
+		Type:     input.TypeNumber,
+		{{- if .IsOptional }}
+		Value:    {{.ModelTransformedText.CamelCase}}.{{ .PascalCase }}.GetValue(){{- if eq .Type "decimal"}}.StringFixed(2){{end}},
+		{{- else }}
+		Value:    {{.ModelTransformedText.CamelCase}}.{{ .PascalCase }}{{- if eq .Type "decimal"}}.StringFixed(2){{end}},
+		{{- end }}
+		HasError: has{{ .PascalCase }}Errors,
+		{{- if not .IsOptional }}
+		Required: true,
+		{{- end }}
+		Attributes: map[string]any{
+			"step": "0.01",
+		},
+	})
+	@form.Description() {
+		Enter {{ .PascalCase }}
+	}
+	if has{{ .PascalCase }}Errors {
+		for _,value := range errors.Field({{ .CamelCase }}Key) {
+			@form.Message(form.MessageProps{
+				Variant: form.MessageVariantError,
+			}) {
+				{ value }
+			}
+		}
+	}
+}

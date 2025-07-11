@@ -3,7 +3,10 @@ task install
 cd $HOME
 gomancer new github.com/manicar2093/gomancer_test
 cd $HOME/gomancer_test
+go mod tidy
 gomancer gen Entity arg1:string arg2:string:optional arg3:time:optional arg4:string arg5:time
+go tool templ generate --proxy="http://localhost:8090" --open-browser=false -v
+tailwindcss -i ./cmd/service/sources/css/input.css -o ./cmd/service/assets/css/styles.css
 go mod tidy
 task run &
 sleep 2

@@ -1,0 +1,289 @@
+package posttestpages
+
+import (
+	fmt "fmt"
+	i18n "github.com/invopop/ctxi18n/i18n"
+	gormpager "github.com/manicar2093/gormpager"
+	http "net/http"
+	button "github.com/user/project_name/cmd/service/ui/components/button"
+	label "github.com/user/project_name/cmd/service/ui/components/label"
+	pagination "github.com/user/project_name/cmd/service/ui/components/pagination"
+	table "github.com/user/project_name/cmd/service/ui/components/table"
+	link "github.com/user/project_name/core/coretpls/link"
+	models "github.com/user/project_name/internal/domain/models"
+)
+
+var tableId = "post_test-data-table"
+var tableIdAsSelector = fmt.Sprintf("#%s", tableId)
+
+templ PostTestsTable(page *gormpager.Page[models.PostTest]) {
+	@table.Table(table.Props{
+		ID: tableId,
+	}) {
+		@table.Header() {
+			@table.Row() {
+				@table.Head() {
+					AnOptionalInt
+				}
+				@table.Head() {
+					AnInt
+				}
+				@table.Head() {
+					AnOptionalInt8
+				}
+				@table.Head() {
+					AnInt8
+				}
+				@table.Head() {
+					AnOptionalInt16
+				}
+				@table.Head() {
+					AnInt16
+				}
+				@table.Head() {
+					AnOptionalInt32
+				}
+				@table.Head() {
+					AnInt32
+				}
+				@table.Head() {
+					AnOptionalInt64
+				}
+				@table.Head() {
+					AnInt64
+				}
+				@table.Head() {
+					AnOptionalFloat32
+				}
+				@table.Head() {
+					AnFloat32
+				}
+				@table.Head() {
+					AnOptionalFloat64
+				}
+				@table.Head() {
+					AnFloat64
+				}
+				@table.Head() {
+					OptionalString
+				}
+				@table.Head() {
+					String
+				}
+				@table.Head() {
+					OptionalBool
+				}
+				@table.Head() {
+					Bool
+				}
+				@table.Head() {
+					OptionalTime
+				}
+				@table.Head() {
+					Time
+				}
+				@table.Head() {
+					OptionalDecimal
+				}
+				@table.Head() {
+					Decimal
+				}
+				@table.Head() {
+					OptionalUuid
+				}
+				@table.Head() {
+					Uuid
+				}
+				@table.Head() {
+					OptionalEnum
+				}
+				@table.Head() {
+					Enum
+				}
+				@table.Head() {
+					{ i18n.T(ctx, "actions") }
+				}
+			}
+		}
+		if page.TotalEntries > 0 {
+			@table.Body() {
+				for _, item := range page.Items {
+					@table.Row() {
+						@table.Cell() {
+							{ item.AnOptionalInt.GetValue() }
+						}
+						@table.Cell() {
+							{ item.AnInt }
+						}
+						@table.Cell() {
+							{ item.AnOptionalInt8.GetValue() }
+						}
+						@table.Cell() {
+							{ item.AnInt8 }
+						}
+						@table.Cell() {
+							{ item.AnOptionalInt16.GetValue() }
+						}
+						@table.Cell() {
+							{ item.AnInt16 }
+						}
+						@table.Cell() {
+							{ item.AnOptionalInt32.GetValue() }
+						}
+						@table.Cell() {
+							{ item.AnInt32 }
+						}
+						@table.Cell() {
+							{ item.AnOptionalInt64.GetValue() }
+						}
+						@table.Cell() {
+							{ item.AnInt64 }
+						}
+						@table.Cell() {
+							{ item.AnOptionalFloat32.GetValue() }
+						}
+						@table.Cell() {
+							{ item.AnFloat32 }
+						}
+						@table.Cell() {
+							{ item.AnOptionalFloat64.GetValue() }
+						}
+						@table.Cell() {
+							{ item.AnFloat64 }
+						}
+						@table.Cell() {
+							{ item.OptionalString.GetValue() }
+						}
+						@table.Cell() {
+							{ item.String }
+						}
+						@table.Cell() {
+							{ item.OptionalBool.GetValue() }
+						}
+						@table.Cell() {
+							{ item.Bool }
+						}
+						@table.Cell() {
+							{ item.OptionalTime.GetValue().String() }
+						}
+						@table.Cell() {
+							{ item.Time.String() }
+						}
+						@table.Cell() {
+							{ item.OptionalDecimal.GetValue().StringFixed(2) }
+						}
+						@table.Cell() {
+							{ item.Decimal.StringFixed(2) }
+						}
+						@table.Cell() {
+							{ item.OptionalUuid.GetValue().String() }
+						}
+						@table.Cell() {
+							{ item.Uuid.String() }
+						}
+						@table.Cell() {
+							{ item.OptionalEnum.GetValue() }
+						}
+						@table.Cell() {
+							{ item.Enum }
+						}
+						@table.Cell() {
+							@button.Button(button.Props{
+								Variant: button.VariantSecondary,
+								Href:    fmt.Sprintf("/app/post_tests/%v", item.Id),
+							}) {
+								{ i18n.T(ctx, "show") }
+							}
+							@button.Button(button.Props{
+								Variant: button.VariantDefault,
+								Href:    fmt.Sprintf("/app/post_tests/%v/edit", item.Id),
+							}) {
+								{ i18n.T(ctx, "edit") }
+							}
+							@link.Link(link.LinkProps{
+								Href:    fmt.Sprintf("/app/post_tests/%v?page_number=%d", item.Id, page.CurrentPage),
+								Confirm: i18n.T(ctx, "confirm_deletion"),
+								Method:  http.MethodDelete,
+								Variant: button.VariantDestructive,
+								Class:   "inline-block",
+							}) {
+								{ i18n.T(ctx, "delete") }
+							}
+						}
+					}
+				}
+			}
+		}
+	}
+	if page.TotalEntries > 0 {
+		<div class="mt-4">
+			{{ p := pagination.CreatePagination(int(page.CurrentPage), int(page.TotalPages), int(page.TotalPages)) }}
+			@pagination.Pagination() {
+				@pagination.Content() {
+					@pagination.Item() {
+						@pagination.Previous(pagination.PreviousProps{
+							Href:     fmt.Sprintf("?page_number=%d", p.CurrentPage-1),
+							Disabled: !p.HasPrevious,
+							Label:    i18n.T(ctx, "previous"),
+						})
+					}
+					// First page with ellipsis if needed
+					if p.Pages[0] > 1 {
+						@pagination.Item() {
+							@pagination.Link(pagination.LinkProps{
+								Href: "?page_number=1",
+							}) {
+								1
+							}
+						}
+						if p.Pages[0] > 2 {
+							@pagination.Item() {
+								@pagination.Ellipsis()
+							}
+						}
+					}
+					// Visible pages
+					for _, page := range p.Pages {
+						@pagination.Item() {
+							@pagination.Link(pagination.LinkProps{
+								Href:     fmt.Sprintf("?page_number=%d", page),
+								IsActive: page == p.CurrentPage,
+							}) {
+								{ fmt.Sprint(page) }
+							}
+						}
+					}
+					// Last page with ellipsis if needed
+					if p.Pages[len(p.Pages)-1] < p.TotalPages {
+						if p.Pages[len(p.Pages)-1] < p.TotalPages-1 {
+							@pagination.Item() {
+								@pagination.Ellipsis()
+							}
+						}
+						@pagination.Item() {
+							@pagination.Link(pagination.LinkProps{
+								Href: fmt.Sprintf("?page_number=%d", p.TotalPages),
+							}) {
+								{ fmt.Sprint(p.TotalPages) }
+							}
+						}
+					}
+					@pagination.Item() {
+						@pagination.Next(pagination.NextProps{
+							Href:     fmt.Sprintf("?page_number=%d", p.CurrentPage+1),
+							Disabled: !p.HasNext,
+							Label:    i18n.T(ctx, "next"),
+						})
+					}
+				}
+			}
+		</div>
+	}
+	if page.TotalEntries == 0 {
+		@label.Label(label.Props{
+			Class: "text-center block p-5",
+		}) {
+			No data to show
+		}
+	}
+}

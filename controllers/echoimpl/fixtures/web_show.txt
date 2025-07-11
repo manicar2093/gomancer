@@ -1,0 +1,204 @@
+package posttestpages
+
+import (
+	fmt "fmt"
+	http "net/http"
+	i18n "github.com/invopop/ctxi18n/i18n"
+	models "github.com/user/project_name/internal/domain/models"
+	form "github.com/user/project_name/cmd/service/ui/components/form"
+	label "github.com/user/project_name/cmd/service/ui/components/label"
+	button "github.com/user/project_name/cmd/service/ui/components/button"
+	layouts "github.com/user/project_name/cmd/service/ui/layouts"
+	link "github.com/user/project_name/core/coretpls/link"
+)
+
+templ ShowPostTest(postTest *models.PostTest) {
+	@layouts.Initial() {
+		<h1 class="mb-2 text-xl">PostTest: { postTest.Id.String() }</h1>
+		<div class="mb-2 space-y-2">
+			@form.Item() {
+				@label.Label() {
+					AnOptionalInt
+				}
+				<p>{ postTest.AnOptionalInt.GetValue() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					AnInt
+				}
+				<p>{ postTest.AnInt }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					AnOptionalInt8
+				}
+				<p>{ postTest.AnOptionalInt8.GetValue() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					AnInt8
+				}
+				<p>{ postTest.AnInt8 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					AnOptionalInt16
+				}
+				<p>{ postTest.AnOptionalInt16.GetValue() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					AnInt16
+				}
+				<p>{ postTest.AnInt16 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					AnOptionalInt32
+				}
+				<p>{ postTest.AnOptionalInt32.GetValue() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					AnInt32
+				}
+				<p>{ postTest.AnInt32 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					AnOptionalInt64
+				}
+				<p>{ postTest.AnOptionalInt64.GetValue() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					AnInt64
+				}
+				<p>{ postTest.AnInt64 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					AnOptionalFloat32
+				}
+				<p>{ postTest.AnOptionalFloat32.GetValue() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					AnFloat32
+				}
+				<p>{ postTest.AnFloat32 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					AnOptionalFloat64
+				}
+				<p>{ postTest.AnOptionalFloat64.GetValue() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					AnFloat64
+				}
+				<p>{ postTest.AnFloat64 }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					OptionalString
+				}
+				<p>{ postTest.OptionalString.GetValue() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					String
+				}
+				<p>{ postTest.String }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					OptionalBool
+				}
+				<p>{ postTest.OptionalBool.GetValue() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Bool
+				}
+				<p>{ postTest.Bool }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					OptionalTime
+				}
+				<p>{ postTest.OptionalTime.GetValue().String() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Time
+				}
+				<p>{ postTest.Time.String() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					OptionalDecimal
+				}
+				<p>{ postTest.OptionalDecimal.GetValue().StringFixed(2) }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Decimal
+				}
+				<p>{ postTest.Decimal.StringFixed(2) }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					OptionalUuid
+				}
+				<p>{ postTest.OptionalUuid.GetValue().String() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Uuid
+				}
+				<p>{ postTest.Uuid.String() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					OptionalEnum
+				}
+				<p>{ postTest.OptionalEnum.GetValue() }</p>
+			}
+			@form.Item() {
+				@label.Label() {
+					Enum
+				}
+				<p>{ postTest.Enum }</p>
+			}
+		</div>
+		@link.Link(link.LinkProps{
+			Href:    fmt.Sprintf("/app/post_tests/%v/edit", postTest.Id),
+			Variant: button.VariantDefault,
+		}) {
+			{ i18n.T(ctx, "edit") }
+		}
+		@link.Link(link.LinkProps{
+			Href:    fmt.Sprintf("/app/post_tests/%v", postTest.Id),
+			Confirm: fmt.Sprintf("Are you sure to delete %v", postTest.Id),
+			Method:  http.MethodDelete,
+			Variant: button.VariantDestructive,
+			Class:   "inline-block",
+		}) {
+			{ i18n.T(ctx, "delete") }
+		}
+		@button.Button(button.Props{
+			Variant: button.VariantSecondary,
+			Href:    "/app/post_tests/new",
+		}) {
+			{ i18n.T(ctx, "create_new") }
+		}
+		@button.Button(button.Props{
+			Variant: button.VariantOutline,
+			Href:    "/app/post_tests?page_number=1",
+		}) {
+			{ i18n.T(ctx, "show_all") }
+		}
+	}
+}

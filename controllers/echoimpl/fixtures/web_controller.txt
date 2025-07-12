@@ -45,9 +45,9 @@ func (c *PostTestWebController) SetUpRoutes(group *echo.Group) {
 	// Creates a user
 	postTestGroup.POST("", c.SaveHandler)
 	// Patch user
-	postTestGroup.PATCH("/:id", c.SaveHandler)
+	postTestGroup.PATCH("/:id", c.PartialUpdateByIdHandler)
 	// Updates all user
-	postTestGroup.PUT("/:id", c.PartialUpdateByIdHandler)
+	postTestGroup.PUT("/:id", c.SaveHandler)
 	// Deletes a user
 	postTestGroup.DELETE("/:id", c.DeleteByIdHandler)
 }

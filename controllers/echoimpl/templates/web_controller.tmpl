@@ -45,9 +45,9 @@ func (c *{{.PascalCase}}WebController) SetUpRoutes(group *echo.Group) {
 	// Creates a user
 	{{.CamelCase}}Group.POST("", c.SaveHandler)
 	// Patch user
-	{{.CamelCase}}Group.PATCH("/:id", c.SaveHandler)
+	{{.CamelCase}}Group.PATCH("/:id", c.PartialUpdateByIdHandler)
 	// Updates all user
-	{{.CamelCase}}Group.PUT("/:id", c.PartialUpdateByIdHandler)
+	{{.CamelCase}}Group.PUT("/:id", c.SaveHandler)
 	// Deletes a user
 	{{.CamelCase}}Group.DELETE("/:id", c.DeleteByIdHandler)
 }

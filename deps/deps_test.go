@@ -14,7 +14,7 @@ var _ = Describe("Deps", func() {
 	var container deps.Container
 
 	BeforeEach(func() {
-		container = deps.Init(testfixtures.ModelBinaryIdSuccess.ModuleInfo.Name)
+		container = deps.Init(testfixtures.ModelBinaryIdSuccess.ModuleInfo.Name, testfixtures.ModelBinaryIdSuccess.TransformedText.LowerNoSpaceCase)
 	})
 
 	Describe("InCreation", func() {
@@ -310,6 +310,10 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Cmd.Service.Controllers.Alias).To(Equal("controllers"))
 				Expect(container.Project.Cmd.Service.Controllers.Path).To(Equal(testfixtures.TestPath + "/cmd/service/controllers"))
 				container.Project.Cmd.Service.Controllers.ImportAlias(file)
+
+				Expect(container.Project.Cmd.Service.Controllers.ModelPages.Alias).To(Equal("posttestpages"))
+				Expect(container.Project.Cmd.Service.Controllers.ModelPages.Path).To(Equal(testfixtures.TestPath + "/cmd/service/controllers/posttestpages"))
+				container.Project.Cmd.Service.Controllers.ModelPages.ImportAlias(file)
 
 				Expect(container.Project.Cmd.Service.Controllers.InitPages.Alias).To(Equal("initpages"))
 				Expect(container.Project.Cmd.Service.Controllers.InitPages.Path).To(Equal(testfixtures.TestPath + "/cmd/service/controllers/initpages"))

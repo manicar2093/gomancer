@@ -6,7 +6,8 @@ import (
 	"path"
 )
 
-func Init(moduleName string) Container {
+func Init(moduleName, lowerNoSpaceCase string) Container {
+	modelPagesPackageName := fmt.Sprintf("%spages", lowerNoSpaceCase)
 	return Container{
 		Echo: Echo{
 			Dependency: Dependency{
@@ -193,6 +194,10 @@ func Init(moduleName string) Container {
 						Dependency: Dependency{
 							Path:  buildPath(moduleName, "cmd", "service", "controllers"),
 							Alias: "controllers",
+						},
+						ModelPages: Dependency{
+							Path:  buildPath(moduleName, "cmd", "service", "controllers", modelPagesPackageName),
+							Alias: modelPagesPackageName,
 						},
 						InitPages: Dependency{
 							Path:  buildPath(moduleName, "cmd", "service", "controllers", "initpages"),

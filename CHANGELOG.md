@@ -1,3 +1,10 @@
+## v0.21.1 (2025-07-14)
+
+### Fix
+
+- change web controller verbs methods for patch and put
+- add model pages dependency
+
 ## v0.21.0 (2025-07-11)
 
 ### Feat

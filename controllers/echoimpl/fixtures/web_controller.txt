@@ -5,7 +5,7 @@ import (
 	validate	"github.com/gookit/validate"
 	i18n	"github.com/invopop/ctxi18n/i18n"
 	http	"net/http"
-	posttestpages "github.com/user/project_name/cmd/service/controllers/posttestpages"
+	posttestpages	"github.com/user/project_name/cmd/service/controllers/posttestpages"
 	toast	"github.com/user/project_name/core/coretpls/toast"
 	validator	"github.com/user/project_name/core/validator"
 
@@ -45,9 +45,9 @@ func (c *PostTestWebController) SetUpRoutes(group *echo.Group) {
 	// Creates a user
 	postTestGroup.POST("", c.SaveHandler)
 	// Patch user
-	postTestGroup.PATCH("/:id", c.SaveHandler)
+	postTestGroup.PATCH("/:id", c.PartialUpdateByIdHandler)
 	// Updates all user
-	postTestGroup.PUT("/:id", c.PartialUpdateByIdHandler)
+	postTestGroup.PUT("/:id", c.SaveHandler)
 	// Deletes a user
 	postTestGroup.DELETE("/:id", c.DeleteByIdHandler)
 }

@@ -47,7 +47,7 @@ var _ = Describe("Input Components", func() {
 		ID:       anOptionalIntKey,
 		Name:     anOptionalIntKey,
 		Type:     input.TypeNumber,
-		Value:    userData.AnOptionalInt.GetValue(),
+		Value:    strconv.Itoa(userData.AnOptionalInt.GetValue()),
 		HasError: hasAnOptionalIntErrors,
 	})
 	@form.Description() {
@@ -84,7 +84,7 @@ var _ = Describe("Input Components", func() {
 		ID:       anIntKey,
 		Name:     anIntKey,
 		Type:     input.TypeNumber,
-		Value:    userData.AnInt,
+		Value:    strconv.Itoa(userData.AnInt),
 		HasError: hasAnIntErrors,
 		Required: true,
 	})

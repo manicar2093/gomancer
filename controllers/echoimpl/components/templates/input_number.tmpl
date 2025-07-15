@@ -10,11 +10,7 @@
 		ID:       {{ .CamelCase }}Key,
 		Name:     {{ .CamelCase }}Key,
 		Type:     input.TypeNumber,
-		{{- if .IsOptional }}
-		Value:    {{.ModelTransformedText.CamelCase}}.{{ .PascalCase }}.GetValue(),
-		{{- else }}
-		Value:    {{.ModelTransformedText.CamelCase}}.{{ .PascalCase }},
-		{{- end }}
+		Value:    {{ GenerateFormValue . }},
 		HasError: has{{ .PascalCase }}Errors,
 		{{- if not .IsOptional }}
 		Required: true,

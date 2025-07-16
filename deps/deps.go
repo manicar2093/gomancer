@@ -166,6 +166,10 @@ func Init(moduleName, lowerNoSpaceCase string) Container {
 						Path:  buildPath(moduleName, "core", "coretpls", "link"),
 						Alias: "link",
 					},
+					FormErrors: Dependency{
+						Path:  buildPath(moduleName, "core", "coretpls", "formerrors"),
+						Alias: "formerrors",
+					},
 				},
 			},
 			Internal: Internal{

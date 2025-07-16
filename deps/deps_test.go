@@ -284,6 +284,10 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Core.CoreTpls.Link.Alias).To(Equal("link"))
 				Expect(container.Project.Core.CoreTpls.Link.Path).To(Equal(testfixtures.TestPath + "/core/coretpls/link"))
 				container.Project.Core.CoreTpls.Link.ImportAlias(file)
+
+				Expect(container.Project.Core.CoreTpls.FormErrors.Alias).To(Equal("formerrors"))
+				Expect(container.Project.Core.CoreTpls.FormErrors.Path).To(Equal(testfixtures.TestPath + "/core/coretpls/formerrors"))
+				container.Project.Core.CoreTpls.FormErrors.ImportAlias(file)
 			})
 		})
 

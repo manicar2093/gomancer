@@ -388,7 +388,7 @@ var _ = Describe("Input Components", func() {
 		ID:       optionalUuidKey,
 		Name:     optionalUuidKey,
 		Type:     input.TypeText,
-		Value:    userData.OptionalUuid.GetValue(),
+		Value:    userData.OptionalUuid.GetValue().String(),
 		HasError: hasOptionalUuidErrors,
 	})
 	@form.Description() {
@@ -425,7 +425,7 @@ var _ = Describe("Input Components", func() {
 		ID:       uuidKey,
 		Name:     uuidKey,
 		Type:     input.TypeText,
-		Value:    userData.Uuid,
+		Value:    userData.Uuid.String(),
 		HasError: hasUuidErrors,
 		Required: true,
 	})

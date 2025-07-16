@@ -654,7 +654,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       optionalUuidKey,
 					Name:     optionalUuidKey,
 					Type:     input.TypeText,
-					Value:    postTest.OptionalUuid.GetValue(),
+					Value:    postTest.OptionalUuid.GetValue().String(),
 					HasError: hasOptionalUuidErrors,
 				})
 				@form.Description() {
@@ -682,7 +682,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       uuidKey,
 					Name:     uuidKey,
 					Type:     input.TypeText,
-					Value:    postTest.Uuid,
+					Value:    postTest.Uuid.String(),
 					HasError: hasUuidErrors,
 					Required: true,
 				})

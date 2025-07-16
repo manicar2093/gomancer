@@ -1,3 +1,13 @@
+## v0.21.2 (2025-07-16)
+
+### Fix
+
+- change api to service in gen command output
+- add string method calling to get uuid form value
+- add strconv dependency on controller generation
+- add strconv.FormatFloat on float value form component
+- add strconv.Itoa on int value form component
+
 ## v0.21.1 (2025-07-14)
 
 ### Fix

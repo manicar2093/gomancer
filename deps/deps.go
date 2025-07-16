@@ -54,6 +54,10 @@ func Init(moduleName, lowerNoSpaceCase string) Container {
 				Path:  "slices",
 				Alias: "slices",
 			},
+			StrConv: Dependency{
+				Path:  "strconv",
+				Alias: "strconv",
+			},
 		},
 		Gorm: Gorm{
 			Dependency: Dependency{

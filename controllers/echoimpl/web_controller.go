@@ -106,7 +106,10 @@ func getComponentsToBeUsed(attributes []parser.Attribute, goDeps deps.Container)
 	var componentsDetected = map[string]deps.Dependency{}
 	for _, attr := range attributes {
 		switch types.SupportedType(attr.Type) {
-		case types.TypeInt, types.TypeInt8, types.TypeInt16, types.TypeInt32, types.TypeInt64, types.TypeFloat32, types.TypeFloat64, types.TypeDecimal, types.TypeString, types.TypeUuid:
+		case types.TypeInt, types.TypeInt8, types.TypeInt16, types.TypeInt32, types.TypeInt64, types.TypeFloat32, types.TypeFloat64:
+			componentsDetected["input"] = goDeps.Project.Cmd.Components.Input
+			componentsDetected["strconv"] = goDeps.Std.StrConv
+		case types.TypeDecimal, types.TypeString, types.TypeUuid:
 			componentsDetected["input"] = goDeps.Project.Cmd.Components.Input
 		case types.TypeBool:
 			componentsDetected["toggle"] = goDeps.Project.Cmd.Components.Toggle

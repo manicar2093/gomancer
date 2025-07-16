@@ -60,9 +60,9 @@ func generateTemplates(input parser.GenerateModelInput, tplData tplInput, tpl *t
 	templsToGenerate := []struct {
 		TemplateName, Filename string
 		AdditionalComponents   []string
-		GetTemplComponents     bool
+		GetTemplFormComponents bool
 	}{
-		{TemplateName: "web_form", Filename: fmt.Sprintf("%s_form.templ", input.SnakeCase), GetTemplComponents: true},
+		{TemplateName: "web_form", Filename: fmt.Sprintf("%s_form.templ", input.SnakeCase), GetTemplFormComponents: true},
 		{TemplateName: "web_table", Filename: fmt.Sprintf("%s_table.templ", input.SnakeCase)},
 		{TemplateName: "web_show", Filename: fmt.Sprintf("%s_show.templ", input.SnakeCase)},
 		{TemplateName: "web_register", Filename: fmt.Sprintf("%s_register.templ", input.SnakeCase)},
@@ -85,8 +85,8 @@ func generateTemplates(input parser.GenerateModelInput, tplData tplInput, tpl *t
 			return errors.Wrap(err, "Error opening file")
 		}
 
-		if item.GetTemplComponents {
-			tplData.ComponentsDeps = getComponentsToBeUsed(input.Attributes, goDeps)
+		if item.GetTemplFormComponents {
+			tplData.ComponentsDeps = getFormComponentsToBeUsed(input.Attributes, goDeps)
 		}
 
 		bytesContent := bytes.NewBufferString("")
@@ -102,7 +102,7 @@ func generateTemplates(input parser.GenerateModelInput, tplData tplInput, tpl *t
 	return nil
 }
 
-func getComponentsToBeUsed(attributes []parser.Attribute, goDeps deps.Container) []deps.Dependency {
+func getFormComponentsToBeUsed(attributes []parser.Attribute, goDeps deps.Container) []deps.Dependency {
 	var componentsDetected = map[string]deps.Dependency{}
 	for _, attr := range attributes {
 		switch types.SupportedType(attr.Type) {
@@ -120,6 +120,7 @@ func getComponentsToBeUsed(attributes []parser.Attribute, goDeps deps.Container)
 		}
 		componentsDetected["label"] = goDeps.Project.Cmd.Components.Label
 		componentsDetected["form"] = goDeps.Project.Cmd.Components.Form
+		componentsDetected["formerrors"] = goDeps.Project.CoreTpls.FormErrors
 		componentsDetected["button"] = goDeps.Project.Cmd.Components.Button
 	}
 

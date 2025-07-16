@@ -53,15 +53,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Enter AnOptionalInt
 	}
-	if hasAnOptionalIntErrors {
-		for _,value := range errors.Field(anOptionalIntKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasAnOptionalIntErrors,
+		Errors: errors,
+		FormItemKey: anOptionalIntKey,
+	})
 }
 `),
 		Entry("not optional int", parser.Attribute{
@@ -91,15 +87,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Enter AnInt
 	}
-	if hasAnIntErrors {
-		for _,value := range errors.Field(anIntKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasAnIntErrors,
+		Errors: errors,
+		FormItemKey: anIntKey,
+	})
 }
 `),
 	)
@@ -144,15 +136,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Enter AnOptionalFloat64
 	}
-	if hasAnOptionalFloat64Errors {
-		for _,value := range errors.Field(anOptionalFloat64Key) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasAnOptionalFloat64Errors,
+		Errors: errors,
+		FormItemKey: anOptionalFloat64Key,
+	})
 }
 `),
 		Entry("not optional float", parser.Attribute{
@@ -185,15 +173,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Enter AnFloat32
 	}
-	if hasAnFloat32Errors {
-		for _,value := range errors.Field(anFloat32Key) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasAnFloat32Errors,
+		Errors: errors,
+		FormItemKey: anFloat32Key,
+	})
 }
 `),
 		Entry("optional decimal", parser.Attribute{
@@ -226,15 +210,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Enter OptionalDecimal
 	}
-	if hasOptionalDecimalErrors {
-		for _,value := range errors.Field(optionalDecimalKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasOptionalDecimalErrors,
+		Errors: errors,
+		FormItemKey: optionalDecimalKey,
+	})
 }
 `),
 		Entry("not optional decimal", parser.Attribute{
@@ -267,15 +247,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Enter Decimal
 	}
-	if hasDecimalErrors {
-		for _,value := range errors.Field(decimalKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasDecimalErrors,
+		Errors: errors,
+		FormItemKey: decimalKey,
+	})
 }
 `),
 	)
@@ -318,15 +294,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Enter OptionalString
 	}
-	if hasOptionalStringErrors {
-		for _,value := range errors.Field(optionalStringKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasOptionalStringErrors,
+		Errors: errors,
+		FormItemKey: optionalStringKey,
+	})
 }
 `),
 		Entry("not optional", parser.Attribute{
@@ -356,15 +328,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Enter String
 	}
-	if hasStringErrors {
-		for _,value := range errors.Field(stringKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasStringErrors,
+		Errors: errors,
+		FormItemKey: stringKey,
+	})
 }
 `),
 		Entry("optional", parser.Attribute{
@@ -394,15 +362,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Enter OptionalUuid
 	}
-	if hasOptionalUuidErrors {
-		for _,value := range errors.Field(optionalUuidKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasOptionalUuidErrors,
+		Errors: errors,
+		FormItemKey: optionalUuidKey,
+	})
 }
 `),
 		Entry("not optional", parser.Attribute{
@@ -432,15 +396,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Enter Uuid
 	}
-	if hasUuidErrors {
-		for _,value := range errors.Field(uuidKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasUuidErrors,
+		Errors: errors,
+		FormItemKey: uuidKey,
+	})
 }
 `),
 	)
@@ -546,15 +506,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Enter OptionalTime
 	}
-	if hasOptionalTimeErrors {
-		for _,value := range errors.Field(optionalTimeKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasOptionalTimeErrors,
+		Errors: errors,
+		FormItemKey: optionalTimeKey,
+	})
 }
 `),
 		Entry("not optional", parser.Attribute{
@@ -583,15 +539,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Enter Time
 	}
-	if hasTimeErrors {
-		for _,value := range errors.Field(timeKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasTimeErrors,
+		Errors: errors,
+		FormItemKey: timeKey,
+	})
 }
 `),
 	)
@@ -683,15 +635,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Select OptionalEnum
 	}
-	if hasOptionalEnumErrors {
-		for _,value := range errors.Field(optionalEnumKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasOptionalEnumErrors,
+		Errors: errors,
+		FormItemKey: optionalEnumKey,
+	})
 }
 `),
 		Entry("not optional", parser.Attribute{
@@ -770,15 +718,11 @@ var _ = Describe("Input Components", func() {
 	@form.Description() {
 		Select Enum
 	}
-	if hasEnumErrors {
-		for _,value := range errors.Field(enumKey) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: hasEnumErrors,
+		Errors: errors,
+		FormItemKey: enumKey,
+	})
 }
 `),
 	)

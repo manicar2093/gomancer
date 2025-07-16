@@ -101,10 +101,11 @@ type (
 	}
 	CoreTpls struct {
 		Dependency
-		Toast    Dependency
-		DateTime Dependency
-		FormTag  Dependency
-		Link     Dependency
+		Toast      Dependency
+		DateTime   Dependency
+		FormTag    Dependency
+		Link       Dependency
+		FormErrors Dependency
 	}
 	Container struct {
 		Echo

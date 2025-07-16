@@ -10,6 +10,7 @@ import (
 	selectbox "github.com/user/project_name/cmd/service/ui/components/selectbox"
 	toggle "github.com/user/project_name/cmd/service/ui/components/toggle"
 	datetime "github.com/user/project_name/core/coretpls/datetime"
+	formerrors "github.com/user/project_name/core/coretpls/formerrors"
 	strconv "strconv"
 
 	coretpls "github.com/user/project_name/core/coretpls"
@@ -42,15 +43,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnOptionalInt
 				}
-				if hasAnOptionalIntErrors {
-					for _,value := range errors.Field(anOptionalIntKey) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnOptionalIntErrors,
+					Errors:      errors,
+					FormItemKey: anOptionalIntKey,
+				})
 			}
 			{{ anIntKey := "an_int" }}
 			{{ hasAnIntErrors := errors.HasField(anIntKey) }}
@@ -71,15 +68,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnInt
 				}
-				if hasAnIntErrors {
-					for _,value := range errors.Field(anIntKey) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnIntErrors,
+					Errors:      errors,
+					FormItemKey: anIntKey,
+				})
 			}
 			{{ anOptionalInt8Key := "an_optional_int8" }}
 			{{ hasAnOptionalInt8Errors := errors.HasField(anOptionalInt8Key) }}
@@ -99,15 +92,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnOptionalInt8
 				}
-				if hasAnOptionalInt8Errors {
-					for _,value := range errors.Field(anOptionalInt8Key) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnOptionalInt8Errors,
+					Errors:      errors,
+					FormItemKey: anOptionalInt8Key,
+				})
 			}
 			{{ anInt8Key := "an_int8" }}
 			{{ hasAnInt8Errors := errors.HasField(anInt8Key) }}
@@ -128,15 +117,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnInt8
 				}
-				if hasAnInt8Errors {
-					for _,value := range errors.Field(anInt8Key) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnInt8Errors,
+					Errors:      errors,
+					FormItemKey: anInt8Key,
+				})
 			}
 			{{ anOptionalInt16Key := "an_optional_int16" }}
 			{{ hasAnOptionalInt16Errors := errors.HasField(anOptionalInt16Key) }}
@@ -156,15 +141,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnOptionalInt16
 				}
-				if hasAnOptionalInt16Errors {
-					for _,value := range errors.Field(anOptionalInt16Key) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnOptionalInt16Errors,
+					Errors:      errors,
+					FormItemKey: anOptionalInt16Key,
+				})
 			}
 			{{ anInt16Key := "an_int16" }}
 			{{ hasAnInt16Errors := errors.HasField(anInt16Key) }}
@@ -185,15 +166,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnInt16
 				}
-				if hasAnInt16Errors {
-					for _,value := range errors.Field(anInt16Key) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnInt16Errors,
+					Errors:      errors,
+					FormItemKey: anInt16Key,
+				})
 			}
 			{{ anOptionalInt32Key := "an_optional_int32" }}
 			{{ hasAnOptionalInt32Errors := errors.HasField(anOptionalInt32Key) }}
@@ -213,15 +190,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnOptionalInt32
 				}
-				if hasAnOptionalInt32Errors {
-					for _,value := range errors.Field(anOptionalInt32Key) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnOptionalInt32Errors,
+					Errors:      errors,
+					FormItemKey: anOptionalInt32Key,
+				})
 			}
 			{{ anInt32Key := "an_int32" }}
 			{{ hasAnInt32Errors := errors.HasField(anInt32Key) }}
@@ -242,15 +215,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnInt32
 				}
-				if hasAnInt32Errors {
-					for _,value := range errors.Field(anInt32Key) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnInt32Errors,
+					Errors:      errors,
+					FormItemKey: anInt32Key,
+				})
 			}
 			{{ anOptionalInt64Key := "an_optional_int64" }}
 			{{ hasAnOptionalInt64Errors := errors.HasField(anOptionalInt64Key) }}
@@ -270,15 +239,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnOptionalInt64
 				}
-				if hasAnOptionalInt64Errors {
-					for _,value := range errors.Field(anOptionalInt64Key) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnOptionalInt64Errors,
+					Errors:      errors,
+					FormItemKey: anOptionalInt64Key,
+				})
 			}
 			{{ anInt64Key := "an_int64" }}
 			{{ hasAnInt64Errors := errors.HasField(anInt64Key) }}
@@ -299,15 +264,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnInt64
 				}
-				if hasAnInt64Errors {
-					for _,value := range errors.Field(anInt64Key) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnInt64Errors,
+					Errors:      errors,
+					FormItemKey: anInt64Key,
+				})
 			}
 			{{ anOptionalFloat32Key := "an_optional_float_32" }}
 			{{ hasAnOptionalFloat32Errors := errors.HasField(anOptionalFloat32Key) }}
@@ -330,15 +291,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnOptionalFloat32
 				}
-				if hasAnOptionalFloat32Errors {
-					for _,value := range errors.Field(anOptionalFloat32Key) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnOptionalFloat32Errors,
+					Errors:      errors,
+					FormItemKey: anOptionalFloat32Key,
+				})
 			}
 			{{ anFloat32Key := "an_float_32" }}
 			{{ hasAnFloat32Errors := errors.HasField(anFloat32Key) }}
@@ -362,15 +319,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnFloat32
 				}
-				if hasAnFloat32Errors {
-					for _,value := range errors.Field(anFloat32Key) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnFloat32Errors,
+					Errors:      errors,
+					FormItemKey: anFloat32Key,
+				})
 			}
 			{{ anOptionalFloat64Key := "an_optional_float_64" }}
 			{{ hasAnOptionalFloat64Errors := errors.HasField(anOptionalFloat64Key) }}
@@ -393,15 +346,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnOptionalFloat64
 				}
-				if hasAnOptionalFloat64Errors {
-					for _,value := range errors.Field(anOptionalFloat64Key) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnOptionalFloat64Errors,
+					Errors:      errors,
+					FormItemKey: anOptionalFloat64Key,
+				})
 			}
 			{{ anFloat64Key := "an_float_64" }}
 			{{ hasAnFloat64Errors := errors.HasField(anFloat64Key) }}
@@ -425,15 +374,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter AnFloat64
 				}
-				if hasAnFloat64Errors {
-					for _,value := range errors.Field(anFloat64Key) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasAnFloat64Errors,
+					Errors:      errors,
+					FormItemKey: anFloat64Key,
+				})
 			}
 			{{ optionalStringKey := "optional_string" }}
 			{{ hasOptionalStringErrors := errors.HasField(optionalStringKey) }}
@@ -453,15 +398,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter OptionalString
 				}
-				if hasOptionalStringErrors {
-					for _,value := range errors.Field(optionalStringKey) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasOptionalStringErrors,
+					Errors:      errors,
+					FormItemKey: optionalStringKey,
+				})
 			}
 			{{ stringKey := "string" }}
 			{{ hasStringErrors := errors.HasField(stringKey) }}
@@ -482,15 +423,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter String
 				}
-				if hasStringErrors {
-					for _,value := range errors.Field(stringKey) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasStringErrors,
+					Errors:      errors,
+					FormItemKey: stringKey,
+				})
 			}
 			{{ optionalBoolKey := "optional_bool" }}
 			@label.Label(label.Props{
@@ -541,15 +478,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter OptionalTime
 				}
-				if hasOptionalTimeErrors {
-					for _,value := range errors.Field(optionalTimeKey) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasOptionalTimeErrors,
+					Errors:      errors,
+					FormItemKey: optionalTimeKey,
+				})
 			}
 			{{ timeKey := "time" }}
 			{{ hasTimeErrors := errors.HasField(timeKey) }}
@@ -569,15 +502,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter Time
 				}
-				if hasTimeErrors {
-					for _,value := range errors.Field(timeKey) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasTimeErrors,
+					Errors:      errors,
+					FormItemKey: timeKey,
+				})
 			}
 			{{ optionalDecimalKey := "optional_decimal" }}
 			{{ hasOptionalDecimalErrors := errors.HasField(optionalDecimalKey) }}
@@ -600,15 +529,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter OptionalDecimal
 				}
-				if hasOptionalDecimalErrors {
-					for _,value := range errors.Field(optionalDecimalKey) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasOptionalDecimalErrors,
+					Errors:      errors,
+					FormItemKey: optionalDecimalKey,
+				})
 			}
 			{{ decimalKey := "decimal" }}
 			{{ hasDecimalErrors := errors.HasField(decimalKey) }}
@@ -632,15 +557,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter Decimal
 				}
-				if hasDecimalErrors {
-					for _,value := range errors.Field(decimalKey) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasDecimalErrors,
+					Errors:      errors,
+					FormItemKey: decimalKey,
+				})
 			}
 			{{ optionalUuidKey := "optional_uuid" }}
 			{{ hasOptionalUuidErrors := errors.HasField(optionalUuidKey) }}
@@ -660,15 +581,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter OptionalUuid
 				}
-				if hasOptionalUuidErrors {
-					for _,value := range errors.Field(optionalUuidKey) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasOptionalUuidErrors,
+					Errors:      errors,
+					FormItemKey: optionalUuidKey,
+				})
 			}
 			{{ uuidKey := "uuid" }}
 			{{ hasUuidErrors := errors.HasField(uuidKey) }}
@@ -689,15 +606,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Enter Uuid
 				}
-				if hasUuidErrors {
-					for _,value := range errors.Field(uuidKey) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasUuidErrors,
+					Errors:      errors,
+					FormItemKey: uuidKey,
+				})
 			}
 			{{ optionalEnumKey := "optional_enum" }}
 			{{ hasOptionalEnumErrors := errors.HasField(optionalEnumKey) }}
@@ -746,15 +659,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Select OptionalEnum
 				}
-				if hasOptionalEnumErrors {
-					for _,value := range errors.Field(optionalEnumKey) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasOptionalEnumErrors,
+					Errors:      errors,
+					FormItemKey: optionalEnumKey,
+				})
 			}
 			{{ enumKey := "enum" }}
 			{{ hasEnumErrors := errors.HasField(enumKey) }}
@@ -804,15 +713,11 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 				@form.Description() {
 					Select Enum
 				}
-				if hasEnumErrors {
-					for _,value := range errors.Field(enumKey) {
-						@form.Message(form.MessageProps{
-							Variant: form.MessageVariantError,
-						}) {
-							{ value }
-						}
-					}
-				}
+				@formerrors.FormErrors(formerrors.FormErrorsProps{
+					HasErrors:   hasEnumErrors,
+					Errors:      errors,
+					FormItemKey: enumKey,
+				})
 			}
 		</div>
 		@button.Button(button.Props{

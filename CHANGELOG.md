@@ -1,3 +1,11 @@
+## v0.21.3 (2025-07-16)
+
+### Perf
+
+- add form errors to web form generation
+- add form errors to components generation
+- add form errors component into coretpls
+
 ## v0.21.2 (2025-07-16)
 
 ### Fix

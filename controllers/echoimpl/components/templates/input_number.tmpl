@@ -19,13 +19,9 @@
 	@form.Description() {
 		Enter {{ .PascalCase }}
 	}
-	if has{{ .PascalCase }}Errors {
-		for _,value := range errors.Field({{ .CamelCase }}Key) {
-			@form.Message(form.MessageProps{
-				Variant: form.MessageVariantError,
-			}) {
-				{ value }
-			}
-		}
-	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: has{{ .PascalCase }}Errors,
+		Errors: errors,
+		FormItemKey: {{ .CamelCase }}Key,
+	})
 }

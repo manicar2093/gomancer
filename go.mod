@@ -5,12 +5,12 @@ go 1.24
 require (
 	github.com/Oudwins/tailwind-merge-go v0.2.1
 	github.com/a-h/templ v0.3.898
+	github.com/brianvoe/gofakeit/v7 v7.3.0
 	github.com/caarlos0/env/v10 v10.0.0
 	github.com/charmbracelet/log v0.4.1
 	github.com/coditory/go-errors v0.0.6
 	github.com/dave/jennifer v1.7.1
 	github.com/gertd/go-pluralize v0.2.1
-	github.com/go-faker/faker/v4 v4.6.0
 	github.com/google/uuid v1.6.0
 	github.com/gookit/validate v1.5.4
 	github.com/gorilla/sessions v1.4.0

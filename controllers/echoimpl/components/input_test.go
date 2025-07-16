@@ -47,7 +47,7 @@ var _ = Describe("Input Components", func() {
 		ID:       anOptionalIntKey,
 		Name:     anOptionalIntKey,
 		Type:     input.TypeNumber,
-		Value:    userData.AnOptionalInt.GetValue(),
+		Value:    strconv.Itoa(userData.AnOptionalInt.GetValue()),
 		HasError: hasAnOptionalIntErrors,
 	})
 	@form.Description() {
@@ -84,7 +84,7 @@ var _ = Describe("Input Components", func() {
 		ID:       anIntKey,
 		Name:     anIntKey,
 		Type:     input.TypeNumber,
-		Value:    userData.AnInt,
+		Value:    strconv.Itoa(userData.AnInt),
 		HasError: hasAnIntErrors,
 		Required: true,
 	})
@@ -135,7 +135,7 @@ var _ = Describe("Input Components", func() {
 		ID:       anOptionalFloat64Key,
 		Name:     anOptionalFloat64Key,
 		Type:     input.TypeNumber,
-		Value:    userData.AnOptionalFloat64.GetValue(),
+		Value:    strconv.FormatFloat(userData.AnOptionalFloat64.GetValue(), 'f', 2, 64),
 		HasError: hasAnOptionalFloat64Errors,
 		Attributes: map[string]any{
 			"step": "0.01",
@@ -175,7 +175,7 @@ var _ = Describe("Input Components", func() {
 		ID:       anFloat32Key,
 		Name:     anFloat32Key,
 		Type:     input.TypeNumber,
-		Value:    userData.AnFloat32,
+		Value:    strconv.FormatFloat(float64(userData.AnFloat32), 'f', 2, 64),
 		HasError: hasAnFloat32Errors,
 		Required: true,
 		Attributes: map[string]any{
@@ -388,7 +388,7 @@ var _ = Describe("Input Components", func() {
 		ID:       optionalUuidKey,
 		Name:     optionalUuidKey,
 		Type:     input.TypeText,
-		Value:    userData.OptionalUuid.GetValue(),
+		Value:    userData.OptionalUuid.GetValue().String(),
 		HasError: hasOptionalUuidErrors,
 	})
 	@form.Description() {
@@ -425,7 +425,7 @@ var _ = Describe("Input Components", func() {
 		ID:       uuidKey,
 		Name:     uuidKey,
 		Type:     input.TypeText,
-		Value:    userData.Uuid,
+		Value:    userData.Uuid.String(),
 		HasError: hasUuidErrors,
 		Required: true,
 	})

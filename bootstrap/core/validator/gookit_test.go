@@ -5,7 +5,7 @@ import (
 	"github.com/manicar2093/gomancer/bootstrap/core/validator"
 	"net/http"
 
-	"github.com/go-faker/faker/v4"
+	"github.com/brianvoe/gofakeit/v7"
 	"github.com/google/uuid"
 	"github.com/manicar2093/goption"
 
@@ -41,7 +41,7 @@ var _ = Describe("Gookitvalidator", func() {
 				expectedDataToValidate := struct {
 					Name string `validate:"required|min_len:7" json:"name,omitempty"`
 				}{
-					Name: faker.Name(),
+					Name: gofakeit.Name(),
 				}
 
 				got := validator.ValidateAndTransform(validator.NewStructValidatorConfigured(&expectedDataToValidate, "en"))

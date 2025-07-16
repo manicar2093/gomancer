@@ -10,6 +10,7 @@ import (
 	selectbox "github.com/user/project_name/cmd/service/ui/components/selectbox"
 	toggle "github.com/user/project_name/cmd/service/ui/components/toggle"
 	datetime "github.com/user/project_name/core/coretpls/datetime"
+	strconv "strconv"
 
 	coretpls "github.com/user/project_name/core/coretpls"
 	formtag "github.com/user/project_name/core/coretpls/formtag"
@@ -35,7 +36,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalIntKey,
 					Name:     anOptionalIntKey,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalInt.GetValue(),
+					Value:    strconv.Itoa(postTest.AnOptionalInt.GetValue()),
 					HasError: hasAnOptionalIntErrors,
 				})
 				@form.Description() {
@@ -63,7 +64,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anIntKey,
 					Name:     anIntKey,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnInt,
+					Value:    strconv.Itoa(postTest.AnInt),
 					HasError: hasAnIntErrors,
 					Required: true,
 				})
@@ -92,7 +93,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalInt8Key,
 					Name:     anOptionalInt8Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalInt8.GetValue(),
+					Value:    strconv.Itoa(int(postTest.AnOptionalInt8.GetValue())),
 					HasError: hasAnOptionalInt8Errors,
 				})
 				@form.Description() {
@@ -120,7 +121,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anInt8Key,
 					Name:     anInt8Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnInt8,
+					Value:    strconv.Itoa(int(postTest.AnInt8)),
 					HasError: hasAnInt8Errors,
 					Required: true,
 				})
@@ -149,7 +150,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalInt16Key,
 					Name:     anOptionalInt16Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalInt16.GetValue(),
+					Value:    strconv.Itoa(int(postTest.AnOptionalInt16.GetValue())),
 					HasError: hasAnOptionalInt16Errors,
 				})
 				@form.Description() {
@@ -177,7 +178,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anInt16Key,
 					Name:     anInt16Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnInt16,
+					Value:    strconv.Itoa(int(postTest.AnInt16)),
 					HasError: hasAnInt16Errors,
 					Required: true,
 				})
@@ -206,7 +207,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalInt32Key,
 					Name:     anOptionalInt32Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalInt32.GetValue(),
+					Value:    strconv.Itoa(int(postTest.AnOptionalInt32.GetValue())),
 					HasError: hasAnOptionalInt32Errors,
 				})
 				@form.Description() {
@@ -234,7 +235,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anInt32Key,
 					Name:     anInt32Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnInt32,
+					Value:    strconv.Itoa(int(postTest.AnInt32)),
 					HasError: hasAnInt32Errors,
 					Required: true,
 				})
@@ -263,7 +264,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalInt64Key,
 					Name:     anOptionalInt64Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalInt64.GetValue(),
+					Value:    strconv.Itoa(int(postTest.AnOptionalInt64.GetValue())),
 					HasError: hasAnOptionalInt64Errors,
 				})
 				@form.Description() {
@@ -291,7 +292,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anInt64Key,
 					Name:     anInt64Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnInt64,
+					Value:    strconv.Itoa(int(postTest.AnInt64)),
 					HasError: hasAnInt64Errors,
 					Required: true,
 				})
@@ -320,7 +321,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalFloat32Key,
 					Name:     anOptionalFloat32Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalFloat32.GetValue(),
+					Value:    strconv.FormatFloat(float64(postTest.AnOptionalFloat32.GetValue()), 'f', 2, 64),
 					HasError: hasAnOptionalFloat32Errors,
 					Attributes: map[string]any{
 						"step": "0.01",
@@ -351,7 +352,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anFloat32Key,
 					Name:     anFloat32Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnFloat32,
+					Value:    strconv.FormatFloat(float64(postTest.AnFloat32), 'f', 2, 64),
 					HasError: hasAnFloat32Errors,
 					Required: true,
 					Attributes: map[string]any{
@@ -383,7 +384,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anOptionalFloat64Key,
 					Name:     anOptionalFloat64Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnOptionalFloat64.GetValue(),
+					Value:    strconv.FormatFloat(postTest.AnOptionalFloat64.GetValue(), 'f', 2, 64),
 					HasError: hasAnOptionalFloat64Errors,
 					Attributes: map[string]any{
 						"step": "0.01",
@@ -414,7 +415,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       anFloat64Key,
 					Name:     anFloat64Key,
 					Type:     input.TypeNumber,
-					Value:    postTest.AnFloat64,
+					Value:    strconv.FormatFloat(postTest.AnFloat64, 'f', 2, 64),
 					HasError: hasAnFloat64Errors,
 					Required: true,
 					Attributes: map[string]any{
@@ -653,7 +654,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       optionalUuidKey,
 					Name:     optionalUuidKey,
 					Type:     input.TypeText,
-					Value:    postTest.OptionalUuid.GetValue(),
+					Value:    postTest.OptionalUuid.GetValue().String(),
 					HasError: hasOptionalUuidErrors,
 				})
 				@form.Description() {
@@ -681,7 +682,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props core
 					ID:       uuidKey,
 					Name:     uuidKey,
 					Type:     input.TypeText,
-					Value:    postTest.Uuid,
+					Value:    postTest.Uuid.String(),
 					HasError: hasUuidErrors,
 					Required: true,
 				})

@@ -5,6 +5,7 @@ import (
 	"embed"
 	"fmt"
 	"github.com/manicar2093/gomancer/parser"
+	"github.com/manicar2093/gomancer/types"
 	"path"
 	"text/template"
 )
@@ -66,7 +67,37 @@ func InputSelectBox(input InputGenerationData) (string, error) {
 }
 
 func executeTemplate(templateName string, data InputGenerationData) (string, error) {
-	tplStarted := template.Must(template.ParseFS(templatesFS, path.Join("templates", templateName)))
+	tplStarted := template.Must(
+		template.New(templateName).
+			Funcs(map[string]any{
+				"GenerateFormValue": func(input InputGenerationData) string {
+					gen := ""
+
+					if input.IsOptional {
+						gen = fmt.Sprintf("%s.%s.GetValue()", input.ModelTransformedText.CamelCase, input.PascalCase)
+					} else {
+						gen = fmt.Sprintf("%s.%s", input.ModelTransformedText.CamelCase, input.PascalCase)
+					}
+
+					switch types.SupportedType(input.Type) {
+					case types.TypeInt:
+						gen = fmt.Sprintf("strconv.Itoa(%s)", gen)
+					case types.TypeInt8, types.TypeInt16, types.TypeInt32, types.TypeInt64:
+						gen = fmt.Sprintf("strconv.Itoa(int(%s))", gen)
+					case types.TypeFloat32:
+						gen = fmt.Sprintf("strconv.FormatFloat(float64(%s), 'f', 2, 64)", gen)
+					case types.TypeFloat64:
+						gen = fmt.Sprintf("strconv.FormatFloat(%s, 'f', 2, 64)", gen)
+					case types.TypeDecimal:
+						gen = fmt.Sprintf("%s.StringFixed(2)", gen)
+					case types.TypeUuid:
+						gen = fmt.Sprintf("%s.String()", gen)
+					}
+					return gen
+				},
+			}).
+			ParseFS(templatesFS, path.Join("templates", templateName)),
+	)
 	var buf bytes.Buffer
 	if err := tplStarted.Execute(&buf, data); err != nil {
 		return "", fmt.Errorf("error executing template %s: %w", templateName, err)

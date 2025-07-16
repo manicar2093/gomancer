@@ -132,6 +132,16 @@ var _ = Describe("Deps", func() {
 				container.Std.Slices.ImportAlias(file)
 			})
 		})
+
+		Describe("StrConv", func() {
+			It("contains all strconv usable callers", func() {
+				file := jen.NewFile("fmt_test")
+
+				Expect(container.Std.StrConv.Alias).To(Equal("strconv"))
+				Expect(container.Std.StrConv.Path).To(Equal("strconv"))
+				container.Std.Fmt.ImportAlias(file)
+			})
+		})
 	})
 
 	Describe("Gorm", func() {

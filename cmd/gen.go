@@ -91,7 +91,7 @@ gomancer gen Client name:string dob:time:optional status:enum/active/deactivated
 ✅ Ready!
 🏁 Next steps:
 
-	➡️ Go to cmd/api/main.go
+	➡️ Go to cmd/service/main.go
 	➡️ Add dbConn = connections.GetGormConnection(conf.DatabaseConnectionConfig)
 	➡️ Add repository initialization
 	➡️ Add controller initialization

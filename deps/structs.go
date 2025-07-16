@@ -23,9 +23,10 @@ type (
 	Std struct {
 		Net
 		Fmt
-		Time   Dependency
-		Maps   Dependency
-		Slices Dependency
+		Time    Dependency
+		Maps    Dependency
+		Slices  Dependency
+		StrConv Dependency
 	}
 	Gorm struct {
 		Dependency

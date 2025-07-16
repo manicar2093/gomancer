@@ -8,8 +8,6 @@ import (
 	"github.com/manicar2093/gomancer/types"
 )
 
-const fakerPkgPath = "github.com/brianvoe/gofakeit/v7"
-
 func FakerCallByType(t string, goDeps deps.Container, attribute parser.Attribute) jen.Code {
 	switch types.SupportedType(t) {
 	case types.TypeString:

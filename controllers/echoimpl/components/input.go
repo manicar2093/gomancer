@@ -88,6 +88,8 @@ func executeTemplate(templateName string, data InputGenerationData) (string, err
 						gen = fmt.Sprintf("strconv.FormatFloat(float64(%s), 'f', 2, 64)", gen)
 					case types.TypeFloat64:
 						gen = fmt.Sprintf("strconv.FormatFloat(%s, 'f', 2, 64)", gen)
+					case types.TypeDecimal:
+						gen = fmt.Sprintf("%s.StringFixed(2)", gen)
 					}
 					return gen
 				},

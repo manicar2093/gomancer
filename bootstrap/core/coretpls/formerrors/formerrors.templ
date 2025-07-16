@@ -1,0 +1,24 @@
+package formerrors
+
+import (
+    validate "github.com/gookit/validate"
+	form "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/form"
+)
+
+type FormErrorsProps struct {
+    HasErrors bool
+    Errors validate.Errors
+    FormItemKey string
+}
+
+templ FormErrors(props FormErrorsProps) {
+	if props.HasErrors {
+    	for _,value := range props.Errors.Field(props.FormItemKey) {
+    		@form.Message(form.MessageProps{
+    			Variant: form.MessageVariantError,
+    		}) {
+    			{ value }
+    		}
+    	}
+    }
+}

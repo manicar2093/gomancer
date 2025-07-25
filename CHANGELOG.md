@@ -1,3 +1,13 @@
+## v0.22.0 (2025-07-25)
+
+### Fix
+
+- move all components to a new package into core
+
+### Refactor
+
+- change all imports and add deps changes
+
 ## v0.21.3 (2025-07-16)
 
 ### Perf

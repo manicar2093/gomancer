@@ -1,0 +1,166 @@
+// templui component input - version: main installed by templui v0.70.0
+package input
+
+import (
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/button"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/icon"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/utils"
+)
+
+type Type string
+
+const (
+	TypeText     Type = "text"
+	TypePassword Type = "password"
+	TypeEmail    Type = "email"
+	TypeNumber   Type = "number"
+	TypeTel      Type = "tel"
+	TypeURL      Type = "url"
+	TypeSearch   Type = "search"
+	TypeDate     Type = "date"
+	TypeTime     Type = "time"
+	TypeDateTime     Type = "datetime-local"
+	TypeFile     Type = "file"
+)
+
+type Props struct {
+	ID               string
+	Class            string
+	Attributes       templ.Attributes
+	Name             string
+	Type             Type
+	Placeholder      string
+	Value            string
+	Disabled         bool
+	Readonly         bool
+	Required         bool
+	FileAccept       string
+	HasError         bool
+	NoTogglePassword bool
+}
+
+templ Input(props ...Props) {
+	{{ var p Props }}
+	if len(props) > 0 {
+		{{ p = props[0] }}
+	}
+	if p.Type == "" {
+		{{ p.Type = TypeText }}
+	}
+	if p.ID == "" {
+		{{ p.ID = utils.RandomID() }}
+	}
+	if p.Type == TypePassword && !p.NoTogglePassword {
+		@Script()
+	}
+	<div class="relative w-full">
+		<input
+			id={ p.ID }
+			type={ string(p.Type) }
+			if p.Name != "" {
+				name={ p.Name }
+			}
+			if p.Placeholder != "" {
+				placeholder={ p.Placeholder }
+			}
+			if p.Value != "" {
+				value={ p.Value }
+			}
+			if p.Type == TypeFile && p.FileAccept != "" {
+				accept={ p.FileAccept }
+			}
+			disabled?={ p.Disabled }
+			readonly?={ p.Readonly }
+			required?={ p.Required }
+			class={
+				utils.TwMerge(
+					"peer flex h-10 w-full px-3 py-2",
+					"rounded-md border border-input bg-background text-sm ring-offset-background",
+					"file:border-0 file:bg-transparent file:text-sm file:font-medium file:text-foreground",
+					"placeholder:text-muted-foreground",
+					"focus-visible:outline-hidden focus-visible:ring-2 focus-visible:ring-ring focus-visible:ring-offset-2",
+					"disabled:cursor-not-allowed disabled:opacity-50",
+					utils.If(p.HasError, "border-destructive ring-destructive"),
+					utils.If(p.Type == TypePassword && !p.NoTogglePassword, "pr-8"),
+					p.Class,
+				),
+			}
+			{ p.Attributes... }
+		/>
+		if p.Type == TypePassword && !p.NoTogglePassword {
+			@button.Button(button.Props{
+				Size:       button.SizeIcon,
+				Variant:    button.VariantGhost,
+				Class:      "absolute right-0 top-1/2 -translate-y-1/2 opacity-50 cursor-pointer",
+				Attributes: templ.Attributes{"data-toggle-password": p.ID},
+			}) {
+				<span class="icon-open block">
+					@icon.Eye(icon.Props{
+						Size: 18,
+					})
+				</span>
+				<span class="icon-closed hidden">
+					@icon.EyeOff(icon.Props{
+						Size: 18,
+					})
+				</span>
+			}
+		}
+	</div>
+}
+
+var handle = templ.NewOnceHandle()
+
+templ Script() {
+	@handle.Once() {
+		<script nonce={ templ.GetNonce(ctx) }>
+		(function() { // IIFE Start
+            function initPasswordToggle(button) {
+                if (button.hasAttribute('data-password-initialized')) {
+                    return;
+                }
+
+                button.setAttribute('data-password-initialized', 'true');
+
+                button.addEventListener('click', function(event) {
+                    const inputId = button.getAttribute('data-toggle-password');
+                    const input = document.getElementById(inputId);
+                    if (input) {
+                        const iconOpen = button.querySelector('.icon-open');
+                        const iconClosed = button.querySelector('.icon-closed');
+
+                        if (input.type === 'password') {
+                            input.type = 'text';
+                            iconOpen.classList.add('hidden');
+                            iconClosed.classList.remove('hidden');
+                        } else {
+                            input.type = 'password';
+                            iconOpen.classList.remove('hidden');
+                            iconClosed.classList.add('hidden');
+                        }
+                    }
+                });
+            }
+
+            function initAllComponents(root = document) {
+                const buttons = root.querySelectorAll('[data-toggle-password]:not([data-password-initialized])');
+                buttons.forEach(button => {
+                    initPasswordToggle(button);
+                });
+            }
+
+            const handleHtmxSwap = (event) => {
+                const target = event.detail.elt
+                if (target instanceof Element) {
+                    requestAnimationFrame(() => initAllComponents(target));
+                }
+            };
+
+			initAllComponents();
+            document.addEventListener('DOMContentLoaded', () => initAllComponents());
+            document.body.addEventListener('htmx:afterSwap', handleHtmxSwap);
+            document.body.addEventListener('htmx:oobAfterSwap', handleHtmxSwap);
+         })(); // IIFE End
+        </script>
+	}
+}

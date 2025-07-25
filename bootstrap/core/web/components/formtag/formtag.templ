@@ -1,0 +1,79 @@
+package formtag
+
+import (
+    "github.com/manicar2093/gomancer/bootstrap/core"
+    "net/http"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/utils"
+)
+
+type FormTagProperties struct {
+	Id      string
+	Action  string
+	Method  string
+	Confirm string
+    Class        string
+}
+
+templ FormTag(props FormTagProperties) {
+	if props.Id == "" {
+		{{ props.Id = utils.RandomID() }}
+	}
+	{{ formMethod := props.Method }}
+	{{ isOverwritableMethod := utils.IsOverwritableMethod(props.Method) }}
+
+	if isOverwritableMethod {
+		{{ formMethod = http.MethodPost }}
+	} else {
+		{{ formMethod = http.MethodGet }}
+	}
+	<form
+		id={ props.Id }
+		action={ templ.SafeURL(props.Action) }
+		method={ formMethod }
+		if props.Confirm != "" && isOverwritableMethod {
+			data-confirm={ props.Confirm }
+			data-method={ props.Method }
+		}
+        class={
+        utils.TwMerge(
+            props.Class,
+        ),
+    }
+	>
+		if props.Method != http.MethodGet {
+			<input name="_method" hidden value={ props.Method }/>
+			@CreateCqrfTokenInput()
+		}
+		{ children... }
+	</form>
+}
+
+templ CreateCqrfTokenInput() {
+    <input name="X-XSRF-TOKEN" hidden value={ core.GetEchoTemplContext(ctx).GetCqrfToken() }/>
+}
+
+var handle = templ.NewOnceHandle()
+
+templ Script() {
+	@handle.Once() {
+		<script defer nonce={ templ.GetNonce(ctx) }>
+            (function(){
+                const components = document.querySelectorAll('[data-confirm]')
+                components.forEach(el => el.addEventListener(
+                        'submit',
+                        (event) => {
+                            event.preventDefault();
+                            const confirmMessage = el.dataset.confirm;
+                            if(confirm(confirmMessage)) {
+                                el.submit()
+                                return
+                            }
+                            return
+                        }
+                    )
+                )
+            })()
+
+        </script>
+	}
+}

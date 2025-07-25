@@ -4,12 +4,12 @@ import (
     {{ .GoDeps.GookitValidate.GenerateImportString }}
     {{ .GoDeps.I18n.GenerateImportString }}
     {{ range .ComponentsDeps }}{{ println .GenerateImportString  }}{{ end }}
-    {{ .GoDeps.Project.Core.CoreTpls.GenerateImportString }}
-    {{ .GoDeps.Project.Core.CoreTpls.FormTag.GenerateImportString }}
+    {{ .GoDeps.Project.Core.Web.Components.GenerateImportString }}
+    {{ .GoDeps.Project.Core.Web.Components.FormTag.GenerateImportString }}
     {{ .GoDeps.Project.Internal.Domain.Models.GenerateImportString }}
 )
 
-templ {{.PascalCase}}Form({{.CamelCase}} *models.{{.PascalCase}}, errors validate.Errors, props coretpls.FormProperties) {
+templ {{.PascalCase}}Form({{.CamelCase}} *models.{{.PascalCase}}, errors validate.Errors, props {{.GoDeps.Project.Core.Web.Components.Alias}}.FormProperties) {
     @formtag.FormTag(formtag.FormTagProperties{
         Action: props.Action,
         Method: props.Method,

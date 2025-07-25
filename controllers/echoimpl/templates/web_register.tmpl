@@ -3,8 +3,8 @@
 import (
 	{{.GoDeps.Std.Net.Http.GenerateImportString}}
 	{{.GoDeps.Project.Internal.Domain.Models.GenerateImportString}}
-	{{.GoDeps.Cmd.Service.Ui.Layouts.GenerateImportString}}
-	{{.GoDeps.Core.CoreTpls.GenerateImportString}}
+	{{.GoDeps.Core.Web.Layouts.GenerateImportString}}
+	{{.GoDeps.Core.Web.Components.GenerateImportString}}
 	{{.GoDeps.GookitValidate.GenerateImportString}}
 )
 
@@ -13,7 +13,7 @@ templ Register{{.PascalCase}}Page({{.CamelCase}} *models.{{.PascalCase}}, errors
 		@{{.PascalCase}}Form(
 			{{.CamelCase}},
 			errors,
-			coretpls.FormProperties{
+			{{.GoDeps.Core.Web.Components.Alias}}.FormProperties{
 				Action: "/app/{{Pluralize .SnakeCase}}",
 				Method: http.MethodPost,
 			},

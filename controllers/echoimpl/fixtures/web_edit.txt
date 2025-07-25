@@ -4,9 +4,9 @@ import (
 	fmt "fmt"
 	http "net/http"
 	validate "github.com/gookit/validate"
-	layouts "github.com/user/project_name/cmd/service/ui/layouts"
+	layouts "github.com/user/project_name/core/web/layouts"
 	models "github.com/user/project_name/internal/domain/models"
-	coretpls "github.com/user/project_name/core/coretpls"
+	components "github.com/user/project_name/core/web/components"
 )
 
 templ EditPostTestPage(postTest *models.PostTest, errors validate.Errors) {
@@ -14,7 +14,7 @@ templ EditPostTestPage(postTest *models.PostTest, errors validate.Errors) {
 		@PostTestForm(
 			postTest,
 			errors,
-			coretpls.FormProperties{
+			components.FormProperties{
 				Action: fmt.Sprintf("/app/post_tests/%v", postTest.Id),
 				Method: http.MethodPut,
 			},

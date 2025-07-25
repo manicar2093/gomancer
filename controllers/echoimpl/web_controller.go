@@ -107,21 +107,21 @@ func getFormComponentsToBeUsed(attributes []parser.Attribute, goDeps deps.Contai
 	for _, attr := range attributes {
 		switch types.SupportedType(attr.Type) {
 		case types.TypeInt, types.TypeInt8, types.TypeInt16, types.TypeInt32, types.TypeInt64, types.TypeFloat32, types.TypeFloat64:
-			componentsDetected["input"] = goDeps.Project.Cmd.Components.Input
+			componentsDetected["input"] = goDeps.Project.Core.Web.Components.Input
 			componentsDetected["strconv"] = goDeps.Std.StrConv
 		case types.TypeDecimal, types.TypeString, types.TypeUuid:
-			componentsDetected["input"] = goDeps.Project.Cmd.Components.Input
+			componentsDetected["input"] = goDeps.Project.Core.Web.Components.Input
 		case types.TypeBool:
-			componentsDetected["toggle"] = goDeps.Project.Cmd.Components.Toggle
+			componentsDetected["toggle"] = goDeps.Project.Core.Web.Components.Toggle
 		case types.TypeTime:
-			componentsDetected["datetime"] = goDeps.Project.CoreTpls.DateTime
+			componentsDetected["datetime"] = goDeps.Project.Core.Web.Components.DateTime
 		case types.TypeEnum:
-			componentsDetected["selectbox"] = goDeps.Project.Cmd.Components.SelectBox
+			componentsDetected["selectbox"] = goDeps.Project.Core.Web.Components.SelectBox
 		}
-		componentsDetected["label"] = goDeps.Project.Cmd.Components.Label
-		componentsDetected["form"] = goDeps.Project.Cmd.Components.Form
-		componentsDetected["formerrors"] = goDeps.Project.CoreTpls.FormErrors
-		componentsDetected["button"] = goDeps.Project.Cmd.Components.Button
+		componentsDetected["label"] = goDeps.Project.Core.Web.Components.Label
+		componentsDetected["form"] = goDeps.Project.Core.Web.Components.Form
+		componentsDetected["formerrors"] = goDeps.Project.Core.Web.Components.FormErrors
+		componentsDetected["button"] = goDeps.Project.Core.Web.Components.Button
 	}
 
 	return slices.SortedFunc(

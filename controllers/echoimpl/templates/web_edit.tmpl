@@ -3,10 +3,10 @@
 import (
 	{{.GoDeps.Std.Fmt.GenerateImportString}}
 	{{.GoDeps.Std.Net.Http.GenerateImportString}}
-	{{ .GoDeps.GookitValidate.GenerateImportString }}
-	{{.GoDeps.Cmd.Service.Ui.Layouts.GenerateImportString}}
-	{{ .GoDeps.Project.Internal.Domain.Models.GenerateImportString }}
-	{{.GoDeps.Core.CoreTpls.GenerateImportString}}
+	{{.GoDeps.GookitValidate.GenerateImportString}}
+	{{.GoDeps.Core.Web.Layouts.GenerateImportString}}
+	{{.GoDeps.Project.Internal.Domain.Models.GenerateImportString}}
+	{{.GoDeps.Core.Web.Components.GenerateImportString}}
 )
 
 templ Edit{{.PascalCase}}Page({{.CamelCase}} *models.{{.PascalCase}}, errors validate.Errors) {
@@ -14,7 +14,7 @@ templ Edit{{.PascalCase}}Page({{.CamelCase}} *models.{{.PascalCase}}, errors val
 		@{{.PascalCase}}Form(
 			{{.CamelCase}},
 			errors,
-			coretpls.FormProperties{
+			{{.GoDeps.Core.Web.Components.Alias}}.FormProperties{
 				Action: fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v", {{.CamelCase}}.Id),
 				Method: http.MethodPut,
 			},

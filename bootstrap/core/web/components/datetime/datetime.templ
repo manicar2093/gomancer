@@ -1,0 +1,65 @@
+package datetime
+
+import (
+	"fmt"
+	"time"
+
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/input"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/utils"
+)
+
+type DatetimeProps struct {
+	ID         string
+	Name       string
+	Value      time.Time
+	HasError   bool
+	Required   bool
+	Attributes templ.Attributes
+}
+
+templ Datetime(props DatetimeProps) {
+	{{ shadowingElementId := fmt.Sprintf("%s-shadowing", props.ID) }}
+	@input.Input(input.Props{
+		ID:       props.ID,
+		Type:     input.TypeDateTime,
+		HasError: props.HasError,
+		Required: props.Required,
+		Attributes: utils.MergeAttributes(
+		    props.Attributes,
+		    templ.Attributes{
+                "data-datetime-utc":    props.Value.Format(time.RFC3339),
+                "data-shadowing-input": shadowingElementId,
+            }) ,
+	})
+	<input id={ shadowingElementId } hidden type="text" name={props.ID} value={ props.Value.Format(time.RFC3339) }/>
+	@Script()
+}
+
+templ Script() {
+	<script>
+        (function(){
+            function formatDateToUtc(unformatedDate){
+                const asDate = new Date(unformatedDate)
+                const getMonth = (month) => {
+                    return addPrefixZero(month += 1)
+                }
+                const addPrefixZero = (number) => {
+                    if(number >= 10) return `${number}`
+                    return `0${number}`
+                }
+                return `${asDate.getFullYear()}-${getMonth(asDate.getMonth())}-${addPrefixZero(asDate.getDate())}T${addPrefixZero(asDate.getHours())}:${addPrefixZero(asDate.getMinutes())}:${addPrefixZero(asDate.getSeconds())}`
+            }
+
+            const datetimeUtc = document.querySelectorAll("[data-datetime-utc]")
+            datetimeUtc.forEach(el => {
+                el.value = formatDateToUtc(el.dataset.datetimeUtc);
+            })
+            datetimeUtc.forEach(el => {
+                el.addEventListener('change', event => {
+                    const shadowingInput = document.querySelector(`#${el.dataset.shadowingInput}`)
+                    shadowingInput.value = `${formatDateToUtc(event.srcElement.value)}.000Z`
+                })
+            })
+        })()
+    </script>
+}

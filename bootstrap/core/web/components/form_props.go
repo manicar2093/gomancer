@@ -1,4 +1,4 @@
-package coretpls
+package components
 
 type FormProperties struct {
 	Action string

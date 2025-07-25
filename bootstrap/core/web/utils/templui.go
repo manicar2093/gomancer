@@ -3,6 +3,8 @@ package utils
 
 import (
 	"fmt"
+	"net/http"
+	"slices"
 
 	"math/rand"
 
@@ -52,4 +54,25 @@ func MergeAttributes(attrs ...templ.Attributes) templ.Attributes {
 // Example: RandomID() → "id-123456"
 func RandomID() string {
 	return fmt.Sprintf("id-%d", rand.Intn(1000000))
+}
+
+func IsOverwritableMethod(method string) bool {
+	return slices.Contains(
+		[]string{
+			http.MethodConnect,
+			http.MethodDelete,
+			http.MethodHead,
+			http.MethodOptions,
+			http.MethodPatch,
+			http.MethodPost,
+			http.MethodPut,
+			http.MethodTrace,
+		}, method)
+}
+
+func IsPathStyles(path, expected, trueStyles, falseStyles string) string {
+	if path == expected {
+		return trueStyles
+	}
+	return falseStyles
 }

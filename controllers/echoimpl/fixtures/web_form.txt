@@ -3,22 +3,22 @@ package posttestpages
 import (
 	validate "github.com/gookit/validate"
 	i18n "github.com/invopop/ctxi18n/i18n"
-	button "github.com/user/project_name/cmd/service/ui/components/button"
-	form "github.com/user/project_name/cmd/service/ui/components/form"
-	input "github.com/user/project_name/cmd/service/ui/components/input"
-	label "github.com/user/project_name/cmd/service/ui/components/label"
-	selectbox "github.com/user/project_name/cmd/service/ui/components/selectbox"
-	toggle "github.com/user/project_name/cmd/service/ui/components/toggle"
-	datetime "github.com/user/project_name/core/coretpls/datetime"
-	formerrors "github.com/user/project_name/core/coretpls/formerrors"
+	button "github.com/user/project_name/core/web/components/button"
+	datetime "github.com/user/project_name/core/web/components/datetime"
+	form "github.com/user/project_name/core/web/components/form"
+	formerrors "github.com/user/project_name/core/web/components/formerrors"
+	input "github.com/user/project_name/core/web/components/input"
+	label "github.com/user/project_name/core/web/components/label"
+	selectbox "github.com/user/project_name/core/web/components/selectbox"
+	toggle "github.com/user/project_name/core/web/components/toggle"
 	strconv "strconv"
 
-	coretpls "github.com/user/project_name/core/coretpls"
-	formtag "github.com/user/project_name/core/coretpls/formtag"
+	components "github.com/user/project_name/core/web/components"
+	formtag "github.com/user/project_name/core/web/components/formtag"
 	models "github.com/user/project_name/internal/domain/models"
 )
 
-templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props coretpls.FormProperties) {
+templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props components.FormProperties) {
 	@formtag.FormTag(formtag.FormTagProperties{
 		Action: props.Action,
 		Method: props.Method,

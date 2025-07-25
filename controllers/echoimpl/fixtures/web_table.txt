@@ -5,11 +5,11 @@ import (
 	i18n "github.com/invopop/ctxi18n/i18n"
 	gormpager "github.com/manicar2093/gormpager"
 	http "net/http"
-	button "github.com/user/project_name/cmd/service/ui/components/button"
-	label "github.com/user/project_name/cmd/service/ui/components/label"
-	pagination "github.com/user/project_name/cmd/service/ui/components/pagination"
-	table "github.com/user/project_name/cmd/service/ui/components/table"
-	link "github.com/user/project_name/core/coretpls/link"
+	button "github.com/user/project_name/core/web/components/button"
+	label "github.com/user/project_name/core/web/components/label"
+	pagination "github.com/user/project_name/core/web/components/pagination"
+	table "github.com/user/project_name/core/web/components/table"
+	link "github.com/user/project_name/core/web/components/link"
 	models "github.com/user/project_name/internal/domain/models"
 )
 

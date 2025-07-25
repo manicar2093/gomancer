@@ -3,8 +3,8 @@ package posttestpages
 import (
 	http "net/http"
 	models "github.com/user/project_name/internal/domain/models"
-	layouts "github.com/user/project_name/cmd/service/ui/layouts"
-	coretpls "github.com/user/project_name/core/coretpls"
+	layouts "github.com/user/project_name/core/web/layouts"
+	components "github.com/user/project_name/core/web/components"
 	validate "github.com/gookit/validate"
 )
 
@@ -13,7 +13,7 @@ templ RegisterPostTestPage(postTest *models.PostTest, errors validate.Errors) {
 		@PostTestForm(
 			postTest,
 			errors,
-			coretpls.FormProperties{
+			components.FormProperties{
 				Action: "/app/post_tests",
 				Method: http.MethodPost,
 			},

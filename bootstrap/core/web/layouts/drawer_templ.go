@@ -8,11 +8,13 @@ package layouts
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/drawer"
-import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/icon"
-import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/button"
-import "github.com/manicar2093/gomancer/bootstrap/core/templutils"
-import "github.com/manicar2093/gomancer/bootstrap/core"
+import (
+	"github.com/manicar2093/gomancer/bootstrap/core"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/button"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/drawer"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/icon"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/utils"
+)
 
 func MenuAndDrawer(echoCtx *core.EchoContextTemplWrapper) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -110,7 +112,7 @@ func MenuAndDrawer(echoCtx *core.EchoContextTemplWrapper) templ.Component {
 			templ_7745c5c3_Err = button.Button(button.Props{
 				Href:    "/app/initial",
 				Variant: button.VariantLink,
-				Class:   templutils.IsPathStyles(echoCtx.Path(), "/app/initial", "underline", ""),
+				Class:   utils.IsPathStyles(echoCtx.Path(), "/app/initial", "underline", ""),
 			}).Render(templ.WithChildren(ctx, templ_7745c5c3_Var4), templ_7745c5c3_Buffer)
 			if templ_7745c5c3_Err != nil {
 				return templ_7745c5c3_Err

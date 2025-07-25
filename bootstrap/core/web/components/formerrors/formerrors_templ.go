@@ -9,8 +9,8 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	validate "github.com/gookit/validate"
-	form "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/form"
+	"github.com/gookit/validate"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/form"
 )
 
 type FormErrorsProps struct {
@@ -57,7 +57,7 @@ func FormErrors(props FormErrorsProps) templ.Component {
 					var templ_7745c5c3_Var3 string
 					templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(value)
 					if templ_7745c5c3_Err != nil {
-						return templ.Error{Err: templ_7745c5c3_Err, FileName: `bootstrap/core/coretpls/formerrors/formerrors.templ`, Line: 20, Col: 14}
+						return templ.Error{Err: templ_7745c5c3_Err, FileName: `bootstrap/core/web/components/formerrors/formerrors.templ`, Line: 20, Col: 14}
 					}
 					_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 					if templ_7745c5c3_Err != nil {

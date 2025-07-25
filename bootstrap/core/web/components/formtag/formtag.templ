@@ -1,9 +1,10 @@
 package formtag
 
-import "github.com/manicar2093/gomancer/bootstrap/core"
-import "net/http"
-import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/utils"
-import "github.com/manicar2093/gomancer/bootstrap/core/templutils"
+import (
+    "github.com/manicar2093/gomancer/bootstrap/core"
+    "net/http"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/utils"
+)
 
 type FormTagProperties struct {
 	Id      string
@@ -18,7 +19,7 @@ templ FormTag(props FormTagProperties) {
 		{{ props.Id = utils.RandomID() }}
 	}
 	{{ formMethod := props.Method }}
-	{{ isOverwritableMethod := templutils.IsOverwritableMethod(props.Method) }}
+	{{ isOverwritableMethod := utils.IsOverwritableMethod(props.Method) }}
 
 	if isOverwritableMethod {
 		{{ formMethod = http.MethodPost }}

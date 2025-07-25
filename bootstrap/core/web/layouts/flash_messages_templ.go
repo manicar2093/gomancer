@@ -9,7 +9,7 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import "github.com/manicar2093/gomancer/bootstrap/core"
-import "github.com/manicar2093/gomancer/bootstrap/core/coretpls/toast"
+import "github.com/manicar2093/gomancer/bootstrap/core/web/components/toast"
 
 func showFlash(echoCtx *core.EchoContextTemplWrapper) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {

@@ -6,7 +6,7 @@ import (
 	i18n	"github.com/invopop/ctxi18n/i18n"
 	http	"net/http"
 	posttestpages	"github.com/user/project_name/cmd/service/controllers/posttestpages"
-	toast	"github.com/user/project_name/core/coretpls/toast"
+	toast	"github.com/user/project_name/core/web/components/toast"
 	validator	"github.com/user/project_name/core/validator"
 
 	core	"github.com/user/project_name/core"

@@ -1,7 +1,9 @@
 package layouts
 
-import "github.com/manicar2093/gomancer/bootstrap/core/templutils"
-import "github.com/manicar2093/gomancer/bootstrap/core"
+import (
+    "github.com/manicar2093/gomancer/bootstrap/core"
+    "github.com/manicar2093/gomancer/bootstrap/core/web/utils"
+)
 
 templ SideMenu(echoCtx *core.EchoContextTemplWrapper) {
 	<div class="flex h-full flex-col justify-between bg-background">
@@ -15,7 +17,7 @@ templ SideMenu(echoCtx *core.EchoContextTemplWrapper) {
 						href="/app/initial"
 						class={
 						    "block rounded-lg px-4 py-2 text-sm font-medium",
-						    templutils.IsPathStyles(
+						    utils.IsPathStyles(
 						        echoCtx.Path(),
 						        "/app/initial",
 						        "bg-primary text-primary-foreground hover:bg-primary/90",

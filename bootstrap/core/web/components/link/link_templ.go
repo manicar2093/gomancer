@@ -8,10 +8,12 @@ package link
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/button"
-import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/utils"
-import "github.com/manicar2093/gomancer/bootstrap/core/coretpls/formtag"
-import "net/http"
+import (
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/button"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/formtag"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/utils"
+	"net/http"
+)
 
 type LinkProps struct {
 	Href    string

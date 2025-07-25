@@ -55,6 +55,7 @@ type (
 	}
 
 	Components struct {
+		Dependency
 		Button     Dependency
 		Drawer     Dependency
 		Form       Dependency
@@ -66,6 +67,11 @@ type (
 		SelectBox  Dependency
 		Table      Dependency
 		Toggle     Dependency
+		Toast      Dependency
+		DateTime   Dependency
+		FormTag    Dependency
+		Link       Dependency
+		FormErrors Dependency
 	}
 	Ui struct {
 		Components
@@ -74,7 +80,6 @@ type (
 	Service struct {
 		Dependency
 		Controllers
-		Ui
 		Translations Dependency
 	}
 	Cmd struct {
@@ -97,15 +102,12 @@ type (
 		Connections Dependency
 		CommonReq   Dependency
 		AppErrors   Dependency
-		CoreTpls    CoreTpls
+		Web         Web
 	}
-	CoreTpls struct {
+	Web struct {
 		Dependency
-		Toast      Dependency
-		DateTime   Dependency
-		FormTag    Dependency
-		Link       Dependency
-		FormErrors Dependency
+		Layouts    Dependency
+		Components Components
 	}
 	Container struct {
 		Echo

@@ -145,30 +145,84 @@ func Init(moduleName, lowerNoSpaceCase string) Container {
 					Path:  buildPath(moduleName, "core", "apperrors"),
 					Alias: "apperrors",
 				},
-				CoreTpls: CoreTpls{
+				Web: Web{
 					Dependency: Dependency{
-						Path:  buildPath(moduleName, "core", "coretpls"),
-						Alias: "coretpls",
+						Path:  buildPath(moduleName, "core", "web"),
+						Alias: "web",
 					},
-					Toast: Dependency{
-						Path:  buildPath(moduleName, "core", "coretpls", "toast"),
-						Alias: "toast",
+					Layouts: Dependency{
+						Path:  buildPath(moduleName, "core", "web", "layouts"),
+						Alias: "layouts",
 					},
-					DateTime: Dependency{
-						Path:  buildPath(moduleName, "core", "coretpls", "datetime"),
-						Alias: "datetime",
-					},
-					FormTag: Dependency{
-						Path:  buildPath(moduleName, "core", "coretpls", "formtag"),
-						Alias: "formtag",
-					},
-					Link: Dependency{
-						Path:  buildPath(moduleName, "core", "coretpls", "link"),
-						Alias: "link",
-					},
-					FormErrors: Dependency{
-						Path:  buildPath(moduleName, "core", "coretpls", "formerrors"),
-						Alias: "formerrors",
+					Components: Components{
+						Dependency: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components"),
+							Alias: "components",
+						},
+						Button: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "button"),
+							Alias: "button",
+						},
+						Drawer: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "drawer"),
+							Alias: "drawer",
+						},
+						Form: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "form"),
+							Alias: "form",
+						},
+						Icon: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "icon"),
+							Alias: "icon",
+						},
+						Input: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "input"),
+							Alias: "input",
+						},
+						Label: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "label"),
+							Alias: "label",
+						},
+						Pagination: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "pagination"),
+							Alias: "pagination",
+						},
+						Popover: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "popover"),
+							Alias: "popover",
+						},
+						SelectBox: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "selectbox"),
+							Alias: "selectbox",
+						},
+						Table: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "table"),
+							Alias: "table",
+						},
+						Toggle: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "toggle"),
+							Alias: "toggle",
+						},
+						Toast: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "toast"),
+							Alias: "toast",
+						},
+						DateTime: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "datetime"),
+							Alias: "datetime",
+						},
+						FormTag: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "formtag"),
+							Alias: "formtag",
+						},
+						Link: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "link"),
+							Alias: "link",
+						},
+						FormErrors: Dependency{
+							Path:  buildPath(moduleName, "core", "web", "components", "formerrors"),
+							Alias: "formerrors",
+						},
 					},
 				},
 			},
@@ -210,58 +264,6 @@ func Init(moduleName, lowerNoSpaceCase string) Container {
 						InitPages: Dependency{
 							Path:  buildPath(moduleName, "cmd", "service", "controllers", "initpages"),
 							Alias: "initpages",
-						},
-					},
-					Ui: Ui{
-						Components: Components{
-							Button: Dependency{
-								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "button"),
-								Alias: "button",
-							},
-							Drawer: Dependency{
-								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "drawer"),
-								Alias: "drawer",
-							},
-							Form: Dependency{
-								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "form"),
-								Alias: "form",
-							},
-							Icon: Dependency{
-								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "icon"),
-								Alias: "icon",
-							},
-							Input: Dependency{
-								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "input"),
-								Alias: "input",
-							},
-							Label: Dependency{
-								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "label"),
-								Alias: "label",
-							},
-							Pagination: Dependency{
-								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "pagination"),
-								Alias: "pagination",
-							},
-							Popover: Dependency{
-								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "popover"),
-								Alias: "popover",
-							},
-							SelectBox: Dependency{
-								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "selectbox"),
-								Alias: "selectbox",
-							},
-							Table: Dependency{
-								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "table"),
-								Alias: "table",
-							},
-							Toggle: Dependency{
-								Path:  buildPath(moduleName, "cmd", "service", "ui", "components", "toggle"),
-								Alias: "toggle",
-							},
-						},
-						Layouts: Dependency{
-							Path:  buildPath(moduleName, "cmd", "service", "ui", "layouts"),
-							Alias: "layouts",
 						},
 					},
 					Translations: Dependency{

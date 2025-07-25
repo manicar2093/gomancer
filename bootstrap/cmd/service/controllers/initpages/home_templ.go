@@ -8,9 +8,11 @@ package initpages
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/layouts"
-import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/button"
-import "github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/icon"
+import (
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/button"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/icon"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/layouts"
+)
 
 func HomePage() templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {

@@ -8,8 +8,10 @@ package layouts
 import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
-import "github.com/manicar2093/gomancer/bootstrap/core/templutils"
-import "github.com/manicar2093/gomancer/bootstrap/core"
+import (
+	"github.com/manicar2093/gomancer/bootstrap/core"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/utils"
+)
 
 func SideMenu(echoCtx *core.EchoContextTemplWrapper) templ.Component {
 	return templruntime.GeneratedTemplate(func(templ_7745c5c3_Input templruntime.GeneratedComponentInput) (templ_7745c5c3_Err error) {
@@ -38,7 +40,7 @@ func SideMenu(echoCtx *core.EchoContextTemplWrapper) templ.Component {
 		}
 		var templ_7745c5c3_Var2 = []any{
 			"block rounded-lg px-4 py-2 text-sm font-medium",
-			templutils.IsPathStyles(
+			utils.IsPathStyles(
 				echoCtx.Path(),
 				"/app/initial",
 				"bg-primary text-primary-foreground hover:bg-primary/90",
@@ -56,7 +58,7 @@ func SideMenu(echoCtx *core.EchoContextTemplWrapper) templ.Component {
 		var templ_7745c5c3_Var3 string
 		templ_7745c5c3_Var3, templ_7745c5c3_Err = templ.JoinStringErrs(templ.CSSClasses(templ_7745c5c3_Var2).String())
 		if templ_7745c5c3_Err != nil {
-			return templ.Error{Err: templ_7745c5c3_Err, FileName: `bootstrap/cmd/service/ui/layouts/sidemenu.templ`, Line: 1, Col: 0}
+			return templ.Error{Err: templ_7745c5c3_Err, FileName: `bootstrap/core/web/layouts/sidemenu.templ`, Line: 1, Col: 0}
 		}
 		_, templ_7745c5c3_Err = templ_7745c5c3_Buffer.WriteString(templ.EscapeString(templ_7745c5c3_Var3))
 		if templ_7745c5c3_Err != nil {

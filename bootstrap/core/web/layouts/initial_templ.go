@@ -9,11 +9,11 @@ import "github.com/a-h/templ"
 import templruntime "github.com/a-h/templ/runtime"
 
 import (
-	"github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/popover"
-	"github.com/manicar2093/gomancer/bootstrap/cmd/service/ui/components/selectbox"
 	"github.com/manicar2093/gomancer/bootstrap/core"
-	"github.com/manicar2093/gomancer/bootstrap/core/coretpls/datetime"
-	"github.com/manicar2093/gomancer/bootstrap/core/coretpls/formtag"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/datetime"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/formtag"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/popover"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/selectbox"
 )
 
 func Initial() templ.Component {

@@ -1,3 +1,9 @@
+## v0.22.1 (2025-08-06)
+
+### Fix
+
+- add new templui dependency
+
 ## v0.22.0 (2025-07-25)
 
 ### Fix

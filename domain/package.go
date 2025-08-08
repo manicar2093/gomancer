@@ -2,9 +2,10 @@ package domain
 
 import (
 	"fmt"
+	"path"
+
 	"github.com/dave/jennifer/jen"
 	"github.com/manicar2093/gomancer/parser"
-	"path"
 )
 
 type (
@@ -20,6 +21,7 @@ var (
 	CmdPackagePath                   Path = "cmd"
 	GithubPackagePath                Path = ".github"
 	PkgGeneratorsPackagePath              = Path(path.Join(string(PkgPackagePath), "generators"))
+	PkgTestfuncPackagePath                = Path(path.Join(string(PkgPackagePath), "testfunc"))
 	PkgConfigPackagePath                  = Path(path.Join(string(PkgPackagePath), "config"))
 	PkgVersioningPackagePath              = Path(path.Join(string(PkgPackagePath), "versioning"))
 	CmdServicePackagePath                 = Path(path.Join(string(CmdPackagePath), "service"))

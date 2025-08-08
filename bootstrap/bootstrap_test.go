@@ -1,12 +1,13 @@
 package bootstrap_test
 
 import (
+	"os"
+	"path"
+
 	"github.com/manicar2093/gomancer/bootstrap"
 	"github.com/manicar2093/gomancer/testmatchers"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-	"os"
-	"path"
 )
 
 var _ = Describe("Main", Ordered, func() {
@@ -41,9 +42,18 @@ var _ = Describe("Main", Ordered, func() {
 			content := `DATABASE_URL="postgresql://development:development@localhost:5432/test_dev?sslmode=disable"
 ENVIRONMENT=dev
 PORT=3000
-SESSION_SECRET_KEY=session_secret_key
+SESSION_SECRET_KEY=session_secret_key_dev
 `
 			Expect(dirWithPath(".env")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates .env.test file", func() {
+			content := `DATABASE_URL="postgresql://development:development@localhost:5432/test_test?sslmode=disable"
+ENVIRONMENT=test
+PORT=3000
+SESSION_SECRET_KEY=session_secret_key_test
+`
+			Expect(dirWithPath(".env.test")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
 
 		It("creates package.json file", func() {
@@ -220,6 +230,75 @@ func decode(t testingI, args map[string]any, holder any) {
 			Expect(dirWithPath("pkg/generators/generators.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
 
+		It("creates pkg/generators/db.go file", func() {
+			content := `package generators
+
+import (
+    connections	"test/core/connections"
+    errors	"errors"
+    gorm	"gorm.io/gorm"
+)
+
+func CreateOrFail(t testingI, dbConn *connections.ConnWrapper, data any) {
+    res := dbConn.Create(data)
+    if res.Error != nil {
+        t.Fatal(res.Error)
+    }
+}
+
+func FirstOrFail[T any](t testingI, dbConn *connections.ConnWrapper, conds ...any) *T {
+    var dest T
+    if res := dbConn.First(&dest, conds...); res.Error != nil {
+        t.Fatal(res.Error)
+    }
+
+    return &dest
+}
+
+func NotFoundOrFail[T any](t testingI, dbConn *connections.ConnWrapper, conds ...any) {
+    var dest T
+    if res := dbConn.First(&dest, conds...); res.Error != nil {
+        if !errors.Is(res.Error, gorm.ErrRecordNotFound) {
+            t.Fatal(res.Error)
+        }
+    }
+}
+`
+			Expect(dirWithPath("pkg/generators/db.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates pkg/generators/slices.go file", func() {
+			content := `package generators
+
+func Slice[T any](generator func() T, count int) []T {
+    ret := make([]T, count)
+    for i := 0; i < count; i++ {
+        ret[i] = generator()
+    }
+    return ret
+}
+`
+			Expect(dirWithPath("pkg/generators/slices.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
+		It("creates pkg/testfunc/db.go file", func() {
+			content := `// Package testfunc contains utility functions to run tests with ease
+package testfunc
+
+import (
+    core	"test/core"
+    connections	"test/core/connections"
+    converters	"test/core/converters"
+)
+
+func GetTestingGormDB() *connections.ConnWrapper {
+    conf := converters.Must(core.ParseConfig[connections.DatabaseConnectionConfig]())
+    return connections.GetGormConnection(conf)
+}
+`
+			Expect(dirWithPath("pkg/testfunc/db.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
 		It("creates pkg/config/config.go file", func() {
 			content := `// Package config contains a struct with all your API configs
 package config
@@ -340,6 +419,13 @@ tasks:
         deps: [build]
         cmds:
             - ./.bin/service/server
+    test:
+        desc: Run migrations, all tests and reset migrations using .env.test environment file
+        dotenv: ['.env.test']
+        cmds:
+            - npx prisma migrate dev --skip-seed
+            - go tool ginkgo run -v ./...
+            - npx prisma migrate reset --force
 `
 			Expect(dirWithPath("Taskfile.yml")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})

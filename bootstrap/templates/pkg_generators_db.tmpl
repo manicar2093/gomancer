@@ -1,0 +1,33 @@
+{{ define "pkg_generators_db" }}package generators
+
+import (
+    {{.GoDeps.Project.Core.Connections.GenerateImportString}}
+    {{.GoDeps.Std.Errors.GenerateImportString}}
+    {{.GoDeps.Gorm.GenerateImportString}}
+)
+
+func CreateOrFail(t testingI, dbConn *connections.ConnWrapper, data any) {
+    res := dbConn.Create(data)
+    if res.Error != nil {
+        t.Fatal(res.Error)
+    }
+}
+
+func FirstOrFail[T any](t testingI, dbConn *connections.ConnWrapper, conds ...any) *T {
+    var dest T
+    if res := dbConn.First(&dest, conds...); res.Error != nil {
+        t.Fatal(res.Error)
+    }
+
+    return &dest
+}
+
+func NotFoundOrFail[T any](t testingI, dbConn *connections.ConnWrapper, conds ...any) {
+    var dest T
+    if res := dbConn.First(&dest, conds...); res.Error != nil {
+        if !errors.Is(res.Error, gorm.ErrRecordNotFound) {
+            t.Fatal(res.Error)
+        }
+    }
+}
+{{ end }}

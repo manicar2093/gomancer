@@ -4,14 +4,15 @@ import (
 	"embed"
 	"errors"
 	"fmt"
-	"github.com/charmbracelet/log"
-	"github.com/manicar2093/gomancer/deps"
-	"github.com/manicar2093/gomancer/domain"
 	"net/url"
 	"os"
 	"path"
 	"strings"
 	"text/template"
+
+	"github.com/charmbracelet/log"
+	"github.com/manicar2093/gomancer/deps"
+	"github.com/manicar2093/gomancer/domain"
 )
 
 //go:embed templates/*
@@ -41,6 +42,10 @@ var (
 				{
 					".env",
 					"env_file",
+				},
+				{
+					".env.test",
+					"env_test_file",
 				},
 				{
 					"package.json",
@@ -123,6 +128,23 @@ var (
 				{
 					"generators.go",
 					"pkg_generators_generators",
+				},
+				{
+					"db.go",
+					"pkg_generators_db",
+				},
+				{
+					"slices.go",
+					"pkg_generators_slices",
+				},
+			},
+		},
+		{
+			string(domain.PkgTestfuncPackagePath),
+			[]fileWithContent{
+				{
+					"db.go",
+					"pkg_testfunc_db",
 				},
 			},
 		},

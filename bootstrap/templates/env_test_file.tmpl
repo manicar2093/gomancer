@@ -1,0 +1,5 @@
+{{ define "env_test_file" }}DATABASE_URL="postgresql://development:development@localhost:5432/{{.ProjectName}}_{{.TestEnvironment}}?sslmode=disable"
+ENVIRONMENT={{.TestEnvironment}}
+PORT=3000
+SESSION_SECRET_KEY=session_secret_key_{{.TestEnvironment}}
+{{end}}

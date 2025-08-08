@@ -27,4 +27,11 @@ tasks:
         deps: [build]
         cmds:
             - ./.bin/service/server
+    test:
+        desc: Run migrations, all tests and reset migrations using .env.test environment file
+        dotenv: ['.env.test']
+        cmds:
+            - npx prisma migrate dev --skip-seed
+            - go tool ginkgo run -v ./...
+            - npx prisma migrate reset --force
 {{ end }}

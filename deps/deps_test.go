@@ -142,6 +142,16 @@ var _ = Describe("Deps", func() {
 				container.Std.Fmt.ImportAlias(file)
 			})
 		})
+
+		Describe("Errors", func() {
+			It("contains all errors usable callers", func() {
+				file := jen.NewFile("fmt_test")
+
+				Expect(container.Std.Errors.Alias).To(Equal("errors"))
+				Expect(container.Std.Errors.Path).To(Equal("errors"))
+				container.Std.Errors.ImportAlias(file)
+			})
+		})
 	})
 
 	Describe("Gorm", func() {

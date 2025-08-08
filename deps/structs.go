@@ -27,6 +27,7 @@ type (
 		Maps    Dependency
 		Slices  Dependency
 		StrConv Dependency
+		Errors  Dependency
 	}
 	Gorm struct {
 		Dependency

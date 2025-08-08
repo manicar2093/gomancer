@@ -2,8 +2,9 @@ package deps
 
 import (
 	"fmt"
-	"github.com/dave/jennifer/jen"
 	"path"
+
+	"github.com/dave/jennifer/jen"
 )
 
 func Init(moduleName, lowerNoSpaceCase string) Container {
@@ -57,6 +58,10 @@ func Init(moduleName, lowerNoSpaceCase string) Container {
 			StrConv: Dependency{
 				Path:  "strconv",
 				Alias: "strconv",
+			},
+			Errors: Dependency{
+				Path:  "errors",
+				Alias: "errors",
 			},
 		},
 		Gorm: Gorm{

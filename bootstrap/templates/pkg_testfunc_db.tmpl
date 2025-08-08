@@ -1,0 +1,14 @@
+{{ define "pkg_testfunc_db" }}// Package testfunc contains utility functions to run tests with ease
+package testfunc
+
+import (
+    {{.GoDeps.Project.Core.GenerateImportString}}
+    {{.GoDeps.Project.Core.Connections.GenerateImportString}}
+    {{.GoDeps.Project.Core.Converters.GenerateImportString}}
+)
+
+func GetTestingGormDB() *connections.ConnWrapper {
+    conf := converters.Must(core.ParseConfig[connections.DatabaseConnectionConfig]())
+    return connections.GetGormConnection(conf)
+}
+{{ end }}

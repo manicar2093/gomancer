@@ -1,0 +1,18 @@
+package products_test
+
+import (
+	"testing"
+	"github.com/user/project_name/core/connections"
+	"github.com/user/project_name/pkg/testfunc"
+
+	. "github.com/onsi/ginkgo/v2"
+	. "github.com/onsi/gomega"
+)
+
+var dbConn *connections.ConnWrapper
+
+func TestProducts(t *testing.T) {
+	dbConn = testfunc.GetTestingGormDB()
+	RegisterFailHandler(Fail)
+	RunSpecs(t, "Products Suite")
+}

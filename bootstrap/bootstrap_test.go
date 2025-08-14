@@ -299,6 +299,16 @@ func GetTestingGormDB() *connections.ConnWrapper {
 			Expect(dirWithPath("pkg/testfunc/db.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
 		})
 
+		It("creates pkg/testfunc/goption.go file", func() {
+			content := `package testfunc
+
+const (
+    GetValueMethod = "GetValue()"
+)
+`
+			Expect(dirWithPath("pkg/testfunc/goption.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+		})
+
 		It("creates pkg/config/config.go file", func() {
 			content := `// Package config contains a struct with all your API configs
 package config

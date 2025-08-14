@@ -146,6 +146,10 @@ var (
 					"db.go",
 					"pkg_testfunc_db",
 				},
+				{
+					"goption.go",
+					"pkg_testfunc_goption",
+				},
 			},
 		},
 		{

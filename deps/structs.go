@@ -28,6 +28,7 @@ type (
 		Slices  Dependency
 		StrConv Dependency
 		Errors  Dependency
+		Testing Dependency
 	}
 	Gorm struct {
 		Dependency
@@ -47,7 +48,8 @@ type (
 	}
 	Pkg struct {
 		Dependency
-		Config Dependency
+		Config   Dependency
+		TestFunc Dependency
 	}
 	Controllers struct {
 		Dependency
@@ -110,6 +112,12 @@ type (
 		Layouts    Dependency
 		Components Components
 	}
+
+	Gomega struct {
+		Dependency
+		GStruct Dependency
+	}
+
 	Container struct {
 		Echo
 		EchoRoutesView
@@ -124,5 +132,7 @@ type (
 		Goption      Dependency
 		GormPager    Dependency
 		UDecimal     Dependency
+		Ginkgo       Dependency
+		Gomega       Gomega
 	}
 )

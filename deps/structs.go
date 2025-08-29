@@ -48,8 +48,9 @@ type (
 	}
 	Pkg struct {
 		Dependency
-		Config   Dependency
-		TestFunc Dependency
+		Config     Dependency
+		TestFunc   Dependency
+		Generators Dependency
 	}
 	Controllers struct {
 		Dependency

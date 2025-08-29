@@ -128,6 +128,10 @@ func Init(moduleName, lowerNoSpaceCase string) Container {
 					Path:  buildPath(moduleName, "pkg", "testfunc"),
 					Alias: "testfunc",
 				},
+				Generators: Dependency{
+					Path:  buildPath(moduleName, "pkg", "generators"),
+					Alias: "generators",
+				},
 			},
 			Core: Core{
 				Dependency: Dependency{

@@ -2,22 +2,20 @@
 package posttests_test
 
 import (
-	"time"
-	"github.com/user/project_name/internal/domain/models"
-	"github.com/user/project_name/internal/posttests"
-	"github.com/user/project_name/pkg/generators"
-	"github.com/user/project_name/pkg/testfunc"
-
-	"github.com/brianvoe/gofakeit/v7"
-	"github.com/manicar2093/goption"
+	gofakeit "github.com/brianvoe/gofakeit/v7"
+	goption "github.com/manicar2093/goption"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-	"github.com/onsi/gomega/gstruct"
-	"github.com/quagmt/udecimal"
+	gstruct "github.com/onsi/gomega/gstruct"
+	udecimal "github.com/quagmt/udecimal"
+	models "github.com/user/project_name/internal/domain/models"
+	posttests "github.com/user/project_name/internal/posttests"
+	generators "github.com/user/project_name/pkg/generators"
+	testfunc "github.com/user/project_name/pkg/testfunc"
+	time "time"
 )
 
 var _ = Describe("RepositoryGomancer", func() {
-
 	var (
 		T    = GinkgoT()
 		repo *posttests.PostTestRepository
@@ -31,7 +29,7 @@ var _ = Describe("RepositoryGomancer", func() {
 		It("should save", func() {
 			item := generators.GeneratePostTest(T, map[string]any{})
 
-			Expect(repo.Save(&item)).To(Succeed())
+			Expect(repo.Save(&item)).To(Success())
 			generators.FirstOrFail[models.PostTest](T, dbConn, "id = ?", item.Id)
 		})
 	})
@@ -45,33 +43,33 @@ var _ = Describe("RepositoryGomancer", func() {
 
 			Expect(err).ToNot(HaveOccurred())
 			Expect(*found).To(gstruct.MatchFields(gstruct.IgnoreExtras, gstruct.Fields{
-				"Id": Equal(item.Id),
-                "AnOptionalInt": HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalInt.GetValue())),
-                "AnInt": Equal(item.AnInt),
-                "AnOptionalInt8": HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalInt8.GetValue())),
-                "AnInt8": Equal(item.AnInt8),
-                "AnOptionalInt16": HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalInt16.GetValue())),
-                "AnInt16": Equal(item.AnInt16),
-                "AnOptionalInt32": HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalInt32.GetValue())),
-                "AnInt32": Equal(item.AnInt32),
-                "AnOptionalInt64": HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalInt64.GetValue())),
-                "AnInt64": Equal(item.AnInt64),
-                "AnOptionalFloat32": HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalFloat32.GetValue())),
-                "AnFloat32": Equal(item.AnFloat32),
-                "AnOptionalFloat64": HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalFloat64.GetValue())),
-                "AnFloat64": Equal(item.AnFloat64),
-                "OptionalString": HaveField(testfunc.GetValueMethod, Equal(item.OptionalString.GetValue())),
-                "String": Equal(item.String),
-                "OptionalBool": HaveField(testfunc.GetValueMethod, Equal(item.OptionalBool.GetValue())),
-                "Bool": Equal(item.Bool),
-                "OptionalTime": HaveField(testfunc.GetValueMethod, BeTemporally("~", item.OptionalTime.GetValue())),
-                "Time": BeTemporally("~", item.Time),
-                "OptionalDecimal": HaveField(testfunc.GetValueMethod, Equal(item.Decimal.GetValue().RoundBank(2))),
-                "Decimal": Equal(item.Decimal.RoundBank(2)),
-                "OptionalUuid": HaveField(testfunc.GetValueMethod, Equal(item.OptionalUuid.GetValue())),
-                "Uuid": Equal(item.Uuid),
-                "OptionalEnum": HaveField(testfunc.GetValueMethod, Equal(item.OptionalEnum.GetValue())),
-                "Enum": Equal(item.Enum),
+				"AnFloat32":         Equal(item.AnFloat32),
+				"AnFloat64":         Equal(item.AnFloat64),
+				"AnInt":             Equal(item.AnInt),
+				"AnInt16":           Equal(item.AnInt16),
+				"AnInt32":           Equal(item.AnInt32),
+				"AnInt64":           Equal(item.AnInt64),
+				"AnInt8":            Equal(item.AnInt8),
+				"AnOptionalFloat32": HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalFloat32.GetValue())),
+				"AnOptionalFloat64": HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalFloat64.GetValue())),
+				"AnOptionalInt":     HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalInt.GetValue())),
+				"AnOptionalInt16":   HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalInt16.GetValue())),
+				"AnOptionalInt32":   HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalInt32.GetValue())),
+				"AnOptionalInt64":   HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalInt64.GetValue())),
+				"AnOptionalInt8":    HaveField(testfunc.GetValueMethod, Equal(item.AnOptionalInt8.GetValue())),
+				"Bool":              Equal(item.Bool),
+				"Decimal":           Equal(item.Decimal.RoundBank(2)),
+				"Enum":              Equal(item.Enum),
+				"Id":                Equal(item.Id),
+				"OptionalBool":      HaveField(testfunc.GetValueMethod, Equal(item.OptionalBool.GetValue())),
+				"OptionalDecimal":   HaveField(testfunc.GetValueMethod, Equal(item.OptionalDecimal.GetValue().RoundBank(2))),
+				"OptionalEnum":      HaveField(testfunc.GetValueMethod, Equal(item.OptionalEnum.GetValue())),
+				"OptionalString":    HaveField(testfunc.GetValueMethod, Equal(item.OptionalString.GetValue())),
+				"OptionalTime":      HaveField(testfunc.GetValueMethod, BeTemporally("~", item.OptionalTime.GetValue())),
+				"OptionalUuid":      HaveField(testfunc.GetValueMethod, Equal(item.OptionalUuid.GetValue())),
+				"String":            Equal(item.String),
+				"Time":              BeTemporally("~", item.Time),
+				"Uuid":              Equal(item.Uuid),
 			}))
 		})
 	})
@@ -96,51 +94,49 @@ var _ = Describe("RepositoryGomancer", func() {
 		})
 	})
 
-    Describe("PartialUpdateById", func() {
+	Describe("PartialUpdateById", func() {
 		It("should partial update by id", func() {
 			item := generators.GeneratePostTest(T, map[string]any{})
 			generators.CreateOrFail(T, dbConn, &item)
 
-			updated, err := repo.PartialUpdateById(
-				generators.GeneratePostTestPartialUpdateByIdInput(T, item.Id, map[string]any{}),
-			)
+			updated, err := repo.PartialUpdateById(generators.GeneratePostTestPartialUpdateById(T, item.Id, map[string]any{}))
 
 			Expect(err).ToNot(HaveOccurred())
 			Expect(*updated).To(gstruct.MatchFields(gstruct.IgnoreExtras, gstruct.Fields{
-                "Id": Equal(item.Id),
-                "AnOptionalInt": HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalInt.GetValue()))),
-                "AnInt": Not(Equal(item.AnInt)),
-                "AnOptionalInt8": HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalInt8.GetValue()))),
-                "AnInt8": Not(Equal(item.AnInt8)),
-                "AnOptionalInt16": HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalInt16.GetValue()))),
-                "AnInt16": Not(Equal(item.AnInt16)),
-                "AnOptionalInt32": HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalInt32.GetValue()))),
-                "AnInt32": Not(Equal(item.AnInt32)),
-                "AnOptionalInt64": HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalInt64.GetValue()))),
-                "AnInt64": Not(Equal(item.AnInt64)),
-                "AnOptionalFloat32": HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalFloat32.GetValue()))),
-                "AnFloat32": Not(Equal(item.AnFloat32)),
-                "AnOptionalFloat64": HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalFloat64.GetValue()))),
-                "AnFloat64": Not(Equal(item.AnFloat64)),
-                "OptionalString": HaveField(testfunc.GetValueMethod, Not(Equal(item.OptionalString.GetValue()))),
-                "String": Not(Equal(item.String)),
-                "OptionalBool": HaveField(testfunc.GetValueMethod, Not(Equal(item.OptionalBool.GetValue()))),
-                "Bool": Not(Equal(item.Bool)),
-                "OptionalTime": HaveField(testfunc.GetValueMethod, Not(BeTemporally("~", item.OptionalTime.GetValue()))),
-                "Time": BeTemporally("~", item.Time),
-                "OptionalDecimal": HaveField(testfunc.GetValueMethod, Not(Equal(item.Decimal.GetValue().RoundBank(2)))),
-                "Decimal": Not(Equal(item.Decimal.)RoundBank(2)),
-                "OptionalUuid": HaveField(testfunc.GetValueMethod, Not(Equal(item.OptionalUuid.GetValue()))),
-                "Uuid": Not(Equal(item.Uuid)),
-                "OptionalEnum": HaveField(testfunc.GetValueMethod, Equal(item.OptionalEnum.GetValue())),
-                "Enum": Equal(item.Enum),
+				"AnFloat32":         Not(Equal(item.AnFloat32)),
+				"AnFloat64":         Not(Equal(item.AnFloat64)),
+				"AnInt":             Not(Equal(item.AnInt)),
+				"AnInt16":           Not(Equal(item.AnInt16)),
+				"AnInt32":           Not(Equal(item.AnInt32)),
+				"AnInt64":           Not(Equal(item.AnInt64)),
+				"AnInt8":            Not(Equal(item.AnInt8)),
+				"AnOptionalFloat32": HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalFloat32.GetValue()))),
+				"AnOptionalFloat64": HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalFloat64.GetValue()))),
+				"AnOptionalInt":     HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalInt.GetValue()))),
+				"AnOptionalInt16":   HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalInt16.GetValue()))),
+				"AnOptionalInt32":   HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalInt32.GetValue()))),
+				"AnOptionalInt64":   HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalInt64.GetValue()))),
+				"AnOptionalInt8":    HaveField(testfunc.GetValueMethod, Not(Equal(item.AnOptionalInt8.GetValue()))),
+				"Bool":              Not(Equal(item.Bool)),
+				"Decimal":           Not(Equal(item.Decimal.RoundBank(2))),
+				"Enum":              Not(Equal(item.Enum)),
+				"Id":                Equal(item.Id),
+				"OptionalBool":      HaveField(testfunc.GetValueMethod, Not(Equal(item.OptionalBool.GetValue()))),
+				"OptionalDecimal":   HaveField(testfunc.GetValueMethod, Not(Equal(item.OptionalDecimal.GetValue().RoundBank(2)))),
+				"OptionalEnum":      HaveField(testfunc.GetValueMethod, Not(Equal(item.OptionalEnum.GetValue()))),
+				"OptionalString":    HaveField(testfunc.GetValueMethod, Not(Equal(item.OptionalString.GetValue()))),
+				"OptionalTime":      HaveField(testfunc.GetValueMethod, Not(BeTemporally("~", item.OptionalTime.GetValue()))),
+				"OptionalUuid":      HaveField(testfunc.GetValueMethod, Not(Equal(item.OptionalUuid.GetValue()))),
+				"String":            Not(Equal(item.String)),
+				"Time":              Not(BeTemporally("~", item.Time)),
+				"Uuid":              Not(Equal(item.Uuid)),
 			}))
 		})
 	})
 
 	Describe("DeleteById", func() {
 		It("should delete by id", func() {
-			item := generators.GeneratePostTest(T, map[string]any{})
+			item := generators.GeneratePostTest(T, map[string]any)
 			generators.CreateOrFail(T, dbConn, &item)
 
 			err := repo.DeleteById(item.Id)

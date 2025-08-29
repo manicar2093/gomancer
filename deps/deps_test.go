@@ -250,6 +250,10 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Pkg.Config.Alias).To(Equal("config"))
 				Expect(container.Project.Pkg.Config.Path).To(Equal(testfixtures.TestPath + "/pkg/config"))
 				container.Project.Pkg.Config.ImportAlias(file)
+
+				Expect(container.Project.Pkg.Generators.Alias).To(Equal("generators"))
+				Expect(container.Project.Pkg.Generators.Path).To(Equal(testfixtures.TestPath + "/pkg/generators"))
+				container.Project.Pkg.Generators.ImportAlias(file)
 			})
 		})
 

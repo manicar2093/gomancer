@@ -74,7 +74,7 @@ func (c *{{.PascalCase}}Controller) GetAllPaginatedHandler(ctx echo.Context) err
 }
 
 func (c *{{.PascalCase}}Controller) PartialUpdateByIdHandler(ctx echo.Context) error {
-	req := {{.InCreation.Alias}}.PartialUpdateByIdInput{}
+	req := {{.GoDeps.Project.Internal.Domain.Models.Alias}}.{{.PascalCase}}PartialUpdateByIdInput{}
 	if err := core.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}

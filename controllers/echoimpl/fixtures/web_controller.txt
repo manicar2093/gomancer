@@ -93,7 +93,7 @@ func (c *PostTestWebController) GetAllPaginatedHandler(ctx echo.Context) error {
 }
 
 func (c *PostTestWebController) PartialUpdateByIdHandler(ctx echo.Context) error {
-	req := posttests.PartialUpdateByIdInput{}
+	req := models.PostTestPartialUpdateByIdInput{}
 	if err := core.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}

@@ -394,6 +394,7 @@ tool (
 	github.com/a-h/templ/cmd/templ
 	github.com/air-verse/air
 	github.com/templui/templui/cmd/templui
+	github.com/onsi/ginkgo/v2/ginkgo
 )
 `
 			Expect(dirWithPath("go.mod")).Should(testmatchers.BeAnExistingFileAndEqualString(content))

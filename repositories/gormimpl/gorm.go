@@ -12,19 +12,19 @@ import (
 	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/manicar2093/gomancer/parser"
-	"github.com/manicar2093/gomancer/tags"
 	"github.com/manicar2093/gomancer/types"
 	"github.com/rjNemo/underscore"
 )
 
 type (
 	generatorData struct {
-		repositoryStructName string
-		db                   string
-		receiverStatement    Code
-		receiverVar          string
-		modelQualifier       Code
-		constructorName      string
+		repositoryStructName        string
+		db                          string
+		receiverStatement           Code
+		receiverVar                 string
+		modelQualifier              Code
+		partialUpdateModelQualifier Code
+		constructorName             string
 	}
 	generatorType func(parser.GenerateModelInput, generatorData, deps.Container) Code
 )
@@ -33,12 +33,13 @@ func GenerateRepository(input parser.GenerateModelInput, goDeps deps.Container, 
 	repositoryStructName := fmt.Sprintf("%sRepository", input.PascalCase)
 	receiverVar := "c"
 	data := generatorData{
-		repositoryStructName: repositoryStructName,
-		db:                   "db",
-		receiverStatement:    Id(receiverVar).Op("*").Add(Id(repositoryStructName)),
-		receiverVar:          receiverVar,
-		modelQualifier:       Qual(goDeps.Internal.Models.Path, input.PascalCase),
-		constructorName:      fmt.Sprintf("New%sRepository", input.PascalCase),
+		repositoryStructName:        repositoryStructName,
+		db:                          "db",
+		receiverStatement:           Id(receiverVar).Op("*").Add(Id(repositoryStructName)),
+		receiverVar:                 receiverVar,
+		modelQualifier:              Qual(goDeps.Internal.Models.Path, input.PascalCase),
+		partialUpdateModelQualifier: Qual(goDeps.Internal.Models.Path, fmt.Sprintf("%sPartialUpdateByIdInput", input.PascalCase)),
+		constructorName:             fmt.Sprintf("New%sRepository", input.PascalCase),
 	}
 
 	modelPackagePath := path.Join(
@@ -395,65 +396,7 @@ func generatedGetAllPaginatedMethod(_ parser.GenerateModelInput, generatorData g
 }
 
 func generatePartialUpdateFunction(input parser.GenerateModelInput, generatorData generatorData, goDeps deps.Container) Code {
-	return Type().
-		Id("PartialUpdateByIdInput").
-		StructFunc(func(g *Group) {
-			g.
-				Id(input.IdAttribute.PascalCase).
-				Add(types.QualifiersByType(input.IdAttribute.Type, goDeps, input.IdAttribute.PascalCase, true)).
-				Tag(
-					tags.Tags(
-						tags.NewJson(tags.JsonOptions{
-							Name: input.IdAttribute.SnakeCase,
-						}),
-						tags.NewEcho(tags.EchoOptions{
-							Name: input.IdAttribute.SnakeCase,
-							Tag:  tags.EchoParam,
-						}),
-						tags.NewEcho(tags.EchoOptions{
-							Name: input.IdAttribute.SnakeCase,
-							Tag:  tags.EchoForm,
-						}),
-						tags.NewEcho(tags.EchoOptions{
-							Name: input.IdAttribute.SnakeCase,
-							Tag:  tags.EchoQuery,
-						}),
-						tags.NewValidate(
-							underscore.Ternary[tags.ValidateGenerable](
-								input.IdAttribute.Type == string(types.TypeUuid),
-								tags.ValidateRequiredUuid{},
-								tags.ValidateRequired{},
-							),
-						),
-					),
-				)
-			underscore.Map(input.Attributes, func(item parser.Attribute) Code {
-				return g.Id(item.PascalCase).Qual(domain.GoptionPkgPath, "Optional").Index(
-					types.QualifiersByType(item.Type, goDeps, item.PascalCase, true),
-				).Tag(
-					tags.Tags(
-						tags.NewJson(
-							tags.JsonOptions{
-								Name: item.SnakeCase,
-							},
-						),
-						tags.NewEcho(tags.EchoOptions{
-							Name: item.SnakeCase,
-							Tag:  tags.EchoParam,
-						}),
-						tags.NewEcho(tags.EchoOptions{
-							Name: item.SnakeCase,
-							Tag:  tags.EchoForm,
-						}),
-						tags.NewEcho(tags.EchoOptions{
-							Name: item.SnakeCase,
-							Tag:  tags.EchoQuery,
-						}),
-					),
-				)
-			})
-		}).
-		Line().
+	return Line().
 		Line().
 		Comment("PartialUpdateById can select which field has to be updated from given input").
 		Line().
@@ -461,7 +404,7 @@ func generatePartialUpdateFunction(input parser.GenerateModelInput, generatorDat
 		Params(generatorData.receiverStatement).
 		Id("PartialUpdateById").
 		Params(
-			Id("changes").Id("PartialUpdateByIdInput"),
+			Id("changes").Add(generatorData.partialUpdateModelQualifier),
 		).
 		Params(
 			Op("*").Add(generatorData.modelQualifier),

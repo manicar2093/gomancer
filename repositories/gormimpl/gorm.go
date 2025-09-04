@@ -178,7 +178,7 @@ func doGenerateRepositoryTest(input parser.GenerateModelInput, generatorData gen
 					Id("item").Op(":=").Id(goDeps.Project.Pkg.Generators.Alias).Dot(fmt.Sprintf("Generate%s", input.PascalCase)).Call(Id("T"), Map(String()).Any().Block()),
 					Line(),
 					Line(),
-					Id("Expect").Call(Id("repo").Dot("Save").Call(Op("&").Id("item"))).Dot("To").Call(Id("Success").Call()),
+					Id("Expect").Call(Id("repo").Dot("Save").Call(Op("&").Id("item"))).Dot("To").Call(Id("Succeed").Call()),
 					Id("generators").Dot("FirstOrFail").Index(Id("models").Dot(input.PascalCase)).Call(Id("T"), Id("dbConn"), Lit("id = ?"), Id("item").Dot("Id")),
 				)),
 			)),
@@ -299,7 +299,7 @@ func doGenerateRepositoryTest(input parser.GenerateModelInput, generatorData gen
 
 			Id("Describe").Call(Lit("DeleteById"), Func().Params().Block(
 				Id("It").Call(Lit("should delete by id"), Func().Params().Block(
-					Id("item").Op(":=").Id(goDeps.Project.Pkg.Generators.Alias).Dot(fmt.Sprintf("Generate%s", input.PascalCase)).Call(Id("T"), Map(String()).Any()),
+					Id("item").Op(":=").Id(goDeps.Project.Pkg.Generators.Alias).Dot(fmt.Sprintf("Generate%s", input.PascalCase)).Call(Id("T"), Map(String()).Any().Values()),
 					Id("generators").Dot("CreateOrFail").Call(Id("T"), Id("dbConn"), Op("&").Id("item")),
 					Line(),
 					Line(),
@@ -311,7 +311,7 @@ func doGenerateRepositoryTest(input parser.GenerateModelInput, generatorData gen
 				)),
 			)),
 		))
-	
+
 	return testFile.Save(
 		path.Join(
 			modelPackagePath,

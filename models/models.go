@@ -222,7 +222,7 @@ func doGenerateTestGeneratorFunc(input parser.GenerateModelInput, goDeps deps.Co
 		Id("args").Map(String()).Any(),
 	).Qual(goDeps.Project.Internal.Domain.Models.Path, fmt.Sprintf("%sPartialUpdateByIdInput", input.PascalCase)).Block(
 		Id("fak").Op(":=").Qual(
-			goDeps.Project.Internal.Domain.Models.Path, input.PascalCase,
+			goDeps.Project.Internal.Domain.Models.Path, fmt.Sprintf("%sPartialUpdateByIdInput", input.PascalCase),
 		).ValuesFunc(func(g *Group) {
 
 			valuesDict := make(Dict)

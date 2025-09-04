@@ -45,7 +45,7 @@ func GeneratePostTest(t testingI, args map[string]any) models.PostTest {
 }
 
 func GeneratePostTestPartialUpdateById(t testingI, id uuid.UUID, args map[string]any) models.PostTestPartialUpdateByIdInput {
-	fak := models.PostTest{
+	fak := models.PostTestPartialUpdateByIdInput{
 		AnFloat32:         goption.Of(gofakeit.Float32()),
 		AnFloat64:         goption.Of(gofakeit.Float64()),
 		AnInt:             goption.Of(gofakeit.Int()),

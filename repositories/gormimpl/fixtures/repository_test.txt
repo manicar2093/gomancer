@@ -2,17 +2,13 @@
 package posttests_test
 
 import (
-	gofakeit "github.com/brianvoe/gofakeit/v7"
-	goption "github.com/manicar2093/goption"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	gstruct "github.com/onsi/gomega/gstruct"
-	udecimal "github.com/quagmt/udecimal"
 	models "github.com/user/project_name/internal/domain/models"
 	posttests "github.com/user/project_name/internal/posttests"
 	generators "github.com/user/project_name/pkg/generators"
 	testfunc "github.com/user/project_name/pkg/testfunc"
-	time "time"
 )
 
 var _ = Describe("RepositoryGomancer", func() {
@@ -29,7 +25,7 @@ var _ = Describe("RepositoryGomancer", func() {
 		It("should save", func() {
 			item := generators.GeneratePostTest(T, map[string]any{})
 
-			Expect(repo.Save(&item)).To(Success())
+			Expect(repo.Save(&item)).To(Succeed())
 			generators.FirstOrFail[models.PostTest](T, dbConn, "id = ?", item.Id)
 		})
 	})
@@ -136,7 +132,7 @@ var _ = Describe("RepositoryGomancer", func() {
 
 	Describe("DeleteById", func() {
 		It("should delete by id", func() {
-			item := generators.GeneratePostTest(T, map[string]any)
+			item := generators.GeneratePostTest(T, map[string]any{})
 			generators.CreateOrFail(T, dbConn, &item)
 
 			err := repo.DeleteById(item.Id)

@@ -1,3 +1,23 @@
+## v0.23.0 (2025-09-05)
+
+### Feat
+
+- add bool and enum handling on repo testing and generators
+- add ginkgo to go tools
+- add correct name to partial update struct generator
+- remove unused imports due partial update struct was move to models
+- add changes into controller due partial update model
+- add partial update generator and move it to models generation
+- add succeed and curly braces in needed places
+- add repository testing
+- add suite test on repo creation
+- add goption.go in testfunc to not repeat GetValue() string in the future
+- add bootstrap files needed to create repo tests
+
+### Fix
+
+- change test data to correct snake case going from data_32 to data32
+
 ## v0.22.1 (2025-08-06)
 
 ### Fix

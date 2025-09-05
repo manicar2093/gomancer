@@ -2,8 +2,9 @@ package deps
 
 import (
 	"fmt"
-	"github.com/dave/jennifer/jen"
 	"path"
+
+	"github.com/dave/jennifer/jen"
 )
 
 func Init(moduleName, lowerNoSpaceCase string) Container {
@@ -57,6 +58,14 @@ func Init(moduleName, lowerNoSpaceCase string) Container {
 			StrConv: Dependency{
 				Path:  "strconv",
 				Alias: "strconv",
+			},
+			Errors: Dependency{
+				Path:  "errors",
+				Alias: "errors",
+			},
+			Testing: Dependency{
+				Path:  "testing",
+				Alias: "testing",
 			},
 		},
 		Gorm: Gorm{
@@ -114,6 +123,14 @@ func Init(moduleName, lowerNoSpaceCase string) Container {
 				Config: Dependency{
 					Path:  buildPath(moduleName, "pkg", "config"),
 					Alias: "config",
+				},
+				TestFunc: Dependency{
+					Path:  buildPath(moduleName, "pkg", "testfunc"),
+					Alias: "testfunc",
+				},
+				Generators: Dependency{
+					Path:  buildPath(moduleName, "pkg", "generators"),
+					Alias: "generators",
 				},
 			},
 			Core: Core{
@@ -273,6 +290,20 @@ func Init(moduleName, lowerNoSpaceCase string) Container {
 				},
 			},
 		},
+		Ginkgo: Dependency{
+			Path:  "github.com/onsi/ginkgo/v2",
+			Alias: ".",
+		},
+		Gomega: Gomega{
+			Dependency: Dependency{
+				Path:  "github.com/onsi/gomega",
+				Alias: ".",
+			},
+			GStruct: Dependency{
+				Path:  "github.com/onsi/gomega/gstruct",
+				Alias: "gstruct",
+			},
+		},
 	}
 }
 
@@ -284,7 +315,7 @@ func InCreation(moduleName, packageEntityName string) Dependency {
 }
 
 func (c Dependency) ImportAlias(file *jen.File) {
-	file.ImportName(c.Path, c.Alias)
+	file.ImportAlias(c.Path, c.Alias)
 }
 func (c Dependency) GenerateImportString() string {
 	return fmt.Sprintf("%s\t\"%s\"", c.Alias, c.Path)

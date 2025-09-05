@@ -19,10 +19,10 @@ type PostTest struct {
 	AnInt32           int32                              `form:"an_int32" json:"an_int32" mapstructure:"an_int32" param:"an_int32" query:"an_int32" validate:"required"`
 	AnOptionalInt64   goption.Optional[int64]            `form:"an_optional_int64" json:"an_optional_int64" mapstructure:"an_optional_int64" param:"an_optional_int64" query:"an_optional_int64"`
 	AnInt64           int64                              `form:"an_int64" json:"an_int64" mapstructure:"an_int64" param:"an_int64" query:"an_int64" validate:"required"`
-	AnOptionalFloat32 goption.Optional[float32]          `form:"an_optional_float_32" json:"an_optional_float_32" mapstructure:"an_optional_float_32" param:"an_optional_float_32" query:"an_optional_float_32"`
-	AnFloat32         float32                            `form:"an_float_32" json:"an_float_32" mapstructure:"an_float_32" param:"an_float_32" query:"an_float_32" validate:"required"`
-	AnOptionalFloat64 goption.Optional[float64]          `form:"an_optional_float_64" json:"an_optional_float_64" mapstructure:"an_optional_float_64" param:"an_optional_float_64" query:"an_optional_float_64"`
-	AnFloat64         float64                            `form:"an_float_64" json:"an_float_64" mapstructure:"an_float_64" param:"an_float_64" query:"an_float_64" validate:"required"`
+	AnOptionalFloat32 goption.Optional[float32]          `form:"an_optional_float32" json:"an_optional_float32" mapstructure:"an_optional_float32" param:"an_optional_float32" query:"an_optional_float32"`
+	AnFloat32         float32                            `form:"an_float32" json:"an_float32" mapstructure:"an_float32" param:"an_float32" query:"an_float32" validate:"required"`
+	AnOptionalFloat64 goption.Optional[float64]          `form:"an_optional_float64" json:"an_optional_float64" mapstructure:"an_optional_float64" param:"an_optional_float64" query:"an_optional_float64"`
+	AnFloat64         float64                            `form:"an_float64" json:"an_float64" mapstructure:"an_float64" param:"an_float64" query:"an_float64" validate:"required"`
 	OptionalString    goption.Optional[string]           `form:"optional_string" json:"optional_string" mapstructure:"optional_string" param:"optional_string" query:"optional_string"`
 	String            string                             `form:"string" json:"string" mapstructure:"string" param:"string" query:"string" validate:"required"`
 	OptionalBool      goption.Optional[bool]             `form:"optional_bool" json:"optional_bool" mapstructure:"optional_bool" param:"optional_bool" query:"optional_bool"`
@@ -40,15 +40,45 @@ type PostTest struct {
 type OptionalEnum string
 
 const (
-	OptionalEnum1 OptionalEnum = "optional_enum_1"
-	OptionalEnum2 OptionalEnum = "optional_enum_2"
-	OptionalEnum3 OptionalEnum = "optional_enum_3"
+	OptionalEnum1 OptionalEnum = "optional_enum1"
+	OptionalEnum2 OptionalEnum = "optional_enum2"
+	OptionalEnum3 OptionalEnum = "optional_enum3"
 )
 
 type Enum string
 
 const (
-	Enum1 Enum = "enum_1"
-	Enum2 Enum = "enum_2"
-	Enum3 Enum = "enum_3"
+	Enum1 Enum = "enum1"
+	Enum2 Enum = "enum2"
+	Enum3 Enum = "enum3"
 )
+
+type PostTestPartialUpdateByIdInput struct {
+	Id                uuid.UUID                          `form:"id" json:"id" param:"id" query:"id" validate:"required_uuid"`
+	AnOptionalInt     goption.Optional[int]              `form:"an_optional_int" json:"an_optional_int" param:"an_optional_int" query:"an_optional_int"`
+	AnInt             goption.Optional[int]              `form:"an_int" json:"an_int" param:"an_int" query:"an_int"`
+	AnOptionalInt8    goption.Optional[int8]             `form:"an_optional_int8" json:"an_optional_int8" param:"an_optional_int8" query:"an_optional_int8"`
+	AnInt8            goption.Optional[int8]             `form:"an_int8" json:"an_int8" param:"an_int8" query:"an_int8"`
+	AnOptionalInt16   goption.Optional[int16]            `form:"an_optional_int16" json:"an_optional_int16" param:"an_optional_int16" query:"an_optional_int16"`
+	AnInt16           goption.Optional[int16]            `form:"an_int16" json:"an_int16" param:"an_int16" query:"an_int16"`
+	AnOptionalInt32   goption.Optional[int32]            `form:"an_optional_int32" json:"an_optional_int32" param:"an_optional_int32" query:"an_optional_int32"`
+	AnInt32           goption.Optional[int32]            `form:"an_int32" json:"an_int32" param:"an_int32" query:"an_int32"`
+	AnOptionalInt64   goption.Optional[int64]            `form:"an_optional_int64" json:"an_optional_int64" param:"an_optional_int64" query:"an_optional_int64"`
+	AnInt64           goption.Optional[int64]            `form:"an_int64" json:"an_int64" param:"an_int64" query:"an_int64"`
+	AnOptionalFloat32 goption.Optional[float32]          `form:"an_optional_float32" json:"an_optional_float32" param:"an_optional_float32" query:"an_optional_float32"`
+	AnFloat32         goption.Optional[float32]          `form:"an_float32" json:"an_float32" param:"an_float32" query:"an_float32"`
+	AnOptionalFloat64 goption.Optional[float64]          `form:"an_optional_float64" json:"an_optional_float64" param:"an_optional_float64" query:"an_optional_float64"`
+	AnFloat64         goption.Optional[float64]          `form:"an_float64" json:"an_float64" param:"an_float64" query:"an_float64"`
+	OptionalString    goption.Optional[string]           `form:"optional_string" json:"optional_string" param:"optional_string" query:"optional_string"`
+	String            goption.Optional[string]           `form:"string" json:"string" param:"string" query:"string"`
+	OptionalBool      goption.Optional[bool]             `form:"optional_bool" json:"optional_bool" param:"optional_bool" query:"optional_bool"`
+	Bool              goption.Optional[bool]             `form:"bool" json:"bool" param:"bool" query:"bool"`
+	OptionalTime      goption.Optional[time.Time]        `form:"optional_time" json:"optional_time" param:"optional_time" query:"optional_time"`
+	Time              goption.Optional[time.Time]        `form:"time" json:"time" param:"time" query:"time"`
+	OptionalDecimal   goption.Optional[udecimal.Decimal] `form:"optional_decimal" json:"optional_decimal" param:"optional_decimal" query:"optional_decimal"`
+	Decimal           goption.Optional[udecimal.Decimal] `form:"decimal" json:"decimal" param:"decimal" query:"decimal"`
+	OptionalUuid      goption.Optional[uuid.UUID]        `form:"optional_uuid" json:"optional_uuid" param:"optional_uuid" query:"optional_uuid"`
+	Uuid              goption.Optional[uuid.UUID]        `form:"uuid" json:"uuid" param:"uuid" query:"uuid"`
+	OptionalEnum      goption.Optional[OptionalEnum]     `form:"optional_enum" json:"optional_enum" param:"optional_enum" query:"optional_enum"`
+	Enum              goption.Optional[Enum]             `form:"enum" json:"enum" param:"enum" query:"enum"`
+}

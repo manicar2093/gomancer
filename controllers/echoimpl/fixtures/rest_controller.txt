@@ -74,7 +74,7 @@ func (c *PostTestController) GetAllPaginatedHandler(ctx echo.Context) error {
 }
 
 func (c *PostTestController) PartialUpdateByIdHandler(ctx echo.Context) error {
-	req := posttests.PartialUpdateByIdInput{}
+	req := models.PostTestPartialUpdateByIdInput{}
 	if err := core.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}

@@ -1,5 +1,5 @@
 {{ define "env_file" }}DATABASE_URL="postgresql://development:development@localhost:5432/{{.ProjectName}}_{{.DevEnvironment}}?sslmode=disable"
 ENVIRONMENT={{.DevEnvironment}}
 PORT=3000
-SESSION_SECRET_KEY=session_secret_key
+SESSION_SECRET_KEY=session_secret_key_{{.DevEnvironment}}
 {{end}}

@@ -142,6 +142,26 @@ var _ = Describe("Deps", func() {
 				container.Std.Fmt.ImportAlias(file)
 			})
 		})
+
+		Describe("Errors", func() {
+			It("contains all errors usable callers", func() {
+				file := jen.NewFile("fmt_test")
+
+				Expect(container.Std.Errors.Alias).To(Equal("errors"))
+				Expect(container.Std.Errors.Path).To(Equal("errors"))
+				container.Std.Errors.ImportAlias(file)
+			})
+		})
+
+		Describe("Testing", func() {
+			It("contains all testing usable callers", func() {
+				file := jen.NewFile("testing_test")
+
+				Expect(container.Std.Testing.Alias).To(Equal("testing"))
+				Expect(container.Std.Testing.Path).To(Equal("testing"))
+				container.Std.Testing.ImportAlias(file)
+			})
+		})
 	})
 
 	Describe("Gorm", func() {
@@ -230,6 +250,10 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Pkg.Config.Alias).To(Equal("config"))
 				Expect(container.Project.Pkg.Config.Path).To(Equal(testfixtures.TestPath + "/pkg/config"))
 				container.Project.Pkg.Config.ImportAlias(file)
+
+				Expect(container.Project.Pkg.Generators.Alias).To(Equal("generators"))
+				Expect(container.Project.Pkg.Generators.Path).To(Equal(testfixtures.TestPath + "/pkg/generators"))
+				container.Project.Pkg.Generators.ImportAlias(file)
 			})
 		})
 
@@ -340,6 +364,10 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Core.Web.Components.Toggle.Alias).To(Equal("toggle"))
 				Expect(container.Project.Core.Web.Components.Toggle.Path).To(Equal(testfixtures.TestPath + "/core/web/components/toggle"))
 				container.Project.Core.Web.Components.Toggle.ImportAlias(file)
+
+				Expect(container.Project.Pkg.TestFunc.Alias).To(Equal("testfunc"))
+				Expect(container.Project.Pkg.TestFunc.Path).To(Equal(testfixtures.TestPath + "/pkg/testfunc"))
+				container.Project.Pkg.TestFunc.ImportAlias(file)
 			})
 		})
 
@@ -388,6 +416,31 @@ var _ = Describe("Deps", func() {
 		})
 	})
 
+	Describe("Ginkgo", func() {
+		It("contains all ginkgo usable callers", func() {
+			file := jen.NewFile("ginkgo_test")
+
+			Expect(container.Ginkgo.Alias).To(Equal("."))
+			Expect(container.Ginkgo.Path).To(Equal("github.com/onsi/ginkgo/v2"))
+			container.Ginkgo.ImportAlias(file)
+		})
+
+	})
+
+	Describe("Gomega", func() {
+		It("contains all gomega usable callers", func() {
+			file := jen.NewFile("gomega_test")
+
+			Expect(container.Gomega.Alias).To(Equal("."))
+			Expect(container.Gomega.Path).To(Equal("github.com/onsi/gomega"))
+			container.Gomega.ImportAlias(file)
+
+			Expect(container.Gomega.GStruct.Alias).To(Equal("gstruct"))
+			Expect(container.Gomega.GStruct.Path).To(Equal("github.com/onsi/gomega/gstruct"))
+			container.Gomega.GStruct.ImportAlias(file)
+		})
+	})
+
 	Describe("Dependency", func() {
 		It("should correctly generate import string", func() {
 			dep := deps.Dependency{
@@ -414,7 +467,7 @@ var _ = Describe("Deps", func() {
 
 			// Get the string representation of the file and check if it contains the expected import
 			fileStr := file.GoString()
-			Expect(fileStr).To(ContainSubstring(`import "github.com/example/package"`))
+			Expect(fileStr).To(ContainSubstring(`import pkg "github.com/example/package"`))
 			Expect(fileStr).To(ContainSubstring(`pkg.SomeFunction()`))
 		})
 	})

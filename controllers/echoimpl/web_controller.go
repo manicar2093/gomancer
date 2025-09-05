@@ -20,7 +20,7 @@ import (
 )
 
 func GenerateWebController(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
-	log.Info("Generating echo web controller...")
+	log.Info("Generating web controller...")
 	var tpl = initTemplates(input)
 
 	f, err := os.OpenFile(

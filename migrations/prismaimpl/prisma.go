@@ -2,13 +2,14 @@ package prismaimpl
 
 import (
 	"fmt"
+	"os"
+	"path"
+	"text/template"
+
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/manicar2093/gomancer/parser"
 	"github.com/manicar2093/gomancer/types"
 	"github.com/rjNemo/underscore"
-	"os"
-	"path"
-	"text/template"
 )
 
 func GenerateMigration(input parser.GenerateModelInput) error {
@@ -48,9 +49,9 @@ func GenerateMigration(input parser.GenerateModelInput) error {
 
 func getMigrationType(typ string, attrib parser.Attribute) string {
 	switch types.SupportedType(typ) {
-	case types.TypeInt, types.TypeInt8, types.TypeInt16, types.TypeInt32:
+	case types.TypeInt8, types.TypeInt16, types.TypeInt32:
 		return "Int"
-	case types.TypeInt64:
+	case types.TypeInt, types.TypeInt64:
 		return "BigInt"
 	case types.TypeFloat32, types.TypeFloat64:
 		return "Float"

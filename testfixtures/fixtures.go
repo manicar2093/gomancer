@@ -127,7 +127,7 @@ var (
 			},
 			{
 				TransformedText: parser.TransformedText{
-					SnakeCase:        "an_optional_float_32",
+					SnakeCase:        "an_optional_float32",
 					PascalCase:       "AnOptionalFloat32",
 					CamelCase:        "anOptionalFloat32",
 					LowerNoSpaceCase: "anoptionalfloat32",
@@ -137,7 +137,7 @@ var (
 			},
 			{
 				TransformedText: parser.TransformedText{
-					SnakeCase:        "an_float_32",
+					SnakeCase:        "an_float32",
 					PascalCase:       "AnFloat32",
 					CamelCase:        "anFloat32",
 					LowerNoSpaceCase: "anfloat32",
@@ -146,7 +146,7 @@ var (
 			},
 			{
 				TransformedText: parser.TransformedText{
-					SnakeCase:        "an_optional_float_64",
+					SnakeCase:        "an_optional_float64",
 					PascalCase:       "AnOptionalFloat64",
 					CamelCase:        "anOptionalFloat64",
 					LowerNoSpaceCase: "anoptionalfloat64",
@@ -156,7 +156,7 @@ var (
 			},
 			{
 				TransformedText: parser.TransformedText{
-					SnakeCase:        "an_float_64",
+					SnakeCase:        "an_float64",
 					PascalCase:       "AnFloat64",
 					CamelCase:        "anFloat64",
 					LowerNoSpaceCase: "anfloat64",
@@ -269,19 +269,19 @@ var (
 				IsOptional: true,
 				EnumStrings: []parser.TransformedText{
 					{
-						SnakeCase:        "optional_enum_1",
+						SnakeCase:        "optional_enum1",
 						PascalCase:       "OptionalEnum1",
 						CamelCase:        "optionalEnum1",
 						LowerNoSpaceCase: "optionalenum1",
 					},
 					{
-						SnakeCase:        "optional_enum_2",
+						SnakeCase:        "optional_enum2",
 						PascalCase:       "OptionalEnum2",
 						CamelCase:        "optionalEnum2",
 						LowerNoSpaceCase: "optionalenum2",
 					},
 					{
-						SnakeCase:        "optional_enum_3",
+						SnakeCase:        "optional_enum3",
 						PascalCase:       "OptionalEnum3",
 						CamelCase:        "optionalEnum3",
 						LowerNoSpaceCase: "optionalenum3",
@@ -298,19 +298,19 @@ var (
 				Type: "enum",
 				EnumStrings: []parser.TransformedText{
 					{
-						SnakeCase:        "enum_1",
+						SnakeCase:        "enum1",
 						PascalCase:       "Enum1",
 						CamelCase:        "enum1",
 						LowerNoSpaceCase: "enum1",
 					},
 					{
-						SnakeCase:        "enum_2",
+						SnakeCase:        "enum2",
 						PascalCase:       "Enum2",
 						CamelCase:        "enum2",
 						LowerNoSpaceCase: "enum2",
 					},
 					{
-						SnakeCase:        "enum_3",
+						SnakeCase:        "enum3",
 						PascalCase:       "Enum3",
 						CamelCase:        "enum3",
 						LowerNoSpaceCase: "enum3",

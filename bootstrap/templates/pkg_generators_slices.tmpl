@@ -1,0 +1,10 @@
+{{ define "pkg_generators_slices" }}package generators
+
+func Slice[T any](generator func() T, count int) []T {
+    ret := make([]T, count)
+    for i := 0; i < count; i++ {
+        ret[i] = generator()
+    }
+    return ret
+}
+{{ end }}

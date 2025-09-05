@@ -16,7 +16,7 @@ import (
 var templatesFS embed.FS
 
 func GenerateRestController(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
-	log.Info("Generating echo rest controller...")
+	log.Info("Generating rest controller...")
 	var tpl = initTemplates(input)
 
 	f, err := os.OpenFile(

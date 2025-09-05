@@ -1,7 +1,7 @@
 model PostTest {
      id String @id @default(dbgenerated("gen_random_uuid()"))  @db.Uuid
-     an_optional_int Int?
-     an_int Int
+     an_optional_int BigInt?
+     an_int BigInt
      an_optional_int8 Int?
      an_int8 Int
      an_optional_int16 Int?
@@ -10,10 +10,10 @@ model PostTest {
      an_int32 Int
      an_optional_int64 BigInt?
      an_int64 BigInt
-     an_optional_float_32 Float?
-     an_float_32 Float
-     an_optional_float_64 Float?
-     an_float_64 Float
+     an_optional_float32 Float?
+     an_float32 Float
+     an_optional_float64 Float?
+     an_float64 Float
      optional_string String?
      string String
      optional_bool Boolean?
@@ -31,13 +31,13 @@ model PostTest {
 }
 
 enum OptionalEnum {
-     optional_enum_1
-     optional_enum_2
-     optional_enum_3
+     optional_enum1
+     optional_enum2
+     optional_enum3
 }
 
 enum Enum {
-     enum_1
-     enum_2
-     enum_3
+     enum1
+     enum2
+     enum3
 }

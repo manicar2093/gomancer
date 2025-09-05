@@ -1,14 +1,15 @@
 package models_test
 
 import (
+	"os"
+	"path"
+
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/manicar2093/gomancer/models"
 	"github.com/manicar2093/gomancer/testfixtures"
 	"github.com/manicar2093/gomancer/testmatchers"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
-	"os"
-	"path"
 )
 
 var _ = Describe("Models", func() {

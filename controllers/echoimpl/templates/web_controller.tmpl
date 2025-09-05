@@ -93,7 +93,7 @@ func (c *{{.PascalCase}}WebController) GetAllPaginatedHandler(ctx echo.Context) 
 }
 
 func (c *{{.PascalCase}}WebController) PartialUpdateByIdHandler(ctx echo.Context) error {
-	req := {{.InCreation.Alias}}.PartialUpdateByIdInput{}
+	req := {{.GoDeps.Project.Internal.Domain.Models.Alias}}.{{.PascalCase}}PartialUpdateByIdInput{}
 	if err := core.BindAndValidate(ctx, &req); err != nil {
 		return err
 	}

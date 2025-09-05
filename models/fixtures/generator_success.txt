@@ -24,11 +24,11 @@ func GeneratePostTest(t testingI, args map[string]any) models.PostTest {
 		AnOptionalInt32:   goption.Of(gofakeit.Int32()),
 		AnOptionalInt64:   goption.Of(gofakeit.Int64()),
 		AnOptionalInt8:    goption.Of(gofakeit.Int8()),
-		Bool:              gofakeit.Bool(),
+		Bool:              false,
 		Decimal:           udecimal.MustFromFloat64(gofakeit.Float64()),
 		Enum:              models.Enum1,
 		Id:                uuid.New(),
-		OptionalBool:      goption.Of(gofakeit.Bool()),
+		OptionalBool:      goption.Of(false),
 		OptionalDecimal:   goption.Of(udecimal.MustFromFloat64(gofakeit.Float64())),
 		OptionalEnum:      goption.Of(models.OptionalEnum1),
 		OptionalString:    goption.Of(gofakeit.Word()),
@@ -37,6 +37,42 @@ func GeneratePostTest(t testingI, args map[string]any) models.PostTest {
 		String:            gofakeit.Word(),
 		Time:              gofakeit.Date(),
 		Uuid:              uuid.New(),
+	}
+
+	decode(t, args, &fak)
+
+	return fak
+}
+
+func GeneratePostTestPartialUpdateById(t testingI, id uuid.UUID, args map[string]any) models.PostTestPartialUpdateByIdInput {
+	fak := models.PostTestPartialUpdateByIdInput{
+		AnFloat32:         goption.Of(gofakeit.Float32()),
+		AnFloat64:         goption.Of(gofakeit.Float64()),
+		AnInt:             goption.Of(gofakeit.Int()),
+		AnInt16:           goption.Of(gofakeit.Int16()),
+		AnInt32:           goption.Of(gofakeit.Int32()),
+		AnInt64:           goption.Of(gofakeit.Int64()),
+		AnInt8:            goption.Of(gofakeit.Int8()),
+		AnOptionalFloat32: goption.Of(gofakeit.Float32()),
+		AnOptionalFloat64: goption.Of(gofakeit.Float64()),
+		AnOptionalInt:     goption.Of(gofakeit.Int()),
+		AnOptionalInt16:   goption.Of(gofakeit.Int16()),
+		AnOptionalInt32:   goption.Of(gofakeit.Int32()),
+		AnOptionalInt64:   goption.Of(gofakeit.Int64()),
+		AnOptionalInt8:    goption.Of(gofakeit.Int8()),
+		Bool:              goption.Of(false),
+		Decimal:           goption.Of(udecimal.MustFromFloat64(gofakeit.Float64())),
+		Enum:              goption.Of(models.Enum1),
+		Id:                id,
+		OptionalBool:      goption.Of(false),
+		OptionalDecimal:   goption.Of(udecimal.MustFromFloat64(gofakeit.Float64())),
+		OptionalEnum:      goption.Of(models.OptionalEnum1),
+		OptionalString:    goption.Of(gofakeit.Word()),
+		OptionalTime:      goption.Of(gofakeit.Date()),
+		OptionalUuid:      goption.Of(uuid.New()),
+		String:            goption.Of(gofakeit.Word()),
+		Time:              goption.Of(gofakeit.Date()),
+		Uuid:              goption.Of(uuid.New()),
 	}
 
 	decode(t, args, &fak)

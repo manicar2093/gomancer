@@ -1,6 +1,8 @@
 package cmd
 
 import (
+	"os"
+
 	"github.com/charmbracelet/log"
 	"github.com/manicar2093/gomancer/controllers/echoimpl"
 	"github.com/manicar2093/gomancer/deps"
@@ -10,7 +12,6 @@ import (
 	"github.com/manicar2093/gomancer/parser"
 	"github.com/manicar2093/gomancer/repositories/gormimpl"
 	"github.com/spf13/cobra"
-	"os"
 )
 
 var GenCmd = &cobra.Command{
@@ -70,7 +71,7 @@ gomancer gen Client name:string dob:time:optional status:enum/active/deactivated
 			log.Error(err)
 			return
 		}
-		if err := gormimpl.GenerateRepository(input, goDeps); err != nil {
+		if err := gormimpl.GenerateRepository(input, goDeps, inCreation); err != nil {
 			log.Error(err)
 			return
 		}

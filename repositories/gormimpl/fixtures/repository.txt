@@ -81,16 +81,16 @@ func (c *PostTestRepository) PartialUpdateById(changes models.PostTestPartialUpd
 		updates["an_int64"] = changes.AnInt64.MustGet()
 	}
 	if changes.AnOptionalFloat32.IsPresent() {
-		updates["an_optional_float_32"] = changes.AnOptionalFloat32.MustGet()
+		updates["an_optional_float32"] = changes.AnOptionalFloat32.MustGet()
 	}
 	if changes.AnFloat32.IsPresent() {
-		updates["an_float_32"] = changes.AnFloat32.MustGet()
+		updates["an_float32"] = changes.AnFloat32.MustGet()
 	}
 	if changes.AnOptionalFloat64.IsPresent() {
-		updates["an_optional_float_64"] = changes.AnOptionalFloat64.MustGet()
+		updates["an_optional_float64"] = changes.AnOptionalFloat64.MustGet()
 	}
 	if changes.AnFloat64.IsPresent() {
-		updates["an_float_64"] = changes.AnFloat64.MustGet()
+		updates["an_float64"] = changes.AnFloat64.MustGet()
 	}
 	if changes.OptionalString.IsPresent() {
 		updates["optional_string"] = changes.OptionalString.MustGet()

@@ -270,7 +270,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props comp
 					FormItemKey: anInt64Key,
 				})
 			}
-			{{ anOptionalFloat32Key := "an_optional_float_32" }}
+			{{ anOptionalFloat32Key := "an_optional_float32" }}
 			{{ hasAnOptionalFloat32Errors := errors.HasField(anOptionalFloat32Key) }}
 			@form.Item(form.ItemProps{}) {
 				@label.Label(label.Props{
@@ -297,7 +297,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props comp
 					FormItemKey: anOptionalFloat32Key,
 				})
 			}
-			{{ anFloat32Key := "an_float_32" }}
+			{{ anFloat32Key := "an_float32" }}
 			{{ hasAnFloat32Errors := errors.HasField(anFloat32Key) }}
 			@form.Item(form.ItemProps{}) {
 				@label.Label(label.Props{
@@ -325,7 +325,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props comp
 					FormItemKey: anFloat32Key,
 				})
 			}
-			{{ anOptionalFloat64Key := "an_optional_float_64" }}
+			{{ anOptionalFloat64Key := "an_optional_float64" }}
 			{{ hasAnOptionalFloat64Errors := errors.HasField(anOptionalFloat64Key) }}
 			@form.Item(form.ItemProps{}) {
 				@label.Label(label.Props{
@@ -352,7 +352,7 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props comp
 					FormItemKey: anOptionalFloat64Key,
 				})
 			}
-			{{ anFloat64Key := "an_float_64" }}
+			{{ anFloat64Key := "an_float64" }}
 			{{ hasAnFloat64Errors := errors.HasField(anFloat64Key) }}
 			@form.Item(form.ItemProps{}) {
 				@label.Label(label.Props{
@@ -633,23 +633,23 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props comp
 					@selectbox.Content() {
 						@selectbox.Group() {
 							@selectbox.Item(selectbox.ItemProps{
-								Value:    "optional_enum_1",
-								Selected: postTest.OptionalEnum.GetValue() == "optional_enum_1",
-								Disabled: postTest.OptionalEnum.GetValue() == "optional_enum_1",
+								Value:    "optional_enum1",
+								Selected: postTest.OptionalEnum.GetValue() == "optional_enum1",
+								Disabled: postTest.OptionalEnum.GetValue() == "optional_enum1",
 							}) {
 								OptionalEnum1
 							}
 							@selectbox.Item(selectbox.ItemProps{
-								Value:    "optional_enum_2",
-								Selected: postTest.OptionalEnum.GetValue() == "optional_enum_2",
-								Disabled: postTest.OptionalEnum.GetValue() == "optional_enum_2",
+								Value:    "optional_enum2",
+								Selected: postTest.OptionalEnum.GetValue() == "optional_enum2",
+								Disabled: postTest.OptionalEnum.GetValue() == "optional_enum2",
 							}) {
 								OptionalEnum2
 							}
 							@selectbox.Item(selectbox.ItemProps{
-								Value:    "optional_enum_3",
-								Selected: postTest.OptionalEnum.GetValue() == "optional_enum_3",
-								Disabled: postTest.OptionalEnum.GetValue() == "optional_enum_3",
+								Value:    "optional_enum3",
+								Selected: postTest.OptionalEnum.GetValue() == "optional_enum3",
+								Disabled: postTest.OptionalEnum.GetValue() == "optional_enum3",
 							}) {
 								OptionalEnum3
 							}
@@ -687,23 +687,23 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props comp
 					@selectbox.Content() {
 						@selectbox.Group() {
 							@selectbox.Item(selectbox.ItemProps{
-								Value:    "enum_1",
-								Selected: postTest.Enum == "enum_1",
-								Disabled: postTest.Enum == "enum_1",
+								Value:    "enum1",
+								Selected: postTest.Enum == "enum1",
+								Disabled: postTest.Enum == "enum1",
 							}) {
 								Enum1
 							}
 							@selectbox.Item(selectbox.ItemProps{
-								Value:    "enum_2",
-								Selected: postTest.Enum == "enum_2",
-								Disabled: postTest.Enum == "enum_2",
+								Value:    "enum2",
+								Selected: postTest.Enum == "enum2",
+								Disabled: postTest.Enum == "enum2",
 							}) {
 								Enum2
 							}
 							@selectbox.Item(selectbox.ItemProps{
-								Value:    "enum_3",
-								Selected: postTest.Enum == "enum_3",
-								Disabled: postTest.Enum == "enum_3",
+								Value:    "enum3",
+								Selected: postTest.Enum == "enum3",
+								Disabled: postTest.Enum == "enum3",
 							}) {
 								Enum3
 							}

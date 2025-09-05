@@ -272,6 +272,12 @@ func doGenerateRepositoryTest(input parser.GenerateModelInput, generatorData gen
 								} else {
 									d[Lit(attr.PascalCase)] = Id("Not").Call(Id("BeTemporally").Call(Lit("~"), Id("item").Dot(attr.PascalCase)))
 								}
+							case types.TypeEnum, types.TypeBool:
+								if attr.IsOptional {
+									d[Lit(attr.PascalCase)] = Id("HaveField").Call(Id("testfunc").Dot("GetValueMethod"), Id("Equal").Call(Id("item").Dot(attr.PascalCase).Dot("GetValue").Call()))
+								} else {
+									d[Lit(attr.PascalCase)] = Id("Equal").Call(Id("item").Dot(attr.PascalCase))
+								}
 							default:
 								if attr.IsOptional {
 									d[Lit(attr.PascalCase)] = Id("HaveField").Call(Id("testfunc").Dot("GetValueMethod"), Id("Not").Call(Id("Equal").Call(Id("item").Dot(attr.PascalCase).Dot("GetValue").Call())))

@@ -2,6 +2,7 @@ package models
 
 import (
 	"fmt"
+
 	"github.com/dave/jennifer/jen"
 	"github.com/manicar2093/gomancer/deps"
 	"github.com/manicar2093/gomancer/parser"
@@ -35,7 +36,7 @@ func FakerCallByType(t string, goDeps deps.Container, attribute parser.Attribute
 	case types.TypeUuid:
 		return jen.Qual(goDeps.Uuid.Path, "New").Call()
 	case types.TypeBool:
-		return jen.Qual(goDeps.GoFakeIt.Path, "Bool").Call()
+		return jen.False()
 	case types.TypeEnum:
 		return jen.Qual(goDeps.Internal.Models.Path, attribute.EnumStrings[0].PascalCase)
 	default:

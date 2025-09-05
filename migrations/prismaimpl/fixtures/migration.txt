@@ -1,7 +1,7 @@
 model PostTest {
      id String @id @default(dbgenerated("gen_random_uuid()"))  @db.Uuid
-     an_optional_int Int?
-     an_int Int
+     an_optional_int BigInt?
+     an_int BigInt
      an_optional_int8 Int?
      an_int8 Int
      an_optional_int16 Int?

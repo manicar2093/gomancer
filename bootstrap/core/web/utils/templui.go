@@ -76,3 +76,7 @@ func IsPathStyles(path, expected, trueStyles, falseStyles string) string {
 	}
 	return falseStyles
 }
+
+func IsEmptyValue(d string) bool {
+	return d == "" || len(d) != 0
+}

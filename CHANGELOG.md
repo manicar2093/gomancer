@@ -1,3 +1,13 @@
+## v0.24.0 (2025-09-08)
+
+### Feat
+
+- add function to clear zero values into form
+
+### Fix
+
+- remove required to Boolean type on model creation
+
 ## v0.23.0 (2025-09-05)
 
 ### Feat

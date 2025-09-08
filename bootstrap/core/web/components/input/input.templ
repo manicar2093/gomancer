@@ -63,9 +63,9 @@ templ Input(props ...Props) {
 			if p.Placeholder != "" {
 				placeholder={ p.Placeholder }
 			}
-			if p.Value != "" {
-				value={ p.Value }
-			}
+			if !utils.IsEmptyValue(p.Value) {
+                value={ p.Value }
+            }
 			if p.Type == TypeFile && p.FileAccept != "" {
 				accept={ p.FileAccept }
 			}

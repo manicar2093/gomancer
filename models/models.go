@@ -70,9 +70,12 @@ func doGenerateModel(input parser.GenerateModelInput, goDeps deps.Container) err
 			var validationsTags []tags.ValidateGenerable
 
 			if !item.IsOptional {
-				if item.Type == string(types.TypeUuid) {
+				switch types.SupportedType(item.Type) {
+				case types.TypeUuid:
 					validationsTags = append(validationsTags, tags.ValidateRequiredUuid{})
-				} else {
+				case types.TypeBool:
+					// just to avoid the required tag registry
+				default:
 					validationsTags = append(validationsTags, tags.ValidateRequired{})
 				}
 			}

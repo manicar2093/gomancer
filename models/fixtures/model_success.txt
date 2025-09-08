@@ -26,7 +26,7 @@ type PostTest struct {
 	OptionalString    goption.Optional[string]           `form:"optional_string" json:"optional_string" mapstructure:"optional_string" param:"optional_string" query:"optional_string"`
 	String            string                             `form:"string" json:"string" mapstructure:"string" param:"string" query:"string" validate:"required"`
 	OptionalBool      goption.Optional[bool]             `form:"optional_bool" json:"optional_bool" mapstructure:"optional_bool" param:"optional_bool" query:"optional_bool"`
-	Bool              bool                               `form:"bool" json:"bool" mapstructure:"bool" param:"bool" query:"bool" validate:"required"`
+	Bool              bool                               `form:"bool" json:"bool" mapstructure:"bool" param:"bool" query:"bool"`
 	OptionalTime      goption.Optional[time.Time]        `form:"optional_time" json:"optional_time" mapstructure:"optional_time" param:"optional_time" query:"optional_time"`
 	Time              time.Time                          `form:"time" json:"time" mapstructure:"time" param:"time" query:"time" validate:"required"`
 	OptionalDecimal   goption.Optional[udecimal.Decimal] `form:"optional_decimal" json:"optional_decimal" mapstructure:"optional_decimal" param:"optional_decimal" query:"optional_decimal"`

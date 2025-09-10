@@ -1,3 +1,13 @@
+## v0.25.0 (2025-09-10)
+
+### Feat
+
+- add uuid pattern and title to avoid parsing errors
+
+### Fix
+
+- change IsEmptyValue function
+
 ## v0.24.0 (2025-09-08)
 
 ### Feat

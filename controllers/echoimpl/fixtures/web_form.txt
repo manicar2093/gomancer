@@ -11,6 +11,7 @@ import (
 	label "github.com/user/project_name/core/web/components/label"
 	selectbox "github.com/user/project_name/core/web/components/selectbox"
 	toggle "github.com/user/project_name/core/web/components/toggle"
+	utils "github.com/user/project_name/core/web/utils"
 	strconv "strconv"
 
 	components "github.com/user/project_name/core/web/components"
@@ -577,6 +578,10 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props comp
 					Type:     input.TypeText,
 					Value:    postTest.OptionalUuid.GetValue().String(),
 					HasError: hasOptionalUuidErrors,
+					Attributes: templ.Attributes{
+						"pattern": utils.UuidV4Pattern,
+						"title":   i18n.T(ctx, "uuid_v4_html_input_title"),
+					},
 				})
 				@form.Description() {
 					Enter OptionalUuid
@@ -602,6 +607,10 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props comp
 					Value:    postTest.Uuid.String(),
 					HasError: hasUuidErrors,
 					Required: true,
+					Attributes: templ.Attributes{
+						"pattern": utils.UuidV4Pattern,
+						"title":   i18n.T(ctx, "uuid_v4_html_input_title"),
+					},
 				})
 				@form.Description() {
 					Enter Uuid

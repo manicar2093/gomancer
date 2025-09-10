@@ -16,3 +16,4 @@ es:
   previous: "Previo"
   select_placeholder: "Selecciona una opción"
   show: "Mostrar"
+  uuid_v4_html_input_title: "El texto debe ser un UUID V4 válido"

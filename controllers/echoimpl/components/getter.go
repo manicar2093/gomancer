@@ -2,6 +2,7 @@ package components
 
 import (
 	"fmt"
+
 	"github.com/manicar2093/gomancer/parser"
 	"github.com/manicar2093/gomancer/types"
 )
@@ -18,8 +19,10 @@ func GetInputByType(attribute parser.Attribute, modelBeingGenerated parser.Trans
 		return InputNumber(input)
 	case types.TypeFloat32, types.TypeFloat64, types.TypeDecimal:
 		return InputNumberFloat(input)
-	case types.TypeString, types.TypeUuid:
+	case types.TypeString:
 		return InputText(input)
+	case types.TypeUuid:
+		return InputTextUuid(input)
 	case types.TypeBool:
 		return InputToggle(input)
 	case types.TypeTime:

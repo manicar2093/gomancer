@@ -335,6 +335,18 @@ var _ = Describe("Input Components", func() {
 	})
 }
 `),
+	)
+
+	DescribeTable("InputTextUuid", func(attr parser.Attribute, expectedResult string) {
+		result, err := components.InputTextUuid(components.InputGenerationData{
+			Attribute:            attr,
+			ModelTransformedText: generateModelTransformedText,
+		})
+
+		Expect(err).ToNot(HaveOccurred())
+		Expect(result).To(Equal(expectedResult))
+
+	},
 		Entry("optional", parser.Attribute{
 			TransformedText: parser.TransformedText{
 				SnakeCase:        "optional_uuid",
@@ -358,6 +370,10 @@ var _ = Describe("Input Components", func() {
 		Type:     input.TypeText,
 		Value:    userData.OptionalUuid.GetValue().String(),
 		HasError: hasOptionalUuidErrors,
+		Attributes: templ.Attributes{
+			"pattern": utils.UuidV4Pattern,
+			"title": i18n.T(ctx, "uuid_v4_html_input_title"),
+		},
 	})
 	@form.Description() {
 		Enter OptionalUuid
@@ -392,6 +408,10 @@ var _ = Describe("Input Components", func() {
 		Value:    userData.Uuid.String(),
 		HasError: hasUuidErrors,
 		Required: true,
+		Attributes: templ.Attributes{
+			"pattern": utils.UuidV4Pattern,
+			"title": i18n.T(ctx, "uuid_v4_html_input_title"),
+		},
 	})
 	@form.Description() {
 		Enter Uuid

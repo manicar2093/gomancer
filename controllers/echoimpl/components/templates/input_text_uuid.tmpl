@@ -1,0 +1,31 @@
+{{ printf "{{ %sKey := \"%s\" }}" .CamelCase .SnakeCase }}
+{{ printf "{{ has%sErrors := errors.HasField(%sKey) }}" .PascalCase .CamelCase }}
+@form.Item(form.ItemProps{}) {
+	@label.Label(label.Props{
+		For: {{ .CamelCase }}Key,
+	}) {
+		{{ .PascalCase }}
+	}
+	@input.Input(input.Props{
+		ID:       {{ .CamelCase }}Key,
+		Name:     {{ .CamelCase }}Key,
+		Type:     input.TypeText,
+		Value:    {{ GenerateFormValue . }},
+		HasError: has{{ .PascalCase }}Errors,
+		{{- if not .IsOptional }}
+		Required: true,
+		{{- end }}
+		Attributes: templ.Attributes{
+			"pattern": utils.UuidV4Pattern,
+			"title": i18n.T(ctx, "uuid_v4_html_input_title"),
+		},
+	})
+	@form.Description() {
+		Enter {{ .PascalCase }}
+	}
+	@formerrors.FormErrors(formerrors.FormErrorsProps{
+		HasErrors: has{{ .PascalCase }}Errors,
+		Errors: errors,
+		FormItemKey: {{ .CamelCase }}Key,
+	})
+}

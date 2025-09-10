@@ -4,6 +4,12 @@ import (
 	"bytes"
 	"cmp"
 	"fmt"
+	"maps"
+	"os"
+	"path"
+	"slices"
+	"text/template"
+
 	"github.com/a-h/templ/cmd/templ/fmtcmd"
 	"github.com/charmbracelet/log"
 	"github.com/coditory/go-errors"
@@ -12,11 +18,6 @@ import (
 	"github.com/manicar2093/gomancer/domain"
 	"github.com/manicar2093/gomancer/parser"
 	"github.com/manicar2093/gomancer/types"
-	"maps"
-	"os"
-	"path"
-	"slices"
-	"text/template"
 )
 
 func GenerateWebController(input parser.GenerateModelInput, goDeps deps.Container, inCreation deps.Dependency) error {
@@ -110,6 +111,9 @@ func getFormComponentsToBeUsed(attributes []parser.Attribute, goDeps deps.Contai
 			componentsDetected["input"] = goDeps.Project.Core.Web.Components.Input
 			componentsDetected["strconv"] = goDeps.Std.StrConv
 		case types.TypeDecimal, types.TypeString, types.TypeUuid:
+			if types.SupportedType(attr.Type) == types.TypeUuid {
+				componentsDetected["utils"] = goDeps.Project.Core.Web.Utils
+			}
 			componentsDetected["input"] = goDeps.Project.Core.Web.Components.Input
 		case types.TypeBool:
 			componentsDetected["toggle"] = goDeps.Project.Core.Web.Components.Toggle

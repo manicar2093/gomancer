@@ -14,6 +14,7 @@ import (
 	"github.com/manicar2093/gomancer/bootstrap/core/web/components/formtag"
 	"github.com/manicar2093/gomancer/bootstrap/core/web/components/popover"
 	"github.com/manicar2093/gomancer/bootstrap/core/web/components/selectbox"
+	"github.com/manicar2093/gomancer/bootstrap/core/web/components/toggle"
 )
 
 func Initial() templ.Component {
@@ -75,6 +76,10 @@ func Initial() templ.Component {
 			return templ_7745c5c3_Err
 		}
 		templ_7745c5c3_Err = datetime.Script().Render(ctx, templ_7745c5c3_Buffer)
+		if templ_7745c5c3_Err != nil {
+			return templ_7745c5c3_Err
+		}
+		templ_7745c5c3_Err = toggle.Script().Render(ctx, templ_7745c5c3_Buffer)
 		if templ_7745c5c3_Err != nil {
 			return templ_7745c5c3_Err
 		}

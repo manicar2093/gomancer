@@ -4,10 +4,11 @@ import (
 	"bytes"
 	"embed"
 	"fmt"
-	"github.com/manicar2093/gomancer/parser"
-	"github.com/manicar2093/gomancer/types"
 	"path"
 	"text/template"
+
+	"github.com/manicar2093/gomancer/parser"
+	"github.com/manicar2093/gomancer/types"
 )
 
 type InputGenerationData struct {
@@ -36,6 +37,14 @@ func InputNumberFloat(input InputGenerationData) (string, error) {
 
 func InputText(input InputGenerationData) (string, error) {
 	result, err := executeTemplate("input_text.tmpl", input)
+	if err != nil {
+		return "", err
+	}
+	return result, nil
+}
+
+func InputTextUuid(input InputGenerationData) (string, error) {
+	result, err := executeTemplate("input_text_uuid.tmpl", input)
 	if err != nil {
 		return "", err
 	}

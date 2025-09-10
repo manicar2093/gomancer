@@ -16,3 +16,4 @@ en:
   previous: "Previous"
   select_placeholder: "Select one option"
   show: "Show"
+  uuid_v4_html_input_title: "Text should be a valid UUID V4"

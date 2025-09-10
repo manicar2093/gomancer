@@ -112,6 +112,7 @@ type (
 		Dependency
 		Layouts    Dependency
 		Components Components
+		Utils      Dependency
 	}
 
 	Gomega struct {

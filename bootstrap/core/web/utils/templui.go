@@ -9,9 +9,12 @@ import (
 	"math/rand"
 
 	"github.com/a-h/templ"
+	"github.com/google/uuid"
 
 	twmerge "github.com/Oudwins/tailwind-merge-go"
 )
+
+const UuidV4Pattern = "^[0-9a-fA-F]{8}-[0-9a-fA-F]{4}-[1-5][0-9a-fA-F]{3}-[89abAB][0-9a-fA-F]{3}-[0-9a-fA-F]{12}$"
 
 // TwMerge combines Tailwind classes and resolves conflicts.
 // Example: "bg-red-500 hover:bg-blue-500", "bg-green-500" → "hover:bg-blue-500 bg-green-500"
@@ -78,5 +81,5 @@ func IsPathStyles(path, expected, trueStyles, falseStyles string) string {
 }
 
 func IsEmptyValue(d string) bool {
-	return d == "" || len(d) != 0
+	return d == "" || d == "0" || d == "0.00" || d == uuid.Nil.String()
 }

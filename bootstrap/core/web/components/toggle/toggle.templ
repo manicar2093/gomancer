@@ -30,9 +30,6 @@ templ Toggle(props ...Props) {
 		<input
 			x-ref={ p.ID }
 			id={ p.ID }
-			if p.Name != "" {
-				name={ p.Name }
-			}
 			type="checkbox"
 			checked?={ p.Checked }
 			disabled?={ p.Disabled }
@@ -42,10 +39,11 @@ templ Toggle(props ...Props) {
 		/>
 		<input
             type="hidden"
+            id={"checkbox-hidden-value-for-"+p.ID}
             if p.Name != "" {
                 name={ p.Name }
             }
-            value="false"
+            value={ p.Checked }
         />
 		<div
 			class={
@@ -67,4 +65,20 @@ templ Toggle(props ...Props) {
 			aria-hidden="true"
 		></div>
 	</label>
+}
+
+templ Script() {
+    <script>
+        (function(){
+            const checkboxes = document.querySelectorAll("input[type=checkbox]");
+            checkboxes.forEach(item => {
+                item.addEventListener("change", e => {
+                    const isChecked = e.target.checked;
+                    const checkboxId = e.target.id;
+                    const hiddenValueSrc = document.querySelector(`#checkbox-hidden-value-for-${checkboxId}`);
+                    hiddenValueSrc.value = isChecked;
+                })
+            })
+        })()
+    </script>
 }

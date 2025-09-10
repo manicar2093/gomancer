@@ -171,6 +171,10 @@ func Init(moduleName, lowerNoSpaceCase string) Container {
 						Path:  buildPath(moduleName, "core", "web", "layouts"),
 						Alias: "layouts",
 					},
+					Utils: Dependency{
+						Path:  buildPath(moduleName, "core", "web", "utils"),
+						Alias: "utils",
+					},
 					Components: Components{
 						Dependency: Dependency{
 							Path:  buildPath(moduleName, "core", "web", "components"),

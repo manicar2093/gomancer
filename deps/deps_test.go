@@ -297,6 +297,10 @@ var _ = Describe("Deps", func() {
 				Expect(container.Project.Core.Web.Layouts.Path).To(Equal(testfixtures.TestPath + "/core/web/layouts"))
 				container.Project.Core.Web.Layouts.ImportAlias(file)
 
+				Expect(container.Project.Core.Web.Utils.Alias).To(Equal("utils"))
+				Expect(container.Project.Core.Web.Utils.Path).To(Equal(testfixtures.TestPath + "/core/web/utils"))
+				container.Project.Core.Web.Utils.ImportAlias(file)
+
 				Expect(container.Project.Core.Web.Components.Alias).To(Equal("components"))
 				Expect(container.Project.Core.Web.Components.Path).To(Equal(testfixtures.TestPath + "/core/web/components"))
 				container.Project.Core.Web.Components.ImportAlias(file)

@@ -9,6 +9,7 @@ import (
 	"math/rand"
 
 	"github.com/a-h/templ"
+	"github.com/google/uuid"
 
 	twmerge "github.com/Oudwins/tailwind-merge-go"
 )
@@ -78,5 +79,5 @@ func IsPathStyles(path, expected, trueStyles, falseStyles string) string {
 }
 
 func IsEmptyValue(d string) bool {
-	return d == "" || len(d) != 0
+	return d == "" || d == "0" || d == "0.00" || d == uuid.Nil.String()
 }

@@ -1,3 +1,9 @@
+## v0.25.1 (2026-04-24)
+
+### Refactor
+
+- change parsing logic removing nested for
+
 ## v0.25.0 (2025-09-10)
 
 ### Feat

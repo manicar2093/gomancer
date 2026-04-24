@@ -2,18 +2,23 @@ package parser
 
 import (
 	"fmt"
+	"strings"
+
 	"github.com/charmbracelet/log"
 	"github.com/gertd/go-pluralize"
 	"github.com/manicar2093/gomancer/types"
 	"github.com/rjNemo/underscore"
 	strcase "github.com/stoewer/go-strcase"
-	"strings"
 )
 
 const (
 	notEnoughDataToContinue = "not enough data to continue. Remember syntax: attribute:type:optional"
 	typeNotSupported        = "type '%s' is not supported"
 	optionalNotDeclared     = "expected optional declaration, got '%s'"
+	noEnumValuesFound       = "enum type must have at least one value"
+	enumSeparator           = "/"
+	argumentsSeparator      = ":"
+	enumKeyword             = "enum"
 )
 
 type (
@@ -61,12 +66,10 @@ func ParseArgs(args []string, moduleName string, isPkUuid bool) (GenerateModelIn
 		Attributes: []Attribute{},
 	}
 
-ParsingFor:
 	for index, item := range attributesArgs {
 		var (
-			separated    = strings.Split(item, ":")
+			separated    = strings.Split(item, argumentsSeparator)
 			separatedLen = len(separated)
-			attribName   string
 		)
 		index++
 		log.Debug(item)
@@ -77,83 +80,89 @@ ParsingFor:
 				Err:   notEnoughDataToContinue,
 				Index: index,
 			})
-			continue ParsingFor
+			continue
 		}
 
-		tempAttrib := Attribute{}
+		var fieldName, fieldType, fieldOptional string
+		var validateOptional, isFieldOptional bool
 
-		for attribIndex, attrib := range separated {
-			if attribIndex == 0 {
+		switch separatedLen {
+		case 2:
+			fieldName = separated[0]
+			fieldType = separated[1]
+		case 3:
+			fieldName = separated[0]
+			fieldType = separated[1]
+			fieldOptional = separated[2]
+			validateOptional = true
+		}
+
+		fieldTypeNormalized, enumValues, isValidType, err := inferFieldType(fieldType)
+		if err != nil {
+			parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
+				Input: item,
+				Err:   err.Error(),
+				Index: index,
+			})
+			continue
+		}
+		if !isValidType {
+			parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
+				Input: item,
+				Err:   fmt.Sprintf(typeNotSupported, fieldType),
+				Index: index,
+			})
+			continue
+		}
+
+		if validateOptional {
+			if fieldOptional != "optional" {
+				parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
+					Input: item,
+					Err:   fmt.Sprintf(optionalNotDeclared, underscore.Ternary(fieldOptional == "", "<empty>", fieldOptional)),
+					Index: index,
+				})
 				continue
 			}
-
-			if attribIndex == 1 {
-				enumData, isEnumType := func(argument string) ([]string, bool) {
-					if !strings.Contains(argument, "enum") {
-						return nil, false
-					}
-					argumentSeparated := strings.Split(argument, "/")
-					return argumentSeparated[1:len(argumentSeparated)], strings.ToLower(argumentSeparated[0]) == "enum"
-				}(attrib)
-				if isEnumType {
-					attrib = string(types.TypeEnum)
-				}
-
-				isValidType := types.IsValidType(attrib)
-				if isValidType {
-					tempAttrib.Type = attrib
-					if isEnumType {
-						tempAttrib.EnumStrings = underscore.Map(enumData, func(enumItem string) TransformedText {
-							return TransformedText{
-								SnakeCase:        strcase.SnakeCase(enumItem),
-								PascalCase:       strcase.UpperCamelCase(enumItem),
-								CamelCase:        enumItem,
-								LowerNoSpaceCase: strings.ToLower(strcase.LowerCamelCase(enumItem)),
-							}
-						})
-					}
-				}
-				if !isValidType {
-					parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
-						Input: item,
-						Err:   fmt.Sprintf(typeNotSupported, attrib),
-						Index: index,
-					})
-					continue ParsingFor
-
-				}
-			}
-
-			if attribIndex == 2 {
-				isOptional := strings.ToLower(attrib) == "optional"
-				if isOptional {
-					tempAttrib.IsOptional = true
-				}
-				if !isOptional {
-					parseErrorsDetails = append(parseErrorsDetails, ParsingErrorDetail{
-						Input: item,
-						Err: fmt.Sprintf(
-							optionalNotDeclared,
-							underscore.Ternary(attrib == "", "<empty>", attrib),
-						),
-						Index: index,
-					})
-					continue ParsingFor
-				}
-			}
+			isFieldOptional = true
 		}
 
-		attribName = separated[0]
-
-		attributeNameCamelCase := strcase.LowerCamelCase(attribName)
-		tempAttrib.TransformedText = TransformedText{
-			SnakeCase:        strcase.SnakeCase(attribName),
-			PascalCase:       strcase.UpperCamelCase(attribName),
-			CamelCase:        attributeNameCamelCase,
-			LowerNoSpaceCase: strings.ToLower(attributeNameCamelCase),
+		tempAttrib := Attribute{
+			TransformedText: TransformedText{},
+			Type:            fieldTypeNormalized,
+			IsOptional:      isFieldOptional,
 		}
+
+		if enumValues != nil {
+			tempAttrib.EnumStrings = underscore.Map(enumValues, transformText)
+		}
+
+		tempAttrib.TransformedText = transformText(fieldName)
 		response.Attributes = append(response.Attributes, tempAttrib)
 	}
 
 	return response, parseErrorsDetails, len(parseErrorsDetails) > 0
+}
+
+func inferFieldType(fieldType string) (string, []string, bool, error) {
+	if fieldType == "" {
+		return "", nil, false, fmt.Errorf(notEnoughDataToContinue)
+	}
+	if strings.HasPrefix(fieldType, enumKeyword) {
+		argumentSeparated := strings.Split(fieldType, enumSeparator)
+		if len(argumentSeparated) <= 1 {
+			return string(types.TypeEnum), nil, false, fmt.Errorf(noEnumValuesFound)
+		}
+		return string(types.TypeEnum), argumentSeparated[1:len(argumentSeparated)], strings.ToLower(argumentSeparated[0]) == enumKeyword, nil
+	}
+	return fieldType, nil, types.IsValidType(fieldType), nil
+}
+
+func transformText(name string) TransformedText {
+	return TransformedText{
+		SnakeCase:        strcase.SnakeCase(name),
+		PascalCase:       strcase.UpperCamelCase(name),
+		CamelCase:        strcase.LowerCamelCase(name),
+		LowerNoSpaceCase: strings.ToLower(strcase.LowerCamelCase(name)),
+	}
 }

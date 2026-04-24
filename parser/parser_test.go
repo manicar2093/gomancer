@@ -1,11 +1,12 @@
 package parser_test
 
 import (
+	"strconv"
+
 	"github.com/manicar2093/gomancer/parser"
 	. "github.com/onsi/ginkgo/v2"
 	. "github.com/onsi/gomega"
 	"github.com/onsi/gomega/gstruct"
-	"strconv"
 )
 
 func idSliceGetter(index int, _ interface{}) string {
@@ -205,6 +206,7 @@ var _ = Describe("Parser", func() {
 						"arg2:",
 						"arg3:string",
 						"arg4:string:optional",
+						"arg5:enum:optional",
 					}
 				)
 
@@ -220,7 +222,12 @@ var _ = Describe("Parser", func() {
 						}),
 						"1": gstruct.MatchAllFields(gstruct.Fields{
 							"Input": Equal("arg2:"),
-							"Err":   Equal("type '' is not supported"),
+							"Err":   Equal("not enough data to continue. Remember syntax: attribute:type:optional"),
+							"Index": Not(BeZero()),
+						}),
+						"2": gstruct.MatchAllFields(gstruct.Fields{
+							"Input": Equal("arg5:enum:optional"),
+							"Err":   Equal("enum type must have at least one value"),
 							"Index": Not(BeZero()),
 						}),
 					}),

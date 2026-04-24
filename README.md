@@ -1,9 +1,9 @@
 # Gomancer
 
-<div align="center">
-  <img src="https://img.shields.io/github/go-mod/go-version/manicar2093/gomancer" alt="Go Version">
-  <img src="https://img.shields.io/github/license/manicar2093/gomancer" alt="License">
-</div>
+
+<img src="https://img.shields.io/github/go-mod/go-version/manicar2093/gomancer" alt="Go Version">
+<img src="https://img.shields.io/github/v/tag/manicar2093/gomancer?label=version" alt="Gomancer Version">
+<img src="https://img.shields.io/github/license/manicar2093/gomancer" alt="License">
 
 ⚠️ **Note:** Building in process. I hope to be able to create many things to deliver v1.0.0 ⚠️
 
@@ -232,12 +232,20 @@ Now the only thing to notice is all dates are handled as UTC and show as Local w
 - [ ] Create auth implementation
 - [X] Add CRUD HTML templates
 - [ ] Add CRUD HTML testing
-- [ ] Add API testing
+- [ ] ~~Add API testing~~: *Removed due controller testing covers this*
 
 ## Known Issues
 
 - On PartialUpdateById test bool and enums (and it optional variations) has no random validations. This is due bool just has 2 possible values and enums can have from 1 to many. This makes it hard to randomize tests.
 - On command when writing an attribute called data_32 snake case is not well converted. This can cause problems with Gorm ORM due gorm will transform it to data32 and model will be data_32. Horrible, but avoidable if not use _ in attributes declaration
+
+## Possible tools to use
+
+- For controller testing: [apitest](https://github.com/steinfletcher/apitest)
+- For API documentation: To be defined. I'm thinking about [swag](https://github.com/swaggo/swag)
+- For CRUD HTML: [apitest](https://github.com/steinfletcher/apitest) with [goquery](https://github.com/PuerkitoBio/goquery)
+
+Feel free to suggest any other tool to use :D
 
 ## License
 

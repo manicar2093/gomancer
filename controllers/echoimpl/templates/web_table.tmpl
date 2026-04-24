@@ -19,50 +19,53 @@ var tableIdAsSelector = fmt.Sprintf("#%s", tableId)
 templ {{Pluralize .PascalCase}}Table(page *gormpager.Page[models.{{.PascalCase}}]) {
     @table.Table(table.Props{
         ID: tableId,
+        Class: "min-w-max",
     }) {
-        @table.Header() {
-            @table.Row() {
+        @table.Header(table.HeaderProps{Class: "sticky top-0 z-10 bg-background shadow-sm"}) {
+            @table.Row(table.RowProps{Class: "bg-muted/40"}) {
                 {{ range $item := .Attributes }}
-                @table.Head() {
+                @table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
                     {{$item.PascalCase}}
                 }
                 {{ end }}
-                @table.Head() {
+                @table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold sticky right-0 z-20 bg-background"}) {
                     { i18n.T(ctx, "actions") }
                 }
             }
         }
         if page.TotalEntries > 0 {
-            @table.Body() {
+            @table.Body(table.BodyProps{Class: "[&_tr:nth-child(even)]:bg-muted/20"}) {
                 for _, item := range page.Items {
                     @table.Row() {
                         {{ range $item := .Attributes }}
-                        @table.Cell() {
+                        @table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
                             { item.{{GenerateStringableValue $item}} }
                         }
                         {{ end }}
-                        @table.Cell() {
-                            @button.Button(button.Props{
-                                Variant: button.VariantSecondary,
-                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v", item.Id),
-                            }) {
-                                { i18n.T(ctx, "show") }
-                            }
-                            @button.Button(button.Props{
-                                Variant: button.VariantDefault,
-                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v/edit", item.Id),
-                            }) {
-                                { i18n.T(ctx, "edit") }
-                            }
-                            @link.Link(link.LinkProps{
-                                Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v?page_number=%d", item.Id, page.CurrentPage),
-                                Confirm: i18n.T(ctx, "confirm_deletion"),
-                                Method:  http.MethodDelete,
-                                Variant: button.VariantDestructive,
-                                Class:   "inline-block",
-                            }) {
-                                { i18n.T(ctx, "delete") }
-                            }
+                        @table.Cell(table.CellProps{Class: "whitespace-nowrap sticky right-0 bg-background"}) {
+							<div class="flex min-w-[220px] flex-wrap items-center gap-2">
+                                @button.Button(button.Props{
+                                    Variant: button.VariantSecondary,
+                                    Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v", item.Id),
+                                }) {
+                                    { i18n.T(ctx, "show") }
+                                }
+                                @button.Button(button.Props{
+                                    Variant: button.VariantDefault,
+                                    Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v/edit", item.Id),
+                                }) {
+                                    { i18n.T(ctx, "edit") }
+                                }
+                                @link.Link(link.LinkProps{
+                                    Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v?page_number=%d", item.Id, page.CurrentPage),
+                                    Confirm: i18n.T(ctx, "confirm_deletion"),
+                                    Method:  http.MethodDelete,
+                                    Variant: button.VariantDestructive,
+                                    Class:   "inline-block",
+                                }) {
+                                    { i18n.T(ctx, "delete") }
+                                }
+							</div>
                         }
                     }
                 }
@@ -70,7 +73,7 @@ templ {{Pluralize .PascalCase}}Table(page *gormpager.Page[models.{{.PascalCase}}
         }
     }
     if page.TotalEntries > 0 {
-        <div class="mt-4">
+		<div class="mt-4">
             {{ print "{{ p := pagination.CreatePagination(int(page.CurrentPage), int(page.TotalPages), int(page.TotalPages)) }}" }}
             @pagination.Pagination() {
                 @pagination.Content() {
@@ -131,7 +134,7 @@ templ {{Pluralize .PascalCase}}Table(page *gormpager.Page[models.{{.PascalCase}}
                     }
                 }
             }
-        </div>
+		</div>
     }
     if page.TotalEntries == 0 {
         @label.Label(label.Props{

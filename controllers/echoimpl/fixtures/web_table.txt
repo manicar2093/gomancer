@@ -18,197 +18,200 @@ var tableIdAsSelector = fmt.Sprintf("#%s", tableId)
 
 templ PostTestsTable(page *gormpager.Page[models.PostTest]) {
 	@table.Table(table.Props{
-		ID: tableId,
+		ID:    tableId,
+		Class: "min-w-max",
 	}) {
-		@table.Header() {
-			@table.Row() {
-				@table.Head() {
+		@table.Header(table.HeaderProps{Class: "sticky top-0 z-10 bg-background shadow-sm"}) {
+			@table.Row(table.RowProps{Class: "bg-muted/40"}) {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnOptionalInt
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnInt
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnOptionalInt8
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnInt8
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnOptionalInt16
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnInt16
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnOptionalInt32
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnInt32
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnOptionalInt64
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnInt64
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnOptionalFloat32
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnFloat32
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnOptionalFloat64
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					AnFloat64
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					OptionalString
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					String
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					OptionalBool
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					Bool
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					OptionalTime
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					Time
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					OptionalDecimal
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					Decimal
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					OptionalUuid
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					Uuid
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					OptionalEnum
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold"}) {
 					Enum
 				}
-				@table.Head() {
+				@table.Head(table.HeadProps{Class: "whitespace-nowrap font-semibold sticky right-0 z-20 bg-background"}) {
 					{ i18n.T(ctx, "actions") }
 				}
 			}
 		}
 		if page.TotalEntries > 0 {
-			@table.Body() {
+			@table.Body(table.BodyProps{Class: "[&_tr:nth-child(even)]:bg-muted/20"}) {
 				for _, item := range page.Items {
 					@table.Row() {
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnOptionalInt.GetValue() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnInt }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnOptionalInt8.GetValue() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnInt8 }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnOptionalInt16.GetValue() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnInt16 }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnOptionalInt32.GetValue() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnInt32 }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnOptionalInt64.GetValue() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnInt64 }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnOptionalFloat32.GetValue() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnFloat32 }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnOptionalFloat64.GetValue() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.AnFloat64 }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.OptionalString.GetValue() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.String }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.OptionalBool.GetValue() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.Bool }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.OptionalTime.GetValue().String() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.Time.String() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.OptionalDecimal.GetValue().StringFixed(2) }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.Decimal.StringFixed(2) }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.OptionalUuid.GetValue().String() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.Uuid.String() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.OptionalEnum.GetValue() }
 						}
-						@table.Cell() {
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap"}) {
 							{ item.Enum }
 						}
-						@table.Cell() {
-							@button.Button(button.Props{
-								Variant: button.VariantSecondary,
-								Href:    fmt.Sprintf("/app/post_tests/%v", item.Id),
-							}) {
-								{ i18n.T(ctx, "show") }
-							}
-							@button.Button(button.Props{
-								Variant: button.VariantDefault,
-								Href:    fmt.Sprintf("/app/post_tests/%v/edit", item.Id),
-							}) {
-								{ i18n.T(ctx, "edit") }
-							}
-							@link.Link(link.LinkProps{
-								Href:    fmt.Sprintf("/app/post_tests/%v?page_number=%d", item.Id, page.CurrentPage),
-								Confirm: i18n.T(ctx, "confirm_deletion"),
-								Method:  http.MethodDelete,
-								Variant: button.VariantDestructive,
-								Class:   "inline-block",
-							}) {
-								{ i18n.T(ctx, "delete") }
-							}
+						@table.Cell(table.CellProps{Class: "whitespace-nowrap sticky right-0 bg-background"}) {
+							<div class="flex min-w-[220px] flex-wrap items-center gap-2">
+								@button.Button(button.Props{
+									Variant: button.VariantSecondary,
+									Href:    fmt.Sprintf("/app/post_tests/%v", item.Id),
+								}) {
+									{ i18n.T(ctx, "show") }
+								}
+								@button.Button(button.Props{
+									Variant: button.VariantDefault,
+									Href:    fmt.Sprintf("/app/post_tests/%v/edit", item.Id),
+								}) {
+									{ i18n.T(ctx, "edit") }
+								}
+								@link.Link(link.LinkProps{
+									Href:    fmt.Sprintf("/app/post_tests/%v?page_number=%d", item.Id, page.CurrentPage),
+									Confirm: i18n.T(ctx, "confirm_deletion"),
+									Method:  http.MethodDelete,
+									Variant: button.VariantDestructive,
+									Class:   "inline-block",
+								}) {
+									{ i18n.T(ctx, "delete") }
+								}
+							</div>
 						}
 					}
 				}

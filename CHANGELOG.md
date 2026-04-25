@@ -1,3 +1,13 @@
+## v0.26.0 (2026-04-25)
+
+### Feat
+
+- add missing translations
+- add home and intial templates style changes
+- add styles to show template
+- add styles to form template
+- add styles to table generation
+
 ## v0.25.1 (2026-04-24)
 
 ### Refactor

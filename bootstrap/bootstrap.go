@@ -75,6 +75,10 @@ var (
 					"README.md",
 					"README.md",
 				},
+				{
+					"prisma.config.ts",
+					"prisma_config",
+				},
 			},
 		},
 		{

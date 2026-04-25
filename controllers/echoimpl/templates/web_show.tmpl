@@ -13,45 +13,52 @@ import (
 )
 templ Show{{.PascalCase}}({{.CamelCase}} *models.{{.PascalCase}}) {
 	@layouts.Initial() {
-		<h1 class="mb-2 text-xl">{{.PascalCase}}: { {{.CamelCase}}.{{ GenerateStringableValue .IdAttribute}} }</h1>
-		<div class="mb-2 space-y-2">
-			{{	$global := . }}
-			{{range $item := .Attributes}}
-			@form.Item() {
-				@label.Label() {
+		<div class="mx-auto w-full max-w-7xl rounded-lg border bg-card p-4 shadow-sm md:p-6">
+			<div class="mb-4 space-y-1">
+				<h1 class="text-xl font-semibold tracking-tight">PostTest: { postTest.Id.String() }</h1>
+				<p class="text-sm text-muted-foreground">{ i18n.T(ctx, "item_details") }</p>
+			</div>
+			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+				{{	$global := . }}
+				{{range $item := .Attributes}}
+					@form.Item() {
+					@label.Label() {
 					{{$item.PascalCase}}
+					}
+					<p>{ {{$global.CamelCase}}.{{GenerateStringableValue $item}} }</p>
+					}
+				{{end}}
+			</div>
+			<div class="mt-6 flex flex-wrap items-center gap-2 border-t pt-4">
+				@link.Link(link.LinkProps{
+					Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v/edit", {{.CamelCase}}.Id),
+					Variant: button.VariantDefault,
+				}) {
+					{ i18n.T(ctx, "edit") }
 				}
-				<p>{ {{$global.CamelCase}}.{{GenerateStringableValue $item}} }</p>
-			}
-			{{end}}
+				@link.Link(link.LinkProps{
+					Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v", {{.CamelCase}}.Id),
+					Confirm: i18n.T(ctx, "confirm_deletion"),
+					Method:  http.MethodDelete,
+					Variant: button.VariantDestructive,
+					Class:   "inline-block",
+				}) {
+					{ i18n.T(ctx, "delete") }
+				}
+				@button.Button(button.Props{
+					Variant: button.VariantSecondary,
+					Href:    "/app/{{Pluralize .SnakeCase}}/new",
+				}) {
+					{ i18n.T(ctx, "create_new") }
+				}
+				@button.Button(button.Props{
+					Variant: button.VariantOutline,
+					Href:    "/app/{{Pluralize .SnakeCase}}?page_number=1",
+				}) {
+					{ i18n.T(ctx, "show_all") }
+				}
+			</div>
 		</div>
-		@link.Link(link.LinkProps{
-			Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v/edit", {{.CamelCase}}.Id),
-			Variant: button.VariantDefault,
-		}) {
-			{ i18n.T(ctx, "edit") }
-		}
-		@link.Link(link.LinkProps{
-			Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v", {{.CamelCase}}.Id),
-			Confirm: fmt.Sprintf("Are you sure to delete %v", {{.CamelCase}}.Id),
-			Method:  http.MethodDelete,
-			Variant: button.VariantDestructive,
-			Class:   "inline-block",
-		}) {
-			{ i18n.T(ctx, "delete") }
-		}
-		@button.Button(button.Props{
-			Variant: button.VariantSecondary,
-			Href:    "/app/{{Pluralize .SnakeCase}}/new",
-		}) {
-			{ i18n.T(ctx, "create_new") }
-		}
-		@button.Button(button.Props{
-			Variant: button.VariantOutline,
-			Href:    "/app/{{Pluralize .SnakeCase}}?page_number=1",
-		}) {
-			{ i18n.T(ctx, "show_all") }
-		}
 	}
 }
 {{end}}

@@ -15,7 +15,7 @@ templ Show{{.PascalCase}}({{.CamelCase}} *models.{{.PascalCase}}) {
 	@layouts.Initial() {
 		<div class="mx-auto w-full max-w-7xl rounded-lg border bg-card p-4 shadow-sm md:p-6">
 			<div class="mb-4 space-y-1">
-				<h1 class="text-xl font-semibold tracking-tight">PostTest: { postTest.Id.String() }</h1>
+				<h1 class="text-xl font-semibold tracking-tight">{{ .PascalCase }}: { {{.CamelCase}}.{{ GenerateStringableValue .IdAttribute}} }</h1>
 				<p class="text-sm text-muted-foreground">{ i18n.T(ctx, "item_details") }</p>
 			</div>
 			<div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">

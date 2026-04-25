@@ -1,4 +1,4 @@
-{{ define "README.md" }}# {{.ProjectName}}
+# test
 
 This is the initial code for the greatest project ever made.
 
@@ -20,4 +20,3 @@ Yep, you need to install some tools to make this work:
 ## Thank you!
 
 Be yourself. Find joy by what you do. Happy coding :)
-{{ end }}

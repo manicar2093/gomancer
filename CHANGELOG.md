@@ -1,3 +1,10 @@
+## v0.28.0 (2026-04-25)
+
+### Feat
+
+- add more details in generated readme
+- remove prisma config from package_ and add prisma config template
+
 ## v0.27.0 (2026-04-25)
 
 ### Feat

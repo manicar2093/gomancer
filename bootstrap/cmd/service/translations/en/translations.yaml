@@ -17,3 +17,6 @@ en:
   select_placeholder: "Select one option"
   show: "Show"
   uuid_v4_html_input_title: "Text should be a valid UUID V4"
+  no_data_to_show: "No data to show"
+  item_details: "Selected item details"
+  create_item_text: "Complete all the fields to complete the registration."

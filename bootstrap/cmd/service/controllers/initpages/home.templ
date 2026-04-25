@@ -8,70 +8,70 @@ import (
 
 templ HomePage() {
 	@layouts.Initial() {
-		<div class="bg-primary/10 p-8 rounded-lg mb-8">
-			<img src="/app/assets/img/gomancer.png" class="w-80 mx-auto my-2"/>
-			<h1 class="text-4xl font-bold text-center mb-4">Welcome to Gomancer!</h1>
-			<p class="text-xl text-center mb-3">The Go code generator to create awesome apps blazingly fast.</p>
-			<div class="text-center">
+		<div class="mx-auto w-full max-w-7xl space-y-8">
+			<div class="rounded-xl border bg-gradient-to-b from-primary/10 to-background p-6 shadow-sm md:p-8">
+				<img src="/app/assets/img/gomancer.png" class="mx-auto my-2 w-56 md:w-72"/>
+				<h1 class="mb-3 text-center text-3xl font-bold tracking-tight md:text-4xl">Welcome to Gomancer!</h1>
+				<p class="mx-auto mb-4 max-w-3xl text-center text-base text-muted-foreground md:text-lg">The Go code generator to create awesome apps blazingly fast.</p>
+				<div class="flex justify-center">
 				@button.Button(button.Props{
 					Variant: button.VariantGhost,
 					Href:    "https://github.com/manicar2093/gomancer",
 					Target: "_blank",
-					Class: "mb-3 flex flex-row grow",
+					Class: "inline-flex items-center gap-2",
 				}) {
-				    GitHub Repository
+					GitHub Repository
 					@icon.SquareArrowOutUpRight(icon.Props{
-					    Class: "ml-2",
+						Class: "size-4",
 					})
 				}
+				</div>
 			</div>
-			<p class="text-xs text-center">Built with version: 1.0.0</p>
-		</div>
-		<section class="mt-8 p-6 bg-card rounded-lg shadow-md">
-			<h2 class="text-2xl font-semibold mb-4">Features</h2>
-			<div class="grid grid-cols-1 md:grid-cols-3 gap-4">
-				<div class="p-4 border border-gray-200 rounded-lg">
+			<section class="rounded-xl border bg-card p-6 shadow-sm md:p-8">
+				<h2 class="mb-4 text-2xl font-semibold tracking-tight">Features</h2>
+				<div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
+					<div class="rounded-lg border border-border bg-background/60 p-4 transition-colors hover:bg-background">
 					<h3 class="text-xl font-medium mb-2">Type-Safe Templates</h3>
 					<p>Build type-safe HTML templates with Go's type system.</p>
 				</div>
-				<div class="p-4 border border-gray-200 rounded-lg">
+				<div class="rounded-lg border border-border bg-background/60 p-4 transition-colors hover:bg-background">
 					<h3 class="text-xl font-medium mb-2">Modern UI</h3>
-					<p>Beautiful UI with Tailwind CSS and interactive elements with HTMX.</p>
+					<p>Beautiful UI with Tailwind CSS and reusable components.</p>
 				</div>
-				<div class="p-4 border border-gray-200 rounded-lg">
+				<div class="rounded-lg border border-border bg-background/60 p-4 transition-colors hover:bg-background">
 					<h3 class="text-xl font-medium mb-2">Fast Development</h3>
 					<p>Rapid development with hot reloading and efficient workflows.</p>
 				</div>
-				<div class="p-4 border border-gray-200 rounded-lg">
+				<div class="rounded-lg border border-border bg-background/60 p-4 transition-colors hover:bg-background">
 					<h3 class="text-xl font-medium mb-2">Database Integration</h3>
 					<p>Seamless PostgreSQL integration with GORM ORM for efficient data management.</p>
 				</div>
-				<div class="p-4 border border-gray-200 rounded-lg">
+				<div class="rounded-lg border border-border bg-background/60 p-4 transition-colors hover:bg-background">
 					<h3 class="text-xl font-medium mb-2">Caching</h3>
 					<p>Redis integration for high-performance caching and session management.</p>
 				</div>
-				<div class="p-4 border border-gray-200 rounded-lg">
+				<div class="rounded-lg border border-border bg-background/60 p-4 transition-colors hover:bg-background">
 					<h3 class="text-xl font-medium mb-2">Validation</h3>
 					<p>Robust input validation with built-in validation libraries.</p>
 				</div>
-				<div class="p-4 border border-gray-200 rounded-lg">
+				<div class="rounded-lg border border-border bg-background/60 p-4 transition-colors hover:bg-background">
 					<h3 class="text-xl font-medium mb-2">Testing</h3>
 					<p>Comprehensive testing support with Ginkgo and Gomega frameworks.</p>
 				</div>
-				<div class="p-4 border border-gray-200 rounded-lg">
+				<div class="rounded-lg border border-border bg-background/60 p-4 transition-colors hover:bg-background">
 					<h3 class="text-xl font-medium mb-2">Live Reload</h3>
 					<p>Automatic reloading during development with Air for a smoother workflow.</p>
 				</div>
 			</div>
-		</section>
-		<section class="mt-8 p-6 bg-card rounded-lg shadow-md">
-			<h2 class="text-2xl font-semibold mb-4">Tools & Libraries</h2>
-			<div class="grid grid-cols-1 md:grid-cols-2 gap-4">
-				<div class="p-4 border border-gray-200 rounded-lg">
+			</section>
+			<section class="rounded-xl border bg-card p-6 shadow-sm md:p-8">
+				<h2 class="mb-4 text-2xl font-semibold tracking-tight">Tools & Libraries</h2>
+				<div class="grid grid-cols-1 gap-4 md:grid-cols-2">
+					<div class="rounded-lg border border-border bg-background/60 p-4 transition-colors hover:bg-background">
 					<h3 class="text-xl font-medium mb-2">Core Tools</h3>
 					<ul class="space-y-2">
 						<li>
-							<a href="https://go.dev/" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://go.dev/" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -79,7 +79,7 @@ templ HomePage() {
 							</a>
 						</li>
 						<li>
-							<a href="https://github.com/go-task/task" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/go-task/task" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -87,7 +87,7 @@ templ HomePage() {
 							</a>
 						</li>
 						<li>
-							<a href="https://github.com/air-verse/air" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/air-verse/air" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -95,7 +95,7 @@ templ HomePage() {
 							</a>
 						</li>
 						<li>
-							<a href="https://github.com/prisma/prisma" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/prisma/prisma" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -104,11 +104,11 @@ templ HomePage() {
 						</li>
 					</ul>
 				</div>
-				<div class="p-4 border border-gray-200 rounded-lg">
+				<div class="rounded-lg border border-border bg-background/60 p-4 transition-colors hover:bg-background">
 					<h3 class="text-xl font-medium mb-2">Frontend Libraries</h3>
 					<ul class="space-y-2">
 						<li>
-							<a href="https://github.com/a-h/templ" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/a-h/templ" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -116,7 +116,7 @@ templ HomePage() {
 							</a>
 						</li>
 						<li>
-							<a href="https://github.com/templui/templui" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/templui/templui" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -124,28 +124,20 @@ templ HomePage() {
 							</a>
 						</li>
 						<li>
-							<a href="https://github.com/tailwindlabs/tailwindcss" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/tailwindlabs/tailwindcss" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
 								Tailwind CSS
 							</a>
 						</li>
-						<li>
-							<a href="https://github.com/bigskysoftware/htmx" class="text-blue-600 hover:underline flex items-center" target="_blank">
-								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
-									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
-								</svg>
-								HTMX
-							</a>
-						</li>
 					</ul>
 				</div>
-				<div class="p-4 border border-gray-200 rounded-lg">
+				<div class="rounded-lg border border-border bg-background/60 p-4 transition-colors hover:bg-background">
 					<h3 class="text-xl font-medium mb-2">Backend Libraries</h3>
 					<ul class="space-y-2">
 						<li>
-							<a href="https://github.com/labstack/echo" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/labstack/echo" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -153,7 +145,7 @@ templ HomePage() {
 							</a>
 						</li>
 						<li>
-							<a href="https://github.com/go-gorm/gorm" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/go-gorm/gorm" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -161,7 +153,7 @@ templ HomePage() {
 							</a>
 						</li>
 						<li>
-							<a href="https://github.com/manicar2093/gormpager" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/manicar2093/gormpager" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -169,7 +161,7 @@ templ HomePage() {
 							</a>
 						</li>
 						<li>
-							<a href="https://github.com/redis/go-redis" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/redis/go-redis" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -177,7 +169,7 @@ templ HomePage() {
 							</a>
 						</li>
 						<li>
-							<a href="https://github.com/gookit/validate" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/gookit/validate" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -186,11 +178,11 @@ templ HomePage() {
 						</li>
 					</ul>
 				</div>
-				<div class="p-4 border border-gray-200 rounded-lg">
+				<div class="rounded-lg border border-border bg-background/60 p-4 transition-colors hover:bg-background">
 					<h3 class="text-xl font-medium mb-2">Testing Libraries</h3>
 					<ul class="space-y-2">
 						<li>
-							<a href="https://github.com/onsi/ginkgo" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/onsi/ginkgo" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -198,7 +190,7 @@ templ HomePage() {
 							</a>
 						</li>
 						<li>
-							<a href="https://github.com/onsi/gomega" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/onsi/gomega" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -206,7 +198,7 @@ templ HomePage() {
 							</a>
 						</li>
 						<li>
-							<a href="https://github.com/brianvoe/gofakeit" class="text-blue-600 hover:underline flex items-center" target="_blank">
+							<a href="https://github.com/brianvoe/gofakeit" class="text-foreground/90 hover:text-primary hover:underline underline-offset-4 transition-colors flex items-center" target="_blank">
 								<svg xmlns="http://www.w3.org/2000/svg" class="h-5 w-5 mr-2" fill="currentColor" viewBox="0 0 24 24">
 									<path d="M12 0c-6.626 0-12 5.373-12 12 0 5.302 3.438 9.8 8.207 11.387.599.111.793-.261.793-.577v-2.234c-3.338.726-4.033-1.416-4.033-1.416-.546-1.387-1.333-1.756-1.333-1.756-1.089-.745.083-.729.083-.729 1.205.084 1.839 1.237 1.839 1.237 1.07 1.834 2.807 1.304 3.492.997.107-.775.418-1.305.762-1.604-2.665-.305-5.467-1.334-5.467-5.931 0-1.311.469-2.381 1.236-3.221-.124-.303-.535-1.524.117-3.176 0 0 1.008-.322 3.301 1.23.957-.266 1.983-.399 3.003-.404 1.02.005 2.047.138 3.006.404 2.291-1.552 3.297-1.23 3.297-1.23.653 1.653.242 2.874.118 3.176.77.84 1.235 1.911 1.235 3.221 0 4.609-2.807 5.624-5.479 5.921.43.372.823 1.102.823 2.222v3.293c0 .319.192.694.801.576 4.765-1.589 8.199-6.086 8.199-11.386 0-6.627-5.373-12-12-12z"></path>
 								</svg>
@@ -216,6 +208,7 @@ templ HomePage() {
 					</ul>
 				</div>
 			</div>
-		</section>
+			</section>
+		</div>
 	}
 }

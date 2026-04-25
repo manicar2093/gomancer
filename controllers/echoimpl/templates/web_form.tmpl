@@ -15,24 +15,39 @@ templ {{.PascalCase}}Form({{.CamelCase}} *models.{{.PascalCase}}, errors validat
         Method: props.Method,
         Class:  props.Class,
     }) {
-        <div class="mb-2">
+        <div class="mx-auto w-full max-w-7xl rounded-lg border bg-card p-4 shadow-sm md:p-6">
+            <div class="mb-4 space-y-1">
+                <h2 class="text-lg font-semibold tracking-tight">PostTest</h2>
+                <p class="text-sm text-muted-foreground">{ i18n.T(ctx, "create_item_text") }</p>
+            </div>
+            @form.Item(form.ItemProps{}) {
+                @input.Input(input.Props{
+                    Name:  "_method",
+                    Value: props.Method,
+                    Type:  "hidden",
+                })
+            }
+            <div class="grid grid-cols-1 gap-4 md:grid-cols-2 xl:grid-cols-3">
 {{ range .Attributes }}
-            {{GenerateFormItemInput .}}
+                {{GenerateFormItemInput .}}
 {{ end }}
+            </div>
+            <div class="mt-6 flex flex-wrap items-center gap-2 border-t pt-4">
+                @button.Button(button.Props{
+                    Variant: button.VariantDefault,
+                    Type:    button.TypeSubmit,
+                }) {
+                    { i18n.T(ctx, "save") }
+                }
+                @button.Button(button.Props{
+                    Type:    button.TypeSubmit,
+                    Variant: button.VariantGhost,
+                    Href:    "/app/{{ Pluralize .SnakeCase }}?page_number=1",
+                }) {
+                    { i18n.T(ctx, "cancel") }
+                }
+            </div>
         </div>
-        @button.Button(button.Props{
-            Variant: button.VariantDefault,
-            Type:    button.TypeSubmit,
-        }) {
-            { i18n.T(ctx, "save") }
-        }
-        @button.Button(button.Props{
-            Type:    button.TypeSubmit,
-            Variant: button.VariantGhost,
-            Href:    "/app/{{ Pluralize .SnakeCase }}?page_number=1",
-        }) {
-            { i18n.T(ctx, "cancel") }
-        }
     }
 }
 {{end}}

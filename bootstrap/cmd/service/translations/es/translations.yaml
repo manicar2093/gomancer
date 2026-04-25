@@ -17,3 +17,6 @@ es:
   select_placeholder: "Selecciona una opción"
   show: "Mostrar"
   uuid_v4_html_input_title: "El texto debe ser un UUID V4 válido"
+  no_data_to_show: "No hay datos para mostrar"
+  item_details: "Detalle del registro seleccionado."
+  create_item_text: "Completa los campos para guardar el registro."

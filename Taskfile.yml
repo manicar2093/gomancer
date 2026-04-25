@@ -32,3 +32,8 @@ tasks:
     desc: Generates all needed code for project
     cmds:
       - go tool templ generate --proxy="http://localhost:8090" --open-browser=false -v
+
+  gen-project-tree-file:
+    desc: Generates project tree file. It is used in a generated new project. Be aware of it
+    cmds:
+      - tree -L 4 -a --dirsfirst -o project_struct.txt

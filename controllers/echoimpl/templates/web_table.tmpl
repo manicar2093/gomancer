@@ -140,7 +140,7 @@ templ {{Pluralize .PascalCase}}Table(page *gormpager.Page[models.{{.PascalCase}}
         @label.Label(label.Props{
             Class: "text-center block p-5",
         }) {
-            No data to show
+			{ i18n.T(ctx, "no_data_to_show") }
         }
     }
 }

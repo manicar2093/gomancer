@@ -286,7 +286,7 @@ templ PostTestsTable(page *gormpager.Page[models.PostTest]) {
 		@label.Label(label.Props{
 			Class: "text-center block p-5",
 		}) {
-			No data to show
+			{ i18n.T(ctx, "no_data_to_show") }
 		}
 	}
 }

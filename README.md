@@ -9,7 +9,7 @@
 
 ## Overview
 
-Gomancer is a powerful code generator designed to make API development in Go **BLAZINGLY** fast! It automates the creation of models, controllers, repositories, and database migrations, allowing you to focus on your business logic rather than boilerplate code.
+Gomancer is a powerful code generator designed to make API development in Go **REALLY** fast! It automates the creation of models, controllers, repositories, and database migrations, allowing you to focus on your business logic rather than boilerplate code.
 
 Inspired by tools like Phoenix's generators in Elixir, Gomancer brings rapid API development to the Go ecosystem by leveraging existing powerful packages and organizing them in a cohesive way.
 
@@ -105,98 +105,63 @@ When you create a new project with Gomancer, it generates the following structur
 
 ```
 <project_name>/
-├── .air.toml           # Configuration for hot reloading
-├── .cz.toml            # Commitizen configuration
-├── .env                # Environment variables
-├── .gitignore
-├── go.mod              # Go module definition
-├── Makefile            # Templ and Tailwind used commands
-├── package.json        # Node.js dependencies (for Prisma)
-├── README.md           # Project documentation
-├── Taskfile.yml        # Task runner configuration
 ├── .github
 │   └── workflows
-│       └── bump_version.yml        # GitHub Actions workflow for automatic version bumping
 ├── cmd
-│   └── service
-│       ├── main.go                 # Application entry point
-│       ├── assets
-│       │   ├── css
-│       │   │   └── styles.css
-│       │   ├── img
-│       │   │   ├── favicon.ico
-│       │   │   └── gomancer.png
-│       │   └── js
-│       │       ├── htmx@2.0.4.min.js
-│       │       ├── popover.min.js
-│       │       ├── selectbox.min.js
-│       │       ├── theme-setter.js
-│       │       └── toggle-theme.js
-│       ├── controllers
-│       │   ├── init_rest.go        # REST initial controller
-│       │   ├── init_web.go         # Web initial controller
-│       │   └── initpages           # Initial templ docs
-│       │       └── home.templ
-│       ├── sources
-│       │   └── css
-│       │       └── input.css
-│       ├── translations
-│       │   ├── translations.go
-│       │   ├── en
-│       │   │   └── translations.yaml
-│       │   └── es
-│       │       ├── translations.yaml
-│       │       └── validator.go
-│       └── ui
-│           ├── components
-│           │   ├── button
-│           │   │   └── button.templ
-│           │   ├── drawer
-│           │   │   └── drawer.templ
-│           │   ├── form
-│           │   │   └── form.templ
-│           │   ├── icon
-│           │   │   ├── icon_data.go
-│           │   │   ├── icon_defs.go
-│           │   │   └── icon.go
-│           │   ├── input
-│           │   │   └── input.templ
-│           │   ├── label
-│           │   │   └── label.templ
-│           │   ├── pagination
-│           │   │   └── pagination.templ
-│           │   ├── popover
-│           │   │   └── popover.templ
-│           │   ├── selectbox
-│           │   │   └── selectbox.templ
-│           │   ├── table
-│           │   │   └── table.templ
-│           │   └── toggle
-│           │       └── toggle.templ
-│           ├── layouts
-│           │   ├── drawer.templ
-│           │   ├── flash_messages.templ
-│           │   ├── Initial.templ
-│           │   └── sidemenu.templ
-│           └── utils
-│               └── templui.go
+│   ├── service
+│   │   ├── assets
+│   │   │   ├── css
+│   │   │   ├── img
+│   │   │   └── js
+│   │   ├── controllers
+│   │   │   ├── initpages
+│   │   │   ├── init_rest.go
+│   │   │   └── init_web.go
+│   │   ├── sources
+│   │   │   └── css
+│   │   ├── translations
+│   │   │   ├── en
+│   │   │   ├── es
+│   │   │   └── translations.go
+│   │   └── main.go
 ├── core
-│   └── ...
+│   ├── apperrors
+│   ├── commonreq
+│   ├── connections
+│   ├── converters
+│   ├── echoer
+│   ├── env
+│   ├── httphealthcheck
+│   ├── logger
+│   ├── stages
+│   ├── validator
+│   ├── web
+│   ├── config.go
+│   ├── controllers.go
+│   ├── ctx_utils.go
+│   ├── flash.go
+│   ├── middlewares.go
+│   ├── templctx.go
+│   └── templrender.go
 ├── internal
-│   ├── domain
-│   │   └── models                  # Here will be all your models
-│   │       └── init.go
+│   └── domain
 ├── pkg
 │   ├── config
-│   │   └── config.go
 │   ├── generators
-│   │   ├── entities.go
-│   │   └── generators.go
+│   ├── testfunc
 │   └── versioning
-│       └── version.go
-└── prisma
-    └── schema
-        └── schema.prisma
+├── prisma
+│   └── schema
+├── .air.toml
+├── .cz.toml
+├── .env
+├── .env.test
+├── go.mod
+├── Makefile
+├── package.json
+├── project_struct.txt
+├── README.md
+└── Taskfile.yml
 
 ```
 

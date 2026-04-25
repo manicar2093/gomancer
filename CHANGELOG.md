@@ -1,3 +1,9 @@
+## v0.27.0 (2026-04-25)
+
+### Feat
+
+- remove htmx js source and its reference form initial.templ
+
 ## v0.26.0 (2026-04-25)
 
 ### Feat

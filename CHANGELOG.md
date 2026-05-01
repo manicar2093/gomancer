@@ -1,3 +1,13 @@
+## v0.29.0 (2026-05-01)
+
+### Feat
+
+- add migration instruction after gen new entity
+- add new logger middleware
+- add task to migrate database
+- add icons to data table generation
+- add bool form input new structure
+
 ## v0.28.0 (2026-04-25)
 
 ### Feat

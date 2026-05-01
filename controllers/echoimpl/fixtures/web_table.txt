@@ -11,6 +11,7 @@ import (
 	table "github.com/user/project_name/core/web/components/table"
 	link "github.com/user/project_name/core/web/components/link"
 	models "github.com/user/project_name/internal/domain/models"
+	icon "github.com/user/project_name/core/web/components/icon"
 )
 
 var tableId = "post_test-data-table"
@@ -194,13 +195,17 @@ templ PostTestsTable(page *gormpager.Page[models.PostTest]) {
 									Variant: button.VariantSecondary,
 									Href:    fmt.Sprintf("/app/post_tests/%v", item.Id),
 								}) {
-									{ i18n.T(ctx, "show") }
+									@icon.Eye(icon.Props{
+										Size: 18,
+									})
 								}
 								@button.Button(button.Props{
 									Variant: button.VariantDefault,
 									Href:    fmt.Sprintf("/app/post_tests/%v/edit", item.Id),
 								}) {
-									{ i18n.T(ctx, "edit") }
+									@icon.Pencil(icon.Props{
+										Size: 18,
+									})
 								}
 								@link.Link(link.LinkProps{
 									Href:    fmt.Sprintf("/app/post_tests/%v?page_number=%d", item.Id, page.CurrentPage),
@@ -209,7 +214,9 @@ templ PostTestsTable(page *gormpager.Page[models.PostTest]) {
 									Variant: button.VariantDestructive,
 									Class:   "inline-block",
 								}) {
-									{ i18n.T(ctx, "delete") }
+									@icon.Trash2(icon.Props{
+										Size: 18,
+									})
 								}
 							</div>
 						}

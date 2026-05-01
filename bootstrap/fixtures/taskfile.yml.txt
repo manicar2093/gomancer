@@ -1,4 +1,4 @@
-{{ define "taskfile.yml"}}# https://taskfile.dev
+# https://taskfile.dev
 
 version: '3'
 
@@ -39,4 +39,3 @@ tasks:
         dotenv: ['.env']
         cmds:
             - npx prisma migrate dev --skip-seed
-{{ end }}

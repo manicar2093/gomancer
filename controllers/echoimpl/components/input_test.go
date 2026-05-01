@@ -446,19 +446,21 @@ var _ = Describe("Input Components", func() {
 			Type:       "bool",
 			IsOptional: true,
 		}, `{{ optionalBoolKey := "optional_bool" }}
-@label.Label(label.Props{
-	For: optionalBoolKey,
-}) {
-	OptionalBool
-}
-@form.ItemFlex() {
-	@toggle.Toggle(toggle.Props{
-		ID:      optionalBoolKey,
-		Name:    optionalBoolKey,
-		Checked: userData.OptionalBool.GetValue(),
-	})
-	@form.Description() {
-		Check for OptionalBool
+@form.Item() {
+	@label.Label(label.Props{
+		For: optionalBoolKey,
+	}) {
+		OptionalBool
+	}
+	@form.ItemFlex() {
+		@toggle.Toggle(toggle.Props{
+			ID:      optionalBoolKey,
+			Name:    optionalBoolKey,
+			Checked: userData.OptionalBool.GetValue(),
+		})
+		@form.Description() {
+			Check for OptionalBool
+		}
 	}
 }
 `),
@@ -471,19 +473,21 @@ var _ = Describe("Input Components", func() {
 			},
 			Type: "bool",
 		}, `{{ boolKey := "bool" }}
-@label.Label(label.Props{
-	For: boolKey,
-}) {
-	Bool
-}
-@form.ItemFlex() {
-	@toggle.Toggle(toggle.Props{
-		ID:      boolKey,
-		Name:    boolKey,
-		Checked: userData.Bool,
-	})
-	@form.Description() {
-		Check for Bool
+@form.Item() {
+	@label.Label(label.Props{
+		For: boolKey,
+	}) {
+		Bool
+	}
+	@form.ItemFlex() {
+		@toggle.Toggle(toggle.Props{
+			ID:      boolKey,
+			Name:    boolKey,
+			Checked: userData.Bool,
+		})
+		@form.Description() {
+			Check for Bool
+		}
 	}
 }
 `),

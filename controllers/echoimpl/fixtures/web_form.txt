@@ -443,35 +443,39 @@ templ PostTestForm(postTest *models.PostTest, errors validate.Errors, props comp
 					})
 				}
 				{{ optionalBoolKey := "optional_bool" }}
-				@label.Label(label.Props{
-					For: optionalBoolKey,
-				}) {
-					OptionalBool
-				}
-				@form.ItemFlex() {
-					@toggle.Toggle(toggle.Props{
-						ID:      optionalBoolKey,
-						Name:    optionalBoolKey,
-						Checked: postTest.OptionalBool.GetValue(),
-					})
-					@form.Description() {
-						Check for OptionalBool
+				@form.Item() {
+					@label.Label(label.Props{
+						For: optionalBoolKey,
+					}) {
+						OptionalBool
+					}
+					@form.ItemFlex() {
+						@toggle.Toggle(toggle.Props{
+							ID:      optionalBoolKey,
+							Name:    optionalBoolKey,
+							Checked: postTest.OptionalBool.GetValue(),
+						})
+						@form.Description() {
+							Check for OptionalBool
+						}
 					}
 				}
 				{{ boolKey := "bool" }}
-				@label.Label(label.Props{
-					For: boolKey,
-				}) {
-					Bool
-				}
-				@form.ItemFlex() {
-					@toggle.Toggle(toggle.Props{
-						ID:      boolKey,
-						Name:    boolKey,
-						Checked: postTest.Bool,
-					})
-					@form.Description() {
-						Check for Bool
+				@form.Item() {
+					@label.Label(label.Props{
+						For: boolKey,
+					}) {
+						Bool
+					}
+					@form.ItemFlex() {
+						@toggle.Toggle(toggle.Props{
+							ID:      boolKey,
+							Name:    boolKey,
+							Checked: postTest.Bool,
+						})
+						@form.Description() {
+							Check for Bool
+						}
 					}
 				}
 				{{ optionalTimeKey := "optional_time" }}

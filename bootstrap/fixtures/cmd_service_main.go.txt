@@ -1,18 +1,18 @@
-{{ define "cmd_api_main" }}package main
+package main
 
 import (
-    {{.GoDeps.Std.Fmt.GenerateImportString}}
-    {{.GoDeps.Echo.GenerateImportString}}
-    {{.GoDeps.Echo.Middlewares.GenerateImportString}}
-    {{.GoDeps.EchoRoutesView.GenerateImportString}}
-    {{.GoDeps.Project.Cmd.Service.Controllers.GenerateImportString}}
-    {{.GoDeps.Project.Cmd.Service.Translations.GenerateImportString}}
-    {{.GoDeps.Project.Core.GenerateImportString}}
-    {{.GoDeps.Project.Core.AppErrors.GenerateImportString}}
-    {{.GoDeps.Project.Core.Converters.GenerateImportString}}
-    {{.GoDeps.Project.Core.Logger.GenerateImportString}}
-    {{.GoDeps.Project.Core.Validator.GenerateImportString}}
-    {{.GoDeps.Project.Pkg.Config.GenerateImportString}}
+    fmt	"fmt"
+    echo	"github.com/labstack/echo/v4"
+    middleware	"github.com/labstack/echo/v4/middleware"
+    echoroutesview	"github.com/manicar2093/echoroutesview"
+    controllers	"test/cmd/service/controllers"
+    translations	"test/cmd/service/translations"
+    core	"test/core"
+    apperrors	"test/core/apperrors"
+    converters	"test/core/converters"
+    logger	"test/core/logger"
+    validator	"test/core/validator"
+    config	"test/pkg/config"
 )
 
 func main() {
@@ -53,4 +53,3 @@ func main() {
 
     e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", conf.Port)))
 }
-{{ end }}

@@ -153,63 +153,7 @@ func (c *InitWebController) GetHandler(ctx echo.Context) error {
 		})
 
 		It("creates cmd/service/main.go file", func() {
-			content := `package main
-
-import (
-    fmt	"fmt"
-    echo	"github.com/labstack/echo/v4"
-    middleware	"github.com/labstack/echo/v4/middleware"
-    echoroutesview	"github.com/manicar2093/echoroutesview"
-    controllers	"test/cmd/service/controllers"
-    translations	"test/cmd/service/translations"
-    core	"test/core"
-    apperrors	"test/core/apperrors"
-    converters	"test/core/converters"
-    logger	"test/core/logger"
-    validator	"test/core/validator"
-    config	"test/pkg/config"
-)
-
-func main() {
-    var (
-        e                = echo.New()
-        restBaseEndpoint = "/api/v1"
-        webBaseEndpoint  = "/app"
-        restBaseGroup    = e.Group(restBaseEndpoint)
-        webBaseGroup     = e.Group(webBaseEndpoint)
-        conf             = converters.Must(core.ParseConfig[config.Config]())
-    )
-    logger.Config()
-
-    // Use only for web app. echo do not allow to register this on a group :/
-    e.Pre(middleware.MethodOverrideWithConfig(middleware.MethodOverrideConfig{
-        Getter: middleware.MethodFromForm("_method"),
-    }))
-
-    e.Use(core.I18nMiddleware(translations.Embed, "en"))
-
-    webBaseGroup.Static("/assets", "./cmd/service/assets")
-    webBaseGroup.Use(middleware.CSRFWithConfig(middleware.CSRFConfig{
-        TokenLookup: "form:X-XSRF-TOKEN",
-    }))
-    webBaseGroup.Use(core.SessionSecretKeyMiddleware(conf.SessionSecretKeyConfig))
-
-    e.Use(middleware.Logger())
-
-    core.RegisterController(webBaseGroup, controllers.NewInitWebController())
-    core.RegisterController(restBaseGroup, controllers.NewInitRestController())
-
-    if err := echoroutesview.RegisterRoutesViewer(e); err != nil {
-        panic(err)
-    }
-
-    e.HTTPErrorHandler = apperrors.HandlerWEcho
-    e.Validator = validator.NoValidatorWarning{}
-
-    e.Logger.Fatal(e.Start(fmt.Sprintf(":%d", conf.Port)))
-}
-`
-			Expect(dirWithPath("cmd/service/main.go")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+			Expect(dirWithPath("cmd/service/main.go")).Should(testmatchers.BeAnExistingFileWithEqualContent(path.Join("fixtures", "cmd_service_main.go.txt")))
 		})
 
 		It("creates pkg/generators/generators.go file", func() {

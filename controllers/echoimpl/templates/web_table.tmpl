@@ -11,6 +11,7 @@ import (
     {{.GoDeps.Core.Web.Components.Table.GenerateImportString}}
     {{.GoDeps.Core.Web.Components.Link.GenerateImportString}}
     {{ .GoDeps.Project.Internal.Domain.Models.GenerateImportString }}
+    {{.GoDeps.Core.Web.Components.Icon.GenerateImportString}}
 )
 
 var tableId = "{{.SnakeCase}}-data-table"
@@ -48,13 +49,17 @@ templ {{Pluralize .PascalCase}}Table(page *gormpager.Page[models.{{.PascalCase}}
                                     Variant: button.VariantSecondary,
                                     Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v", item.Id),
                                 }) {
-                                    { i18n.T(ctx, "show") }
+                                    @icon.Eye(icon.Props{
+                                        Size: 18,
+                                    })
                                 }
                                 @button.Button(button.Props{
                                     Variant: button.VariantDefault,
                                     Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v/edit", item.Id),
                                 }) {
-                                    { i18n.T(ctx, "edit") }
+                                    @icon.Pencil(icon.Props{
+                                        Size: 18,
+                                    })
                                 }
                                 @link.Link(link.LinkProps{
                                     Href:    fmt.Sprintf("/app/{{Pluralize .SnakeCase}}/%v?page_number=%d", item.Id, page.CurrentPage),
@@ -63,7 +68,9 @@ templ {{Pluralize .PascalCase}}Table(page *gormpager.Page[models.{{.PascalCase}}
                                     Variant: button.VariantDestructive,
                                     Class:   "inline-block",
                                 }) {
-                                    { i18n.T(ctx, "delete") }
+                                    @icon.Trash2(icon.Props{
+                                        Size: 18,
+                                    })
                                 }
 							</div>
                         }

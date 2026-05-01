@@ -96,6 +96,7 @@ gomancer gen Client name:string dob:time:optional status:enum/active/deactivated
 	➡️ Add dbConn = connections.GetGormConnection(conf.DatabaseConnectionConfig)
 	➡️ Add repository initialization
 	➡️ Add controller initialization
+	➡️ If not yet, migrate database with 'task migrate'
 	➡️ Register controller
 	➡️ Run 'go mod download' to install deps
 	➡️ Enjoy! 😎

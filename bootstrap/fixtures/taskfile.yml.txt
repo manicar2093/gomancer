@@ -35,7 +35,7 @@ tasks:
             - go tool ginkgo run -v ./...
             - npx prisma migrate reset --force
     migrate:
-        desc: Run migrations using .env file
+        desc: Run migrations using .env file. Usually used for development
         dotenv: ['.env']
         cmds:
             - npx prisma migrate dev --skip-seed

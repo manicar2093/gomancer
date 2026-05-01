@@ -402,44 +402,7 @@ tool (
 		})
 
 		It("creates Taskfile.yml file", func() {
-			content := `# https://taskfile.dev
-
-version: '3'
-
-tasks:
-    build:
-        desc: Build your API to deploy anywhere
-        cmds:
-            - go build -o .bin/service/server cmd/service/*.go
-    fmt:
-        desc: Format all your Golang and Prisma code
-        cmds:
-            - go fmt ./...
-            - npx prisma format
-    version:
-        desc: Shows your current API version
-        cmds:
-            - cz version -p
-    dev:
-        desc: Start project with air using your .env file
-        dotenv: ['.env']
-        cmds:
-            - make -j3 tailwind templ dev
-    run:
-        desc: Start project from build
-        dotenv: ['.env']
-        deps: [build]
-        cmds:
-            - ./.bin/service/server
-    test:
-        desc: Run migrations, all tests and reset migrations using .env.test environment file
-        dotenv: ['.env.test']
-        cmds:
-            - npx prisma migrate dev --skip-seed
-            - go tool ginkgo run -v ./...
-            - npx prisma migrate reset --force
-`
-			Expect(dirWithPath("Taskfile.yml")).Should(testmatchers.BeAnExistingFileAndEqualString(content))
+			Expect(dirWithPath("Taskfile.yml")).Should(testmatchers.BeAnExistingFileWithEqualContent(path.Join("fixtures", "taskfile.yml.txt")))
 		})
 
 		It("creates Makefile file", func() {

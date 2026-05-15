@@ -1,3 +1,9 @@
+## v0.29.1 (2026-05-15)
+
+### Fix
+
+- add missing {{.PascalCase}} in templates to generate controllers
+
 ## v0.29.0 (2026-05-01)
 
 ### Feat

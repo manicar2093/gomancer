@@ -17,7 +17,7 @@ templ {{.PascalCase}}Form({{.CamelCase}} *models.{{.PascalCase}}, errors validat
     }) {
         <div class="mx-auto w-full max-w-7xl rounded-lg border bg-card p-4 shadow-sm md:p-6">
             <div class="mb-4 space-y-1">
-                <h2 class="text-lg font-semibold tracking-tight">PostTest</h2>
+                <h2 class="text-lg font-semibold tracking-tight">{{.PascalCase}}</h2>
                 <p class="text-sm text-muted-foreground">{ i18n.T(ctx, "create_item_text") }</p>
             </div>
             @form.Item(form.ItemProps{}) {

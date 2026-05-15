@@ -34,14 +34,14 @@ func New{{.PascalCase}}WebController({{.CamelCase}}Repository *{{.InCreation.Ali
 func (c *{{.PascalCase}}WebController) SetUpRoutes(group *echo.Group) {
 	{{.CamelCase}}Group := group.Group("/{{ Pluralize .SnakeCase}}")
 
-	// Show all postTest
+	// Show all {{.CamelCase}}
 	{{.CamelCase}}Group.GET("", c.GetAllPaginatedHandler)
 	// Send page to edit a user
 	{{.CamelCase}}Group.GET("/:id/edit", c.GetEditionHandler)
 	// Sends page to registry a user
 	{{.CamelCase}}Group.GET("/new", c.GetRegistrationPageHandler)
 	// Send page to show a user
-	{{.CamelCase}}Group.GET("/:id", c.GetShowPostTestPageHandler).Name = Show{{.PascalCase}}RouteName
+	{{.CamelCase}}Group.GET("/:id", c.GetShow{{.PascalCase}}PageHandler).Name = Show{{.PascalCase}}RouteName
 	// Creates a user
 	{{.CamelCase}}Group.POST("", c.SaveHandler)
 	// Patch user
@@ -136,7 +136,7 @@ func (c *{{.PascalCase}}WebController) GetRegistrationPageHandler(ctx echo.Conte
 	return core.Render(ctx, http.StatusOK, {{$pagesPackage}}.Register{{.PascalCase}}Page(&models.{{.PascalCase}}{}, nil))
 }
 
-func (c *{{.PascalCase}}WebController) GetShowPostTestPageHandler(ctx echo.Context) error {
+func (c *{{.PascalCase}}WebController) GetShow{{.PascalCase}}PageHandler(ctx echo.Context) error {
 	req := commonreq.{{GetByType}}{}
 	if err := core.BindAndValidate(ctx, &req); err != nil {
 		return err
